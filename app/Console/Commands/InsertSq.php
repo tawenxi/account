@@ -43,7 +43,7 @@ class InsertSq extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->guzzleexcel = \App::make(Excel::class,['excel']);
+        $this->guzzleexcel = \App::make(Excel::class,['excelFile'=>'excel']);
     }
 
     /**
@@ -109,7 +109,10 @@ class InsertSq extends Command
         $successi = 0;
         foreach ($arr as $key => $value) 
         {
-            $guzz = \App::make(Guzzle::class,[app()->make(Getsqzb::class),app()->make(Http::class),$value]);//传入一个一位数组（账户信息）
+            $guzz = \App::make(Guzzle::class,[
+            'Getsqzb'=>app()->make(Getsqzb::class),
+            'http'=>app()->make(Http::class),
+            'payee'=>$value]);//传入一个一位数组（账户信息）
             if (stristr($arr[$key]['kemu'], "#")) {
                 $this->info("info:第".(1+$successi).'条数据做账成功但未授权支付'.$value['zhaiyao']);
             } else {

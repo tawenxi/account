@@ -47,7 +47,7 @@ Route::get('/reflash', 'GuzzleController@reflash');
 //Route::get('/account', 'AccountController@index');
 Route::get('/dpt', 'GuzzleController@dpt');
 Route::get('/hyy', 'GuzzleController@hyy');
-Route::get('/edit/{id}', 'GuzzleController@edit')->name('guzzle.edit'); 
+Route::get('/edit/{guzzledb}', 'GuzzleController@edit')->name('guzzle.edit'); 
 Route::get('/preview/{option?}', 'GuzzleController@preview'); 	
 Route::any('/payout', 'GuzzleController@payoutlist')->name('payout'); 
 Route::get('/{id}/show', 'GuzzleController@show'); 
@@ -109,3 +109,8 @@ Route::get('/zbdetails', 'HomeController@zbdetail');
 Route::get('/viewdetail', 'HomeController@viewdetail');
 Route::post('/storeaccount', 'MakeAccountController@storeAccount');
 Route::get('/zhibiaos', 'HomeController@zhibiao');
+
+
+Route::get('/muxing/{user}',function(\App\Model\User $user){
+    dd($user);
+});

@@ -110,6 +110,8 @@ class GuzzleController extends Controller
         $item['kemuname'] = stristr($item['kemu'], "@")?$item['kemu']:$searchobject->findac($item['kemu']);
         })->toArray();
 
+        //dd($arr);
+
         foreach ($arr as $key => $data) 
         {
             $Validator=\Validator::make($data, [
@@ -148,7 +150,10 @@ class GuzzleController extends Controller
         $successi = 0;
 		foreach ($arr as $key => $value) 
 		{
-			$guzz = \App::make(Guzzle::class,[app()->make(Getsqzb::class),app()->make(Http::class),$value]);//传入一个一位数组（账户信息）
+			$guzz = \App::make(Guzzle::class,[
+            'Getsqzb'=>app()->make(Getsqzb::class),
+            'http'=>app()->make(Http::class),
+            'payee'=>$value]);//传入一个一位数组（账户信息）
             if (stristr($arr[$key]['kemu'], "#")) {
                 session()->flash('info',  "第".(1+$successi).'条数据做账成功但未授权支付');
             } else {
@@ -279,9 +284,9 @@ class GuzzleController extends Controller
      * 
      * 
      */
-    public function edit($id)
+    public function edit(Guzzledb $guzzledb)
     {
-        $guzzledb = Guzzledb::findOrfail($id);
+        //$guzzledb = Guzzledb::findOrfail($id);
         return view('guzzle.edit',compact('guzzledb'));
     }
 
