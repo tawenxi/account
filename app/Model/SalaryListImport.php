@@ -15,7 +15,7 @@ class SalaryListImport extends \Maatwebsite\Excel\Files\ExcelFile {
     public function getFile()
     {
        
-         $file = $GLOBALS['exce'];
+         $file = cache('excel');
 
         return storage_path("excel/$file.xls");
     }

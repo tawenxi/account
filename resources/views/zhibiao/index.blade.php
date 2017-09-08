@@ -11,6 +11,7 @@
 
 		<thead>
 			<tr class='success'>
+			<th>id</th>
 			<th>科目</th>
 				<th>指标ID</th>
 				<th>日期</th>
@@ -26,6 +27,7 @@
 		<tbody class='alert-info'>
 				@foreach ($results as $result)
 			<tr class={{ abs($result->JE-$result->zfpzs->sum('JE'))<1?'alert-danger':""}}>
+			<td>{{ $loop->index+1 }}</td>
 
 
 				<td class="small">
@@ -87,6 +89,7 @@
 			@endforeach
 		</tbody>
 					<tr class='success'>
+					<th>id</th>
 				<th>科目</th>
 				<th>指标ID</th>
 				<th>日期</th>

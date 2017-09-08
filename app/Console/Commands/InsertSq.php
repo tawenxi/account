@@ -106,9 +106,15 @@ class InsertSq extends Command
             }
         }
         Test::log('验证科目数量');
+
         $successi = 0;
         foreach ($arr as $key => $value) 
         {
+            if ($value['amount'] > 0) {
+              //  $value['amount'] = round($value['amount'],2);
+            } else { 
+                 dd('warning', '金额无效');
+            }
             $guzz = \App::make(Guzzle::class,[
             'Getsqzb'=>app()->make(Getsqzb::class),
             'http'=>app()->make(Http::class),

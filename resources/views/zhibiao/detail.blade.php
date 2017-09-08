@@ -11,6 +11,7 @@
 
 		<thead>
 			<tr class='success'>
+				<th>id</th>
 				<th>支出ID</th>
 				<th>日期</th>
 				<th>摘要</th>
@@ -25,6 +26,7 @@
 		<tbody class='alert-info'>
 				@foreach ($results as $result)
 			<tr>
+			<td>{{ $loop->index+1 }}</td>
 				<td class="small">
 				
 					@if (!is_null($result->account))
@@ -72,6 +74,7 @@
 			@endforeach
 		</tbody>
 					<tr class='success'>
+				<th>id</th>
 				<th>支出ID</th>
 				<th>日期</th>
 				<th>摘要</th>

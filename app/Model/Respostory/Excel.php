@@ -17,8 +17,7 @@ class Excel extends Model
 	function __construct($excelFile=null)//默认传入excel.xls方便注入，不然无法注入
 	{
 		if ($excelFile) {
-			Global $exce;
-			$exce = $excelFile;
+			cache(['excel'=>$excelFile],10);
 			$this->excelFile = $excelFile;
 			$this->import =app()->make("\App\Model\SalaryListImport");
 			$this->setDate();

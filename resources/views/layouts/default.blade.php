@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>@yield('title', '枚江镇财务查询系统')</title>
-    <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
   </head>
   <body>
 @if (!\Auth::check())
@@ -26,7 +26,7 @@
       </div>
     </div>
       
-      <script src="{{ elixir('/js/app.js') }}"></script>
+      <script src="{{ mix('/js/app.js') }}"></script>
       @yield('js')
   </body>
 </html>
