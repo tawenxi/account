@@ -137,6 +137,7 @@ class SalaryController extends Controller
 
       $res=Salary::where('date','>=',\Carbon\Carbon::parse($year.'-01-01'))->where('date','<=',\Carbon\Carbon::parse($year.'-12-31'))
          ->Hasjj($jj)
+         ->where('id','<',3)
          ->get()
          ->groupBy('name')->sortByDesc(function ($product, $key) {
       return        
@@ -174,6 +175,7 @@ class SalaryController extends Controller
       $resv=Salary::where('date','>=',\Carbon\Carbon::parse($year.'-01-01'))
             ->where('date','<=',\Carbon\Carbon::parse($year.'-12-31'))
             ->Hasjj($jj)
+            ->where('id','<',3)
             ->get();
 
       return $this->excel->exportBlade('salary.phb',compact('res','resv'))->render();

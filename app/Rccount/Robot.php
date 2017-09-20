@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Rccount;
+
+use App\Rccount\Bill;
+use App\Rccount\Fenlu;
+
+class Robot
+{
+
+
+   public function check_last_balance($list_id){
+
+   		$jie = Fenlu::where('list_id',$list_id-1)
+   					->where('jdbz','借')->sum('je');
+   		$dai = Fenlu::where('list_id',$list_id-1)
+   					->where('jdbz','贷')->sum('je');
+   				//echo $jie."   ".$dai;
+   		if ($jie != $dai && $jie == 0) {
+   			//dd(222);
+   			return $this->be_balance('jie',$dai);
+   		} elseif ($jie != $dai && $dai == 0){
+   			//dd(222);
+   			return $this->be_balance('dai',$jie);
+   		} elseif ($jie == $dai){
+   			return true;
+   		}else{
+   			dd('平衡有错，多对多');
+   		}
+   }
+
+   public function be_balance($zero,$amount){
+
+   		$last_fenlu = Fenlu::orderBy('list_id','desc')->first();
+   		$max_flh = Fenlu::where('list_id',$last_fenlu->list_id)->orderBy('list_id','desc')->max('flh');
+   		$new_fenlu = new Fenlu();
+   			$new_fenlu->kjqj=$last_fenlu->kjqj;
+   			$new_fenlu->pzh=$last_fenlu->list_id;
+   			$new_fenlu->flh=$max_flh+1;
+   			$new_fenlu->zy=$last_fenlu->zy;
+   			$new_fenlu->kmdm='1002001';
+   			$new_fenlu->jdbz=($zero=='jie')?'借':'贷';
+   			$new_fenlu->je=$amount;
+   			$new_fenlu->wldrq=$last_fenlu->wldrq;
+   			$new_fenlu->xmdm='';
+   			$new_fenlu->list_id=$last_fenlu->list_id;
+   		$new_fenlu->save();
+   		//dd(Fenlu::all()->toarray());
+
+   	    $jie = Fenlu::where('pzh',$last_fenlu->list_id-1)
+   					->where('jdbz','借')->sum('je');  
+   		$dai = Fenlu::where('pzh',$last_fenlu->list_id-1)
+   					->where('jdbz','贷')->sum('je');
+   		if ($jie == $dai) {
+   			return true;
+   		} else {
+   			dd($jie,$dai);
+   			dd('无法借贷平衡');
+   		}
+   		
+   }
+
+
+
+}

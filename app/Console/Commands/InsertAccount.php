@@ -1,0 +1,143 @@
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+use App\Rccount\Bill;
+use App\Rccount\Fenlu;
+use App\Model\Respostory\Excel;
+
+class InsertAccount extends Command
+{
+    private $fenlu;
+    private $list;
+
+
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'insert:account {del?}';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Command description';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct(Excel $excel)
+    {
+        parent::__construct();
+        $this->fenlu = \App::make(Excel::class,['excelFile'=>'fenlus']);
+        $this->list = \App::make(Excel::class,['excelFile'=>'lists']);
+
+        
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        
+        if ($this->argument('del') ==1) {
+                Bill::truncate();
+                Fenlu::truncate();
+                dd("清空表格");
+        } elseif ($this->argument('del') == 2) {
+                Bill::truncate();
+                Fenlu::truncate();
+                $this->info('正在清空表格...');
+        }
+        $list = $this->list->getExcel();
+        $fenlus = $this->fenlu->getExcel();
+
+        $list->each(function($v){
+            $bill = new Bill;
+            $bill->kjqj = $v['kjqj'];
+            $bill->pzh = $v['pzh'];
+            $bill->pzrq = $v['pzrq'];
+            $bill->srrq = $v['srrq'];
+            $bill->pzzy = $v['pzzy'];
+            $bill->pzje = $v['pzje'];
+
+            $ok = $bill->save();
+            if (!$ok) {
+                Bill::truncate();
+                Fenlu::truncate();
+                $this->info('失败--'.$v->pzzy.'--'.$v->pzje);
+                dd('list数据错误');
+            }
+            //$this->info('success--'.$v->pzzy.'--'.$v->pzje);
+        
+        });
+        echo "\n";
+        $this->info('list总金额-'.$list->sum('pzje'));
+        $this->info('list总数量-'.$list->count());
+
+        $fenlus->each(function($v){
+            $fenlu = new Fenlu;
+            $fenlu->kjqj = $v['kjqj'];
+            $fenlu->pzh = $v['pzh'];
+            $fenlu->flh = $v['flh'];
+            $fenlu->zy = $v['zy'];
+            $fenlu->kmdm = $v['kmdm'];
+            $fenlu->jdbz = $v['jdbz'];
+            $fenlu->je = $v['je'];
+            $fenlu->wldrq = $v['wldrq'];
+            $fenlu->xmdm = $v['xmdm'];
+            $fenlu->list_id = $v['list_id'];
+
+            $ok = $fenlu->save();
+            if (!$ok) {
+                Bill::truncate();
+                Fenlu::truncate();
+                $this->info('success--'.$v->zy.'--'.$v->je);
+                dd('分录数据错误');
+            }    
+        });
+        echo "<br>";
+        $this->info('fenlu总金额-'.$fenlus->sum('je')/2);
+        $this->info('fenlu总数量-'.$fenlus->where('flh',1)->count());
+        $this->error('比对双方数据...:');
+
+        $bills = Bill::get();
+        $bills->each(function($v){
+            $flh = $v->Fenlus->pluck('flh');
+            $i = 0;
+            while ($shift = $flh->shift()) {
+                $check = ($shift == ++$i);
+                if (!$check) {
+                    dd('验证行号错误',$shift,$i);
+                }
+            }
+            //$a = $v->Fenlus->count();
+            //dd($t);
+           if ($v->pzje == $v->Fenlus->sum('je')/2 &&
+               $v->Fenlus->where('jdbz','借')->sum('je') == 
+               $v->Fenlus->where('jdbz','贷')->sum('je')) {
+               $this->info($v->pzh.'比对成功'); 
+
+            } else {
+                $this->error($v->pzh.'比对失败'); 
+                $this->error($v->pzje); 
+                $this->error($v->Fenlus->sum('je')); 
+                dd();
+            }
+        });
+
+
+
+
+
+    }
+}

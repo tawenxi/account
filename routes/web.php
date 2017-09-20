@@ -114,3 +114,7 @@ Route::get('/zhibiaos', 'HomeController@zhibiao');
 Route::get('/muxing/{user}',function(\App\Model\User $user){
     dd($user);
 });
+
+
+
+Route::get('/r9', 'RccountController@index');

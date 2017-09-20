@@ -238,6 +238,7 @@ class Guzzle extends Model
 		//-----------------------------
 		$this->insertbody = str_replace('遂川县财政局枚江乡财政所','遂川县枚江镇财政所',$this->insertbody);
 		$this->insertbody = str_replace('遂川县枚江镇财政所2','遂川县枚江镇财政所',$this->insertbody);
+
 		//-----------------------
 		$this->insertbody = iconv('UTF-8', 'GB2312', $this->insertbody);
 
