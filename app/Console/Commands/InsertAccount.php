@@ -105,8 +105,9 @@ class InsertAccount extends Command
                 dd('分录数据错误');
             }    
         });
-        echo "<br>";
-        $this->info('fenlu总金额-'.$fenlus->sum('je')/2);
+        $this->info('');
+
+        $this->info('fenlu总金额-'.$fenlus->sum('je'));
         $this->info('fenlu总数量-'.$fenlus->where('flh',1)->count());
         $this->error('比对双方数据...:');
 

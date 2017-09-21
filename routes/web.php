@@ -61,7 +61,7 @@ Route::get('exportaccount', 'GuzzleController@export_account');
 
 
     Route::get('/salary/{date?}/{jj?}', 'SalaryController@index')->name('salary');
-    Route::get('/addmember', 'TestController@member');
+    //Route::get('/addmember', 'TestController@member');
     Route::get('/bumen/{date?}/{jj?}', 'SalaryController@bumen')->name('bumen');
     Route::get('/geren/{id?}/{jj?}', 'SalaryController@geren')->name('geren');
     Route::get('/byear/{year?}/{jj?}', 'SalaryController@byear')->name('byear');
@@ -92,7 +92,7 @@ Route::get('/inco', 'ZhibiaoController@inco');//收支对应表
 Route::get('/ardent', 'ArdentController@index');
 
 Route::get('/jiema', 'GuzzleController@jiema');
-Route::get('/test', 'TestController@test');
+//Route::get('/test', 'TestController@test');
 Route::get('/showzf/{id}', 'ZhibiaoController@showzf');
 Route::get('/getdetails', 'ZhibiaoController@getdetails');
 Route::get('/mysql', 'SqlController@index');

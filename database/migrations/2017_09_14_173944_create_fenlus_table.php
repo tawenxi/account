@@ -60,6 +60,8 @@ class CreateFenlusTable extends Migration
             $table->string('fzdm9')->default('');
             $table->string('fzdm10')->default('');
             $table->integer('list_id')->unsigned();
+            $table->increments('id');
+            
 
             
         });
