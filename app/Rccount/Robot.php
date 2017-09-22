@@ -4,6 +4,7 @@ namespace App\Rccount;
 
 use App\Rccount\Bill;
 use App\Rccount\Fenlu;
+use App\Rccount\Account;
 
 class Robot
 {
@@ -58,6 +59,26 @@ class Robot
    			dd('无法借贷平衡');
    		}
    		
+   }
+
+
+   public function GetBalance($account_number){
+      $accounts = Account::Where('kmdm',$account_number)
+        ->where('fzdm10','')
+        ->get();
+
+        Global $total;
+        $total = \DB::table('accounts')->where('account_number',$account_number)->value('init');
+        
+        $table = $accounts->each(function($account) use ($total){
+            $account['jie'] = round($account->jie,2);
+            $account['dai'] = round($account->dai,2);
+
+            $GLOBALS['total'] = round($GLOBALS['total'],2) + round((($account['jie']!=0)?$account['jie']:0),2) - round((($account['dai']!=0)?$account['dai']:0),2);
+            $account['yue'] = round($GLOBALS['total'],2);
+        });
+
+        return round($GLOBALS['total'],2);
    }
 
 

@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Rccount\Bill;
 use App\Rccount\Fenlu;
 use App\Rccount\Account;
+use App\Rccount\Robot;
 
 class SearchAccount extends Command
 {
@@ -14,7 +15,7 @@ class SearchAccount extends Command
      *
      * @var string
      */
-    protected $signature = 'search:account {account} {--key=*}';
+    protected $signature = 'search:account {account?} {--key=*}';
 
     /**
      * The console command description.
@@ -28,8 +29,10 @@ class SearchAccount extends Command
      *
      * @return void
      */
-    public function __construct()
+    public $robot;
+    public function __construct(Robot $robot)
     {
+        $this->robot = $robot;
         parent::__construct();
     }
 
@@ -40,35 +43,55 @@ class SearchAccount extends Command
      */
     public function handle()
     {
-        //$headers = ['kjqj','pzh','zy', 'jie','dai','je','kmdm'];
+        $account_id = 0;
+        if (!$this->argument('account')) {
 
+            do {
+                do 
+                {
+                    $key = $this->ask('请输入科目关键字');
+                    $topics = 
+                    \App\Model\Account::select(['id','name'])
+                    ->where('name','like','%'.$key.'%')->get();
+                } while (empty($topics->first()));
+                
+                foreach ($topics as $key => $topic) 
+                {
+                    $this->info($topic->id.'--'.$topic->name);
+
+                }
+                $YN = $this->ask('是否找到科目');
+            } while ($YN !== 'y' AND $YN !=='q');
+            do 
+            {
+                $account_id = $this->ask('请选择科目id');
+            } while (!in_array($account_id, $topics->pluck('id')->toArray()))  ;
+            
+        }
+        
         $headers = ['kjqj','pzh','zy', 'jie','dai','kmdm','yue'];
-
         $accounts = Account::
-        //where('zy', 'like',"%{$this->argument('account')}%")->
-        Where('kmdm' ,$this->argument('account'))
+        Where(function ($query) use ($account_id){
+            if ($account_id) {
+                $query->where('kmdm',\App\Model\Account::where('id',$account_id)->value('account_number'));
+            }
+        })->orWhere('kmdm',$this->argument('account'))
         ->where('fzdm10','')
         ->get();
 
         Global $total;
         $total = \DB::table('accounts')->where('account_number',$this->argument('account'))->value('init');
         
-        $table = $accounts->map(function($account) use ($headers,$total){
-            
+        $table = $accounts->map(function($account) use ($headers,$total){   
             $account['jie'] = round($account->jie,2);
-
             $account['dai'] = round($account->dai,2);
             $account['zy'] = trim(mb_substr($account['zy'],0,10,"utf-8"));
-            //dd($account['jie']>0,$account['jie']);
-            //dd($account['dai']>0,$account['dai']);
             $GLOBALS['total'] = round($GLOBALS['total'],2) + round((($account['jie']!=0)?$account['jie']:0),2) - round((($account['dai']!=0)?$account['dai']:0),2);
             $account['yue'] = round($GLOBALS['total'],2);
             return $account->only($headers);
         });
-
-
-       
-
         $this->table($headers, $table);
+
+        //dd($this->robot->GetBalance('1001'));
     }
 }
