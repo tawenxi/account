@@ -65,22 +65,20 @@ class SearchAccount extends Command
             do 
             {
                 $account_id = $this->ask('请选择科目id');
-            } while (!in_array($account_id, $topics->pluck('id')->toArray()))  ;
-            
+            } while (!in_array($account_id, $topics->pluck('id')->toArray()))  ;       
         }
-        
+        $account_number = $account_id?
+        (int)\App\Model\Account::where('id',$account_id)->value('account_number'):
+        $this->argument('account');
+        $this->info(\App\Model\Account::where('account_number',$account_number)->value('account_name'));
         $headers = ['kjqj','pzh','zy', 'jie','dai','kmdm','yue'];
         $accounts = Account::
-        Where(function ($query) use ($account_id){
-            if ($account_id) {
-                $query->where('kmdm',\App\Model\Account::where('id',$account_id)->value('account_number'));
-            }
-        })->orWhere('kmdm',$this->argument('account'))
+        Where('kmdm',$account_number)
         ->where('fzdm10','')
         ->get();
 
         Global $total;
-        $total = \DB::table('accounts')->where('account_number',$this->argument('account'))->value('init');
+        $total = \DB::table('accounts')->where('account_number',$account_number)->value('init');
         
         $table = $accounts->map(function($account) use ($headers,$total){   
             $account['jie'] = round($account->jie,2);
