@@ -38,8 +38,9 @@ class InsertSalary extends Command
      */
     public function handle()
     {
-        Global $exce;
-        $exce = $this->argument('exc');
+        // Global $exce;
+        // $exce = $this->argument('exc');
+        cache(['excel'=>$this->argument('exc')],10);
         $import =app()->make("\App\Model\SalaryListImport");
         $ziduan=['member_id',
         'name',"account",'bumen',
