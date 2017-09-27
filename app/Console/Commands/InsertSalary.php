@@ -52,7 +52,7 @@ class InsertSalary extends Command
         'gjj_dw','sb_dw',
         'gjj_gr','sb_gr',
         'zhiye_nj','daikou_gz',
-        'hongfang_zj','yiliao_bx',
+        'fanghong_zj','yiliao_bx',
         'shiye_bx','shengyu_bx',
         'gongshang_bx',
         'yirijuan','tiaozheng_gjj',
