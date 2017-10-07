@@ -50,7 +50,7 @@ class Guzzle extends Model
   
     private function setAmountData($amount)
 	{
-		$pattern = '/\d{1,}(.[0-9]{1,})?,\s*\d{1,}(.[0-9]{1,})?,\s*\d{1,}(.[0-9]{1,})?,\s*\d{1,}(.[0-9]{1,})?/';
+		$pattern = '/\d{1,}(.[0-9]{1,})?,\s*\d{1,}(.[0-9]{1,})?,\s*\d{1,}(.[0-9]{1,})?,\s*\d{1,}(.[0-9]{1,2})?/';
 		preg_match($pattern, $amount,$res);
 		if ($res[0] === $amount) {
 			$this->amountData = $amount;
@@ -195,7 +195,7 @@ class Guzzle extends Model
   */
 		public function amountreplace($zbamount)
 	{
-		$pattern3='/\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,})?/';
+		$pattern3='/\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,2})?/';
 		 $copydata=$this->insertbody;
 		 $this->setAmountData($zbamount);
 		 $this->insertbody=preg_replace($pattern3,$this->getAmountData(),$this->insertbody);
@@ -278,6 +278,8 @@ class Guzzle extends Model
 		$info = Guzzledb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
 			return $info;
 			});
+
+		return $collection;
 	}
 
 

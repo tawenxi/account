@@ -18,7 +18,7 @@ class InsertAccount extends Command
      *
      * @var string
      */
-    protected $signature = 'insert:account {del?}';
+    protected $signature = 'insert:account {del?}';  //输入2
 
     /**
      * The console command description.
