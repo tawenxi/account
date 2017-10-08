@@ -54,6 +54,21 @@ return [
             'engine' => null,
         ],
 
+        'imiguo' => [
+            'driver' => 'mysql',
+            'host' => env('IMIGUO_HOST',''),
+            'port' => '3306',
+            'database' => 'tawenxi_guzzler',
+            'username' => 'homestead',
+            'password' => env('IMIGUO_PASSWORD',''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -69,11 +84,11 @@ return [
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
-            'host' => env('DB_HOST', 'localhost'),
-            'port' => env('DB_PORT', '1433'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => env('MSHOST',''),
+            'port' => '1433',
+            'database' => 'xc00601',
+            'username' => env('MSUSER',''),
+            'password' => env('MSPASSWORD',''),
             'charset' => 'utf8',
             'prefix' => '',
         ],

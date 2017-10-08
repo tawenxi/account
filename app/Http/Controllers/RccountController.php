@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Respostory\Excel;
 use App\Rccount\Bill;
 use App\Rccount\Fenlu;
+use DB;
 
 
 class RccountController extends Controller
@@ -43,6 +44,36 @@ class RccountController extends Controller
     	});
     	
 
+    }
+
+
+    public function rr(){
+       // phpinfo();
+      // $a = \DB::connection('sqlsrv')->table('GL_Pzml')->first();
+       //$a = get_object_vars($a);
+
+       //$a = \DB::connection('sqlsrv')->table('GL_Pzml')->get();
+
+
+      $arrays = DB::connection('mysql')->table('lists')->get()->toarray();
+
+            $a = collect($arrays)->map(function($item,$key){
+                return collect($item)->diffKeys([
+                    'id' => 2,
+                ])->all();
+
+            })->toArray();
+
+       dd($a);   
+    //$a = \DB::connection('imiguo')->table('accounts')->get();
+
+
+       //   $arrays = \DB::connection('mysql')->table('guzzledbs')->get()->all();
+       //      $arrays = array_map('get_object_vars', $arrays);
+       //      dd($arrays);
+       //      DB::connection('imiguo')->table($table)->insert($arrays);
+       //      $this->info('success-'.$table);
+       // dd($a);
     }
 
 }
