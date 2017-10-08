@@ -6,11 +6,14 @@ use Illuminate\Console\Command;
 use App\Rccount\Bill;
 use App\Rccount\Fenlu;
 use App\Model\Respostory\Excel;
+use App\Rccount\Robot; 
 
 class InsertAccount extends Command
 {
     private $fenlu;
     private $list;
+    private $robot;
+
 
 
     /**
@@ -32,13 +35,12 @@ class InsertAccount extends Command
      *
      * @return void
      */
-    public function __construct(Excel $excel)
+    public function __construct(Excel $excel,Robot $robot)
     {
         parent::__construct();
         $this->fenlu = \App::make(Excel::class,['excelFile'=>'fenlus']);
         $this->list = \App::make(Excel::class,['excelFile'=>'lists']);
-
-        
+        $this->robot = $robot;        
     }
 
     /**
@@ -105,7 +107,9 @@ class InsertAccount extends Command
                 dd('分录数据错误');
             }    
         });
-        $this->info('');
+        $this->info('进行最后的一个分录调整');
+    
+        $this->robot->check_last_balance(Fenlu::max('list_id')+1);
 
         $this->info('fenlu总金额-'.$fenlus->sum('je'));
         $this->info('fenlu总数量-'.$fenlus->where('flh',1)->count());

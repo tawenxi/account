@@ -12,7 +12,7 @@ class UpdateNeiwang extends Command
      *
      * @var string
      */
-    protected $signature = 'update:R9';
+    protected $signature = 'update:R9 {backup?}';
 
     /**
      * The console command description.
@@ -38,26 +38,27 @@ class UpdateNeiwang extends Command
      */
     public function handle()
     {
-        //先进行数据备份
-        $this->call('iseed', [
-        'tables' => 'GL_Pznr,GL_Pzml', 
-        '--database' => 'sqlsrv',
-        '--force' => 'true'
-        ]);
+        //先进行数据备份,将GL_Pznr和GL_Pzml的数据做iseed备份，生成iseed文件
+        //只要再运行db:seed就可以把备份文件插入本地的homestead数据表
+        //如果不想进行备份可以update:R9 nobackup
+        if ($this->argument('backup')!='nobackup' AND 
+            $this->argument('backup')!='allrollback' ) {
+            $this->call('iseed', [
+            'tables' => 'GL_Pznr,GL_Pzml', 
+            '--database' => 'sqlsrv',
+            '--force' => 'true',
+            ]); 
+        }
+
+
+        if ($this->argument('backup')=='allrollback') {
+            $this->onebyoneupdate();
+        }
+
 
         foreach ($this->tables as $table) {
             $arrays = DB::connection('mysql')->table($table)->get()->toarray();
-
-            $arrays = array_map('get_object_vars', $arrays);
-            
-            $arrays = collect($arrays)->map(function($item,$key) use ($table){
-                $keys = ($table=='lists')?['id'=>1]:($table=='fenlus')?['id'=>1,'list_id'=>2]:NULL;
-                if (!$keys) {
-                    dd('错误',$table);
-                }
-                return collect($item)->diffKeys($keys)->all();
-            })->toArray();
-
+            $arrays = $this->transarray($arrays,$table);
 
             if ($table == 'lists') {
                 collect($arrays)->each(function($val){
@@ -84,16 +85,50 @@ class UpdateNeiwang extends Command
      */
     public $tables = ['lists','fenlus'];
 
+    private $onebyonetables = ['GL_Pznr','GL_Pznr'];
+
 
     /**
      *
      * insert the msssql one by one with GL_
      *
      */
-
     public function onebyoneupdate() {
+        foreach ($this->onebyonetables as $table) {
+            $arrays = DB::connection('mysql')->table($table)
+                      ->get()->toarray();
+            $arrays = $this->transarray($arrays,$table);
+
+            foreach (collect($arrays)->chunk(500) as $datas) {
+                collect($arrays)->each(function($val) use ($table){
+                    DB::connection('sqlsrv')->table($table)->insert($val);
+                });
+            }
+        }
+    }
+
+
+/**
+ *
+ * tranfor [object] to array
+ *  Array
+ * 
+ *
+ */
+
+    public function transarray($arrays,$table) {
+
+        $arrays = array_map('get_object_vars', $arrays);
+        $arrays = collect($arrays)->map(function($item,$key) use ($table){
+            $keys = ($table=='lists')?['id'=>1]:($table=='fenlus')?['id'=>1,'list_id'=>2]:NULL;
+
+            return collect($item)->diffKeys($keys)->all();
+        })->toArray();
+
+        return $arrays;
         
 
     }
+    
     
 }
