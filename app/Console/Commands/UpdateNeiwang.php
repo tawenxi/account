@@ -40,7 +40,7 @@ class UpdateNeiwang extends Command
 
     public function backup()
     {
-        $this->ask('这个操作会覆盖seed数据，请问您是否已经把seed文件备份在R9Database，回答YES进行备份?');
+        $this->ask('这个操作会覆盖seed数据，请问您是否已经把seed文件备份在R9Database，回答YES进行备份?,如果没有commit备份请切换到MSSQLDATABASE分支');
         $this->call('iseed', [
             'tables' => 'GL_Pznr,GL_Pzml', 
             '--database' => 'sqlsrv',
@@ -62,12 +62,14 @@ class UpdateNeiwang extends Command
         switch ($this->option('only')) {
             case 'backup':
                 $this->backup();
-                dd('已经备份完成');
+                $this->info('已经备份完成');
+                return true;
                 break;
 
             case 'allrollback':
                 $this->onebyoneupdate();
-                dd('已经还原成功');
+                $this->info('已经还原成功');
+                return true;
                 break;
 
             case 'nobackup':
@@ -75,8 +77,9 @@ class UpdateNeiwang extends Command
             if ($YES == 'YES') {
                 break;
             }
-                dd('操作终止');
-            
+                $this->info('操作终止');
+                return true;
+  
             default:
                 $this->backup();
                 break;
