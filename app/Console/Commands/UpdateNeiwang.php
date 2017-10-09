@@ -62,7 +62,7 @@ class UpdateNeiwang extends Command
         switch ($this->option('only')) {
             case 'backup':
                 $this->backup();
-                dd('已经备份完成');
+                return true;
                 break;
 
             case 'allrollback':
