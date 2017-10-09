@@ -70,6 +70,32 @@ class ZhibiaoController extends Controller
     }
 
 
+    /**
+     *
+     * 进行数据并查，看看有zbdetails里面有没有数据差错进行调整
+     * @param $zfpzdatas 来自大平台的数据
+     * 
+     */
+    public function checkoutZFPZ($zfpzdatas = 0) {
+        $Zfpz = Zfpz::get();
+        $Zfpz = $Zfpz->map(function($a){ 
+            return collect($a->only(['PDH','ZY']))->toJson(); 
+        });
+        $zfpzdatas = $this->getdetail->getdata($this->zfpz,[
+                                ["'20170101'","'20170101'"],
+                                ["'20170821'","to_char(sysdate,'yyyymmdd')"],
+                                ]);
+        $b = collect($zfpzdatas)->map(function($a){
+            return collect(collect($a)->only(['PDH','ZY']))->toJson(); 
+        })->toarray();
+
+        //dd($Zfpz->diff($b)->count());
+        
+        dd($Zfpz->intersect($b)->count()==$Zfpz->count());
+
+    }
+    
+
     public function zb_detail()
     {
         $results = Zfpz::search(\Request::get('search'), 0.01, true)->orderBy('PDRQ','desc')->get()->unique();

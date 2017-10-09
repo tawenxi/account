@@ -120,4 +120,6 @@ Route::get('/muxing/{user}',function(\App\Model\User $user){
 Route::get('/r9', 'RccountController@index');
 
 Route::get('/rr', 'RccountController@rr');
+Route::get('/up', 'zhibiaoController@checkoutZFPZ');
+
 
