@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a17b47d2a1ef2a95d8b69c8f5a076cc",
+    "content-hash": "20cfcafce61b26c65e23c8a095e0705c",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -2851,6 +2851,65 @@
                 "dump"
             ],
             "time": "2017-08-27T14:52:21+00:00"
+        },
+        {
+            "name": "tawenxi/iseed",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tawenxi/iseed.git",
+                "reference": "148b4d6d2d71200de69fdc49ddefc73c3890e804"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/tawenxi/iseed/148b4d6d2d71200de69fdc49ddefc73c3890e804.zip",
+                "reference": "148b4d6d2d71200de69fdc49ddefc73c3890e804",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^5.3.8",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "illuminate/filesystem": "5.x",
+                "laravel/framework": "^5.3.8",
+                "mockery/mockery": "dev-master",
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Orangehill\\Iseed\\IseedServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Orangehill\\Iseed": "src/"
+                },
+                "classmap": [
+                    "src/Orangehill/Iseed/Exceptions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Tihomir Opacic",
+                    "email": "tawenxi@qq.com"
+                }
+            ],
+            "description": "Generate a new Laravel database seed file based on data from the existing database table.",
+            "keywords": [
+                "artisan",
+                "generators",
+                "laravel",
+                "seed"
+            ],
+            "time": "2017-10-09T08:57:12+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
