@@ -12,7 +12,7 @@ class UpdateNeiwang extends Command
      *
      * @var string
      */
-    protected $signature = 'update:R9 {backup?}';
+    protected $signature = 'update:R9 {--only=defalte}';
 
     /**
      * The console command description.
@@ -31,6 +31,24 @@ class UpdateNeiwang extends Command
         parent::__construct();
     }
 
+
+    /**
+     *
+     * backupdata  from R9 to homestead (GL_Pznl and GL_Pzml)
+     *
+     */
+
+    public function backup()
+    {
+        $this->ask('这个操作会覆盖seed数据，请问您是否已经把seed文件备份在R9Database，回答YES进行备份?');
+        $this->call('iseed', [
+            'tables' => 'GL_Pznr,GL_Pzml', 
+            '--database' => 'sqlsrv',
+            '--force' => 'true',
+        ]);
+    }
+    
+
     /**
      * Execute the console command.
      *
@@ -41,41 +59,30 @@ class UpdateNeiwang extends Command
         //先进行数据备份,将GL_Pznr和GL_Pzml的数据做iseed备份，生成iseed文件
         //只要再运行db:seed就可以把备份文件插入本地的homestead数据表
         //如果不想进行备份可以update:R9 nobackup
-        if ($this->argument('backup')!='nobackup' AND 
-            $this->argument('backup')!='allrollback' ) {
-            $this->call('iseed', [
-            'tables' => 'GL_Pznr,GL_Pzml', 
-            '--database' => 'sqlsrv',
-            '--force' => 'true',
-            ]); 
-        }
+        switch ($this->option('only')) {
+            case 'backup':
+                $this->backup();
+                dd('已经备份完成');
+                break;
 
+            case 'allrollback':
+                $this->onebyoneupdate();
+                dd('已经还原成功');
+                break;
 
-        if ($this->argument('backup')=='allrollback') {
-            $this->onebyoneupdate();
-        }
-
-
-        foreach ($this->tables as $table) {
-            $arrays = DB::connection('mysql')->table($table)->get()->toarray();
-            $arrays = $this->transarray($arrays,$table);
-
-            if ($table == 'lists') {
-                collect($arrays)->each(function($val){
-                   DB::connection('sqlsrv')->table('GL_Pzml')->insert($val);
-                });
-    
-            } elseif ($table == 'fenlus') {
-                collect($arrays)->each(function($val){
-                    DB::connection('sqlsrv')->table('GL_Pznr')->insert($val);
-                });
-            } else {
-                dd();
+            case 'nobackup':
+            $YES = $this->ask('是否不备份直接进行数据上传？回复<YES>继续');
+            if ($YES == 'YES') {
+                break;
             }
-
-            $this->info('success-'.$table);
+                dd('操作终止');
+            
+            default:
+                $this->backup();
+                break;
         }
-        
+
+        $this->insertToMS();
     }
 
     /**
@@ -128,6 +135,31 @@ class UpdateNeiwang extends Command
         return $arrays;
         
 
+    }
+
+
+
+    public function insertToMS()
+    {
+        foreach ($this->tables as $table) {
+            $arrays = DB::connection('mysql')->table($table)->get()->toarray();
+            $arrays = $this->transarray($arrays,$table);
+
+            if ($table == 'lists') {
+                collect($arrays)->each(function($val){
+                   DB::connection('sqlsrv')->table('GL_Pzml')->insert($val);
+                });
+    
+            } elseif ($table == 'fenlus') {
+                collect($arrays)->each(function($val){
+                    DB::connection('sqlsrv')->table('GL_Pznr')->insert($val);
+                });
+            } else {
+                dd();
+            }
+
+            $this->info('success-'.$table);
+        }
     }
     
     

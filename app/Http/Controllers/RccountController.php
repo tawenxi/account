@@ -52,17 +52,17 @@ class RccountController extends Controller
       // $a = \DB::connection('sqlsrv')->table('GL_Pzml')->first();
        //$a = get_object_vars($a);
 
-       //$a = \DB::connection('sqlsrv')->table('GL_Pzml')->get();
+       $a = \DB::connection('sqlsrv')->table('GL_Pzml')->get();
 
 
-      $arrays = DB::connection('mysql')->table('lists')->get()->toarray();
+      // $arrays = DB::connection('mysql')->table('lists')->get()->toarray();
 
-            $a = collect($arrays)->map(function($item,$key){
-                return collect($item)->diffKeys([
-                    'id' => 2,
-                ])->all();
+      //       $a = collect($arrays)->map(function($item,$key){
+      //           return collect($item)->diffKeys([
+      //               'id' => 2,
+      //           ])->all();
 
-            })->toArray();
+      //       })->toArray();
 
        dd($a);   
     //$a = \DB::connection('imiguo')->table('accounts')->get();

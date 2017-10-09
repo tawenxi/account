@@ -86,7 +86,7 @@ return [
             'driver' => 'sqlsrv',
             'host' => env('MSHOST',''),
             'port' => '1433',
-            'database' => 'xc00601',
+            'database' => env('MSDATABASE',''),
             'username' => env('MSUSER',''),
             'password' => env('MSPASSWORD',''),
             'charset' => 'utf8',

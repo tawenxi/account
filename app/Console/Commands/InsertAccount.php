@@ -109,7 +109,11 @@ class InsertAccount extends Command
         });
         $this->info('进行最后的一个分录调整');
     
-        $this->robot->check_last_balance(Fenlu::max('list_id')+1);
+        $check = $this->robot->check_last_balance(Fenlu::max('list_id')+1);
+
+        if (!$check) {
+            dd('借贷平衡失败');
+        }
 
         $this->info('fenlu总金额-'.$fenlus->sum('je'));
         $this->info('fenlu总数量-'.$fenlus->where('flh',1)->count());
@@ -139,6 +143,22 @@ class InsertAccount extends Command
                 dd();
             }
         });
+
+
+        /**
+         *
+         * 询问是否进行数据插入远程R9操作
+         *
+         */
+
+        $YES = $this->ask('是否继续进行插入数据库操作？回复YES继续（1）备份数据（2）插入R9数据');
+        if ($YES == 'YES') {
+            $this->call('update:R9', [
+            ]);
+            
+        }
+
+        
 
 
 

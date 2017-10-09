@@ -48,11 +48,12 @@ class Robot
    		$new_fenlu->save();
    		//dd(Fenlu::all()->toarray());
 
-   	    $jie = Fenlu::where('pzh',$last_fenlu->list_id) //list_id-1
+   	    $jie = Fenlu::where('list_id',$last_fenlu->list_id) //list_id-1
    					->where('jdbz','借')->sum('je');  
-   		$dai = Fenlu::where('pzh',$last_fenlu->list_id) //list_id-1
+   		$dai = Fenlu::where('list_id',$last_fenlu->list_id) //list_id-1
    					->where('jdbz','贷')->sum('je');
-   		if ($jie == $dai) {
+
+   		if ($jie == $dai && $dai>0) {
    			return true;
    		} else {
    			dd($jie,$dai);
