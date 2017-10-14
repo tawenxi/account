@@ -123,3 +123,17 @@ Route::get('/rr', 'RccountController@rr');
 Route::get('/up', 'zhibiaoController@checkoutZFPZ');
 
 
+
+//test l5
+Route::get('/l5', 'L5Controller@l5');
+Route::resource('rep', '\App\Repo\Http\Controllers\Salary3sController');
+//test l5
+
+
+
+
+
+
+
+
+
