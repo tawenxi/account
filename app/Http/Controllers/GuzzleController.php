@@ -74,11 +74,11 @@ class GuzzleController extends Controller
                 'amount'      => 'numeric|between:0.01,3000000',
                 'zbid'        => 'size:15',
                 ], [
-                'numeric'    => ':attribute 必须为纯数字',
-                'size'       => ':attribute 必须为15位',
+                'numeric'     => ':attribute 必须为纯数字',
+                'size'        => ':attribute 必须为15位',
                 ], ['zbid'    => '指标ID',
-                'amount'     => '金额',
-                'payeebanker'=> '银行账号',
+                'amount'      => '金额',
+                'payeebanker' => '银行账号',
             ]);
             if ($Validator->fails()) {
                 return \Redirect::to('/hyy')->withErrors($Validator);
@@ -108,11 +108,11 @@ class GuzzleController extends Controller
                 'amount'      => 'numeric|between:0.01,3000000',
                 'zbid'        => 'size:15',
                 ], [
-                'numeric'    => ':attribute 必须为纯数字',
-                'size'       => ':attribute 必须为15位',
+                'numeric'     => ':attribute 必须为纯数字',
+                'size'        => ':attribute 必须为15位',
                 ], ['zbid'    => '指标ID',
-                'amount'     => '金额',
-                'payeebanker'=> '银行账号',
+                'amount'      => '金额',
+                'payeebanker' => '银行账号',
             ]);
             if ($Validator->fails()) {
                 return \Redirect::to('/hyy')->withErrors($Validator);

@@ -2,7 +2,6 @@
 
 namespace App\Rccount;
 
-
 class Robot
 {
     public function check_last_balance($list_id)
