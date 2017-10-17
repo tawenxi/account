@@ -2,11 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use App\Rccount\Bill;
-use App\Rccount\Fenlu;
-use App\Rccount\Account;
 use App\Rccount\Robot;
+use Illuminate\Console\Command;
 
 class SearchBalance extends Command
 {
@@ -30,6 +27,7 @@ class SearchBalance extends Command
      * @return void
      */
     public $robot;
+
     public function __construct(Robot $robot)
     {
         $this->robot = $robot;
@@ -44,22 +42,23 @@ class SearchBalance extends Command
     public function handle()
     {
         $kemus = \App\Model\Account::all();
-        $balance = $kemus->map(function($kemu){
-            $balance = array();
+        $balance = $kemus->map(function ($kemu) {
+            $balance = [];
             $balance['kmdm'] = $kemu->account_number;
             $balance['kmmc'] = $kemu->account_name;
             $yue = $this->robot->GetBalance($kemu->account_number);
             if ($yue > 0) {
                 $balance['jdbz'] = '借';
-            } elseif($yue < 0) {
+            } elseif ($yue < 0) {
                 $balance['jdbz'] = '贷';
             } else {
                 $balance['jdbz'] = '平';
             }
-            $balance['balance'] =$yue;
+            $balance['balance'] = $yue;
+
             return $balance;
         })->toarray();
-        $headers = ['kmdm','kmmc','jdbz','balance'];
+        $headers = ['kmdm', 'kmmc', 'jdbz', 'balance'];
         $this->table($headers, $balance);
     }
 }

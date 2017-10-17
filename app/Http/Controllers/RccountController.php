@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Model\Respostory\Excel;
-use App\Rccount\Bill;
 use App\Rccount\Fenlu;
 use DB;
 
-
 class RccountController extends Controller
 {
-	    public function __construct(Excel $excel){
+    public function __construct(Excel $excel)
+    {
         //$this->excel = $excel;
-        $this->guzzleexcel = \App::make(Excel::class,['excelFile'=>'fenlus']);
+        $this->guzzleexcel = \App::make(Excel::class, ['excelFile'=>'fenlus']);
     }
+
     public $list = '~month~~政府    id~date~0~9~刘小勇~-1~~~-1~~date~~~0~0~1~abstract~amount~~~遂川财政局~';
     //month 201706
     //id 空1
@@ -34,39 +33,36 @@ class RccountController extends Controller
     //date
     //xmdm 项目代码1001 或者空
 
-    public function index(){
-    	$bills = $this->guzzleexcel->getExcel();
-    	dd($bills);
-    	$fenlus = $this->guzzleexcel->getExcel();
-    	
-    	$fenlus->each(function($v){
-    		Fenlu::create($v->toArray());
-    	});
-    	
+    public function index()
+    {
+        $bills = $this->guzzleexcel->getExcel();
+        dd($bills);
+        $fenlus = $this->guzzleexcel->getExcel();
 
+        $fenlus->each(function ($v) {
+            Fenlu::create($v->toArray());
+        });
     }
 
+    public function rr()
+    {
+        // phpinfo();
+        // $a = \DB::connection('sqlsrv')->table('GL_Pzml')->first();
+        //$a = get_object_vars($a);
 
-    public function rr(){
-       // phpinfo();
-      // $a = \DB::connection('sqlsrv')->table('GL_Pzml')->first();
-       //$a = get_object_vars($a);
+        $a = \DB::connection('sqlsrv')->table('GL_Pzml')->get();
 
-       $a = \DB::connection('sqlsrv')->table('GL_Pzml')->get();
+        // $arrays = DB::connection('mysql')->table('lists')->get()->toarray();
 
+        //       $a = collect($arrays)->map(function($item,$key){
+        //           return collect($item)->diffKeys([
+        //               'id' => 2,
+        //           ])->all();
 
-      // $arrays = DB::connection('mysql')->table('lists')->get()->toarray();
+        //       })->toArray();
 
-      //       $a = collect($arrays)->map(function($item,$key){
-      //           return collect($item)->diffKeys([
-      //               'id' => 2,
-      //           ])->all();
-
-      //       })->toArray();
-
-       dd($a);   
-    //$a = \DB::connection('imiguo')->table('accounts')->get();
-
+        dd($a);
+        //$a = \DB::connection('imiguo')->table('accounts')->get();
 
        //   $arrays = \DB::connection('mysql')->table('guzzledbs')->get()->all();
        //      $arrays = array_map('get_object_vars', $arrays);
@@ -75,5 +71,4 @@ class RccountController extends Controller
        //      $this->info('success-'.$table);
        // dd($a);
     }
-
 }

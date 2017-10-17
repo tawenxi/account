@@ -2,21 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Model\Respostory\Excel;
+use App\Model\Respostory\GetSqlResult;
 use App\Model\Respostory\Guzzle;
+use App\Model\Tt\Data;
 use App\Model\Zb;
 use App\Model\Zfpz;
-use App\Model\Respostory\Excel;
-use App\Model\GetPerson;
-use App\Model\Getzf;
-use App\Model\Getsf;
-use App\Model\Respostory\GetSqlResult;
-use App\Model\Tt\Data;
-
-
+use Illuminate\Http\Request;
 
 class ZhibiaoController extends Controller
 {
@@ -26,16 +18,16 @@ class ZhibiaoController extends Controller
     private $guzzleexcel;
     private $getperson;
 
-
-    public function __construct(Excel $excel,  GetSqlResult $getdetail)
+    public function __construct(Excel $excel, GetSqlResult $getdetail)
     {
-    $this->middleware('auth');
-    // $this->middleware('admin');
-    // $this->middleware('sudo');
-    $this->excel = $excel;
-    $this->getdetail = $getdetail;
-    $this->guzzleexcel = \App::make(Excel::class,['excel']);
+        $this->middleware('auth');
+        // $this->middleware('admin');
+        // $this->middleware('sudo');
+        $this->excel = $excel;
+        $this->getdetail = $getdetail;
+        $this->guzzleexcel = \App::make(Excel::class, ['excel']);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -43,81 +35,75 @@ class ZhibiaoController extends Controller
      */
     public function index(Request $request, Guzzle $guzzle)
     {
-        if (strstr($request->ip(),"192.168") AND !(\Request::has('show'))) 
-        {
+        if (strstr($request->ip(), '192.168') and !(\Request::has('show'))) {
             $zb_data = $guzzle->get_ZB();
             $collection = collect($zb_data);
-            $collection = $collection->map(function ($item)
-            {    
-            $info = Zb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
+            $collection = $collection->map(function ($item) {
+                $info = Zb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
+
                 return $info;
             });
-            if (\Request::has('update')) 
-            {
-           
-                $zfpzdatas = $this->getdetail->getdata($this->zfpz,[
-                                ["'20170101'","'20170801'"],
-                                ["'20170821'","to_char(sysdate,'yyyymmdd')"],
+            if (\Request::has('update')) {
+                $zfpzdatas = $this->getdetail->getdata($this->zfpz, [
+                                ["'20170101'", "'20170801'"],
+                                ["'20170821'", "to_char(sysdate,'yyyymmdd')"],
                                 ]);
                 //dd(...$zfpzdatas);
                 foreach ($zfpzdatas as $zfpzdata) {
-                           Zfpz::updateOrCreate(['PDH' => $zfpzdata['PDH']], $zfpzdata);
-                       }
-            };                                        
-        };
-            $results = ZB::search(\Request::get('search'), 0.01, true)->orderBy('LR_RQ','desc')->get()->unique();
-        return $this->excel->exportBlade('zhibiao.index',compact('results'))->render();
+                    Zfpz::updateOrCreate(['PDH' => $zfpzdata['PDH']], $zfpzdata);
+                }
+            }
+        }
+        $results = ZB::search(\Request::get('search'), 0.01, true)->orderBy('LR_RQ', 'desc')->get()->unique();
+
+        return $this->excel->exportBlade('zhibiao.index', compact('results'))->render();
     }
 
-
     /**
+     * 进行数据并查，看看有zbdetails里面有没有数据差错进行调整.
      *
-     * 进行数据并查，看看有zbdetails里面有没有数据差错进行调整
      * @param $zfpzdatas 来自大平台的数据
-     * 
      */
-    public function checkoutZFPZ($zfpzdatas = 0) {
+    public function checkoutZFPZ($zfpzdatas = 0)
+    {
         $Zfpz = Zfpz::get();
-        $Zfpz = $Zfpz->map(function($a){ 
-            return collect($a->only(['PDH','ZY']))->toJson(); 
+        $Zfpz = $Zfpz->map(function ($a) {
+            return collect($a->only(['PDH', 'ZY']))->toJson();
         });
-        $zfpzdatas = $this->getdetail->getdata($this->zfpz,[
-                                ["'20170101'","'20170101'"],
-                                ["'20170821'","to_char(sysdate,'yyyymmdd')"],
+        $zfpzdatas = $this->getdetail->getdata($this->zfpz, [
+                                ["'20170101'", "'20170101'"],
+                                ["'20170821'", "to_char(sysdate,'yyyymmdd')"],
                                 ]);
-        $b = collect($zfpzdatas)->map(function($a){
-            return collect(collect($a)->only(['PDH','ZY']))->toJson(); 
+        $b = collect($zfpzdatas)->map(function ($a) {
+            return collect(collect($a)->only(['PDH', 'ZY']))->toJson();
         })->toarray();
 
         //dd($Zfpz->diff($b)->count());
-        
-        dd($Zfpz->intersect($b)->count()==$Zfpz->count());
 
+        dd($Zfpz->intersect($b)->count() == $Zfpz->count());
     }
-    
 
     public function zb_detail()
     {
-        $results = Zfpz::search(\Request::get('search'), 0.01, true)->orderBy('PDRQ','desc')->get()->unique();
-        return $this->excel->exportBlade('zhibiao.detail',compact('results'))->render();
+        $results = Zfpz::search(\Request::get('search'), 0.01, true)->orderBy('PDRQ', 'desc')->get()->unique();
+
+        return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
     }
 
     public function checkout()
     {
         $results1 = Zfpz::get()
                    ->groupBy('zy_skr')
-                   ->filter(function($item){
-                      return $item->count()>1;
+                   ->filter(function ($item) {
+                       return $item->count() > 1;
                    });
         $results = collect();
         foreach ($results1 as $key => $result) {
             $results = $results->merge($result);
         }
-        return $this->excel->exportBlade('zhibiao.detail',compact('results'))->render();
-        
+
+        return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
     }
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -132,7 +118,8 @@ class ZhibiaoController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -143,19 +130,22 @@ class ZhibiaoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($zbid)
     {
-        $results = Zfpz::where('ZBID',$zbid)->get();
-        return $this->excel->exportBlade('zhibiao.showzbdetail',compact('results'))->render();
+        $results = Zfpz::where('ZBID', $zbid)->get();
+
+        return $this->excel->exportBlade('zhibiao.showzbdetail', compact('results'))->render();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function showzf($id)
@@ -176,19 +166,19 @@ class ZhibiaoController extends Controller
         dd($person);
     }
 
-
     public function getdetails()
-    {  
-        $person = $this->getdetail->getdata($this->zfpz,[
-            ["'20170821'","to_char(sysdate,'yyyymmdd')"],]);
-        dd($person); 
-        
+    {
+        $person = $this->getdetail->getdata($this->zfpz, [
+            ["'20170821'", "to_char(sysdate,'yyyymmdd')"], ]);
+        dd($person);
     }
+
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -199,7 +189,8 @@ class ZhibiaoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -209,10 +200,8 @@ class ZhibiaoController extends Controller
 
     public function inco()
     {
-        $results = Zfpz::search(\Request::get('search'), 0.01, true)->orderBy('PDRQ','desc')->get()->unique();
+        $results = Zfpz::search(\Request::get('search'), 0.01, true)->orderBy('PDRQ', 'desc')->get()->unique();
 
-        return $this->excel->exportBlade('zhibiao.inco',compact('results'))->render();
+        return $this->excel->exportBlade('zhibiao.inco', compact('results'))->render();
     }
-
-
 }
