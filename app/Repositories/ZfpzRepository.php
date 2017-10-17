@@ -5,8 +5,7 @@ namespace App\Repositories;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
- * Interface ZfpzRepository
- * @package namespace App\Repositories;
+ * Interface ZfpzRepository.
  */
 interface ZfpzRepository extends RepositoryInterface
 {

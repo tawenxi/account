@@ -17,10 +17,9 @@ use Illuminate\Http\Request;
 //     return $request->user();
 // });
 
-
-
 Route::get('/topics2', function (Request $request) {
-	$topics = \App\Model\Account::select(['id','name'])
-				->where('name','like','%'.$request->q.'%')->get();
+    $topics = \App\Model\Account::select(['id', 'name'])
+                ->where('name', 'like', '%'.$request->q.'%')->get();
+
     return $topics;
 })->middleware('api');

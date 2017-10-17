@@ -2,24 +2,22 @@
 
 namespace App\Repositories;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\ZfpzRepository;
 use App\Model\Zfpz;
 use App\Validators\ZfpzValidator;
-use Prettus\Repository\Traits\CacheableRepository;
 use Prettus\Repository\Contracts\CacheableInterface;
-
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
+use Prettus\Repository\Traits\CacheableRepository;
 
 /**
- * Class ZfpzRepositoryEloquent
- * @package namespace App\Repositories;
+ * Class ZfpzRepositoryEloquent.
  */
 class ZfpzRepositoryEloquent extends BaseRepository implements ZfpzRepository, CacheableInterface
 {
     use CacheableRepository;
+
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -29,19 +27,17 @@ class ZfpzRepositoryEloquent extends BaseRepository implements ZfpzRepository, C
     }
 
     /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
+     * Specify Validator class name.
+     *
+     * @return mixed
+     */
     public function validator()
     {
-
         return ZfpzValidator::class;
     }
 
-
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
@@ -49,10 +45,10 @@ class ZfpzRepositoryEloquent extends BaseRepository implements ZfpzRepository, C
     }
 
     protected $fieldSearchable = [
-        'ZY'=>'like',
-        'SKR'=>'like',
-        'ZFFSMC'=>'like',
+        'ZY'    => 'like',
+        'SKR'   => 'like',
+        'ZFFSMC'=> 'like',
         'JE',
-        'YSDWMC'=>'like',
+        'YSDWMC'=> 'like',
     ];
 }

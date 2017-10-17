@@ -6,14 +6,12 @@ use App\Transformers\ZbTransformer;
 use Prettus\Repository\Presenter\FractalPresenter;
 
 /**
- * Class ZbPresenter
- *
- * @package namespace App\Presenters;
+ * Class ZbPresenter.
  */
 class ZbPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

@@ -2,24 +2,22 @@
 
 namespace App\Repositories;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\ZbRepository;
 use App\Model\Zb;
 use App\Validators\ZbValidator;
-use Prettus\Repository\Traits\CacheableRepository;
 use Prettus\Repository\Contracts\CacheableInterface;
-
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
+use Prettus\Repository\Traits\CacheableRepository;
 
 /**
- * Class ZbRepositoryEloquent
- * @package namespace App\Repositories;
+ * Class ZbRepositoryEloquent.
  */
 class ZbRepositoryEloquent extends BaseRepository implements ZbRepository, CacheableInterface
 {
     use CacheableRepository;
+
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -29,29 +27,26 @@ class ZbRepositoryEloquent extends BaseRepository implements ZbRepository, Cache
     }
 
     /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
+     * Specify Validator class name.
+     *
+     * @return mixed
+     */
     public function validator()
     {
-
         return ZbValidator::class;
     }
 
-
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
 
-
     protected $fieldSearchable = [
-        'ZY'=>'like',
+        'ZY'=> 'like',
         'JE',
-        'YSDWMC'=>'like',
+        'YSDWMC'=> 'like',
     ];
 }

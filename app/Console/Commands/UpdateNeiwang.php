@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use DB;
+use Illuminate\Console\Command;
 
 class UpdateNeiwang extends Command
 {
@@ -31,23 +31,18 @@ class UpdateNeiwang extends Command
         parent::__construct();
     }
 
-
     /**
-     *
-     * backupdata  from R9 to homestead (GL_Pznl and GL_Pzml)
-     *
+     * backupdata  from R9 to homestead (GL_Pznl and GL_Pzml).
      */
-
     public function backup()
     {
         $this->ask('这个操作会覆盖seed数据，请问您是否已经把seed文件备份在R9Database，回答YES进行备份?,如果没有commit备份请切换到MSSQLDATABASE分支');
         $this->call('iseed', [
-            'tables' => 'GL_Pznr,GL_Pzml', 
+            'tables'     => 'GL_Pznr,GL_Pzml',
             '--database' => 'sqlsrv',
-            '--force' => 'true',
+            '--force'    => 'true',
         ]);
     }
-    
 
     /**
      * Execute the console command.
@@ -63,12 +58,14 @@ class UpdateNeiwang extends Command
             case 'backup':
                 $this->backup();
                 $this->info('已经备份完成');
+
                 return true;
                 break;
 
             case 'allrollback':
                 $this->onebyoneupdate();
                 $this->info('已经还原成功');
+
                 return true;
                 break;
 
@@ -78,8 +75,9 @@ class UpdateNeiwang extends Command
                 break;
             }
                 $this->info('操作终止');
+
                 return true;
-  
+
             default:
                 $this->backup();
                 break;
@@ -89,72 +87,58 @@ class UpdateNeiwang extends Command
     }
 
     /**
-     *
-     * all table need to update
-     *
+     * all table need to update.
      */
-    public $tables = ['lists','fenlus'];
+    public $tables = ['lists', 'fenlus'];
 
-    private $onebyonetables = ['GL_Pznr','GL_Pznr'];
-
+    private $onebyonetables = ['GL_Pznr', 'GL_Pznr'];
 
     /**
-     *
-     * insert the msssql one by one with GL_
-     *
+     * insert the msssql one by one with GL_.
      */
-    public function onebyoneupdate() {
+    public function onebyoneupdate()
+    {
         foreach ($this->onebyonetables as $table) {
             $arrays = DB::connection('mysql')->table($table)
                       ->get()->toarray();
-            $arrays = $this->transarray($arrays,$table);
+            $arrays = $this->transarray($arrays, $table);
 
             foreach (collect($arrays)->chunk(500) as $datas) {
-                collect($arrays)->each(function($val) use ($table){
+                collect($arrays)->each(function ($val) use ($table) {
                     DB::connection('sqlsrv')->table($table)->insert($val);
                 });
             }
         }
     }
 
-
-/**
- *
- * tranfor [object] to array
- *  Array
- * 
- *
- */
-
-    public function transarray($arrays,$table) {
-
+    /**
+     * tranfor [object] to array
+     *  Array.
+     */
+    public function transarray($arrays, $table)
+    {
         $arrays = array_map('get_object_vars', $arrays);
-        $arrays = collect($arrays)->map(function($item,$key) use ($table){
-            $keys = ($table=='lists')?['id'=>1]:($table=='fenlus')?['id'=>1,'list_id'=>2]:NULL;
+        $arrays = collect($arrays)->map(function ($item, $key) use ($table) {
+            $keys = ($table == 'lists') ? ['id'=>1] : ($table == 'fenlus') ? ['id'=>1, 'list_id'=>2] : null;
 
             return collect($item)->diffKeys($keys)->all();
         })->toArray();
 
         return $arrays;
-        
-
     }
-
-
 
     public function insertToMS()
     {
         foreach ($this->tables as $table) {
             $arrays = DB::connection('mysql')->table($table)->get()->toarray();
-            $arrays = $this->transarray($arrays,$table);
+            $arrays = $this->transarray($arrays, $table);
 
             if ($table == 'lists') {
-                collect($arrays)->each(function($val){
-                   DB::connection('sqlsrv')->table('GL_Pzml')->insert($val);
+                collect($arrays)->each(function ($val) {
+                    DB::connection('sqlsrv')->table('GL_Pzml')->insert($val);
                 });
-    
             } elseif ($table == 'fenlus') {
-                collect($arrays)->each(function($val){
+                collect($arrays)->each(function ($val) {
                     DB::connection('sqlsrv')->table('GL_Pznr')->insert($val);
                 });
             } else {
@@ -164,6 +148,4 @@ class UpdateNeiwang extends Command
             $this->info('success-'.$table);
         }
     }
-    
-    
 }

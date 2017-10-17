@@ -6,13 +6,12 @@ use Prettus\Repository\Contracts\CriteriaInterface;
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
- * Class MyCriteria
- * @package namespace App\Criteria;
+ * Class MyCriteria.
  */
 class MyCriteria implements CriteriaInterface
 {
     /**
-     * Apply criteria in query repository
+     * Apply criteria in query repository.
      *
      * @param                     $model
      * @param RepositoryInterface $repository
@@ -21,7 +20,8 @@ class MyCriteria implements CriteriaInterface
      */
     public function apply($model, RepositoryInterface $repository)
     {
-        $model = $model->where('jb_gz1','>', 0 );
+        $model = $model->where('jb_gz1', '>', 0);
+
         return $model;
     }
 }

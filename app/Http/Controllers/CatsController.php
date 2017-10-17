@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use Prettus\Validator\Contracts\ValidatorInterface;
-use Prettus\Validator\Exceptions\ValidatorException;
 use App\Http\Requests\CatCreateRequest;
 use App\Http\Requests\CatUpdateRequest;
 use App\Repositories\CatRepository;
 use App\Validators\CatValidator;
-
+use Illuminate\Http\Request;
+use Prettus\Validator\Contracts\ValidatorInterface;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 class CatsController extends Controller
 {
-
     /**
      * @var CatRepository
      */
@@ -29,9 +25,8 @@ class CatsController extends Controller
     public function __construct(CatRepository $repository, CatValidator $validator)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+        $this->validator = $validator;
     }
-
 
     /**
      * Display a listing of the resource.
@@ -48,7 +43,6 @@ class CatsController extends Controller
         dd($cats);
 
         if (request()->wantsJson()) {
-
             return response()->json([
                 'data' => $cats,
             ]);
@@ -60,15 +54,13 @@ class CatsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  CatCreateRequest $request
+     * @param CatCreateRequest $request
      *
      * @return \Illuminate\Http\Response
      */
     public function store(CatCreateRequest $request)
     {
-
         try {
-
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
 
             $cat = $this->repository->create($request->all());
@@ -79,7 +71,6 @@ class CatsController extends Controller
             ];
 
             if ($request->wantsJson()) {
-
                 return response()->json($response);
             }
 
@@ -88,7 +79,7 @@ class CatsController extends Controller
             if ($request->wantsJson()) {
                 return response()->json([
                     'error'   => true,
-                    'message' => $e->getMessageBag()
+                    'message' => $e->getMessageBag(),
                 ]);
             }
 
@@ -96,11 +87,10 @@ class CatsController extends Controller
         }
     }
 
-
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -109,7 +99,6 @@ class CatsController extends Controller
         $cat = $this->repository->find($id);
 
         if (request()->wantsJson()) {
-
             return response()->json([
                 'data' => $cat,
             ]);
@@ -118,36 +107,31 @@ class CatsController extends Controller
         return view('cats.show', compact('cat'));
     }
 
-
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-
         $cat = $this->repository->find($id);
 
         return view('cats.edit', compact('cat'));
     }
 
-
     /**
      * Update the specified resource in storage.
      *
-     * @param  CatUpdateRequest $request
-     * @param  string            $id
+     * @param CatUpdateRequest $request
+     * @param string           $id
      *
      * @return Response
      */
     public function update(CatUpdateRequest $request, $id)
     {
-
         try {
-
             $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
             $cat = $this->repository->update($request->all(), $id);
@@ -158,18 +142,15 @@ class CatsController extends Controller
             ];
 
             if ($request->wantsJson()) {
-
                 return response()->json($response);
             }
 
             return redirect()->back()->with('message', $response['message']);
         } catch (ValidatorException $e) {
-
             if ($request->wantsJson()) {
-
                 return response()->json([
                     'error'   => true,
-                    'message' => $e->getMessageBag()
+                    'message' => $e->getMessageBag(),
                 ]);
             }
 
@@ -177,11 +158,10 @@ class CatsController extends Controller
         }
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -190,7 +170,6 @@ class CatsController extends Controller
         $deleted = $this->repository->delete($id);
 
         if (request()->wantsJson()) {
-
             return response()->json([
                 'message' => 'Cat deleted.',
                 'deleted' => $deleted,

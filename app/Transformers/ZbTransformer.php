@@ -2,18 +2,17 @@
 
 namespace App\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Entities\Zb;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class ZbTransformer
- * @package namespace App\Transformers;
+ * Class ZbTransformer.
  */
 class ZbTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \Zb entity
+     * Transform the \Zb entity.
+     *
      * @param \Zb $model
      *
      * @return array
@@ -26,7 +25,7 @@ class ZbTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }
