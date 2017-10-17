@@ -2,15 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use App\Model\Zb;
-use App\Model\Zfpz;
-use App\Model\Guzzledb;
-use App\Model\Salary;
-use App\Model\Account;
 use DB;
-
-
+use Illuminate\Console\Command;
 
 class UpdateWaiwang extends Command
 {
@@ -54,15 +47,10 @@ class UpdateWaiwang extends Command
             DB::connection('imiguo')->table($table)->insert($arrays);
             $this->info('success-'.$table);
         }
-        
     }
 
     /**
-     *
-     * all table need to update
-     *
+     * all table need to update.
      */
-    public $tables = ['guzzledbs','zbs','zfpzs','salaries','accounts'];
-    
-    
+    public $tables = ['guzzledbs', 'zbs', 'zfpzs', 'salaries', 'accounts'];
 }
