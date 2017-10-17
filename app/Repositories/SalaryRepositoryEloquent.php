@@ -8,12 +8,13 @@ use App\Repositories\SalaryRepository;
 use App\Model\Salary;
 use App\Validators\SalaryValidator;
 use Prettus\Repository\Traits\CacheableRepository;
+use Prettus\Repository\Contracts\CacheableInterface;
 
 /**
  * Class SalaryRepositoryEloquent
  * @package namespace App\Repositories;
  */
-class SalaryRepositoryEloquent extends BaseRepository implements SalaryRepository
+class SalaryRepositoryEloquent extends BaseRepository implements SalaryRepository, CacheableInterface
 {
     use CacheableRepository;
     /**

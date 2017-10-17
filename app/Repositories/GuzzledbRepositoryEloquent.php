@@ -8,12 +8,13 @@ use App\Repositories\GuzzledbRepository;
 use App\Model\Guzzledb;
 use App\Validators\GuzzledbValidator;
 use Prettus\Repository\Traits\CacheableRepository;
+use Prettus\Repository\Contracts\CacheableInterface;
 
 /**
  * Class GuzzledbRepositoryEloquent
  * @package namespace App\Repositories;
  */
-class GuzzledbRepositoryEloquent extends BaseRepository implements GuzzledbRepository
+class GuzzledbRepositoryEloquent extends BaseRepository implements GuzzledbRepository, CacheableInterface
 {
     use CacheableRepository;
     /**

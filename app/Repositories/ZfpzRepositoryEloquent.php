@@ -8,13 +8,14 @@ use App\Repositories\ZfpzRepository;
 use App\Model\Zfpz;
 use App\Validators\ZfpzValidator;
 use Prettus\Repository\Traits\CacheableRepository;
+use Prettus\Repository\Contracts\CacheableInterface;
 
 
 /**
  * Class ZfpzRepositoryEloquent
  * @package namespace App\Repositories;
  */
-class ZfpzRepositoryEloquent extends BaseRepository implements ZfpzRepository
+class ZfpzRepositoryEloquent extends BaseRepository implements ZfpzRepository, CacheableInterface
 {
     use CacheableRepository;
     /**

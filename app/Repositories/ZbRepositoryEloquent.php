@@ -8,13 +8,14 @@ use App\Repositories\ZbRepository;
 use App\Model\Zb;
 use App\Validators\ZbValidator;
 use Prettus\Repository\Traits\CacheableRepository;
+use Prettus\Repository\Contracts\CacheableInterface;
 
 
 /**
  * Class ZbRepositoryEloquent
  * @package namespace App\Repositories;
  */
-class ZbRepositoryEloquent extends BaseRepository implements ZbRepository
+class ZbRepositoryEloquent extends BaseRepository implements ZbRepository, CacheableInterface
 {
     use CacheableRepository;
     /**
