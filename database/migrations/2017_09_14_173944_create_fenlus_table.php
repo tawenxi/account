@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateFenlusTable extends Migration
 {
@@ -14,7 +14,6 @@ class CreateFenlusTable extends Migration
     public function up()
     {
         Schema::create('fenlus', function (Blueprint $table) {
-           
             $table->string('gsdm')->default('');
             $table->string('kjqj');
             $table->string('pzly')->default('');
@@ -61,9 +60,6 @@ class CreateFenlusTable extends Migration
             $table->string('fzdm10')->default('');
             $table->integer('list_id')->unsigned();
             $table->increments('id');
-            
-
-            
         });
     }
 
