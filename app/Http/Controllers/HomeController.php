@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Model\Zfpz;
 use App\Model\Zb;
+use App\Model\Zfpz;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-       // $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -28,19 +28,17 @@ class HomeController extends Controller
         return view('home');
     }
 
-
     public function zbdetail(Request $request)
     {
-        $results = Zfpz::search(\Request::get('search'), 0.01, true)->orderBy('PDRQ','desc')->get()->unique();
-        return view('guzzle.zbdetail',compact('results'))->render();
+        $results = Zfpz::search(\Request::get('search'), 0.01, true)->orderBy('PDRQ', 'desc')->get()->unique();
 
+        return view('guzzle.zbdetail', compact('results'))->render();
     }
 
     public function zhibiao(Request $request)
-    {        
-        $results = ZB::search(\Request::get('search'), 0.01, true)->orderBy('LR_RQ','desc')->get()->unique();
-        return view('guzzle.zhibiao',compact('results'))->render();
+    {
+        $results = ZB::search(\Request::get('search'), 0.01, true)->orderBy('LR_RQ', 'desc')->get()->unique();
+
+        return view('guzzle.zhibiao', compact('results'))->render();
     }
-
-
 }

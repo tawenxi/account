@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateListsTable extends Migration
 {
@@ -40,7 +40,6 @@ class CreateListsTable extends Migration
             $table->string('kjzg')->default('遂川财政局');
             $table->string('idpzh')->default('');
             $table->increments('id');
-
         });
     }
 
