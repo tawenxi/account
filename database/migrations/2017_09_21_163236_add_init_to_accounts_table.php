@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class AddInitToAccountsTable extends Migration
 {
@@ -14,7 +14,7 @@ class AddInitToAccountsTable extends Migration
     public function up()
     {
         Schema::table('accounts', function (Blueprint $table) {
-            $table->double('init',15,2)->nullable();
+            $table->double('init', 15, 2)->nullable();
         });
     }
 
