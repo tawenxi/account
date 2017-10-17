@@ -14,6 +14,10 @@ use App\Acc\Acc;
 use App\Model\Respostory\Excel;
 use App\Model\Respostory\Getsqzb;
 use App\Model\Respostory\Http;
+use App\Http\Requests\GuzzledbCreateRequest;
+use App\Http\Requests\GuzzledbUpdateRequest;
+use App\Repositories\GuzzledbRepository;
+use App\Validators\GuzzledbValidator;
 
 
 
@@ -22,13 +26,14 @@ class GuzzleController extends Controller
     use \App\Model\Tt\Data;
     private $excel;
     private $guzzleexcel;
+    private $repository;
 
-    public function __construct(Excel $excel){
+    public function __construct(Excel $excel,GuzzledbRepository $repository){
         $this->middleware('auth');
         // $this->middleware('admin');
         // $this->middleware('sudo');
         $this->excel = $excel;
-
+        $this->repository = $repository;
         $this->guzzleexcel = \App::make(Excel::class,['excelFile'=>'excel']);
         //dd($this->guzzleexcel);
     }
@@ -40,9 +45,9 @@ class GuzzleController extends Controller
      public function dpt(Guzzle $guzzle)  //带了更新功能
     {
         $info = $guzzle->updatedb();
-        $guzzledbs=Guzzledb::orderBy('ZJXZMC',"Asc")
-                ->orderBy("KYJHJE","desc")
-                ->get();
+        $guzzledbs=$this->repository->orderBy('ZJXZMC',"Asc")
+                        ->orderBy("KYJHJE","desc")
+                        ->all();
         return $this->excel->exportBlade('guzzle.index',compact('guzzledbs'));
     }
 
@@ -53,9 +58,9 @@ class GuzzleController extends Controller
      */
     public function hyy()
     {
-        $guzzledbs = Guzzledb::orderBy('ZJXZMC',"Asc")
+        $guzzledbs = $this->repository->orderBy('ZJXZMC',"Asc")
                 ->orderBy("KYJHJE","desc")
-                ->get();
+                ->all();
         return $this->excel->exportBlade('guzzle.index',compact('guzzledbs'));
     }
     /**
@@ -171,19 +176,6 @@ class GuzzleController extends Controller
         return redirect()->action('GuzzleController@hyy');		
     }
 
-	/**
-     * 查询可用指标
-     *
-     * 
-     * 
-     */
-    public function find(Guzzle $guzz)
-    {
-        $kjhdata = $guzz->find_post();
-        $kjhdata = (string)$kjhdata;
-        $kjhdata = $guzz->makekjharray($kjhdata);
-        dump($kjhdata);            
-    }
 
      /**
      * 保存数据源数据
@@ -201,7 +193,7 @@ class GuzzleController extends Controller
             ],[
 
             'body.regex' => '数据源格式不正确,请检查Fillder是否有误或者支付类型有变',]);
-        $Guzzledb = Guzzledb::where('ZBID',$zbid)->firstOrfail();
+        $Guzzledb = $this->repository->findByField('ZBID',$zbid)->first();
         $a = $Guzzledb->update(['body'=>trim($request->body)]);
         if ($a) {   
                     session()->flash('success', '更新成功');
@@ -358,9 +350,9 @@ EOF;
 
     public  function export_account()
     {
-     $guzzledbs = \App\Model\Guzzledb::orderBy('ZJXZMC',"Asc")
+     $guzzledbs = $this->repository->orderBy('ZJXZMC',"Asc")
                 ->orderBy("KYJHJE","desc")
-                ->get();
+                ->all();
      \Excel::create('New file', function($excel) use($guzzledbs) {
      $excel->sheet('New sheet', function($sheet) use($guzzledbs){
      $sheet->loadView('guzzle.index',array('guzzledbs' => $guzzledbs));

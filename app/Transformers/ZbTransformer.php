@@ -3,25 +3,25 @@
 namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
-use App\Entities\Cat;
+use App\Entities\Zb;
 
 /**
- * Class CatTransformer
+ * Class ZbTransformer
  * @package namespace App\Transformers;
  */
-class CatTransformer extends TransformerAbstract
+class ZbTransformer extends TransformerAbstract
 {
 
     /**
-     * Transform the \Cat entity
-     * @param \Cat $model
+     * Transform the \Zb entity
+     * @param \Zb $model
      *
      * @return array
      */
-    public function transform(Cat $model)
+    public function transform(Zb $model)
     {
         return [
-            'id'         => (int) ($model->id+100),
+            'id'         => (int) $model->id,
 
             /* place your other model properties here */
 

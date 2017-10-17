@@ -4,28 +4,27 @@ namespace App\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\CatRepository;
-use App\Entities\Cat;
-use App\Validators\CatValidator;
-use Prettus\Repository\Contracts\CacheableInterface;
+use App\Repositories\ZbRepository;
+use App\Model\Zb;
+use App\Validators\ZbValidator;
 use Prettus\Repository\Traits\CacheableRepository;
 
+
 /**
- * Class CatRepositoryEloquent
+ * Class ZbRepositoryEloquent
  * @package namespace App\Repositories;
  */
-class CatRepositoryEloquent extends BaseRepository implements CatRepository
+class ZbRepositoryEloquent extends BaseRepository implements ZbRepository
 {
-   // use CacheableRepository;
+    use CacheableRepository;
     /**
      * Specify Model class name
      *
      * @return string
      */
-    protected $skipPresenter = true;
     public function model()
     {
-        return Cat::class;
+        return Zb::class;
     }
 
     /**
@@ -36,7 +35,7 @@ class CatRepositoryEloquent extends BaseRepository implements CatRepository
     public function validator()
     {
 
-        return CatValidator::class;
+        return ZbValidator::class;
     }
 
 
@@ -50,13 +49,8 @@ class CatRepositoryEloquent extends BaseRepository implements CatRepository
 
 
     protected $fieldSearchable = [
-        'name'=>'like',
-        'bumen'
+        'ZY'=>'like',
+        'JE',
+        'YSDWMC'=>'like',
     ];
-
-
-    public function presenter()
-    {
-        return "\App\Presenters\CatPresenter";
-    }
 }

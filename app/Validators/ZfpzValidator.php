@@ -5,7 +5,7 @@ namespace App\Validators;
 use \Prettus\Validator\Contracts\ValidatorInterface;
 use \Prettus\Validator\LaravelValidator;
 
-class CatValidator extends LaravelValidator
+class ZfpzValidator extends LaravelValidator
 {
 
     protected $rules = [

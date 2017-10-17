@@ -21,27 +21,6 @@ class Zb extends Model
     {
         return $this->belongsTo(Account::class,'account_number','account_number');
     }
-    protected $searchable = [
-        /**
-         * Columns and their priority in search results.
-         * Columns with higher values are more important.
-         * Columns with equal values have equal importance.
-         *
-         * @var array
-         */
-        'columns' => [
-            'zbs.ZY' => 10,
-            'zbs.JE' => 10,
-            'zbs.LR_RQ' => 2,
-            'zbs.YSDWMC' => 5,
-            'zbs.SHR' => 10,
-            // 'zb_details.ZY' => 2,
-            // 'zb_details.JE' => 1,
-        ],
-        // 'joins' => [
-        //     'zb_details' => ['zbs.ZBID','zb_details.ZBID'],
-        // ],
-    ];
 
     public $timestamps=false;
 

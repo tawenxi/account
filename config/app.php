@@ -166,7 +166,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         App\Providers\AccServiceProvider::class,
         Overtrue\LaravelUEditor\UEditorServiceProvider::class,
-        //Prettus\Repository\Providers\RepositoryServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
         
 
 

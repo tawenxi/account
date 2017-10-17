@@ -29,17 +29,6 @@ class Zfpz extends Model
         return $query;
     }
 
-    protected $searchable = [
-    'columns' => [
-        'zfpzs.ZY' => 10,
-        'zfpzs.JE' => 10,
-        'zfpzs.QS_RQ' => 50,
-        'zfpzs.YSDWMC' => 50,
-        'zfpzs.XMMC' => 10,
-        'zfpzs.YSKMMC' => 5,
-        'zfpzs.ZFFSMC' => 5,
-        ]
-    ];
 
     public function zb()
     {

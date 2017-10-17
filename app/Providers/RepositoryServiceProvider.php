@@ -24,6 +24,12 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(\App\Repositories\CatRepository::class, \App\Repositories\CatRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\DogRepository::class, \App\Repositories\DogRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\Dog2Repository::class, \App\Repositories\Dog2RepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\SalaryRepository::class, \App\Repositories\SalaryRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\ZfpzRepository::class, \App\Repositories\ZfpzRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\ZbRepository::class, \App\Repositories\ZbRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\GuzzledbRepository::class, \App\Repositories\GuzzledbRepositoryEloquent::class);
         //:end-bindings:
     }
 }

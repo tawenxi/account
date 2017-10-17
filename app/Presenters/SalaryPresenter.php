@@ -2,15 +2,15 @@
 
 namespace App\Presenters;
 
-use App\Transformers\CatTransformer;
+use App\Transformers\SalaryTransformer;
 use Prettus\Repository\Presenter\FractalPresenter;
 
 /**
- * Class CatPresenter
+ * Class SalaryPresenter
  *
  * @package namespace App\Presenters;
  */
-class CatPresenter extends FractalPresenter
+class SalaryPresenter extends FractalPresenter
 {
     /**
      * Transformer
@@ -19,6 +19,6 @@ class CatPresenter extends FractalPresenter
      */
     public function getTransformer()
     {
-        return new CatTransformer();
+        return new SalaryTransformer();
     }
 }

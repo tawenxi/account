@@ -3,41 +3,53 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Model\Salary;
 use App\Model\User;
 use App\Model\Respostory\Excel;
 use Auth;
 use App\Model\Respostory\SalarySum;
+use Prettus\Validator\Contracts\ValidatorInterface;
+use Prettus\Validator\Exceptions\ValidatorException;
+use App\Http\Requests\SalaryCreateRequest;
+use App\Http\Requests\SalaryUpdateRequest;
+use App\Repositories\SalaryRepository;
+use App\Validators\SalaryValidator;
+use App\Criteria\MonthSearchCriteria;
+use App\Criteria\YearSearchCriteria;
+use App\Criteria\HasJJCriteria;
+
 
 class SalaryController extends Controller
 {
   private $excel;
   private $salarySum;
-  public function __construct(Excel $excel, SalarySum $salarySum)
+  public function __construct(Excel $excel, SalarySum $salarySum, SalaryRepository $repository, SalaryValidator $validator)
   {
-   $this->salarySum = $salarySum;
-   $this->middleware('auth');
-  // $this->middleware('admin', ['except' => ['geren']] );
-  $this->excel = $excel;
+      $this->salarySum = $salarySum;
+      $this->middleware('auth');
+      // $this->middleware('admin', ['except' => ['geren']] );
+      $this->excel = $excel;
+      $this->repository = $repository;
+      $this->validator  = $validator;
   }
 
   public function index($date = '201705', $jj = null)
   {
     $dt = $date;
-    $res = Salary::hasJJ($jj)
-           ->where('date','<=',\Carbon\Carbon::parse($dt.'27'))
-           ->where('date','>=',\Carbon\Carbon::parse($dt.'01'))
-           ->get()
-           ->groupBy('member_id');
-    $dates = Salary::get()
-           ->pluck('date')->unique();
-    $resv = Salary::hasJJ($jj)
-           ->where('date','<=',\Carbon\Carbon::parse($dt.'27'))
-           ->where('date','>=',\Carbon\Carbon::parse($dt.'01'))
-           ->get();
+    $res = $this->repository
+                ->pushCriteria(new MonthSearchCriteria($dt))
+                ->pushCriteria(new HasJJCriteria($jj))
+                ->all()
+                ->groupBy('member_id');
+                      //dd($res);
+    $dates = $this->repository
+                  ->pluck('date')
+                  ->unique();
+    $resv = $this->repository
+                ->pushCriteria(new MonthSearchCriteria($dt))
+                ->pushCriteria(new HasJJCriteria($jj))
+                ->all();
       $real_title = $this->salarySum->getObject($resv)->getTitle();
 
        return $this->excel->exportBlade('salary.index',compact('resv','res','dates','real_title'))->render();
@@ -46,19 +58,23 @@ class SalaryController extends Controller
    public function bumen($date = '201703', $jj = null)
    {
       $dt = $date;
-      $res = Salary::hasJJ($jj)
-          ->where('date','<=',\Carbon\Carbon::parse($dt.'27'))
-          ->where('date','>=',\Carbon\Carbon::parse($dt.'01'))
-          ->get()
-          ->groupBy('bumen');
+      $res = $this->repository
+                ->pushCriteria(new MonthSearchCriteria($dt))
+                ->pushCriteria(new HasJJCriteria($jj))
+                ->all()
+                ->groupBy('bumen');
 
 
-       $resv = Salary::hasJJ($jj)
-           ->where('date','<=',\Carbon\Carbon::parse($dt.'27'))
-           ->where('date','>=',\Carbon\Carbon::parse($dt.'01'))
-           ->get();
+       $resv = $this->repository
+                ->pushCriteria(new MonthSearchCriteria($dt))
+                ->pushCriteria(new HasJJCriteria($jj))
+                ->all();
        $real_title = $this->salarySum->getObject($resv)->getTitle();
-       $dates=Salary::get()->pluck('date')->unique();
+
+       $dates = $this->repository
+                     ->pluck('date')
+                     ->unique();
+
        return $this->excel->exportBlade('salary.bumen',compact('res','dates','resv','real_title'))->render();
    }
 
@@ -72,20 +88,21 @@ class SalaryController extends Controller
         } 
        $this->authorize('update', User::find($id));
       }
-      // \Log::useFiles(storage_path('/logs/log.log'),'debug');
-      // \Log::info(\Auth::user()->name."登陆了，登陆时间：".\Carbon\Carbon::now());
+
       error_log(\Auth::user()->name."登陆了，登陆时间：".\Carbon\Carbon::now().PHP_EOL,3,storage_path($path = '/logs/logins.log'));
 
-       $res = Salary::hasJJ($jj)
-           ->where('member_id',$id)
-           ->Hasjj($jj)
-           ->get()
-           ->groupBy('date');
-       $resv=Salary::hasJJ($jj)
-           ->where('member_id',$id)
-           ->Hasjj($jj)
-           ->get();
-       $dates = Salary::get()->pluck('date')->unique();
+       $res = $this->repository
+                   ->pushCriteria(new HasJJCriteria($jj))
+                   ->findByField('member_id',$id)
+                   ->groupBy('date');
+
+       $resv=$this->repository
+                   ->pushCriteria(new HasJJCriteria($jj))
+                   ->findByField('member_id',$id);
+
+       $dates = $this->repository
+                     ->pluck('date')
+                     ->unique();
        $real_title = $this->salarySum->getObject($resv)->getTitle();
   
        return $this->excel->exportBlade('salary.geren',compact('res','dates','resv','real_title'))->render();
@@ -93,21 +110,23 @@ class SalaryController extends Controller
 
   public function byear($year = 2017, $jj = null)//1只显示工资，2只显示奖金
   {
-    $res=Salary::where('date','>=',\Carbon\Carbon::parse($year.'-01-01'))
-           ->where('date','<=',\Carbon\Carbon::parse($year.'-12-31'))
-           ->Hasjj($jj)
-           ->get()
-           ->groupBy('bumen');
+    $res=$this->repository
+              ->pushCriteria(new YearSearchCriteria($year))
+              ->pushCriteria(new HasJJCriteria($jj))
+              ->all()
+              ->groupBy('bumen');
 
-    $resv = Salary::where('date','>=',\Carbon\Carbon::parse($year.'-01-01'))
-            ->where('date','<=',\Carbon\Carbon::parse($year.'-12-31'))
-            ->Hasjj($jj)
-            ->get();
-    $dates = Salary::get()
-            ->pluck('date')->unique()
-            ->map(function($v){
-        return $v=substr($v,0,4);
-        })->toarray();
+    $resv = $this->repository
+              ->pushCriteria(new YearSearchCriteria($year))
+              ->pushCriteria(new HasJJCriteria($jj))
+              ->all();
+            
+    $dates = $this->repository
+                     ->pluck('date')
+                     ->unique()
+                     ->map(function($v){
+                        return $v=substr($v,0,4);
+                     })->toarray();
 
        $dates = collect($dates);
        $dates = $dates->unique();
@@ -118,21 +137,24 @@ class SalaryController extends Controller
 
    public function myear($year = 2017, $jj = null)//1只显示工资，2只显示奖金
     {
-       $res = Salary::where('date','>=',\Carbon\Carbon::parse($year.'-01-01'))->where('date','<=',\Carbon\Carbon::parse($year.'-12-31'))
-         ->Hasjj($jj)
-         ->get()
-         ->groupBy('date');
+       $res = $this->repository
+              ->pushCriteria(new YearSearchCriteria($year))
+              ->pushCriteria(new HasJJCriteria($jj))
+              ->all()
+              ->groupBy('date');
 
-       $resv = Salary::where('date','>=',\Carbon\Carbon::parse($year.'-01-01'))   ->where('date','<=',\Carbon\Carbon::parse($year.'-12-31'))
-            ->Hasjj($jj)
-            ->get();
+       $resv = $this->repository
+              ->pushCriteria(new YearSearchCriteria($year))
+              ->pushCriteria(new HasJJCriteria($jj))
+              ->all();
 
        
-       $dates = Salary::get()
-       ->pluck('date')->unique()
-       ->map(function($v){
-              return $v=substr($v,0,4);
-           })->toarray();
+       $dates = $this->repository
+                     ->pluck('date')
+                     ->unique()
+                     ->map(function($v){
+                        return $v=substr($v,0,4);
+                     })->toarray();
        $dates = collect($dates);
        $dates = $dates->unique();
        $dates->values()->all();
@@ -143,51 +165,51 @@ class SalaryController extends Controller
      public function phb($year = 2017, $jj = null)//1只显示工资，2只显示奖金
     {
 
-      $res=Salary::where('date','>=',\Carbon\Carbon::parse($year.'-01-01'))->where('date','<=',\Carbon\Carbon::parse($year.'-12-31'))
-         ->Hasjj($jj)
-         //->where('id','<',3)
-         ->get()
-         ->groupBy('name')->sortByDesc(function ($product, $key) {
-      return        
-      $product->sum('yishu_bz')+
-      $product->sum('tuixiu_gz')+
-      $product->sum('jb_gz1')+
-      $product->sum('jb_gz2')+
-      $product->sum('jinbutie')+
-      $product->sum('gongche_bz')+
-      $product->sum('xiangzhen_bz')+
-      $product->sum('bufa_gz')+
-      $product->sum('nianzhong_jj')+
-      $product->sum('gaowen_jiangwen')+
-      $product->sum('jiangjin')+
-      $product->sum('gjj_dw')+
-      $product->sum('sb_dw')-
-      (
-      $product->sum('gjj_gr')+
-      $product->sum('gjj_dw')+
-      $product->sum('sb_gr')+
-      $product->sum('sb_dw')+
-      $product->sum('zhiye_nj')+
-      $product->sum('daikou_gz')+
-      $product->sum('fanghong_zj')+
-      $product->sum('yiliao_bx')+
-      $product->sum('shiye_bx')+
-      $product->sum('shengyu_bx')+
-      $product->sum('gongshang_bx')+
-      $product->sum('yirijuan')+
-      $product->sum('other_daikou')+
-      $product->sum('tiaozheng_gjj')+
-      $product->sum('tiaozheng_sb')
-      );
-      });
-      $resv=Salary::where('date','>=',\Carbon\Carbon::parse($year.'-01-01'))
-            ->where('date','<=',\Carbon\Carbon::parse($year.'-12-31'))
-            ->Hasjj($jj)
-            //->where('id','<',3)
-            ->get();
+      $res=$this->repository
+                ->pushCriteria(new YearSearchCriteria($year))
+                ->pushCriteria(new HasJJCriteria($jj))
+                ->all()
+                ->groupBy('name')
+                ->sortByDesc(function ($product, $key) {
+                    return        
+                    $product->sum('yishu_bz')+
+                    $product->sum('tuixiu_gz')+
+                    $product->sum('jb_gz1')+
+                    $product->sum('jb_gz2')+
+                    $product->sum('jinbutie')+
+                    $product->sum('gongche_bz')+
+                    $product->sum('xiangzhen_bz')+
+                    $product->sum('bufa_gz')+
+                    $product->sum('nianzhong_jj')+
+                    $product->sum('gaowen_jiangwen')+
+                    $product->sum('jiangjin')+
+                    $product->sum('gjj_dw')+
+                    $product->sum('sb_dw')-
+                    (
+                    $product->sum('gjj_gr')+
+                    $product->sum('gjj_dw')+
+                    $product->sum('sb_gr')+
+                    $product->sum('sb_dw')+
+                    $product->sum('zhiye_nj')+
+                    $product->sum('daikou_gz')+
+                    $product->sum('fanghong_zj')+
+                    $product->sum('yiliao_bx')+
+                    $product->sum('shiye_bx')+
+                    $product->sum('shengyu_bx')+
+                    $product->sum('gongshang_bx')+
+                    $product->sum('yirijuan')+
+                    $product->sum('other_daikou')+
+                    $product->sum('tiaozheng_gjj')+
+                    $product->sum('tiaozheng_sb')
+                    );
+                });
+      $resv = $this->repository
+                   ->pushCriteria(new YearSearchCriteria($year))
+                   ->pushCriteria(new HasJJCriteria($jj))
+                   ->all();
 
       $real_title = $this->salarySum->getObject($resv)->getTitle();
-      return $this->excel->exportBlade('salary.phb',compact('res','resv','real_title'))->render();der();
+      return $this->excel->exportBlade('salary.phb',compact('res','resv','real_title'))->render();
   }
   
 }
