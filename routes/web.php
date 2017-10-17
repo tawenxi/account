@@ -19,46 +19,40 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
 Route::get('/6323151aa', function () {
-header("Content-type: text/html; charset=utf-8"); 
-    if (\Auth::check()&&\Auth::user()->id==39) {
-           $a=file_get_contents(storage_path('/logs/logins.log'));
-   dd(str_replace("[", "<br/>[", $a)) ;
-    }else{
-        return redirect()->to("/geren");
+    header('Content-type: text/html; charset=utf-8');
+    if (\Auth::check() && \Auth::user()->id == 39) {
+        $a = file_get_contents(storage_path('/logs/logins.log'));
+        dd(str_replace('[', '<br/>[', $a));
+    } else {
+        return redirect()->to('/geren');
     }
-
 });
 Route::get('/6323151bb', function () {
-     if (\Auth::check()&&\Auth::user()->id==39) {
-    return redirect()->to("http://deploy.midollar.biz/?token=1a10c89f&env=tawenxi");
-}else{
-    return redirect()->to("/geren");
+    if (\Auth::check() && \Auth::user()->id == 39) {
+        return redirect()->to('http://deploy.midollar.biz/?token=1a10c89f&env=tawenxi');
+    } else {
+        return redirect()->to('/geren');
     }
 });
-
-
 
 Route::post('/store', 'GuzzleController@store')->name('store');
 Route::get('/guzzle', 'GuzzleController@index');
-Route::get('/find', 'GuzzleController@find');//显示可用授权指标
+Route::get('/find', 'GuzzleController@find'); //显示可用授权指标
 Route::get('/reflash', 'GuzzleController@reflash');
 //Route::get('/account', 'AccountController@index');
 Route::get('/dpt', 'GuzzleController@dpt');
 Route::get('/hyy', 'GuzzleController@hyy');
-Route::get('/edit/{guzzledb}', 'GuzzleController@edit')->name('guzzle.edit'); 
-Route::get('/preview/{option?}', 'GuzzleController@preview'); 	
-Route::any('/payout', 'GuzzleController@payoutlist')->name('payout'); 
-Route::get('/{id}/show', 'GuzzleController@show'); 
+Route::get('/edit/{guzzledb}', 'GuzzleController@edit')->name('guzzle.edit');
+Route::get('/preview/{option?}', 'GuzzleController@preview');
+Route::any('/payout', 'GuzzleController@payoutlist')->name('payout');
+Route::get('/{id}/show', 'GuzzleController@show');
 Route::DELETE('/{id}/delete', 'GuzzleController@destroy')->name('delete');
 Route::get('/{id}/edit', 'GuzzleController@editkemu')->name('editkemu');
 Route::post('/save', 'GuzzleController@savekemu')->name('save');
 Route::get('/getsql', 'GuzzleController@getsql')->name('getsql');
 Route::post('/postsql', 'GuzzleController@postsql')->name('postsql');
 Route::get('exportaccount', 'GuzzleController@export_account');
-
-
 
     Route::get('/salary/{date?}/{jj?}', 'SalaryController@index')->name('salary');
     //Route::get('/addmember', 'TestController@member');
@@ -68,26 +62,22 @@ Route::get('exportaccount', 'GuzzleController@export_account');
     Route::get('/myear/{year?}/{jj?}', 'SalaryController@myear')->name('myear');
     Route::get('/phb/{year?}/{jj?}', 'SalaryController@phb')->name('phb');
 
-
-
 Route::resource('income', 'IncomeController');
-Route::get('incomes/{fp?}',"IncomeController@indexs");
+Route::get('incomes/{fp?}', 'IncomeController@indexs');
 Route::resource('cost', 'CostController');
-Route::any('/costs','CostController@indexs')->name('cost.indexs');
+Route::any('/costs', 'CostController@indexs')->name('cost.indexs');
 
-
-Route::get('/searchacc','SearchController@account');
-Route::post('/api/account','SearchController@store');
-Route::post('/api/addaccount','SearchController@addstore');
-Route::post('/api/payout','SearchController@payout');
-Route::post('/api/payout_with_date','SearchController@payout_with_date');
-Route::get('/modifyacc','SearchController@modifyacc');
+Route::get('/searchacc', 'SearchController@account');
+Route::post('/api/account', 'SearchController@store');
+Route::post('/api/addaccount', 'SearchController@addstore');
+Route::post('/api/payout', 'SearchController@payout');
+Route::post('/api/payout_with_date', 'SearchController@payout_with_date');
+Route::get('/modifyacc', 'SearchController@modifyacc');
 
 Route::get('/zhibiao', 'ZhibiaoController@index');
 Route::get('/zbdetail', 'ZhibiaoController@zb_detail');
 Route::get('/showzbdetail/{zbid}', 'ZhibiaoController@show');
-Route::get('/inco', 'ZhibiaoController@inco');//收支对应表
-
+Route::get('/inco', 'ZhibiaoController@inco'); //收支对应表
 
 Route::get('/ardent', 'ArdentController@index');
 
@@ -98,11 +88,10 @@ Route::get('/getdetails', 'ZhibiaoController@getdetails');
 Route::get('/mysql', 'SqlController@index');
 Route::get('/checkout', 'ZhibiaoController@checkout');
 
-
-Route::delete("logout", "UserController@logout")->name('logout');
-Route::get('edit','UserController@edit')->name('edit');
-Route::post('update','UserController@update')->name('update');
-Route::get('profile','UserController@profile');
+Route::delete('logout', 'UserController@logout')->name('logout');
+Route::get('edit', 'UserController@edit')->name('edit');
+Route::post('update', 'UserController@update')->name('update');
+Route::get('profile', 'UserController@profile');
 
 Route::post('/storeaccount_for_zb', 'MakeAccountController@storeaccount_for_zb');
 Route::get('/zbdetails', 'HomeController@zbdetail');
@@ -110,31 +99,17 @@ Route::get('/viewdetail', 'HomeController@viewdetail');
 Route::post('/storeaccount', 'MakeAccountController@storeAccount');
 Route::get('/zhibiaos', 'HomeController@zhibiao');
 
-
-Route::get('/muxing/{user}',function(\App\Model\User $user){
+Route::get('/muxing/{user}', function (\App\Model\User $user) {
     dd($user);
 });
-
-
 
 Route::get('/r9', 'RccountController@index');
 
 Route::get('/rr', 'RccountController@rr');
 Route::get('/up', 'zhibiaoController@checkoutZFPZ');
 
-
-
 //test l5
 Route::get('/l5', 'L5Controller@l5');
 Route::resource('rep', '\App\Repo\Http\Controllers\Salary3sController');
 Route::resource('cats', CatsController::class);
 //test l5
-
-
-
-
-
-
-
-
-

@@ -6,14 +6,12 @@ use App\Transformers\GuzzledbTransformer;
 use Prettus\Repository\Presenter\FractalPresenter;
 
 /**
- * Class GuzzledbPresenter
- *
- * @package namespace App\Presenters;
+ * Class GuzzledbPresenter.
  */
 class GuzzledbPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

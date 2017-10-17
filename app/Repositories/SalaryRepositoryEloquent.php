@@ -2,23 +2,22 @@
 
 namespace App\Repositories;
 
-use Prettus\Repository\Eloquent\BaseRepository;
-use Prettus\Repository\Criteria\RequestCriteria;
-use App\Repositories\SalaryRepository;
 use App\Model\Salary;
 use App\Validators\SalaryValidator;
-use Prettus\Repository\Traits\CacheableRepository;
 use Prettus\Repository\Contracts\CacheableInterface;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
+use Prettus\Repository\Traits\CacheableRepository;
 
 /**
- * Class SalaryRepositoryEloquent
- * @package namespace App\Repositories;
+ * Class SalaryRepositoryEloquent.
  */
 class SalaryRepositoryEloquent extends BaseRepository implements SalaryRepository, CacheableInterface
 {
     use CacheableRepository;
+
     /**
-     * Specify Model class name
+     * Specify Model class name.
      *
      * @return string
      */
@@ -28,19 +27,17 @@ class SalaryRepositoryEloquent extends BaseRepository implements SalaryRepositor
     }
 
     /**
-    * Specify Validator class name
-    *
-    * @return mixed
-    */
+     * Specify Validator class name.
+     *
+     * @return mixed
+     */
     public function validator()
     {
-
         return SalaryValidator::class;
     }
 
-
     /**
-     * Boot up the repository, pushing criteria
+     * Boot up the repository, pushing criteria.
      */
     public function boot()
     {
@@ -52,5 +49,4 @@ class SalaryRepositoryEloquent extends BaseRepository implements SalaryRepositor
         $this->makeModel();
         $this->resetCriteria();
     }
-
 }

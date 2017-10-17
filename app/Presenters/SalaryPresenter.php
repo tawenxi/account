@@ -6,14 +6,12 @@ use App\Transformers\SalaryTransformer;
 use Prettus\Repository\Presenter\FractalPresenter;
 
 /**
- * Class SalaryPresenter
- *
- * @package namespace App\Presenters;
+ * Class SalaryPresenter.
  */
 class SalaryPresenter extends FractalPresenter
 {
     /**
-     * Transformer
+     * Transformer.
      *
      * @return \League\Fractal\TransformerAbstract
      */

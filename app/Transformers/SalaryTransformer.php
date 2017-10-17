@@ -2,18 +2,17 @@
 
 namespace App\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Entities\Salary;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class SalaryTransformer
- * @package namespace App\Transformers;
+ * Class SalaryTransformer.
  */
 class SalaryTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \Salary entity
+     * Transform the \Salary entity.
+     *
      * @param \Salary $model
      *
      * @return array
@@ -26,7 +25,7 @@ class SalaryTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }

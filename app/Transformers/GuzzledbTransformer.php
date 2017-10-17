@@ -2,18 +2,17 @@
 
 namespace App\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use App\Entities\Guzzledb;
+use League\Fractal\TransformerAbstract;
 
 /**
- * Class GuzzledbTransformer
- * @package namespace App\Transformers;
+ * Class GuzzledbTransformer.
  */
 class GuzzledbTransformer extends TransformerAbstract
 {
-
     /**
-     * Transform the \Guzzledb entity
+     * Transform the \Guzzledb entity.
+     *
      * @param \Guzzledb $model
      *
      * @return array
@@ -26,7 +25,7 @@ class GuzzledbTransformer extends TransformerAbstract
             /* place your other model properties here */
 
             'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at
+            'updated_at' => $model->updated_at,
         ];
     }
 }
