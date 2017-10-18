@@ -168,6 +168,10 @@ return [
         Overtrue\LaravelUEditor\UEditorServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
 
+        
+        SebastiaanLuca\Helpers\Methods\GlobalHelpersServiceProvider::class,
+        SebastiaanLuca\Helpers\Collections\CollectionMacrosServiceProvider::class,
+
         /*
          * Package Service Providers...
          */

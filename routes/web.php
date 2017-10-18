@@ -108,8 +108,9 @@ Route::get('/r9', 'RccountController@index');
 Route::get('/rr', 'RccountController@rr');
 Route::get('/up', 'zhibiaoController@checkoutZFPZ');
 
-//test l5
-Route::get('/l5', 'L5Controller@l5');
-Route::resource('rep', '\App\Repo\Http\Controllers\Salary3sController');
-Route::resource('cats', CatsController::class);
-//test l5
+Route::get('/test', function(){
+    proc_open();
+    dd(rand_bool());
+});
+
+
