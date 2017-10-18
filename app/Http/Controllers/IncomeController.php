@@ -19,7 +19,6 @@ class IncomeController extends Controller
     public function __construct(Excel $excel)
     {
         $this->middleware('auth');
-        $this->middleware('admin');
         $this->excel = $excel;
     }
 
