@@ -108,11 +108,17 @@ Route::get('/r9', 'RccountController@index');
 Route::get('/rr', 'RccountController@rr');
 Route::get('/up', 'zhibiaoController@checkoutZFPZ');
 
-Route::get('/test', function(){
+Route::get('/test', function(App\Acc\Llj $a){
     //s(1,[1,2]);
-    sss_if(11111111, 'User has a last name', 22);
-    sss(str_wrap('foo', '*'));
-    dd(rand_bool());
+    // sss_if(11111111, 'User has a last name', 22);
+    // sss(str_wrap('foo', '*'));
+    // dd(rand_bool());
+    $a->getknite(function($a){
+        dump($a);
+    })->getknite(function($a){
+        dump(str_wrap($a,'#'));
+    });
+
 });
 
 
