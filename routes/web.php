@@ -109,7 +109,9 @@ Route::get('/rr', 'RccountController@rr');
 Route::get('/up', 'zhibiaoController@checkoutZFPZ');
 
 Route::get('/test', function(){
-    proc_open();
+    //s(1,[1,2]);
+    sss_if(11111111, 'User has a last name', 22);
+    sss(str_wrap('foo', '*'));
     dd(rand_bool());
 });
 
