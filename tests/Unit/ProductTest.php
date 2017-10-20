@@ -13,13 +13,15 @@ class ProductTest extends TestCase
      *
      * @return void
      */
-    public function testProductHasAName()
+
+    /** @test */
+    public function ProductHasAName()
     {
     	$product = new Product('iphone 7',5000);
         $this->assertEquals('iphone 7',$product->name());
     }
-
-    public function testProductHasPrice()
+    /** @test */
+    public function ProductHasPrice()
     {
     	$product = new Product('Macbook',10000);
     	$this->assertEquals(10000, $product->price());

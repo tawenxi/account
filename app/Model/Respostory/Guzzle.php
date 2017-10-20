@@ -33,6 +33,18 @@ class Guzzle extends Model
             $zb = Guzzledb::where('ZBID', $payee['zbid'])->firstOrFail();
             $this->insertbody = trim($zb->body);
         }
+        if (!$this->validateSql()) {
+            throw new Exception('验证数据源错误');
+        } 
+    }
+
+    public function validateSql()
+    {
+        $zbid = $this->payee['zbid'];
+        $zbidmowei = substr($zbid, -4);
+        $pattern = "/<?xml.+to_char%28iPDh%2B1%29%2C%270%27%2C%20%20zfpzdjbh.+178190121002547948.+zhaiyao.+$zbidmowei.+<\/R9PACKET>/";
+        $vali_result = preg_match($pattern, $this->insertbody);
+        return $vali_result?TRUE:FALSE;
     }
 
     /**
@@ -84,6 +96,33 @@ class Guzzle extends Model
         }
     }
 
+
+    /**
+     *
+     * 测试
+     *
+     */
+    public function test_input(){
+        if ($this->payee['amount'] <= 0 OR
+            !is_numeric($this->payee['amount'])) {
+            throw new Exception('金额不能小于 且必须为数值');
+        }elseif ($this->payee['zhaiyao']=='zhaiyao'){
+            throw new Exception('摘要必须修改');
+        } elseif (substr($this->payee['zbid'], 0,11) != '001.2017.0.' OR 
+            strlen($this->payee['zbid']) != 15) {
+            throw new Exception('指标格式不正确'.substr($this->payee['zbid'], 0,11));
+        }  elseif (!is_numeric($this->payee['payeeaccount'])) {
+            throw new Exception('账号非全数值');
+        }  elseif (!is_numeric($this->payee['amount'])) {
+            throw new Exception('账号非全数值');
+        } elseif ((int)substr($this->payee['amount'], strpos($this->payee['amount'],'.')+1) > 100){
+            throw new Exception('输入了多位小数');
+        } else {
+            $this->payee['amount'] = bcdiv($this->payee['amount'], '1',2);
+        };
+    }
+    
+
     /**
      * TODO:发送制单请求
      * - 传入@
@@ -91,17 +130,18 @@ class Guzzle extends Model
      */
     public function add_post()
     {
+        
+        //-----------------------------------------   
+        $this->test_input();
+        //-----------------------------------
+
+
         Test::log(__METHOD__.'根据一行数据获取对象的指标信息');
         $zb = $this->get_zbdata($this->payee); //获取最新数据
+
         if ($zb['KYJHJE'] < $this->payee['amount']) {
             Test::log('!!!金额不足');
-
-            echo $zb['KYJHJE'];
-            echo '<';
-            echo $this->payee['amount'];
-            redirect()->action('GuzzleController@dpt');
-            die();
-            dd();
+            throw new Exception("指标不足：{$zb['KYJHJE']}小于{$this->payee['amount']}");
         }
         Test::log(__METHOD__.'验证金额足够');
         $zbamount = $zb['YKJHZB'].','.$zb['YYJHJE'].','.$zb['KYJHJE'].','.$this->payee['amount'];
@@ -111,6 +151,19 @@ class Guzzle extends Model
         $this->amountreplace($zbamount);
         $this->insertbody = $this->timereplace($this->insertbody);
         Test::log(__METHOD__.'替换时间金额账户信息');
+
+        //--------------------------------------------
+        $vali_var = iconv('GB2312', 'UTF-8', $this->insertbody);
+        if (stristr($vali_var, $this->payee['payeeaccount']) and 
+            stristr($vali_var, $this->payee['amount']) and 
+            stristr($vali_var, $this->payee['payee']) and 
+            stristr($vali_var, $this->payee['payeebanker']) and 
+            stristr($vali_var, $this->payee['zhaiyao']))
+        {}else {
+            throw new Exception('POST前验证替换效果失败');
+        } 
+
+        //--------------------------------------------
         $response2 = $this->http->makerequest($this->insertbody);
         Test::log(__METHOD__.'发送POST请求');
         /*=============================================
@@ -177,7 +230,7 @@ class Guzzle extends Model
      */
     public function amountreplace($zbamount)
     {
-        $pattern3 = '/\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,2})?/';
+        $pattern3 = '/\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,2})?/';//这里的\s+\d{1,}(.[0-9]{1,})?可以不改为0，但是在setamount里需要改为0
         $copydata = $this->insertbody;
         $this->setAmountData($zbamount);
         $this->insertbody = preg_replace($pattern3, $this->getAmountData(), $this->insertbody);
@@ -194,25 +247,22 @@ class Guzzle extends Model
         $this->insertbody = $this->jiema($this->insertbody);
         $this->insertbody = iconv('GB2312', 'UTF-8', $this->insertbody);
 
-        $this->insertbody = str_replace('2016年计生事业费', $payee['zhaiyao'], $this->insertbody);
         $this->insertbody = str_replace('zhaiyao', $payee['zhaiyao'], $this->insertbody);
         //---------------------------------------------
+        $this->insertbody = str_replace('王纯', $payee['payee'], $this->insertbody);
+        $this->insertbody = str_replace('6226820017800467554', $payee['payeeaccount'], $this->insertbody);
+        $this->insertbody = str_replace('遂川农商银行', $payee['payeebanker'], $this->insertbody);
+        $this->insertbody = str_replace('99990247', '', $this->insertbody);
+
         $this->insertbody = str_replace('叶涛', $payee['payee'], $this->insertbody);
         $this->insertbody = str_replace('178190121002547948', $payee['payeeaccount'], $this->insertbody);
-        $this->insertbody = str_replace('遂川农商银行', $payee['payeebanker'], $this->insertbody);
+        $this->insertbody = str_replace('遂川县农商合作银行', $payee['payeebanker'], $this->insertbody);
         $this->insertbody = str_replace('99991392', '', $this->insertbody);
 
         //名字更改的时候更换这个-------------------------------
 
         //----------------------------------------------------------
-        $this->insertbody = str_replace('吉安遂川县财政局', $payee['payee'], $this->insertbody);
-        $this->insertbody = str_replace('190207313396', $payee['payeeaccount'], $this->insertbody);
-        $this->insertbody = str_replace('中行遂川支行', $payee['payeebanker'], $this->insertbody);
-
-        $this->insertbody = str_replace('99900114', '', $this->insertbody);
-
-        //----------------------------------------------------------
-        $this->insertbody = str_replace('\'005\'', '\'\'', $this->insertbody);
+        $this->insertbody = str_replace('\'012\'', '\'\'', $this->insertbody);
         //-----------------------------
         $this->insertbody = str_replace('遂川县财政局枚江乡财政所', '遂川县枚江镇财政所', $this->insertbody);
         $this->insertbody = str_replace('遂川县枚江镇财政所2', '遂川县枚江镇财政所', $this->insertbody);

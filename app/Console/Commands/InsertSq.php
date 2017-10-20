@@ -9,6 +9,7 @@ use App\Model\Respostory\Guzzle;
 use App\Model\Respostory\Http;
 use App\Model\Test;
 use Illuminate\Console\Command;
+use Excption;
 
 class InsertSq extends Command
 {
@@ -59,11 +60,11 @@ class InsertSq extends Command
         Test::log('获取excel数据并增加科目');
         foreach ($arr as $key => $data) {
 
-            $arr['key']['payeeaccount'] = trim($arr['key']['payeeaccount']);
-            $arr['key']['amount'] = trim($arr['key']['amount']);
-            $arr['key']['zbid'] = trim($arr['key']['zbid']);
+            $arr[$key]['payeeaccount'] = trim($arr[$key]['payeeaccount']);
+            $arr[$key]['amount'] = trim($arr[$key]['amount']);
+            $arr[$key]['zbid'] = trim($arr[$key]['zbid']);
             
-            $Validator = \Validator::make($data, [
+            $Validator = \Validator::make($arr[$key], [
                 'payeeaccount'=> 'numeric',
                 'amount'      => 'numeric|between:0.01,3000000',
                 'zbid'        => 'size:15',
@@ -81,13 +82,13 @@ class InsertSq extends Command
                 foreach ($Validator->errors()->all() as $error) {
                     $this->info($error);
                 }
-                dd('检核数据出错');
+                throw new Exception('检核数据出错'.__line__);
             }
         }
 
         foreach ($arr as $key => $value) {
             if (count($value) != 8) {
-                dd('warning', '输入字段数量不为8');
+                throw new Exception('warning:输入字段数量不为8'.__line__);
             }
 
             if (count($arr[$key]['kemuname']) == 1 && is_array($arr[$key]['kemuname'])) {
@@ -95,7 +96,7 @@ class InsertSq extends Command
             }
             //这里使用了reset函数
             if (is_array($arr[$key]['kemuname'])) {
-                dd('info', '请选择确认会计科目并包含@，或者修改关键字');
+                throw new Exception('请选择确认会计科目并包含@，或者修改关键字');
             }
         }
         Test::log('验证科目数量');
@@ -105,7 +106,7 @@ class InsertSq extends Command
             if ($value['amount'] > 0) {
                 $value['amount'] = round($value['amount'], 2);
             } else {
-                dd('warning', '金额无效');
+                throw new Exception('金额无效');
             }
             $guzz = \App::make(Guzzle::class, [
             'Getsqzb'=> app()->make(Getsqzb::class),
@@ -114,6 +115,7 @@ class InsertSq extends Command
             if (stristr($arr[$key]['kemu'], '#')) {
                 $this->info('info:第'.(1 + $successi).'条数据做账成功但未授权支付'.$value['zhaiyao']);
             } else {
+                //dd($value);
                 // dd("拨款成功");//开关
                 $guzz->add_post();
             }
