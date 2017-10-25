@@ -42,7 +42,7 @@ class ZhibiaoController extends Controller
      */
     public function index(Request $request, Guzzle $guzzle)
     {
-        if (strstr($request->ip(), '192.168') and !(\Request::has('show'))) {
+        if (strstr($request->ip(), '192.168') and !(\Request::has('show'))  And FALSE) {
             $zb_data = $guzzle->get_ZB();
             $collection = collect($zb_data);
             $collection = $collection->map(function ($item) {
@@ -52,7 +52,7 @@ class ZhibiaoController extends Controller
 
                 return $info;
             });
-            if (\Request::has('update')) {
+            if (\Request::has('update') And FALSE) {
                 $zfpzdatas = $this->getdetail->getdata($this->zfpz, [
                                 ["'20170101'", "'20170801'"],
                                 ["'20170821'", "to_char(sysdate,'yyyymmdd')"],

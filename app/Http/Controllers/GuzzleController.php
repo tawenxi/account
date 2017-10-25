@@ -191,8 +191,8 @@ class GuzzleController extends Controller
         $a = is_null($request->order) ? 'created_at' : $request->order;
         $my = is_null($request->my) ? '50' : $request->my;
 
-        $date1 = \Input::has('date1') ? \Input::get('date1') : date('Y-m-01', time());
-        $date2 = \Input::has('date2') ? \Input::get('date2') : date('Y-m-d H:i:s', time() + 86400);
+        $date1 = $request->has('date1') ? $request->get('date1') : date('Y-m-01', time());
+        $date2 = $request->has('date2') ? $request->get('date2') : date('Y-m-d H:i:s', time() + 86400);
         $payoutdatas = Payout::whereBetween('created_at', [$date1, $date2])->orderBy($a, 'desc')->paginate($my);
 
         return $this->excel->exportBlade('guzzle.payout', compact('payoutdatas', 'a', 'my', 'date1', 'date2'));

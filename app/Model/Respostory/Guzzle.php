@@ -32,10 +32,11 @@ class Guzzle extends Model
         if (!empty($payee)) {
             $zb = Guzzledb::where('ZBID', $payee['zbid'])->firstOrFail();
             $this->insertbody = trim($zb->body);
+            if (!$this->validateSql()) {
+                throw new Exception('验证数据源错误');
+             } 
         }
-        if (!$this->validateSql()) {
-            throw new Exception('验证数据源错误');
-        } 
+
     }
 
     public function validateSql()

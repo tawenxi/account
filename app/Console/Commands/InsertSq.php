@@ -63,6 +63,7 @@ class InsertSq extends Command
             $arr[$key]['payeeaccount'] = trim($arr[$key]['payeeaccount']);
             $arr[$key]['amount'] = trim($arr[$key]['amount']);
             $arr[$key]['zbid'] = trim($arr[$key]['zbid']);
+            $arr[$key]['amount'] = bcdiv($arr[$key]['amount'], '1',2);
             
             $Validator = \Validator::make($arr[$key], [
                 'payeeaccount'=> 'numeric',
@@ -104,7 +105,7 @@ class InsertSq extends Command
         $successi = 0;
         foreach ($arr as $key => $value) {
             if ($value['amount'] > 0) {
-                $value['amount'] = round($value['amount'], 2);
+                $value['amount'] = bcdiv($value['amount'],'1',2);
             } else {
                 throw new Exception('金额无效');
             }

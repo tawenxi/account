@@ -50,5 +50,7 @@ class ZfpzRepositoryEloquent extends BaseRepository implements ZfpzRepository, C
         'ZFFSMC'=> 'like',
         'JE',
         'YSDWMC'=> 'like',
+        'QS_RQ'=> 'like',
+
     ];
 }

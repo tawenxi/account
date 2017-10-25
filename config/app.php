@@ -171,6 +171,7 @@ return [
         
         SebastiaanLuca\Helpers\Methods\GlobalHelpersServiceProvider::class,
         SebastiaanLuca\Helpers\Collections\CollectionMacrosServiceProvider::class,
+        Naux\Mail\SendCloudServiceProvider::class,
 
         /*
          * Package Service Providers...
