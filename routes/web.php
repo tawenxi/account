@@ -123,6 +123,8 @@ Route::get('/test', function(App\Acc\Llj $a){
 
 Route::get('/5', 'LearnController@index');
 Route::get('/2', 'LearnController@index2');
+Route::get('/3', 'LearnController@index3');
+
 
 
 

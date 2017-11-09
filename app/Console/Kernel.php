@@ -27,6 +27,13 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('pull:data')
                  ->dailyAt('11:45');
+        $schedule->command('sendmail:dpt 365')
+                 ->dailyAt('11:33');
+       // $schedule->command('testcommand')->everyminut();
+
+        //$schedule->exec('touch aaaa.txt')->sendOutputTo(storage_path());
+
+
     }
 
     /**

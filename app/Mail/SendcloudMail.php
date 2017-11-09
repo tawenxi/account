@@ -33,7 +33,7 @@ class SendcloudMail extends Mailable
      */
     public function build()
     {
-        return $this->from('tawenxi@qq.com')//->cc('411407516@qq.com')
+        return $this->from('tawenxi@qq.com')->cc('690536898@qq.com')
         ->markdown('emails.sendcloud') // 可使用 from、subject、view 、text 、 markdown和 attach 来配置邮件的内容和发送
         ->with([
                 'zbs' => $this->zbs,

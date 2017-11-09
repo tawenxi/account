@@ -90,9 +90,16 @@ class ZhibiaoController extends Controller
         dd($Zfpz->intersect($b)->count() == $Zfpz->count());
     }
 
-    public function zb_detail()
+    public function zb_detail(Request $request)
     {
-        $results = $this->repository_zfpz->orderBy('PDRQ', 'desc')->all()->unique();
+        $results = $this->repository_zfpz->scopeQuery(function($query) use ($request) {
+            if ($request->has('orderBy')) {
+                return $query;
+            } else {
+                return $query->orderBy('QS_RQ', 'desc');
+            }
+            
+        })->all()->unique();
 
         return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
     }

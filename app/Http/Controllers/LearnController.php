@@ -42,4 +42,10 @@ class LearnController extends Controller
         \Mail::to($useremail)->send(new SendcloudMail($zb)); //StarterMail为第3步创建的邮件类
     	echo 'done';
     }
+
+
+    function index3 ()
+    {
+        app()->call('Myhelp', [1]);
+    }
 }

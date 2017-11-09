@@ -62,12 +62,12 @@ class InsertAccount extends Command
 
         $list->each(function ($v) {
             $bill = new Bill();
-            $bill->kjqj = $v['kjqj'];
-            $bill->pzh = $v['pzh'];
-            $bill->pzrq = $v['pzrq'];
-            $bill->srrq = $v['srrq'];
-            $bill->pzzy = $v['pzzy'];
-            $bill->pzje = $v['pzje'];
+            $bill->kjqj = trim($v['kjqj']);
+            $bill->pzh = trim($v['pzh']);
+            $bill->pzrq = trim($v['pzrq']);
+            $bill->srrq = trim($v['srrq']);
+            $bill->pzzy = trim($v['pzzy']);
+            $bill->pzje = trim($v['pzje']);
 
             $ok = $bill->save();
             if (!$ok) {

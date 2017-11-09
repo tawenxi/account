@@ -259,6 +259,8 @@ class Guzzle extends Model
         $this->insertbody = str_replace('178190121002547948', $payee['payeeaccount'], $this->insertbody);
         $this->insertbody = str_replace('遂川县农商合作银行', $payee['payeebanker'], $this->insertbody);
         $this->insertbody = str_replace('99991392', '', $this->insertbody);
+        $this->insertbody = str_replace('99991797', '', $this->insertbody);
+
 
         //名字更改的时候更换这个-------------------------------
 

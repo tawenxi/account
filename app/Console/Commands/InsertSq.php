@@ -9,7 +9,7 @@ use App\Model\Respostory\Guzzle;
 use App\Model\Respostory\Http;
 use App\Model\Test;
 use Illuminate\Console\Command;
-use Excption;
+use Exception;
 
 class InsertSq extends Command
 {

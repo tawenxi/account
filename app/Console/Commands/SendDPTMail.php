@@ -52,12 +52,12 @@ class SendDPTMail extends Command
         $date = $this->argument('days')?
         str_replace('-', '', Carbon::parse("-{$this->argument('days')} days")->toDateString()):
         date("Ymd");
-        $zbs = $this->repository_zb->findwhere([['LR_RQ','>=',$date]],$headers);
+        $zbs = $this->repository_zb->orderBy('LR_RQ','desc')->findwhere([['LR_RQ','>=',$date]],$headers);
         $headers = ['QS_RQ', 'ZY', 'JE','SKR'];
-        $zfpzs = $this->repository_zfpz->findwhere([['QS_RQ','>=',$date]],$headers);
+        $zfpzs = $this->repository_zfpz->orderBy('QS_RQ','desc')->findwhere([['QS_RQ','>=',$date]],$headers);
         $useremail = 'tawenxi@qq.com';
 
-        //SendDPTMailJob::dispatch($zbs,$zfpzs);
+        //SendDPTMailJob::dispatch($zbs,$zfpzs);//要接模型而不能接收模型集合
         \Mail::to($useremail)->send(new SendcloudMail($zbs,$zfpzs)); //StarterMail为第3步创建的邮件类
     }
 }

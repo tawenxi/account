@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "browner12/helpers": "^2.0",
         "fideloper/proxy": "~3.3",
         "guzzlehttp/guzzle": "~6.0",
         "kint-php/kint": "^2.2",

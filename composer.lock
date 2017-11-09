@@ -4,8 +4,71 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d99713fd3662d855057446e41f91ebf",
+    "content-hash": "92aea262c884b6d3427f379b03909190",
     "packages": [
+        {
+            "name": "browner12/helpers",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/browner12/helpers.git",
+                "reference": "cb5fef47dc955ddc080bede4745a6fb905e03db8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/browner12/helpers/cb5fef47dc955ddc080bede4745a6fb905e03db8.zip",
+                "reference": "cb5fef47dc955ddc080bede4745a6fb905e03db8",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "~5.2",
+                "illuminate/contracts": "~5.2",
+                "illuminate/support": "~5.2",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "suggest": {
+                "moneyphp/money": "Money value object."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "browner12\\helpers\\HelperServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "browner12\\helpers\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrew Brown",
+                    "email": "browner12@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "generic helpers",
+            "homepage": "https://github.com/browner12/helpers",
+            "keywords": [
+                "browner12",
+                "helpers"
+            ],
+            "time": "2017-08-01T00:59:51+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
@@ -1854,16 +1917,16 @@
         },
         {
             "name": "prettus/l5-repository",
-            "version": "2.6.22",
+            "version": "2.6.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/andersao/l5-repository.git",
-                "reference": "c28699dbe0823bb7e5f93c4f292018dcc163d5bc"
+                "reference": "76acf53fd4d92bbc93f2990e10dbe8c11f02d4e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/andersao/l5-repository/c28699dbe0823bb7e5f93c4f292018dcc163d5bc.zip",
-                "reference": "c28699dbe0823bb7e5f93c4f292018dcc163d5bc",
+                "url": "https://files.phpcomposer.com/files/andersao/l5-repository/76acf53fd4d92bbc93f2990e10dbe8c11f02d4e8.zip",
+                "reference": "76acf53fd4d92bbc93f2990e10dbe8c11f02d4e8",
                 "shasum": ""
             },
             "require": {
@@ -1884,6 +1947,11 @@
             "extra": {
                 "branch-alias": {
                     "dev-develop": "2.2-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Prettus\\Repository\\Providers\\RepositoryServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -1910,7 +1978,7 @@
                 "model",
                 "repository"
             ],
-            "time": "2017-09-06T01:48:23+00:00"
+            "time": "2017-10-28T20:20:20+00:00"
         },
         {
             "name": "prettus/laravel-validation",
