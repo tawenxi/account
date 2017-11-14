@@ -99,7 +99,7 @@ class InsertAccount extends Command
             if (!$ok) {
                 Bill::truncate();
                 Fenlu::truncate();
-                $this->info('success--'.$v->zy.'--'.$v->je);
+                $this->info('分录数据有错，保存失败'.$v->zy.'--'.$v->je);
                 dd('分录数据错误');
             }
         });

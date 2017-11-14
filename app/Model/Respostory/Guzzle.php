@@ -159,7 +159,10 @@ class Guzzle extends Model
             stristr($vali_var, $this->payee['amount']) and 
             stristr($vali_var, $this->payee['payee']) and 
             stristr($vali_var, $this->payee['payeebanker']) and 
-            stristr($vali_var, $this->payee['zhaiyao']))
+            stristr($vali_var, $this->payee['zhaiyao']) and
+            stristr($vali_var, "'178157750000004662', '农商行枚江分理处', '012'")
+            //确保银行数据接收
+            )
         {}else {
             throw new Exception('POST前验证替换效果失败');
         } 
@@ -262,10 +265,10 @@ class Guzzle extends Model
         $this->insertbody = str_replace('99991797', '', $this->insertbody);
 
 
-        //名字更改的时候更换这个-------------------------------
+        //名字更改的时候更换这个-------------------------------'005', 'zhaiyao'
 
         //----------------------------------------------------------
-        $this->insertbody = str_replace('\'012\'', '\'\'', $this->insertbody);
+        //$this->insertbody = str_replace('\'012\'', '\'\'', $this->insertbody);//会影响银行接收信息
         //-----------------------------
         $this->insertbody = str_replace('遂川县财政局枚江乡财政所', '遂川县枚江镇财政所', $this->insertbody);
         $this->insertbody = str_replace('遂川县枚江镇财政所2', '遂川县枚江镇财政所', $this->insertbody);

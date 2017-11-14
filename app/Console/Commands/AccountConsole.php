@@ -40,13 +40,13 @@ class AccountConsole extends Command
         $hasAccount = $this->option('withallaccount');
         $is_income = $this->option('income');
         if ($is_income) {
-            $results = \App\Model\Zb::search($this->argument('date'), 0.01, true)
+            $results = \App\Model\Zb::where('QS_RQ','like',"%{$this->argument('date')}%")
             ->Hasaccount($hasAccount)
             ->orderBy('LR_RQ')
             ->get()
             ->unique();
         } else {
-            $results = \App\Model\Zfpz::search($this->argument('date'), 0.01, true)
+            $results = \App\Model\Zfpz::where('QS_RQ','like',"%{$this->argument('date')}%")
             ->Hasaccount($hasAccount)
             ->orderBy('PDH')
             ->get()

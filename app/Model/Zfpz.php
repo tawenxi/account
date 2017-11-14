@@ -20,10 +20,10 @@ class Zfpz extends Model
         return $this->belongsTo(Account::class, 'account_number', 'account_number');
     }
 
-    public function scopeHasaccount($query, $account)
+    public function scopeHasaccount($query, $account=false)
     {
         if (!$account) {
-            return $query->where('account_number', '');
+            return $query->where('account_number', '')->orwhere('account_number', null);
         }
 
         return $query;

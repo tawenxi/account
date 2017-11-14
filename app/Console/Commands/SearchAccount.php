@@ -42,6 +42,12 @@ class SearchAccount extends Command
      */
     public function handle()
     {
+        //删除作废凭证数据
+        $zuofei_pzs = \DB::table('GL_Pzml')->where('zt','0')->get(['kjqj','pzh']);
+        foreach ($zuofei_pzs as $zuofei_pz) {
+            \DB::table('GL_Pznr')->where('kjqj', $zuofei_pz->kjqj)->where('pzh', $zuofei_pz->pzh)->delete();
+        }
+
         $account_id = 0;
         if (!$this->argument('account')) {
             do {

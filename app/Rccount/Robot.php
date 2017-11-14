@@ -20,9 +20,21 @@ class Robot
         } elseif ($jie == $dai) {
             return true;
         } else {
-            dd('平衡有错，多对多');
+            $wrong_id = $list_id - 1;
+            dd('平衡有错，多对多凭证号：'.$wrong_id.'金额'.$jie.'-'.$dai);
         }
     }
+
+
+
+    /**
+     *
+     * @param $zero 传入：'jie',或者'dai' 表示借方或者贷方为0
+     *        $amount 需要平衡的金额
+     * 平衡分录
+     *
+     */
+
 
     public function be_balance($zero, $amount)
     {
