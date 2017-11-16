@@ -54,7 +54,9 @@ class SearchController extends Controller
     {
         $result = Account::create(
             ['account_name'  => $request->account_name,
-             'account_number'=> $request->account_number, ]);
+             'account_number'=> $request->account_number,
+             'name' =>$request->account_number.'@'.$request->account_name,
+             'init'=>0]);
 
         return \Response::json([
             'status'=> 'success',

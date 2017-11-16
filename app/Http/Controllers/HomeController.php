@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Zb;
 use App\Model\Zfpz;
 use Illuminate\Http\Request;
+use App\Repositories\ZfpzRepository;
 
 class HomeController extends Controller
 {
@@ -13,9 +14,11 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    protected $repository;
+    public function __construct(ZfpzRepository $repository)
     {
-        // $this->middleware('auth');
+        $this->middleware('auth');
+        $this->repository = $repository;
     }
 
     /**
@@ -28,9 +31,9 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function zbdetail(Request $request)
+    public function zbdetail()
     {
-        $results = Zfpz::search(\Request::get('search'), 0.01, true)->orderBy('PDRQ', 'desc')->get()->unique();
+        $results = $this->repository->orderBy('PDRQ', 'desc')->all()->unique();
 
         return view('guzzle.zbdetail', compact('results'))->render();
     }

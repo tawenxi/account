@@ -9,7 +9,7 @@
 @foreach ($zbs as $zb)
 | {{ $zb->LR_RQ }}      | {{ $zb->ZY }} | ${{ $zb->JE }}      |
 @endforeach
-| 汇总      | 汇总 | ${{ bcdiv($zbs->sum('JE'), '1',2) }}      |
+| 汇总      | 汇总 | ${{ div($zbs->sum('JE')) }}      |
 @endcomponent
 
 
@@ -21,7 +21,7 @@
 @foreach ($zfpzs as $zfpz)
 | {{ $zfpz->QS_RQ }}      | {{ $zfpz->ZY }} | ${{ $zfpz->JE }}      |
 @endforeach
-| 汇总      | 汇总 | ${{ bcdiv($zfpzs->sum('JE'), '1',2) }}       |
+| 汇总      | 汇总 | ${{ div($zfpzs->sum('JE')) }}       |
 @endcomponent
 
 

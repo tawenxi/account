@@ -43,10 +43,10 @@ class SearchAccount extends Command
     public function handle()
     {
         //删除作废凭证数据
-        $zuofei_pzs = \DB::table('GL_Pzml')->where('zt','0')->get(['kjqj','pzh']);
-        foreach ($zuofei_pzs as $zuofei_pz) {
-            \DB::table('GL_Pznr')->where('kjqj', $zuofei_pz->kjqj)->where('pzh', $zuofei_pz->pzh)->delete();
-        }
+        // $zuofei_pzs = \DB::table('GL_Pzml')->where('zt','0')->get(['kjqj','pzh']);
+        // foreach ($zuofei_pzs as $zuofei_pz) {
+        //     \DB::table('GL_Pznr')->where('kjqj', $zuofei_pz->kjqj)->where('pzh', $zuofei_pz->pzh)->delete();
+        // }
 
         $account_id = 0;
         if (!$this->argument('account')) {
@@ -81,11 +81,11 @@ class SearchAccount extends Command
         $total = \DB::table('accounts')->where('account_number', $account_number)->value('init');
 
         $table = $accounts->map(function ($account) use ($headers,$total) {
-            $account['jie'] = round($account->jie, 2);
-            $account['dai'] = round($account->dai, 2);
+            $account['jie'] = div($account->jie);
+            $account['dai'] = div($account->dai);
             $account['zy'] = trim(mb_substr($account['zy'], 0, 10, 'utf-8'));
-            $GLOBALS['total'] = round($GLOBALS['total'], 2) + round((($account['jie'] != 0) ? $account['jie'] : 0), 2) - round((($account['dai'] != 0) ? $account['dai'] : 0), 2);
-            $account['yue'] = round($GLOBALS['total'], 2);
+            $GLOBALS['total'] = div($GLOBALS['total']) + div((($account['jie'] != 0) ? $account['jie'] : 0)) - div((($account['dai'] != 0) ? $account['dai'] : 0));
+            $account['yue'] = div($GLOBALS['total']);
 
             return $account->only($headers);
         });

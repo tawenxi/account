@@ -54,7 +54,7 @@ class Guzzle extends Model
      */
     private function setAmountData($amount)
     {
-        $pattern = '/\d{1,}(.[0-9]{1,})?,\s*\d{1,}(.[0-9]{1,})?,\s*\d{0,}(.[0-9]{1,})?,\s*\d{1,}(.[0-9]{1,2})?/';
+        $pattern = '/\d{1,}(.[0-9]{1,2})?,\s*\d{1,}(.[0-9]{1,2})?,\s*\d{0,}(.[0-9]{1,2})?,\s*\d{1,}(.[0-9]{1,2})?/';
         preg_match($pattern, $amount, $res);
         //dd($amount,$res);
         if ($res[0] === $amount) {
@@ -119,7 +119,7 @@ class Guzzle extends Model
         } elseif ((int)substr($this->payee['amount'], strpos($this->payee['amount'],'.')+1) > 100){
             throw new Exception('输入了多位小数');
         } else {
-            $this->payee['amount'] = bcdiv($this->payee['amount'], '1',2);
+            $this->payee['amount'] = div($this->payee['amount']);
         };
     }
     
@@ -145,6 +145,11 @@ class Guzzle extends Model
             throw new Exception("指标不足：{$zb['KYJHJE']}小于{$this->payee['amount']}");
         }
         Test::log(__METHOD__.'验证金额足够');
+
+        $zb['YKJHZB'] = div($zb['YKJHZB']);
+        $zb['YYJHJE'] = div($zb['YYJHJE']);
+        $zb['KYJHJE'] = div($zb['KYJHJE']);
+
         $zbamount = $zb['YKJHZB'].','.$zb['YYJHJE'].','.$zb['KYJHJE'].','.$this->payee['amount'];
         Test::log(__METHOD__.'生成金额数据');
 

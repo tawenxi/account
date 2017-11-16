@@ -6,6 +6,7 @@ class Bill extends \LaravelArdent\Ardent\Ardent
 {
     public $timestamps = false;
     public $table = 'lists';
+    public $pid = 0;
 
     public static $rules = [
     'kjqj' => "required|regex:/^\d{6}$/|between:6,6",
@@ -25,12 +26,12 @@ class Bill extends \LaravelArdent\Ardent\Ardent
     public function beforeSave()
     {
         $pzh = $this->pluck('pzh');
-        $i = 0;
+        $i = $this->pid;
         while ($shift = $pzh->shift()) {
             $check = (substr($shift, 7) == ++$i);
             if (!$check) {
                 //return false;
-                dd('验证行号错误', $shift, $i);
+                dd('凭证号顺序不对', $shift, $i);
             }
         }
         //dd('before');

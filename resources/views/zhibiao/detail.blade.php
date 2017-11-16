@@ -60,7 +60,7 @@
 				</td>
 				<td>
 				
-					{{bcdiv($result->JE,1,2)}}
+					{{div($result->JE)}}
 				
 				</td>
 				

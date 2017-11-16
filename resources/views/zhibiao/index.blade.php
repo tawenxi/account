@@ -72,7 +72,7 @@
 				
 				<td>
 				
-					{{bcdiv($result->JE-$result->zfpzs->sum('JE'),1,2)}}
+					{{div($result->JE-$result->zfpzs->sum('JE'))}}
 				
 				</td>
 				<td >

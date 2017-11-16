@@ -67,7 +67,7 @@ class InsertAccount extends Command
             $bill->pzrq = trim($v['pzrq']);
             $bill->srrq = trim($v['srrq']);
             $bill->pzzy = trim($v['pzzy']);
-            $bill->pzje = trim($v['pzje']);
+            $bill->pzje = div(trim($v['pzje']));
 
             $ok = $bill->save();
             if (!$ok) {
@@ -90,7 +90,7 @@ class InsertAccount extends Command
             $fenlu->zy = $v['zy'];
             $fenlu->kmdm = $v['kmdm'];
             $fenlu->jdbz = $v['jdbz'];
-            $fenlu->je = $v['je'];
+            $fenlu->je = div($v['je']);
             $fenlu->wldrq = $v['wldrq'];
             $fenlu->xmdm = $v['xmdm'];
             $fenlu->list_id = $v['list_id'];
@@ -111,7 +111,7 @@ class InsertAccount extends Command
             dd('借贷平衡失败');
         }
 
-        $this->info('fenlu总金额-'.$fenlus->sum('je'));
+        $this->info('fenlu总金额-'.div($fenlus->sum('je')));
         $this->info('fenlu总数量-'.$fenlus->where('flh', 1)->count());
         $this->error('比对双方数据...:');
 

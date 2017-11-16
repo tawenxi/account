@@ -13,6 +13,8 @@ use Exception;
 
 class InsertSq extends Command
 {
+    protected $excelData;
+
     private $guzzleexcel;
     /**
      * The name and signature of the console command.
@@ -46,25 +48,69 @@ class InsertSq extends Command
      */
     public function handle()
     {
-        $searchobject = \App::make('acc'); //初始化
-        $arr = $this->guzzleexcel
-                    ->setSkipNum()
-                    ->getexcel()
-                    ->each(
-                        function ($item) use ($searchobject) {
-                            $item['kemuname'] = stristr($item['kemu'], '@') ?
-                    $item['kemu'] :
-                    $searchobject->findac($item['kemu']);
-                        }
-            )->toArray();
-        Test::log('获取excel数据并增加科目');
-        foreach ($arr as $key => $data) {
+        $this->excelData = $this->getExcelData();
 
+        $this->excelData = $this->validate_arr($this->excelData);
+
+
+        Test::log('验证科目数量');
+
+        $successi = 0;
+        foreach ($this->excelData as $key => $value) {
+            if ($value['amount'] > 0) {
+                $value['amount'] = div($value['amount']);
+            } else {
+                throw new Exception('金额无效');
+            }
+
+            $guzz = \App::make(Guzzle::class, [
+            'Getsqzb'=> app()->make(Getsqzb::class),
+            'http'   => app()->make(Http::class),
+            'payee'  => $value, ]); //传入一个一位数组（账户信息）
+            if (stristr($this->excelData[$key]['kemu'], '#')) {
+                $this->info('info:第'.(1 + $successi).'条数据做账成功但未授权支付'.$value['zhaiyao']);
+            } else {
+                //dd($value);
+                // dd("拨款成功");//开关
+                $guzz->add_post();
+            }
+
+            
+            if (stristr($this->excelData[$key]['kemu'], '***')) {
+                $this->info('Info:第'.(1 + $successi).'条数据完成重录，没做账保存'.$value['zhaiyao']);
+            } else {
+                $res = $guzz->savesql($this->excelData[$key]);
+            }
+            $successi++;
+            $this->info('success--第'.$successi.'条数据拨款成功'.$value['zhaiyao'].'--'.$value['amount']);
+        }
+        Test::log('注入授权数据');
+        $this->info('success--'.$successi.'条数据拨款成功');
+
+        $guzz->updatedb()->pluck('KYJHJE')->each(function ($val) {
+            ($val >= 0) ? '' : $this->error('出大错了，出现可用金额负数'.$val);
+        });
+        //dump(Test::$info);
+    }
+
+
+    /**
+     *
+     * validate the arr，sometimes this will not be adhereed
+     * @param $arr
+     * @return $arr
+     */
+
+    protected function validate_arr ($arr)
+    {
+        foreach ($arr as $key => $value)
+        {
             $arr[$key]['payeeaccount'] = trim($arr[$key]['payeeaccount']);
             $arr[$key]['amount'] = trim($arr[$key]['amount']);
             $arr[$key]['zbid'] = trim($arr[$key]['zbid']);
-            $arr[$key]['amount'] = bcdiv($arr[$key]['amount'], '1',2);
-            
+            $arr[$key]['amount'] = div($arr[$key]['amount']);
+            $arr[$key]['kemu'] = $arr[$key]['kemuname'] = '@';   //为了不经常忘记加@所以这里就强制@
+                
             $Validator = \Validator::make($arr[$key], [
                 'payeeaccount'=> 'numeric',
                 'amount'      => 'numeric|between:0.01,3000000',
@@ -85,55 +131,49 @@ class InsertSq extends Command
                 }
                 throw new Exception('检核数据出错'.__line__);
             }
-        }
 
-        foreach ($arr as $key => $value) {
+        
+
             if (count($value) != 8) {
                 throw new Exception('warning:输入字段数量不为8'.__line__);
             }
 
             if (count($arr[$key]['kemuname']) == 1 && is_array($arr[$key]['kemuname'])) {
                 $arr[$key]['kemuname'] = (string) (reset($arr[$key]['kemuname']));
+                
+                
             }
             //这里使用了reset函数
             if (is_array($arr[$key]['kemuname'])) {
                 throw new Exception('请选择确认会计科目并包含@，或者修改关键字');
             }
+            
         }
-        Test::log('验证科目数量');
-
-        $successi = 0;
-        foreach ($arr as $key => $value) {
-            if ($value['amount'] > 0) {
-                $value['amount'] = bcdiv($value['amount'],'1',2);
-            } else {
-                throw new Exception('金额无效');
-            }
-            $guzz = \App::make(Guzzle::class, [
-            'Getsqzb'=> app()->make(Getsqzb::class),
-            'http'   => app()->make(Http::class),
-            'payee'  => $value, ]); //传入一个一位数组（账户信息）
-            if (stristr($arr[$key]['kemu'], '#')) {
-                $this->info('info:第'.(1 + $successi).'条数据做账成功但未授权支付'.$value['zhaiyao']);
-            } else {
-                //dd($value);
-                // dd("拨款成功");//开关
-                $guzz->add_post();
-            }
-            if (stristr($arr[$key]['kemu'], '***')) {
-                $this->info('Info:第'.(1 + $successi).'条数据完成重录，没做账保存'.$value['zhaiyao']);
-            } else {
-                $res = $guzz->savesql($value);
-            }
-            $successi++;
-            $this->info('success--第'.$successi.'条数据拨款成功'.$value['zhaiyao'].'--'.$value['amount']);
-        }
-        Test::log('注入授权数据');
-        $this->info('success--'.$successi.'条数据拨款成功');
-
-        $guzz->updatedb()->pluck('KYJHJE')->each(function ($val) {
-            ($val >= 0) ? '' : $this->error('出大错了，出现可用金额负数'.$val);
-        });
-        // dump(Test::$info);
+        return $arr;
     }
+
+
+    /**
+     *
+     * get Excel data
+     *
+     */
+
+    protected function getExcelData()
+    {
+        $searchobject = \App::make('acc'); //初始化
+        $data = $this->guzzleexcel
+                    ->setSkipNum()
+                    ->getexcel()
+                    ->each(
+                        function ($item) use ($searchobject) {
+                            $item['kemuname'] = stristr($item['kemu'], '@') ?
+                    $item['kemu'] :
+                    $searchobject->findac($item['kemu']);
+                        }
+            )->toArray();
+        Test::log('获取excel数据并增加科目');
+        return $data;
+    }
+    
 }

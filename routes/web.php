@@ -125,6 +125,15 @@ Route::get('/5', 'LearnController@index');
 Route::get('/2', 'LearnController@index2');
 Route::get('/3', 'LearnController@index3');
 
+Route::get('/bc', function(){
+    $a = (random_int(0, 500000)+random_int(0, 1))/random_int(01, 100);
+    dump('bcdiv'.bcdiv($a,1,'2'));
+    dump('rount'.round($a,2));
+    echo div($a);
+});
+
+
+
 
 
 
