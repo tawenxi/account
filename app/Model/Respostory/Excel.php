@@ -10,16 +10,20 @@ class Excel extends Model
     private $import;
     public $title;
     public $skipNum;
-
-    public function __construct($excelFile = null)//默认传入excel.xls方便注入，不然无法注入
+    /**
+     *
+     * 应用模式 $Excel->setExcelFile('file')->getExcel()
+     *
+     */
+    
+    public function setExcelFile($excelFile)
     {
-        if ($excelFile) {
-            cache(['excel'=>$excelFile], 10);
-            $this->excelFile = $excelFile;
-            $this->import = app()->make("\App\Model\SalaryListImport");
-            $this->setDate();
-            $this->title = $this->getTitle();
-        }
+        cache(['excel'=>$excelFile], 10);
+        $this->excelFile = $excelFile;
+        $this->import = app()->make("\App\Model\SalaryListImport");
+        $this->setDate();
+        $this->title = $this->getTitle();
+        return $this;
     }
 
     public function getTitle()

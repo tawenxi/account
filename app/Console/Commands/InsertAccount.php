@@ -13,6 +13,8 @@ class InsertAccount extends Command
     private $fenlu;
     private $list;
     private $robot;
+    private $excel;
+
 
     /**
      * The name and signature of the console command.
@@ -36,9 +38,9 @@ class InsertAccount extends Command
     public function __construct(Excel $excel, Robot $robot)
     {
         parent::__construct();
-        $this->fenlu = \App::make(Excel::class, ['excelFile'=>'fenlus']);
-        $this->list = \App::make(Excel::class, ['excelFile'=>'lists']);
+        $this->excel = $excel;
         $this->robot = $robot;
+
     }
 
     /**
@@ -57,8 +59,8 @@ class InsertAccount extends Command
             Fenlu::truncate();
             $this->info('正在清空表格...');
         }
-        $list = $this->list->getExcel();
-        $fenlus = $this->fenlu->getExcel();
+        $list = $this->excel->setExcelFile('lists')->getExcel();
+        $fenlus = $this->excel->setExcelFile('fenlus')->getExcel();
 
         $list->each(function ($v) {
             $bill = new Bill();
@@ -81,6 +83,8 @@ class InsertAccount extends Command
         echo "\n";
         $this->info('list总金额-'.$list->sum('pzje'));
         $this->info('list总数量-'.$list->count());
+
+        //dd($fenlus->toarray());
 
         $fenlus->each(function ($v) {
             $fenlu = new Fenlu();

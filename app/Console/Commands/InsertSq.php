@@ -37,12 +37,12 @@ class InsertSq extends Command
      *
      * @return void
      */
-    public function __construct(Guzzle $guzz)
+    public function __construct(Guzzle $guzz, Excel $guzzleexcel)
     {
         parent::__construct();
 
         $this->guzz = $guzz;
-        $this->guzzleexcel = \App::make(Excel::class, ['excelFile'=>'excel']);
+        $this->guzzleexcel = $guzzleexcel->setExcelFile('excel');
     }
 
     /**
@@ -75,12 +75,10 @@ class InsertSq extends Command
             if (stristr($this->excelData[$key]['kemu'], '#')) {
                 $this->info('info:第'.(1 + $successi).'条数据做账成功但未授权支付'.$value['zhaiyao']);
             } else {
-                //dd($value);
                 // dd("拨款成功");//开关
                 $this->guzz->add_post();
             }
 
-            
             if (stristr($this->excelData[$key]['kemu'], '***')) {
                 $this->info('Info:第'.(1 + $successi).'条数据完成重录，没做账保存'.$value['zhaiyao']);
             } else {

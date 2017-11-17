@@ -20,14 +20,17 @@ class InsertExcel extends Command
      */
     protected $description = '注入Excel';
 
+    protected $excel;
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(\App\Model\Respostory\Excel $excel)
     {
         parent::__construct();
+        $this->excel = $excel;
     }
 
     /**
@@ -37,7 +40,7 @@ class InsertExcel extends Command
      */
     public function handle()
     {
-        $excel2 = new \App\Model\Respostory\Excel($this->argument('excel'));
+        $excel2 = $this->excel->setExcelFile($this->argument('excel'));
         $excel2->setSkipNum()->getExcel()->map(function ($v) {
             static $i;
             \DB::table($this->argument('excel').'s')->insert($v->toArray());
