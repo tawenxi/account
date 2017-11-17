@@ -94,68 +94,10 @@ class GuzzleController extends Controller
      */
     public function index()
     {
-        header('Content-Type: text/html;charset=utf-8');
-        $searchobject = \App::make('acc'); //初始化
-        $arr = $this->guzzleexcel->setSkipNum()->getexcel()->each(function ($item) use ($searchobject) {
-            $item['kemuname'] = stristr($item['kemu'], '@') ? $item['kemu'] : $searchobject->findac($item['kemu']);
-        })->toArray();
-
-        //dd($arr);
-
-        foreach ($arr as $key => $data) {
-            $Validator = \Validator::make($data, [
-                'payeeaccount'=> 'numeric',
-                'amount'      => 'numeric|between:0.01,3000000',
-                'zbid'        => 'size:15',
-                ], [
-                'numeric'     => ':attribute 必须为纯数字',
-                'size'        => ':attribute 必须为15位',
-                ], ['zbid'    => '指标ID',
-                'amount'      => '金额',
-                'payeebanker' => '银行账号',
-            ]);
-            if ($Validator->fails()) {
-                return \Redirect::to('/hyy')->withErrors($Validator);
-            }
-        }
-
-        foreach ($arr as $key => $value) {
-            if (count($value) != 8) {
-                session()->flash('warning', '输入字段数量不为8');
-
-                return redirect()->action('GuzzleController@hyy');
-            }
-
-            if (count($arr[$key]['kemuname']) == 1 && is_array($arr[$key]['kemuname'])) {
-                $arr[$key]['kemuname'] = (string) (reset($arr[$key]['kemuname']));
-            }
-            //这里使用了reset函数
-            if (is_array($arr[$key]['kemuname'])) {
-                session()->flash('info', '请选择确认会计科目并包含@，或者修改关键字');
-
-                return redirect()->action('GuzzleController@hyy');
-            }
-        }
-
-        $successi = 0;
-        foreach ($arr as $key => $value) {
-            $guzz = \App::make(Guzzle::class, [
-            'Getsqzb'=> app()->make(Getsqzb::class),
-            'http'   => app()->make(Http::class),
-            'payee'  => $value, ]); //传入一个一位数组（账户信息）
-            if (stristr($arr[$key]['kemu'], '#')) {
-                session()->flash('info', '第'.(1 + $successi).'条数据做账成功但未授权支付');
-            } else {
-                // dd("拨款成功");//开关
-                $guzz->add_post();
-            }
-            if (stristr($arr[$key]['kemu'], '***')) {
-                session()->flash('info', '第'.(1 + $successi).'条数据完成重录，没做账保存');
-            } else {
-                $res = $guzz->savesql($value);
-            }
-            $successi++;
-        }
+        $exitCode = Artisan::call('insert:sq', [
+        '--force' => true,
+        ]);
+        
         session()->flash('success', $successi.'条数据拨款成功');
 
         return redirect()->action('GuzzleController@hyy');

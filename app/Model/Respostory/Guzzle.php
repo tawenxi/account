@@ -24,19 +24,30 @@ class Guzzle extends Model
     private $rizhiData; //[日志数据]
     private $http; //[日志数据]
 
-    public function __construct(Getsqzb $Getsqzb, Http $http, $payee = [])
+    public function __construct(Getsqzb $Getsqzb, Http $http)
     {
-        $this->payee = $payee;
         $this->Getsqzb = $Getsqzb;
         $this->http = $http;
         if (!empty($payee)) {
-            $zb = Guzzledb::where('ZBID', $payee['zbid'])->firstOrFail();
-            $this->insertbody = trim($zb->body);
-            if (!$this->validateSql()) {
-                throw new Exception('验证数据源错误');
-             } 
+
         }
 
+    }
+
+    public function setPayee(Array $payee)
+    {
+        $this->payee = $payee;
+        return $this;
+    }
+//   ->setPayee()->setBody()
+    public function setBody()
+    {
+        $zb = Guzzledb::where('ZBID', $this->payee['zbid'])->firstOrFail();
+        $this->insertbody = trim($zb->body);
+        if (!$this->validateSql()) {
+            throw new Exception('验证数据源错误');
+        } 
+        return $this;
     }
 
     public function validateSql()
@@ -282,15 +293,6 @@ class Guzzle extends Model
         $this->insertbody = iconv('UTF-8', 'GB2312', $this->insertbody);
     }
 
-    /**
-     * TODO: 进行时间信息
-     * - 传入@data
-     * - 返回@data.
-     */
-    public function setpayee($payee = [])//还没开始使用
-    {
-        $this->payee = $payee;
-    }
 
     /**
      * TODO: 更新数据库的授权指标

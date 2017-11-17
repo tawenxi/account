@@ -16,6 +16,8 @@ class InsertSq extends Command
     protected $excelData;
 
     private $guzzleexcel;
+    protected $guzz;
+
     /**
      * The name and signature of the console command.
      *
@@ -35,9 +37,11 @@ class InsertSq extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Guzzle $guzz)
     {
         parent::__construct();
+
+        $this->guzz = $guzz;
         $this->guzzleexcel = \App::make(Excel::class, ['excelFile'=>'excel']);
     }
 
@@ -63,23 +67,24 @@ class InsertSq extends Command
                 throw new Exception('金额无效');
             }
 
-            $guzz = \App::make(Guzzle::class, [
-            'Getsqzb'=> app()->make(Getsqzb::class),
-            'http'   => app()->make(Http::class),
-            'payee'  => $value, ]); //传入一个一位数组（账户信息）
+            // $guzz = \App::make(Guzzle::class, [
+            // 'Getsqzb'=> app()->make(Getsqzb::class),
+            // 'http'   => app()->make(Http::class),
+            // 'payee'  => $value, ]); //传入一个一位数组（账户信息）
+            $this->instantGuzz($value);
             if (stristr($this->excelData[$key]['kemu'], '#')) {
                 $this->info('info:第'.(1 + $successi).'条数据做账成功但未授权支付'.$value['zhaiyao']);
             } else {
                 //dd($value);
                 // dd("拨款成功");//开关
-                $guzz->add_post();
+                $this->guzz->add_post();
             }
 
             
             if (stristr($this->excelData[$key]['kemu'], '***')) {
                 $this->info('Info:第'.(1 + $successi).'条数据完成重录，没做账保存'.$value['zhaiyao']);
             } else {
-                $res = $guzz->savesql($this->excelData[$key]);
+                $res = $this->guzz->savesql($this->excelData[$key]);
             }
             $successi++;
             $this->info('success--第'.$successi.'条数据拨款成功'.$value['zhaiyao'].'--'.$value['amount']);
@@ -87,7 +92,7 @@ class InsertSq extends Command
         Test::log('注入授权数据');
         $this->info('success--'.$successi.'条数据拨款成功');
 
-        $guzz->updatedb()->pluck('KYJHJE')->each(function ($val) {
+        $this->guzz->updatedb()->pluck('KYJHJE')->each(function ($val) {
             ($val >= 0) ? '' : $this->error('出大错了，出现可用金额负数'.$val);
         });
         //dump(Test::$info);
@@ -174,6 +179,18 @@ class InsertSq extends Command
             )->toArray();
         Test::log('获取excel数据并增加科目');
         return $data;
+    }
+
+    /**
+     *
+     * 把guzzle变成为注入工具
+     * @param 接收一个数据数组
+     *
+     */
+    
+    protected function instantGuzz($data)
+    {
+        $this->guzz->setPayee($data)->setBody();
     }
     
 }
