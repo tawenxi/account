@@ -59,37 +59,13 @@ class InsertAccount extends Command
             Fenlu::truncate();
             $this->info('正在清空表格...');
         }
-        $list = $this->excel->setExcelFile('lists')->getExcel();
+
         $fenlus = $this->excel->setExcelFile('fenlus')->getExcel();
-
-        $list->each(function ($v) {
-            $bill = new Bill();
-            $bill->kjqj = trim($v['kjqj']);
-            $bill->pzh = trim($v['pzh']);
-            $bill->pzrq = trim($v['pzrq']);
-            $bill->srrq = trim($v['srrq']);
-            $bill->pzzy = trim($v['pzzy']);
-            $bill->pzje = div(trim($v['pzje']));
-
-            $ok = $bill->save();
-            if (!$ok) {
-                Bill::truncate();
-                Fenlu::truncate();
-                $this->info('失败--'.$v->pzzy.'--'.$v->pzje);
-                dd('list数据错误');
-            }
-            //$this->info('success--'.$v->pzzy.'--'.$v->pzje);
-        });
-        echo "\n";
-        $this->info('list总金额-'.$list->sum('pzje'));
-        $this->info('list总数量-'.$list->count());
-
-        //dd($fenlus->toarray());
 
         $fenlus->each(function ($v) {
             $fenlu = new Fenlu();
             $fenlu->kjqj = $v['kjqj'];
-            $fenlu->pzh = $v['pzh'];
+            $fenlu->pzh = (int)$v['list_id'];
             $fenlu->flh = $v['flh'];
             $fenlu->zy = $v['zy'];
             $fenlu->kmdm = $v['kmdm'];
@@ -97,7 +73,7 @@ class InsertAccount extends Command
             $fenlu->je = div($v['je']);
             $fenlu->wldrq = $v['wldrq'];
             $fenlu->xmdm = $v['xmdm'];
-            $fenlu->list_id = $v['list_id'];
+            $fenlu->list_id = (int)$v['list_id'];
 
             $ok = $fenlu->save();
             if (!$ok) {
@@ -109,7 +85,7 @@ class InsertAccount extends Command
         });
         $this->info('进行最后的一个分录调整');
 
-        $check = $this->robot->check_last_balance(Fenlu::max('list_id') + 1);
+        $check = $this->robot->checkbe_balance_and_insert_list(Fenlu::max('list_id'));
 
         if (!$check) {
             dd('借贷平衡失败');
@@ -132,8 +108,8 @@ class InsertAccount extends Command
             //$a = $v->Fenlus->count();
             //dd($t);
             if ($v->pzje == $v->Fenlus->sum('je') / 2 &&
-               $v->Fenlus->where('jdbz', '借')->sum('je') ==
-               $v->Fenlus->where('jdbz', '贷')->sum('je')) {
+               $v->Fenlus()->where('jdbz', '借')->sum('je') ==
+               $v->Fenlus()->where('jdbz', '贷')->sum('je')) {
                 $this->info($v->pzh.'比对成功');
             } else {
                 $this->error($v->pzh.'比对失败');

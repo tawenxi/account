@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Rccount;
+use App\Rccount\Bill;
 
 class Fenlu extends \LaravelArdent\Ardent\Ardent
 {
     public static $rules = [
     'kjqj' => "required|regex:/^\d{6}$/|between:6,6",
-//    'pzh'=>['required','regex:/^政府    [\d| ]\d$/','between:8,8'],
     'pzh'   => 'required|numeric|between:1,200',
     'flh'   => "required|regex:/\d+$/",
     'zy'    => 'required',
@@ -22,8 +22,9 @@ class Fenlu extends \LaravelArdent\Ardent\Ardent
   ];
 
     public function beforeSave()
-    {//先用rules检核 再beforesave
-        //dd('before');
+    {
+        //先用rules检核 再beforesave
+        $this->list_id = (int)($this->list_id);
         $robot = new Robot();
         if (is_numeric($this->pzh) && $this->pzh < 10) {
             $this->pzh = '政府     '.$this->pzh;
@@ -33,23 +34,16 @@ class Fenlu extends \LaravelArdent\Ardent\Ardent
             return false;
         }
 
-        if ($this->flh == '1') {
-            //echo 'flh';
-            $check = $robot->check_last_balance($this->list_id);
-            if (!$check) {
-                dd('借贷平衡失败');
-            }
+        if ($this->flh == '1' AND $this->list_id != 1) {
+            $res = $robot->checkbe_balance_and_insert_list($this->list_id-1);
+            $res?:dd('checkbe_balance_and_insert_list错误');
         }
 
         if (substr($this->kmdm, 0, 1) == 4 or
             substr($this->kmdm, 0, 1) == 5) {
-            if ($this->xmdm != '1001') {
-                dd('xmdm错误');
-            }
+            $this->xmdm = '1001';
         } else {
-            if ($this->xmdm != '') {
-                dd('xmdm错误');
-            }
+            $this->xmdm = '';
         }
     }
 

@@ -6,21 +6,21 @@ class Robot
 {
     public function check_last_balance($list_id)
     {
-        $jie = Fenlu::where('list_id', $list_id - 1)
+        $jie = Fenlu::where('list_id', $list_id)
                     ->where('jdbz', '借')->sum('je');
-        $dai = Fenlu::where('list_id', $list_id - 1)
+        $dai = Fenlu::where('list_id', $list_id)
                     ->where('jdbz', '贷')->sum('je');
+
+
         //echo $jie."   ".$dai;
         if ($jie != $dai && $jie == 0) {
-            //dd(222);
             return $this->be_balance('jie', $dai);
         } elseif ($jie != $dai && $dai == 0) {
-            //dd(222);
             return $this->be_balance('dai', $jie);
-        } elseif ($jie == $dai) {
-            return true;
+        } elseif ($jie == $dai) {        
+            return ['bool'=>true, 'amount'=>$jie, 'list_id'=>$list_id];
         } else {
-            $wrong_id = $list_id - 1;
+            $wrong_id = $list_id;
             dd('平衡有错，多对多凭证号：'.$wrong_id.'金额'.$jie.'-'.$dai);
         }
     }
@@ -60,12 +60,59 @@ class Robot
                     ->where('jdbz', '贷')->sum('je');
 
         if ($jie == $dai && $dai > 0) {
-            return true;
+            return ['bool'=>true, 'amount'=>$jie, 'list_id'=>$last_fenlu->list_id];
         } else {
             dd($jie, $dai);
             dd('无法借贷平衡');
         }
     }
+
+    public function checkbe_balance_and_insert_list($list_id){
+        $check = $this->check_last_balance($list_id);
+
+        if (!$check['bool']) {
+                dd('借贷平衡失败');
+            } else {        
+                   return $this->insert_list($check);     
+            }
+    }
+
+    public function insert_list($check)
+    {   
+        $list_info = [];
+        $list_info['pzje'] = $check['amount'];
+        $list_info['pzzy'] = Fenlu::where('list_id', $check['list_id'])
+                                  ->where('flh', 1)
+                                  ->value('zy');
+        $list_info['srrq'] = Fenlu::where('list_id', $check['list_id'])
+                                  ->where('flh', 1)
+                                  ->value('wldrq');
+        $list_info['pzrq'] = $list_info['srrq'];
+        $list_info['kjqj'] = substr($list_info['srrq'], 0,6);
+        $list_info['pzh'] = $check['list_id'];
+
+        $bill = new Bill();
+        $bill->kjqj = trim($list_info['kjqj']);
+        $bill->pzh = (int)trim($list_info['pzh']);
+        $bill->pzrq = trim($list_info['pzrq']);
+        $bill->srrq = trim($list_info['srrq']);
+        $bill->pzzy = trim($list_info['pzzy']);
+        $bill->pzje = div(trim($list_info['pzje']));
+        
+        $ok = $bill->save();
+        //dd($bill->toarray());
+    
+        if (!$ok) {
+        Bill::truncate();
+        Fenlu::truncate();
+        dump('失败--'.$list_info['pzzy'].'--'.$list_info['pzje']);
+        dd('list数据错误');
+            
+        }
+        return true;
+    }
+
+
 
     public function GetBalance($account_number)
     {
