@@ -42,6 +42,14 @@ class UpdateWaiwang extends Command
             $arrays = DB::connection('mysql')->table($table)->get()->toarray();
 
             $arrays = array_map('get_object_vars', $arrays);
+
+            if ($table == 'guzzledbs') {
+                foreach ($arrays as $key => $value) {
+                $arrays[$key]['body'] = $arrays[$key]['body']?:'';
+                }
+            }
+            
+
             DB::connection('imiguo')->table($table)->truncate();
             $this->info('已经清空数据表'.$table);
             DB::connection('imiguo')->table($table)->insert($arrays);

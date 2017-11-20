@@ -28,7 +28,7 @@ class InsertAccount extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = '注入 account to R9';
 
     /**
      * Create a new command instance.
