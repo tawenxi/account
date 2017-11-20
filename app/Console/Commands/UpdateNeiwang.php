@@ -40,7 +40,10 @@ class UpdateNeiwang extends Command
 
     public function backup()
     {
-        $this->ask('这个操作会覆盖seed数据，请问您是否已经把seed文件备份在R9Database，回答YES进行备份?');
+        $process = $this->ask('这个操作会覆盖seed数据，请问您是否已经把seed文件备份在R9Database，回答YES进行备份?');
+        if ($process != 'YES') {
+            dd('操作终止');
+        }
         $this->call('iseed', [
             'tables' => 'GL_Pznr,GL_Pzml', 
             '--database' => 'sqlsrv',
