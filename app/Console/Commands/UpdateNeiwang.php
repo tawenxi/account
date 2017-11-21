@@ -83,7 +83,14 @@ class UpdateNeiwang extends Command
                 break;
         }
 
-        $this->insertToMS();
+        $password = $this->ask('请输入密码');
+        if ($password == '6323151') {
+            $this->insertToMS();
+        } else {
+            dd('密码错误');
+        }
+
+        
     }
 
     /**

@@ -17,7 +17,7 @@ class Robot
             return $this->be_balance('jie', $dai);
         } elseif ($jie != $dai && $dai == 0) {
             return $this->be_balance('dai', $jie);
-        } elseif ($jie == $dai) {        
+        } elseif (div($jie) == div($dai)) {        
             return ['bool'=>true, 'amount'=>$jie, 'list_id'=>$list_id];
         } else {
             $wrong_id = $list_id;

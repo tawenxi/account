@@ -107,9 +107,9 @@ class InsertAccount extends Command
             }
             //$a = $v->Fenlus->count();
             //dd($t);
-            if ($v->pzje == $v->Fenlus->sum('je') / 2 &&
-               $v->Fenlus()->where('jdbz', '借')->sum('je') ==
-               $v->Fenlus()->where('jdbz', '贷')->sum('je')) {
+            if (div($v->pzje == $v->Fenlus->sum('je') / 2) &&
+               div($v->Fenlus()->where('jdbz', '借')->sum('je')) ==
+               div($v->Fenlus()->where('jdbz', '贷')->sum('je'))) {
                 $this->info($v->pzh.'比对成功');
             } else {
                 $this->error($v->pzh.'比对失败');
