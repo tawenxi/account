@@ -133,6 +133,11 @@ Route::get('/bc', function(){
 });
 
 
+Route::get('zbdetail/{id}/edit', 'zhibiaoController@edit');
+Route::patch('zbdetail/update', 'zhibiaoController@update');
+
+
+
 
 
 

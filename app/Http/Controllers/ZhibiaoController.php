@@ -126,7 +126,7 @@ class ZhibiaoController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -195,9 +195,17 @@ class ZhibiaoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $zfpz = \App\Model\Zfpz::find($request->id);
+        $zfpz->JE = $request->JE;
+        $zfpz->account_number = $request->account_number;
+        $zfpz->save();
+
+
+        //\App\Model\Zfpz::where('id', $request->id)->update($request->except(['_method','_token']));
+
+        return back()->with('success','更新成功');
     }
 
     /**
@@ -217,5 +225,14 @@ class ZhibiaoController extends Controller
         $results = $this->repository_zfpz->orderBy('PDRQ', 'desc')->all()->unique();
 
         return $this->excel->exportBlade('zhibiao.inco', compact('results'))->render();
+    }
+
+
+    public function edit($id)
+    {
+       $result = $this->repository_zfpz->find($id);
+
+
+       return view('zhibiao.editaccount', compact('result'));
     }
 }

@@ -70,27 +70,68 @@ class SearchAccount extends Command
         $account_number = $account_id ?
         (int) \App\Model\Account::where('id', $account_id)->value('account_number') :
         $this->argument('account');
-        $this->info(\App\Model\Account::where('account_number', $account_number)->value('account_name'));
-        $headers = ['kjqj', 'pzh', 'zy', 'jie', 'dai', 'kmdm', 'yue'];
-        $accounts = Account::
-        Where('kmdm', $account_number)
-        ->where('fzdm10', '')
-        ->get();
 
-        global $total;
-        $total = \DB::table('accounts')->where('account_number', $account_number)->value('init');
 
-        $table = $accounts->map(function ($account) use ($headers,$total) {
-            $account['jie'] = div($account->jie);
-            $account['dai'] = div($account->dai);
-            $account['zy'] = trim(mb_substr($account['zy'], 0, 10, 'utf-8'));
-            $GLOBALS['total'] = div($GLOBALS['total']) + div((($account['jie'] != 0) ? $account['jie'] : 0)) - div((($account['dai'] != 0) ? $account['dai'] : 0));
-            $account['yue'] = div($GLOBALS['total']);
+        if (is_numeric($account_number)) {
 
-            return $account->only($headers);
-        });
-        $this->table($headers, $table);
+            $this->info(\App\Model\Account::where('account_number', $account_number)->value('account_name'));
+            $headers = ['kjqj', 'pzh', 'zy', 'jie', 'dai', 'kmdm', 'yue'];
+            $accounts = Account::
+            Where('kmdm', $account_number)
+            ->where('fzdm10', '')
+            ->get();
+
+            global $total;
+            $total = \DB::table('accounts')->where('account_number', $account_number)->value('init');
+
+            $table = $accounts->map(function ($account) use ($headers,$total) {
+                $account['jie'] = div($account->jie);
+                $account['dai'] = div($account->dai);
+                $account['zy'] = trim(mb_substr($account['zy'], 0, 10, 'utf-8'));
+                $GLOBALS['total'] = div($GLOBALS['total']) + div((($account['jie'] != 0) ? $account['jie'] : 0)) - div((($account['dai'] != 0) ? $account['dai'] : 0));
+                $account['yue'] = div($GLOBALS['total']);
+
+                return $account->only($headers);
+            });
+            $this->table($headers, $table);
+
+        } else {
+             $this->search_zy($this->argument('account'));
+        }
+        
 
         //dd($this->robot->GetBalance('1001'));
+    }
+
+
+
+    /**
+     *
+     * 查询对象科目
+     *
+     */
+
+    public function search_zy($key_word)
+    {
+        $headers = ['kjqj', 'pzh', 'zy','jdbz','je','kmdm'];
+        $res = [];
+        $table = \DB::table('GL_Pznr')->where('zy', 'like', "%$key_word%")
+                    ->where('kmdm','!=','1002001')->get($headers)
+                ->map(function($account) use ($res){
+                    $res['kjqj'] = $account->kjqj;
+                    $res['pzh'] = $account->pzh;
+                    $res['zy'] = trim(mb_substr($account->zy, 0, 16, 'utf-8'));
+                    $res['jdbz'] = $account->jdbz;
+                    
+                    $res['je'] = $account->je;
+                    $res['kmdm'] = $account->kmdm;
+                    $res['account_name'] = \DB::table('accounts')->where('account_number', $account->kmdm)->value('account_name');
+
+                    return $res;
+                });
+
+        //dd($table);
+                array_push($headers, '科目');
+        $this->table($headers, $table);
     }
 }
