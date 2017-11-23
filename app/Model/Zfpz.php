@@ -37,7 +37,7 @@ class Zfpz extends Model
     public function setJeAttribute($amount)
     {
 
-        $this->attributes['JE'] = $amount * 100;
+        $this->attributes['JE'] = beint100($amount);
         //dd($this->attributes['JE']);
     }
 

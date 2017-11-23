@@ -43,7 +43,7 @@ class ZbDetail extends Model
 
     public function setJeAttribute($amount)
     {
-        $this->attributes['JE'] = $amount * 100;
+        $this->attributes['JE'] = beint100($amount);
     }
 
     public function getJeAttribute($amount)

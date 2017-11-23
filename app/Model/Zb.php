@@ -42,7 +42,7 @@ class Zb extends Model
 
     public function setZbyeAttribute($amount)
     {
-        $this->attributes['ZBYE'] = $amount * 100;
+        $this->attributes['ZBYE'] = beint100($amount);
     }
 
     public function getZbyeAttribute($amount)
@@ -52,7 +52,7 @@ class Zb extends Model
 
     public function setJeAttribute($amount)
     {
-        $this->attributes['JE'] = $amount * 100;
+        $this->attributes['JE'] = beint100($amount);
     }
 
     public function getJeAttribute($amount)

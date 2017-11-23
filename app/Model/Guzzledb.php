@@ -16,7 +16,7 @@ class Guzzledb extends Model
 
     public function setYkjhzbAttribute($amount)
     {
-        $this->attributes['YKJHZB'] = $amount * 100;
+        $this->attributes['YKJHZB'] = beint100($amount);
     }
 
     public function getYkjhzbAttribute($amount)
@@ -26,7 +26,7 @@ class Guzzledb extends Model
 
     public function setYyjhjeAttribute($amount)
     {
-        $this->attributes['YYJHJE'] = $amount * 100;
+        $this->attributes['YYJHJE'] = beint100($amount);
     }
 
     public function getYyjhjeAttribute($amount)
@@ -36,7 +36,7 @@ class Guzzledb extends Model
 
     public function setKyjhjeAttribute($amount)
     {
-        $this->attributes['KYJHJE'] = $amount * 100;
+        $this->attributes['KYJHJE'] = beint100($amount);
     }
 
     public function getKyjhjeAttribute($amount)
