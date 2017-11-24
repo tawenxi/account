@@ -61,31 +61,16 @@ class UpdateNeiwang extends Command
     {
         //先进行数据备份,将GL_Pznr和GL_Pzml的数据做iseed备份，生成iseed文件
         //只要再运行db:seed就可以把备份文件插入本地的homestead数据表
-        //如果不想进行备份可以update:R9 nobackup
+        //如果不想进行备份可以update:R9 --only=nobackup
+
+        //在 MS分支下 只能进行 php artisan update:R9 --only=backup 和
+                //             php artisan db:seed 操作
         switch ($this->option('only')) {
             case 'backup':
                 $this->backup();
                 return true;
                 break;
-
-            case 'allrollback':
-                $this->onebyoneupdate();
-                dd('已经还原成功');
-                break;
-
-            case 'nobackup':
-            $YES = $this->ask('是否不备份直接进行数据上传？回复<YES>继续');
-            if ($YES == 'YES') {
-                break;
-            }
-                dd('操作终止');
-            
-            default:
-                $this->backup();
-                break;
         }
-
-        $this->insertToMS();
     }
 
     /**
@@ -96,74 +81,4 @@ class UpdateNeiwang extends Command
     public $tables = ['lists','fenlus'];
 
     private $onebyonetables = ['GL_Pznr','GL_Pznr'];
-
-
-    /**
-     *
-     * insert the msssql one by one with GL_
-     *
-     */
-    public function onebyoneupdate() {
-        foreach ($this->onebyonetables as $table) {
-            $arrays = DB::connection('mysql')->table($table)
-                      ->get()->toarray();
-            $arrays = $this->transarray($arrays,$table);
-
-            foreach (collect($arrays)->chunk(500) as $datas) {
-                collect($arrays)->each(function($val) use ($table){
-                    DB::connection('sqlsrv')->table($table)->insert($val);
-                });
-            }
-        }
-    }
-
-
-/**
- *
- * tranfor [object] to array
- *  Array
- * 
- *
- */
-
-    public function transarray($arrays,$table) {
-
-        $arrays = array_map('get_object_vars', $arrays);
-        $arrays = collect($arrays)->map(function($item,$key) use ($table){
-            $keys = ($table=='lists')?['id'=>1]:($table=='fenlus')?['id'=>1,'list_id'=>2]:NULL;
-
-            return collect($item)->diffKeys($keys)->all();
-        })->toArray();
-
-        return $arrays;
-        
-
-    }
-
-
-
-    public function insertToMS()
-    {
-        foreach ($this->tables as $table) {
-            $arrays = DB::connection('mysql')->table($table)->get()->toarray();
-            $arrays = $this->transarray($arrays,$table);
-
-            if ($table == 'lists') {
-                collect($arrays)->each(function($val){
-                   DB::connection('sqlsrv')->table('GL_Pzml')->insert($val);
-                });
-    
-            } elseif ($table == 'fenlus') {
-                collect($arrays)->each(function($val){
-                    DB::connection('sqlsrv')->table('GL_Pznr')->insert($val);
-                });
-            } else {
-                dd();
-            }
-
-            $this->info('success-'.$table);
-        }
-    }
-    
-    
 }
