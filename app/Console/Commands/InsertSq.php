@@ -60,6 +60,7 @@ class InsertSq extends Command
         Test::log('验证科目数量');
 
         $successi = 0;
+        $total = 0;
         foreach ($this->excelData as $key => $value) {
             if ($value['amount'] > 0) {
                 $value['amount'] = div($value['amount']);
@@ -85,10 +86,13 @@ class InsertSq extends Command
                 $res = $this->guzz->savesql($this->excelData[$key]);
             }
             $successi++;
+            $total = $total + $value['amount'];
             $this->info('success--第'.$successi.'条数据拨款成功'.$value['zhaiyao'].'--'.$value['amount']);
         }
         Test::log('注入授权数据');
         $this->info('success--'.$successi.'条数据拨款成功');
+        $this->info('success--拨款总金额为'.$total);
+
 
         $this->guzz->updatedb()->pluck('KYJHJE')->each(function ($val) {
             ($val >= 0) ? '' : $this->error('出大错了，出现可用金额负数'.$val);

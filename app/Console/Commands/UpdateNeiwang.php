@@ -147,6 +147,7 @@ class UpdateNeiwang extends Command
                 });
             } elseif ($table == 'fenlus') {
                 collect($arrays)->each(function ($val) {
+                  //校验拿到的null 转化成单空格
                     foreach ($val as $key => $value) {
                       if ($value == null) {
                           $val[$key] = ' ';

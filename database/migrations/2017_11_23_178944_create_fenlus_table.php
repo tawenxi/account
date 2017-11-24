@@ -26,7 +26,7 @@ class CreateFenlusTable extends Migration
             $table->enum('jdbz', ['借', '贷']);
             $table->string('wbje')->default('0');
 
-            $table->double('je', 15, 2);
+            $table->decimal('je', 20, 2);
 
             $table->string('spz')->default(' ');
             $table->string('wldrq');
