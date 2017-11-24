@@ -63,7 +63,7 @@ class UpdateNeiwang extends Command
                 break;
 
             case 'allrollback':
-                $this->onebyoneupdate();
+                //$this->onebyoneupdate();//为了安全暂不启用
                 $this->info('已经还原成功');
 
                 return true;
@@ -146,6 +146,11 @@ class UpdateNeiwang extends Command
                 });
             } elseif ($table == 'fenlus') {
                 collect($arrays)->each(function ($val) {
+                    foreach ($val as $key => $value) {
+                      if ($value == null) {
+                          $val[$key] = ' ';
+                      }  
+                     }
                     DB::connection('sqlsrv')->table('GL_Pznr')->insert($val);
                 });
             } else {
