@@ -48,5 +48,6 @@ class GuzzledbRepositoryEloquent extends BaseRepository implements GuzzledbRepos
         'ZY'    => 'like',
         'KYJHJE'=> '>',
         'YSDWMC'=> 'like',
+        'useable',
     ];
 }

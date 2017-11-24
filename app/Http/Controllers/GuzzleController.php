@@ -117,7 +117,7 @@ class GuzzleController extends Controller
 
             'body.regex' => '数据源格式不正确,请检查Fillder是否有误或者支付类型有变', ]);
         $Guzzledb = $this->repository->findByField('ZBID', $zbid)->first();
-        $a = $Guzzledb->update(['body'=>trim($request->body)]);
+        $a = $Guzzledb->update(['body'=>trim($request->body),'useable'=>$request->useable]);
         if ($a) {
             session()->flash('success', '更新成功');
 

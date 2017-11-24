@@ -76,6 +76,12 @@
               <label for="useable"><font color="black">指标来源：</font></label>
               <input type="text" name="zbly" class="form-control" value={{ $guzzledb->ZBLYDM }}{{ $guzzledb->ZBLYMC }}>
             </div>
+
+            <div class="form-group">
+              <label for="useable"><font color="black">可用性：</font></label>
+              <input type="text" name="useable" class="form-control" value={{ $guzzledb->useable }}>
+            </div>
+
             <div class="form-group">
               <label for="body"><font color="black">数据源：</font></label>
               <textarea type="textarea" name="body" class="form-control" rows="20" >{{ $guzzledb->body }}</textarea>
