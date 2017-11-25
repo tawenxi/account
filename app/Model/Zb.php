@@ -47,7 +47,7 @@ class Zb extends Model
 
     public function getZbyeAttribute($amount)
     {
-        return bcdiv($this->attributes['ZBYE'], 100, 2);
+        return div($this->attributes['ZBYE']/100);
     }
 
     public function setJeAttribute($amount)
@@ -57,7 +57,7 @@ class Zb extends Model
 
     public function getJeAttribute($amount)
     {
-        return bcdiv($this->attributes['JE'], 100, 2);
+        return div($this->attributes['JE']/100);
     }
 
     protected $fillable = [

@@ -43,7 +43,7 @@ class Zfpz extends Model
 
     public function getJeAttribute($amount)
     {
-        return bcdiv($this->attributes['JE'], 100, 2);
+        return div($this->attributes['JE']/100);
     }
 
     protected $fillable = [

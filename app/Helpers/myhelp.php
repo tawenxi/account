@@ -25,7 +25,7 @@ if (!function_exists('div')) {
      */
     function div($amount)
     {
-        return bcdiv(begoodself($amount), '1', 2);
+        return number_format($amount, 2, '.', '');
     }
 
 
