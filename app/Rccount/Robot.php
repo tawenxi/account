@@ -124,13 +124,13 @@ class Robot
         $total = \DB::table('accounts')->where('account_number', $account_number)->value('init');
 
         $table = $accounts->each(function ($account) use ($total) {
-            $account['jie'] = round($account->jie, 2);
-            $account['dai'] = round($account->dai, 2);
+            $account['jie'] = div($account->jie);
+            $account['dai'] = div($account->dai);
 
-            $GLOBALS['total'] = round($GLOBALS['total'], 2) + round((($account['jie'] != 0) ? $account['jie'] : 0), 2) - round((($account['dai'] != 0) ? $account['dai'] : 0), 2);
-            $account['yue'] = round($GLOBALS['total'], 2);
+            $GLOBALS['total'] = div($GLOBALS['total']) + div((($account['jie'] != 0) ? $account['jie'] : 0)) - div((($account['dai'] != 0) ? $account['dai'] : 0));
+            $account['yue'] = div($GLOBALS['total']);
         });
 
-        return round($GLOBALS['total'], 2);
+        return div($GLOBALS['total']);
     }
 }
