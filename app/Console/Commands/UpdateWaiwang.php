@@ -52,7 +52,11 @@ class UpdateWaiwang extends Command
 
             DB::connection('imiguo')->table($table)->truncate();
             $this->info('已经清空数据表'.$table);
-            DB::connection('imiguo')->table($table)->insert($arrays);
+            
+            collect($arrays)->chunk(500)->each(function($data)use($table){
+                DB::connection('imiguo')->table($table)->insert($data->toarray());
+            });
+            
             $this->info('success-'.$table);
         }
     }

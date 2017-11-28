@@ -122,9 +122,10 @@ class InsertAccount extends Command
         /**
          * 询问是否进行数据插入远程R9操作.
          */
-        $YES = $this->ask('是否继续进行插入数据库操作？回复YES继续（1）备份数据（2）插入R9数据');
-        if ($YES == 'YES') {
+        $YES = $this->ask('是否继续进行插入数据库操作？回复YES继续（1）备份数据');
+        if ($YES === 'YES') {
             $this->call('update:R9', [
+                '--only'='nobackup'
             ]);
         }
     }

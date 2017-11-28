@@ -71,25 +71,29 @@ class UpdateNeiwang extends Command
                 break;
 
             case 'nobackup':
-            $YES = $this->ask('是否不备份直接进行数据上传？回复<YES>继续');
-            if ($YES == 'YES') {
-                break;
+                $YES = $this->ask('是否不备份直接进行数据上传？回复<YES>继续');
+                if ($YES === 'YES') {
+                $password = $this->ask('请输入密码');
+                if ($password === '6323151') {
+                    $this->insertToMS();
+                } else {
+                    dd('密码错误');
+                }
+
+                return true;
+                
             }
                 $this->info('操作终止');
 
                 return true;
+                break;
 
             default:
                 $this->backup();
                 break;
         }
 
-        $password = $this->ask('请输入密码');
-        if ($password == '6323151') {
-            $this->insertToMS();
-        } else {
-            dd('密码错误');
-        }
+
 
         
     }
@@ -106,17 +110,11 @@ class UpdateNeiwang extends Command
      */
     public function onebyoneupdate()
     {
-        foreach ($this->onebyonetables as $table) {
-            $arrays = DB::connection('mysql')->table($table)
-                      ->get()->toarray();
-            $arrays = $this->transarray($arrays, $table);
-
-            foreach (collect($arrays)->chunk(500) as $datas) {
-                collect($arrays)->each(function ($val) use ($table) {
-                    DB::connection('sqlsrv')->table($table)->insert($val);
-                });
-            }
+      DB::connection('mysql')->table($table)->chunk(200,function($datas){
+        foreach ($datas as $data) {
+          DB::connection('sqlsrv')->table($table)->insert(get_object_vars($data));
         }
+      });
     }
 
     /**
@@ -127,9 +125,21 @@ class UpdateNeiwang extends Command
     {
         $arrays = array_map('get_object_vars', $arrays);
         $arrays = collect($arrays)->map(function ($item, $key) use ($table) {
-            $keys = ($table == 'lists') ? ['id'=>1] : ($table == 'fenlus') ? ['id'=>1, 'list_id'=>2] : null;
 
-            return collect($item)->diffKeys($keys)->all();
+            switch ($table) {
+              case 'lists':
+                  $new_array = array_except($item, ['id']);
+                break;
+              case 'fenlus':
+                  $new_array = array_except($item, ['id', 'list_id']);
+                break;
+              
+              default:
+                $new_array = $item;
+                break;
+            }
+
+            return $new_array;
         })->toArray();
 
         return $arrays;
@@ -140,7 +150,7 @@ class UpdateNeiwang extends Command
         foreach ($this->tables as $table) {
             $arrays = DB::connection('mysql')->table($table)->get()->toarray();
             $arrays = $this->transarray($arrays, $table);
-
+            
             if ($table == 'lists') {
                 collect($arrays)->each(function ($val) {
                     DB::connection('sqlsrv')->table('GL_Pzml')->insert($val);

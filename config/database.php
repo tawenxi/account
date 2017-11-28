@@ -84,11 +84,11 @@ return [
 
         'sqlsrv' => [
             'driver'   => 'sqlsrv',
-            'host'     => env('MSHOST', ''),
+            'host'     => env('MSHOST', 'forge'),
             'port'     => '1433',
-            'database' => env('MSDATABASE', ''),
-            'username' => env('MSUSER', ''),
-            'password' => env('MSPASSWORD', ''),
+            'database' => env('MSDATABASE', 'forge'),
+            'username' => env('MSUSER', 'forge'),
+            'password' => env('MSPASSWORD', 'forge'),
             'charset'  => 'utf8',
             'prefix'   => '',
         ],
