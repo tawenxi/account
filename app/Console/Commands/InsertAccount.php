@@ -125,7 +125,7 @@ class InsertAccount extends Command
         $YES = $this->ask('是否继续进行插入数据库操作？回复YES继续（1）备份数据');
         if ($YES === 'YES') {
             $this->call('update:R9', [
-                '--only'='nobackup'
+                '--only'=>'nobackup',
             ]);
         }
     }

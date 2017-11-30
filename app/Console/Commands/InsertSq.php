@@ -56,7 +56,6 @@ class InsertSq extends Command
 
         $this->excelData = $this->validate_arr($this->excelData);
 
-
         Test::log('验证科目数量');
 
         $successi = 0;
@@ -72,22 +71,40 @@ class InsertSq extends Command
             // 'Getsqzb'=> app()->make(Getsqzb::class),
             // 'http'   => app()->make(Http::class),
             // 'payee'  => $value, ]); //传入一个一位数组（账户信息）
-            $this->instantGuzz($value);
-            if (stristr($this->excelData[$key]['kemu'], '#')) {
-                $this->info('info:第'.(1 + $successi).'条数据做账成功但未授权支付'.$value['zhaiyao']);
-            } else {
-                // dd("拨款成功");//开关
-                $this->guzz->add_post();
+            $paid_amount = 0;
+            $pm = $value['amount'];
+            $value['zbid'] = str_replace(' ', '', $value['zbid']);
+            $money_id = stristr($value['zbid'], '+')?explode('+', $value['zbid']):[$value['zbid']];
+
+            while ($paid_amount < $pm) {
+                
+                $value['zbid'] = array_shift($money_id);
+
+                if (!isset($value['zbid'])) throw new Exception('没有设置足够的zbid');
+
+                if (strlen($value['zbid'])!=15) throw new Exception('zbid长度错误');
+                if (preg_match("/001\.201\d\.0\.\d{4,4}/", $value['zbid']) != 1) 
+                    throw new Exception('zbid格式不正确');
+                $KYJHJE = $this->guzz->get_zbdata($value['zbid'])['KYJHJE'];       
+                $value['amount'] = ($KYJHJE>($pm-$paid_amount))?
+                ($pm-$paid_amount):($KYJHJE);
+
+                $value['amount'] = div($value['amount']);
+
+                $this->instantGuzz($value);
+                $this->guzz->add_post();                  // 拨款开关
+
+                $res = $this->guzz->savesql($value);
+
+                $this->info($value['zbid'].'---可用金额：'.$KYJHJE.'---使用了'.$value['amount']);
+                $paid_amount += $value['amount'];
+                $total = $total + $value['amount'];
+                
             }
 
-            if (stristr($this->excelData[$key]['kemu'], '***')) {
-                $this->info('Info:第'.(1 + $successi).'条数据完成重录，没做账保存'.$value['zhaiyao']);
-            } else {
-                $res = $this->guzz->savesql($this->excelData[$key]);
-            }
             $successi++;
-            $total = $total + $value['amount'];
-            $this->info('success--第'.$successi.'条数据拨款成功'.$value['zhaiyao'].'--'.$value['amount']);
+            
+            $this->error('success--第'.$successi.'条数据拨款成功'.$value['zhaiyao'].'--'.$pm);
         }
         Test::log('注入授权数据');
         $this->info('success--'.$successi.'条数据拨款成功');
@@ -121,13 +138,13 @@ class InsertSq extends Command
             $Validator = \Validator::make($arr[$key], [
                 'payeeaccount'=> 'numeric',
                 'amount'      => 'numeric|between:0.01,3000000',
-                'zbid'        => 'size:15',
+                //'zbid'        => 'size:15',
                 ],
                 [
                 'numeric'     => ':attribute 必须为纯数字',
                 'size'        => ':attribute 必须为15位',
                 ],
-                ['zbid'       => 'ZBID',
+                [//'zbid'       => 'ZBID',
                 'payeebanker' => 'Banker Number',
             ]);
             Test::log('验证excel数据');

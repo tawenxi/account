@@ -65,7 +65,7 @@ class Guzzle extends Model
      */
     private function setAmountData($amount)
     {
-        $pattern = '/\d{1,}(.[0-9]{1,2})?,\s*\d{1,}(.[0-9]{1,2})?,\s*\d{0,}(.[0-9]{1,2})?,\s*\d{1,}(.[0-9]{1,2})?/';
+        $pattern = '/\d{1,}(\.[0-9]{1,2})?,\s*\d{1,}(\.[0-9]{1,2})?,\s*\d{0,}(\.[0-9]{1,2})?,\s*\d{1,}(\.[0-9]{1,2})?/';
         preg_match($pattern, $amount, $res);
         //dd($amount,$res);
         if ($res[0] === $amount) {
@@ -127,8 +127,8 @@ class Guzzle extends Model
             throw new Exception('账号非全数值');
         }  elseif (!is_numeric($this->payee['amount'])) {
             throw new Exception('账号非全数值');
-        } elseif ((int)substr($this->payee['amount'], strpos($this->payee['amount'],'.')+1) > 100){
-            throw new Exception('输入了多位小数');
+        } elseif (strpos($this->payee['amount'],'.') AND ((int)substr($this->payee['amount'], strpos($this->payee['amount'],'.')+1) > 100)){
+            throw new Exception('输入了多位小数:'.$this->payee['amount']);
         } else {
             $this->payee['amount'] = div($this->payee['amount']);
         };
@@ -149,7 +149,7 @@ class Guzzle extends Model
 
 
         Test::log(__METHOD__.'根据一行数据获取对象的指标信息');
-        $zb = $this->get_zbdata($this->payee); //获取最新数据
+        $zb = $this->get_zbdata($this->payee['zbid']); //获取最新数据
 
         if ($zb['KYJHJE'] < $this->payee['amount']) {
             Test::log('!!!金额不足');
@@ -229,13 +229,13 @@ class Guzzle extends Model
      * - 传入@拨款数据
      * - 返回@指标DATA.
      */
-    public function get_zbdata($payee)
+    public function get_zbdata($zb_id)
     {
         Test::log(__METHOD__.'获取所有的授权指');
         $finddata = $this->Getsqzb->getsqdata();
         $collection = collect($finddata);
-        $filtered = $collection->filter(function ($item) use ($payee) {
-            return $item['ZBID'] == trim($payee['zbid']);
+        $filtered = $collection->filter(function ($item) use ($zb_id) {
+            return $item['ZBID'] == trim($zb_id);
         });
         Test::log(__METHOD__.'过滤指标');
         $zb = $filtered->pop();
@@ -250,7 +250,7 @@ class Guzzle extends Model
      */
     public function amountreplace($zbamount)
     {
-        $pattern3 = '/\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,})?,\s+\d{1,}(.[0-9]{1,2})?/';//这里的\s+\d{1,}(.[0-9]{1,})?可以不改为0，但是在setamount里需要改为0
+        $pattern3 = '/\d{1,}(\.[0-9]{1,})?,\s+\d{1,}(\.[0-9]{1,})?,\s+\d{1,}(\.[0-9]{1,})?,\s+\d{1,}(\.[0-9]{1,2})?/';//这里的\s+\d{1,}(.[0-9]{1,})?可以不改为0，但是在setamount里需要改为0
         $copydata = $this->insertbody;
         $this->setAmountData($zbamount);
         $this->insertbody = preg_replace($pattern3, $this->getAmountData(), $this->insertbody);
