@@ -96,7 +96,7 @@ class InsertSq extends Command
 
                 $res = $this->guzz->savesql($value);
 
-                $this->info($value['zbid'].'---可用金额：'.$KYJHJE.'---使用了'.$value['amount']);
+                $this->line($value['zbid'].'---可用金额：'.$KYJHJE.'---使用了'.$value['amount']);
                 $paid_amount += $value['amount'];
                 $total = $total + $value['amount'];
                 
@@ -104,7 +104,7 @@ class InsertSq extends Command
 
             $successi++;
             
-            $this->error('success--第'.$successi.'条数据拨款成功'.$value['zhaiyao'].'--'.$pm);
+            $this->info('success--第'.$successi.'条数据拨款成功'.$value['zhaiyao'].'--'.$pm);
         }
         Test::log('注入授权数据');
         $this->info('success--'.$successi.'条数据拨款成功');

@@ -127,7 +127,7 @@ class Guzzle extends Model
             throw new Exception('账号非全数值');
         }  elseif (!is_numeric($this->payee['amount'])) {
             throw new Exception('账号非全数值');
-        } elseif (strpos($this->payee['amount'],'.') AND ((int)substr($this->payee['amount'], strpos($this->payee['amount'],'.')+1) > 100)){
+        } elseif (strpos($this->payee['amount'],'.') !== FALSE AND ((int)substr($this->payee['amount'], strpos($this->payee['amount'],'.')+1) > 100)){
             throw new Exception('输入了多位小数:'.$this->payee['amount']);
         } else {
             $this->payee['amount'] = div($this->payee['amount']);

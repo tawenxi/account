@@ -138,7 +138,7 @@ Route::patch('zbdetail/update', 'zhibiaoController@update');
 
 
 Route::get('ff', function(){
-    dd( 9801359.82- 55071.54);
+    dd('2222'.config('myconfig.kjnd').'sss');
 });
 
 
