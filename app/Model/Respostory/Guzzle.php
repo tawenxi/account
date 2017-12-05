@@ -28,10 +28,6 @@ class Guzzle extends Model
     {
         $this->Getsqzb = $Getsqzb;
         $this->http = $http;
-        if (!empty($payee)) {
-
-        }
-
     }
 
     public function setPayee(Array $payee)
@@ -160,13 +156,14 @@ class Guzzle extends Model
         $zb['YKJHZB'] = div($zb['YKJHZB']);
         $zb['YYJHJE'] = div($zb['YYJHJE']);
         $zb['KYJHJE'] = div($zb['KYJHJE']);
+        $this->payee['amount'] = div($this->payee['amount']);
 
         $zbamount = $zb['YKJHZB'].','.$zb['YYJHJE'].','.$zb['KYJHJE'].','.$this->payee['amount'];
         Test::log(__METHOD__.'生成金额数据');
 
         $this->accountreplace($this->payee);
         $this->amountreplace($zbamount);
-        $this->insertbody = $this->timereplace($this->insertbody);
+        $this->insertbody = $this->timereplace($this->insertbody,5,3,1);
         Test::log(__METHOD__.'替换时间金额账户信息');
 
         //--------------------------------------------
@@ -253,7 +250,7 @@ class Guzzle extends Model
         $pattern3 = '/\d{1,}(\.[0-9]{1,})?,\s+\d{1,}(\.[0-9]{1,})?,\s+\d{1,}(\.[0-9]{1,})?,\s+\d{1,}(\.[0-9]{1,2})?/';//这里的\s+\d{1,}(.[0-9]{1,})?可以不改为0，但是在setamount里需要改为0
         $copydata = $this->insertbody;
         $this->setAmountData($zbamount);
-        $this->insertbody = preg_replace($pattern3, $this->getAmountData(), $this->insertbody);
+        $this->insertbody = preg_replace_with_count($pattern3, $this->getAmountData(), $this->insertbody, 1);
         $this->checkreplace($copydata, $this->insertbody);
     }
 
@@ -326,7 +323,7 @@ class Guzzle extends Model
 
         $timepattern = "/\'\s*20[123]([0-9]{5})\s*\'/";
         $copydata = $data;
-        $data = preg_replace($timepattern, "to_char(sysdate,'yyyymmdd')", $data);
+        $data = preg_replace_with_count($timepattern, "to_char(sysdate,'yyyymmdd')", $data, 1);
         $this->checkreplace($copydata, $data);
         Test::log(__METHOD__.'替换日期');
         $pattern = "/\[001,.+\]/";
@@ -335,7 +332,7 @@ class Guzzle extends Model
         $data2 = "[001,$Y,$Ym,$pid]";
         $copydata = $data;
         $this->setRizhiData($data2);
-        $data = preg_replace($pattern, $this->getRizhiData(), $data);
+        $data = preg_replace_with_count($pattern, $this->getRizhiData(), $data, 1);
         $this->checkreplace($copydata, $data);
         Test::log(__METHOD__.'替换日志信息[]');
         $ifsuccess = $this->http->makerequest($data);
@@ -363,7 +360,7 @@ class Guzzle extends Model
     {
         $data = $this->jiema($this->FJ_data);
         $copydata = $data;
-        $data = $this->timereplace($data);
+        $data = $this->timereplace($data,1,1,0);
         $this->checkreplace($copydata, $data);
         $copydata = $data;
         $data = str_replace('21886', $pid, $data);

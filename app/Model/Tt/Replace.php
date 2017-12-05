@@ -11,14 +11,14 @@ trait Replace
         }
     }
 
-    public function timereplace($data)
+    public function timereplace($data,$Y,$M,$D)
     {
         $pattern = "/\'\s*20[123]([0-9]{5})\s*\'/";
         $pattern1 = "/\'\s*20[123]([0-9]{3})\s*\'/";
         $pattern2 = "/\'\s*20[123]([0-9]{1})\s*\'/";
-        $data = preg_replace($pattern, "to_char(sysdate,'yyyymmdd')", $data);
-        $data = preg_replace($pattern1, "to_char(sysdate,'yyyymm')", $data);
-        $data = preg_replace($pattern2, "to_char(sysdate,'yyyy')", $data);
+        $data = preg_replace_with_count($pattern, "to_char(sysdate,'yyyymmdd')", $data, $D);
+        $data = preg_replace_with_count($pattern1, "to_char(sysdate,'yyyymm')", $data, $M);
+        $data = preg_replace_with_count($pattern2, "to_char(sysdate,'yyyy')", $data, $Y);
 
         return $data;
     }

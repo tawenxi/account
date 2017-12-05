@@ -35,7 +35,7 @@ class Getsqzb extends Model
     public function find_post($findquery)
     {
         $balancebody = $this->jiema($findquery);
-        $balancebody = $this->timereplace($balancebody);
+        $balancebody = $this->timereplace($balancebody,1,0,1);
 
         return $this->http->makerequest($balancebody);
     }

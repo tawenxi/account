@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('content')
-<h1>枚江镇授权支付指标明细表</h1>
+<h1>枚江镇授权支付指标明细表({{ $guzzledbs->count() }}条数据)</h1>
 @include('shared.errors')
 
 <article>
@@ -11,6 +11,7 @@
 
 		<thead>
 			<tr class='success'>
+			<th>ID</th>
 				<th>指标ID</th>
 				<th>摘要</th>
 				<th>预算项目</th>
@@ -23,6 +24,7 @@
 				@foreach ($guzzledbs as $guzzledb)
 			<tr class={{ empty($guzzledb->body)?'alert-danger':(
 						$guzzledb->useable?'alert-success':'')}}>
+						<td>{{ $loop->index+1 }}</td>
 				<td>
 				
 					<a href="{{ $guzzledb->ZBID }}/show">{{$guzzledb->ZBID}} 
@@ -63,6 +65,7 @@
 			@endforeach
 		</tbody>
 					<tr class='success'>
+					<th>ID</th>
 				<th>指标ID</th>
 				<th>摘要</th>
 				<th>预算项目</th>

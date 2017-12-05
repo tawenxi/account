@@ -27,8 +27,27 @@ if (!function_exists('div')) {
     {
         return number_format($amount, 2, '.', '');
     }
+}
 
+if (!function_exists('preg_replace_with_count')) {
 
+    /**
+     * return preg_replace_with_count
+     *
+     * @param $amount
+     * @return 
+     */
+    function preg_replace_with_count($pattern, $replacement, $subject, $count)
+    {
+
+        $result = preg_replace($pattern, $replacement, $subject, -1, $fcount);
+
+        if ($count === $fcount) {
+            return $result;
+        } else {
+            throw new Exception('替换次数错误');
+        }
+    }
 }
 
 

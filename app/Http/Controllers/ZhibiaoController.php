@@ -64,7 +64,7 @@ class ZhibiaoController extends Controller
                 }
             }
         }
-        $results = $this->repository_zb->orderBy('LR_RQ', 'desc')->all()->unique();
+        $results = $this->repository_zb->orderBy('LR_RQ', 'desc')->with('zfpzs')->all()->unique();
 
         return $this->excel->exportBlade('zhibiao.index', compact('results'))->render();
     }
