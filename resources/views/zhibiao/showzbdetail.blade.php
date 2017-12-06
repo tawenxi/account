@@ -70,7 +70,7 @@
 					<tr class='success'>
 				<th>日期</th>
 				<th>摘要</th>
-				<th>金额</th>
+				<th>{{ collect($results)->sum('je') }}</th>
 				<th>单位</th>
 				<th>项目名称</th>
 				<th>支出类别</th>

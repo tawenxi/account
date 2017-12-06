@@ -72,7 +72,7 @@
 				
 				<td>
 				
-					{{div($result->JE-$result->zfpzs->sum('JE'))}}
+					{{div($result->yeamount)}}
 				
 				</td>
 				<td >

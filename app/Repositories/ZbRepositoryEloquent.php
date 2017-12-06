@@ -47,6 +47,7 @@ class ZbRepositoryEloquent extends BaseRepository implements ZbRepository, Cache
     protected $fieldSearchable = [
         'ZY'=> 'like',
         'JE',
+        'yeamount'=>'>',
         'YSDWMC'=> 'like',
         'LR_RQ'=>'like',
     ];

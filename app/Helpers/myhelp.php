@@ -51,7 +51,14 @@ if (!function_exists('preg_replace_with_count')) {
 }
 
 
+    function strReplaceAssoc(array $replace, $subject) { 
+       return stro_replace(array_keys($replace), array_values($replace), $subject);    
+    } 
 
+    function stro_replace($search, $replace, $subject)
+    {
+        return strtr( $subject, array_combine($search, $replace) );
+    }
 
 
     function mul($amount)

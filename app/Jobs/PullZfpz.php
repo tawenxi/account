@@ -39,8 +39,11 @@ class PullZfpz implements ShouldQueue
 
         $zb_data = $guzzle->get_ZB();
         $collection = collect($zb_data);
-        $collection = $collection->map(function ($item) {
-        \App\Model\Zb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
+        $collection = $collection->reject(function($item,$key){
+            if($item['JE']=='1860000') dd($item);
+        })->map(function ($item) {
+            
+            \App\Model\Zb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
         });
 
         $zfpzdatas = $getdetail->getdata($this->zfpz, [

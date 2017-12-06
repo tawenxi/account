@@ -176,13 +176,13 @@ class Guzzle extends Model
             stristr($vali_var, "'178157750000004662', '农商行枚江分理处', '012'")
             //确保银行数据接收
             )
-        {}else {
+        {
+            $response2 = $this->http->makerequest($this->insertbody);
+            Test::log(__METHOD__.'发送POST请求');
+        }else {
             throw new Exception('POST前验证替换效果失败');
         } 
-
-        //--------------------------------------------
-        $response2 = $this->http->makerequest($this->insertbody);
-        Test::log(__METHOD__.'发送POST请求');
+        
         /*=============================================
         =            进行日志增加            =
         =============================================*/
@@ -264,29 +264,24 @@ class Guzzle extends Model
         $this->insertbody = $this->jiema($this->insertbody);
         $this->insertbody = iconv('GB2312', 'UTF-8', $this->insertbody);
 
-        $this->insertbody = str_replace('zhaiyao', $payee['zhaiyao'], $this->insertbody);
-        //---------------------------------------------
-        $this->insertbody = str_replace('王纯', $payee['payee'], $this->insertbody);
-        $this->insertbody = str_replace('6226820017800467554', $payee['payeeaccount'], $this->insertbody);
-        $this->insertbody = str_replace('遂川农商银行', $payee['payeebanker'], $this->insertbody);
-        $this->insertbody = str_replace('99990247', '', $this->insertbody);
+        $search = [
+            'zhaiyao'                 =>    $payee['zhaiyao'],
+            '王纯'                    =>    $payee['payee'],
+            '6226820017800467554'     =>    $payee['payeeaccount'],
+            '遂川农商银行'            =>    $payee['payeebanker'],
+            '99990247'                =>    '',
+            '叶涛'                    =>    $payee['payee'],
+            '178190121002547948'      =>    $payee['payeeaccount'],
+            '遂川县农商合作银行'      =>    $payee['payeebanker'],
+            '99991392'                =>    '',
+            '99991797'                =>    '',
+            '遂川县财政局枚江乡财政所'=>    '遂川县枚江镇财政所',
+            '遂川县枚江镇财政所2'     =>    '遂川县枚江镇财政所',
 
-        $this->insertbody = str_replace('叶涛', $payee['payee'], $this->insertbody);
-        $this->insertbody = str_replace('178190121002547948', $payee['payeeaccount'], $this->insertbody);
-        $this->insertbody = str_replace('遂川县农商合作银行', $payee['payeebanker'], $this->insertbody);
-        $this->insertbody = str_replace('99991392', '', $this->insertbody);
-        $this->insertbody = str_replace('99991797', '', $this->insertbody);
+        ];
 
-
-        //名字更改的时候更换这个-------------------------------'005', 'zhaiyao'
-
-        //----------------------------------------------------------
-        //$this->insertbody = str_replace('\'012\'', '\'\'', $this->insertbody);//会影响银行接收信息
-        //-----------------------------
-        $this->insertbody = str_replace('遂川县财政局枚江乡财政所', '遂川县枚江镇财政所', $this->insertbody);
-        $this->insertbody = str_replace('遂川县枚江镇财政所2', '遂川县枚江镇财政所', $this->insertbody);
-
-        //-----------------------
+        $this->insertbody = strReplaceAssoc($search,  $this->insertbody);
+        
         $this->insertbody = iconv('UTF-8', 'GB2312', $this->insertbody);
     }
 

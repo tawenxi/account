@@ -138,7 +138,11 @@ Route::patch('zbdetail/update', 'zhibiaoController@update');
 
 
 Route::get('ff', function(){
-    dd('2222'.config('myconfig.kjnd').'sss');
+    $search = array('A'=>'B', 'B'=>'C', 'C'=>'D', 'D'=>'E', 'E'=>'F');
+
+$subject = 'ABCDE';
+echo strReplaceAssoc($search, $subject); // output: 'FFFFFF'
+    //dd('2222'.config('myconfig.kjnd').'sss');
 });
 
 

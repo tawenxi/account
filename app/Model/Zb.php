@@ -50,6 +50,16 @@ class Zb extends Model
         return div($this->attributes['ZBYE']/100);
     }
 
+    public function setYeamountAttribute($amount)
+    {
+        $this->attributes['yeamount'] = beint100($amount);
+    }
+
+    public function getYeamountAttribute($amount)
+    {
+        return div($this->attributes['yeamount']/100);
+    }
+
     public function setJeAttribute($amount)
     {
         $this->attributes['JE'] = beint100($amount);
