@@ -30,7 +30,7 @@
                 <ul class="dropdown-menu">      
 
                   <li><a href="/payout">授权登记</a></li>
-                  <li><a href="/hyy">外网查询</a></li>
+                  <li><a href="/hyy?search=KYJHJE:0">外网查询</a></li>
                   <li><a href="/dpt">平台更新</a></li>   
                     <li class="divider"></li>
                 </ul>
@@ -48,8 +48,9 @@
                 
                 <ul class="dropdown-menu">      
                 <li><a href="/inco">收支对照</a></li>
-                <li><a href="/zhibiao">[收入(update)]</a></li>
+                <li><a href="/zhibiao/?search=yeamount:0">[收入(update)]</a></li>
                 <li><a href="/zbdetail">[支出]</a></li>
+                <li><a href="/shenqing">申请单</a></li>
                 <li><a href="/incomes">收入</a></li>
                 
                 <li><a href="/costs">支出</a></li>

@@ -6,82 +6,47 @@
 <article>
 	
 	<h2>
-	<table class="table table-bordered table-striped table-hover table-condensed">
-		<caption><center>{{ date("Y-m-d H:i:s") }}</center></caption>
+		<table class="table table-bordered table-striped table-hover table-condensed">
+			<caption><center>{{ date("Y-m-d H:i:s") }}</center></caption>
 
-		<thead>
-			<tr class='success'>
-				<th>日期</th>
-				<th>摘要</th>
-				<th>金额</th>
-				<th>单位</th>
-				<th>项目名称</th>
-				<th>支出类别</th>
-				<th>XZ</th>
-				
-			</tr>
-		</thead>
-		<tbody class='alert-info'>
-				@foreach ($results as $result)
-			<tr class={{ empty($result->body)?'alert-danger':""}}>
-			<td>
-				
-					{{$result->QS_RQ}}
-				
-				</td>
-			<td>
-				<a href="showzbdetail/{{ $result->ZBID }}">
-					{{$result->ZY}}
-				</a>
-				</td>
-				<td>
-				
-					{{$result->JE}} 
-
+			<thead>
+				<tr class='success'>
+					<th>日期</th>
+					<th>摘要</th>
+					<th>金额</th>
+					<th>单位</th>
+					<th>项目名称</th>
+					<th>支出类别</th>
+					<th>XZ</th>
 					
-				
-				</td>
-				
-				
+				</tr>
+			</thead>
+			<tbody class='alert-info'>
+					@foreach ($results as $result)
+				<tr class={{ empty($result->body)?'alert-danger':""}}>
+				<td>{{$result->QS_RQ}}</td>
 				<td>
-				
-					{{$result->YSDWMC}}
-				
+					<a href="showzbdetail/{{ $result->ZBID }}">{{$result->ZY}}</a>
 				</td>
-				
-				<td>
-				
-					{{$result->XMMC}}
-				
-				</td>
-				<td >
-				
-			{{$result->ZFFSMC}}
-				
-				</td>
-						<td >
-				
-			{{$result->ZJXZDM}}
-				
-				</td>
-			</tr>	
-			@endforeach
-		</tbody>
-					<tr class='success'>
-				<th>日期</th>
-				<th>摘要</th>
-				<th>{{ collect($results)->sum('je') }}</th>
-				<th>单位</th>
-				<th>项目名称</th>
-				<th>支出类别</th>
-				<th>XZ</th>
-			</tr>
-	</table>
-
-
-
-			<hr>
-	
+					<td>{{$result->JE}} </td>
+					<td>{{$result->YSDWMC}}</td>
+					<td>{{$result->XMMC}}</td>
+					<td >{{$result->ZFFSMC}}</td>
+					<td >{{$result->ZJXZDM}}</td>
+				</tr>	
+				@endforeach
+			</tbody>
+				<tr class='success'>
+					<th>日期</th>
+					<th>摘要</th>
+					<th>{{ collect($results)->sum('je') }}</th>
+					<th>单位</th>
+					<th>项目名称</th>
+					<th>支出类别</th>
+					<th>XZ</th>
+				</tr>
+		</table>
+				<hr>
 	</h2>
 </article>
 {{-- {!! Form::open() !!}

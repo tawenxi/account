@@ -46,7 +46,7 @@ class GuzzledbRepositoryEloquent extends BaseRepository implements GuzzledbRepos
 
     protected $fieldSearchable = [
         'ZY'    => 'like',
-        'KYJHJE'=> '>',
+        'KYJHJE'=> '!=',
         'YSDWMC'=> 'like',
         'useable',
     ];

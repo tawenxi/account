@@ -9,6 +9,7 @@ use App\Model\Tt\Data;
 use App\Repositories\ZbRepository;
 use App\Repositories\ZfpzRepository;
 use Illuminate\Http\Request;
+use App\Model\ZbApply;
 
 class ZhibiaoController extends Controller
 {
@@ -234,5 +235,12 @@ class ZhibiaoController extends Controller
 
 
        return view('zhibiao.editaccount', compact('result'));
+    }
+
+    public function shenqing()
+    {
+        $results = ZbApply::all();
+        return view('zhibiao.showapply', compact('results'));
+
     }
 }

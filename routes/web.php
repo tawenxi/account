@@ -133,15 +133,15 @@ Route::get('/bc', function(){
 });
 
 
-Route::get('zbdetail/{id}/edit', 'zhibiaoController@edit');
+Route::get('zbdetail/{id}/edit', 'zhibiaoController@edit')->name('zbdetail.edit');
 Route::patch('zbdetail/update', 'zhibiaoController@update');
-
+Route::get('/shenqing', 'zhibiaoController@shenqing');
 
 Route::get('ff', function(){
     $search = array('A'=>'B', 'B'=>'C', 'C'=>'D', 'D'=>'E', 'E'=>'F');
 
 $subject = 'ABCDE';
-echo strReplaceAssoc($search, $subject); // output: 'FFFFFF'
+echo strtr($subject,$search); // output: 'BCDEF'
     //dd('2222'.config('myconfig.kjnd').'sss');
 });
 

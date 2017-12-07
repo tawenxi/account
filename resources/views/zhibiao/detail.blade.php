@@ -28,10 +28,12 @@
 			<tr>
 			 <td>{{ $loop->index+1 }}</td>
 				<td class="small">
-				
+				<a href="{{ route('zbdetail.edit',['id'=>$result->id]) }}">
 					@if (!is_null($result->account))
 					{{$result->account->name}} 
 					@endif
+
+				</a>
 
 					
 				
@@ -48,14 +50,14 @@
 					{{$result->ZY}}
 				
 				</td>
-				<td class="small">
+				<td >
 				
-					{{$result->SKR}}
+					<h6>{{$result->SKR}}</h6>
 				
 				</td>
 				<td>
 				
-					{{$result->YSDWMC}}
+					{{ substr($result->YSDWMC, 9) }}
 				
 				</td>
 				<td>
@@ -66,7 +68,7 @@
 				
 				<td>
 				
-					{{$result->ZFFSMC}}
+					{{ substr($result->ZFFSMC, 0,3) }}
 				
 				</td>
 				

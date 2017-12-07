@@ -31,8 +31,11 @@
 			<tr>
 				<td class="small">
 				
-					{{$result->account?
+					
+						{{$result->account?
 						$result->account->account_name:''}} 
+					
+					
 
 					
 				

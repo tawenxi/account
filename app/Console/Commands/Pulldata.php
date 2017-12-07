@@ -58,8 +58,11 @@ class Pulldata extends Command
     {
         //PullSQ::dispatch();
         //PullZfpz::dispatch();
+        $this->PullShenqing();
         $this->PullZfpz();
         $this->Pullsq();
+        $this->update_yeamount();
+        
     }
 
 
@@ -74,10 +77,7 @@ class Pulldata extends Command
             
             \App\Model\Zb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
         });
-        //更新剩余金额
-        \App\Model\Zb::all()->each(function($val){
-            \App\Model\Zb::where('ZBID',$val['ZBID'])->update(['yeamount'=>($val['JE']-$val->zfpzs->sum('JE'))*100]);
-        });
+
         
 
         $zfpzdatas = $this->getdetail->getdata($this->zfpz, [
@@ -90,9 +90,56 @@ class Pulldata extends Command
         $this->info('SUCCESS-更新收支指标成功');          
     }
 
+
+    /**
+     *
+     * 更新查询用款计划
+     *
+     */
+    public function PullShenqing()
+    {
+        $YSDWDMS = ['901006000','901006001','901006013','901006010'];
+        $date = '20'.date('ymd');
+        $year = '20'.date('y');
+        $data = [];
+
+
+        foreach ($YSDWDMS as $YSDW) 
+        {
+            $once_data = $this->getdetail->getdata($this->shenqingsql, [
+                ["20171207", "{$date}"],
+                ["'2017'", "'{$year}'"],
+                ['901006001', $YSDW],
+            ]);
+            if (!in_array(null,$once_data)) $data = array_merge($once_data,$data);
+        }
+
+        if (!empty($data) AND !in_array(null,$data)) {
+            \DB::table('zb_applies')->truncate();
+            \DB::table('zb_applies')->insert($data);   
+        }
+       
+        $this->info('SUCCESS-更新支付申请指标成功');          
+    }
+    
+
     public function pullSQ()
     {  
         $this->guzzle->updatedb();
         $this->info('SUCCESS-更新授权指标成功');     
+    }
+
+/**
+ *
+ *   更新剩余金额
+ *
+ */
+
+    public function update_yeamount()
+    {
+        \App\Model\Zb::all()->each(function($val){
+            \App\Model\Zb::where('ZBID',$val['ZBID'])->update(['yeamount'=>($val['JE']-$val->zfpzs->sum('JE'))*100]);
+        });
+        $this->info('SUCCESS-更新指标余额成功');     
     }
 }

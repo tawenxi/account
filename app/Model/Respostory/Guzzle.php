@@ -280,7 +280,7 @@ class Guzzle extends Model
 
         ];
 
-        $this->insertbody = strReplaceAssoc($search,  $this->insertbody);
+        $this->insertbody = strtr($this->insertbody, $search);
         
         $this->insertbody = iconv('UTF-8', 'GB2312', $this->insertbody);
     }
