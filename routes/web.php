@@ -1,16 +1,4 @@
 <?php
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return redirect('/geren');
 });
@@ -44,7 +32,7 @@ Route::get('/reflash', 'GuzzleController@reflash');
 Route::get('/dpt', 'GuzzleController@dpt');
 Route::get('/hyy', 'GuzzleController@hyy');
 Route::get('/edit/{guzzledb}', 'GuzzleController@edit')->name('guzzle.edit');
-Route::get('/preview/{option?}', 'GuzzleController@preview');
+Route::get('/preview', 'GuzzleController@preview');
 Route::any('/payout', 'GuzzleController@payoutlist')->name('payout');
 Route::get('/{id}/show', 'GuzzleController@show');
 Route::DELETE('/{id}/delete', 'GuzzleController@destroy')->name('delete');
@@ -54,13 +42,13 @@ Route::get('/getsql', 'GuzzleController@getsql')->name('getsql');
 Route::post('/postsql', 'GuzzleController@postsql')->name('postsql');
 Route::get('exportaccount', 'GuzzleController@export_account');
 
-    Route::get('/salary/{date?}/{jj?}', 'SalaryController@index')->name('salary');
-    //Route::get('/addmember', 'TestController@member');
-    Route::get('/bumen/{date?}/{jj?}', 'SalaryController@bumen')->name('bumen');
-    Route::get('/geren/{id?}/{jj?}', 'SalaryController@geren')->name('geren');
-    Route::get('/byear/{year?}/{jj?}', 'SalaryController@byear')->name('byear');
-    Route::get('/myear/{year?}/{jj?}', 'SalaryController@myear')->name('myear');
-    Route::get('/phb/{year?}/{jj?}', 'SalaryController@phb')->name('phb');
+Route::get('/salary/{date?}/{jj?}', 'SalaryController@index')->name('salary');
+//Route::get('/addmember', 'TestController@member');
+Route::get('/bumen/{date?}/{jj?}', 'SalaryController@bumen')->name('bumen');
+Route::get('/geren/{id?}/{jj?}', 'SalaryController@geren')->name('geren');
+Route::get('/byear/{year?}/{jj?}', 'SalaryController@byear')->name('byear');
+Route::get('/myear/{year?}/{jj?}', 'SalaryController@myear')->name('myear');
+Route::get('/phb/{year?}/{jj?}', 'SalaryController@phb')->name('phb');
 
 Route::resource('income', 'IncomeController');
 Route::get('incomes/{fp?}', 'IncomeController@indexs');
@@ -136,6 +124,8 @@ Route::get('/bc', function(){
 Route::get('zbdetail/{id}/edit', 'zhibiaoController@edit')->name('zbdetail.edit');
 Route::patch('zbdetail/update', 'zhibiaoController@update');
 Route::get('/shenqing', 'zhibiaoController@shenqing');
+
+
 
 Route::get('ff', function(){
     $search = array('A'=>'B', 'B'=>'C', 'C'=>'D', 'D'=>'E', 'E'=>'F');

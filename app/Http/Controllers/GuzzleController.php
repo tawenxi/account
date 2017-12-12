@@ -21,12 +21,11 @@ class GuzzleController extends Controller
 
     public function __construct(Excel $excel, GuzzledbRepository $repository)
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
         // $this->middleware('admin');
         // $this->middleware('sudo');
         $this->excel = $excel;
         $this->repository = $repository;
-        $this->guzzleexcel = \App::make(Excel::class, ['excelFile'=>'excel']);
         //dd($this->guzzleexcel);
     }
 
@@ -60,11 +59,13 @@ class GuzzleController extends Controller
      */
     public function preview()
     {
-        header('Content-Type: text/html;charset=utf-8');
+        $this->guzzleexcel = $this->excel->setExcelFile('excel');
+        //header('Content-Type: text/html;charset=utf-8');
         $searchobject = \App::make('acc'); //初始化
         $arr = $this->guzzleexcel->setSkipNum()->getexcel()->each(function ($item) use ($searchobject) {
             $item['kemuname'] = stristr($item['kemu'], '@') ? $item['kemu'] : $searchobject->findac($item['kemu']);
         })->toArray();
+
         foreach ($arr as $key => $data) {
             if (count($arr[$key]['kemuname']) == 1 && is_array($arr[$key]['kemuname'])) {
                 $arr[$key]['kemuname'] = (string) (reset($arr[$key]['kemuname']));

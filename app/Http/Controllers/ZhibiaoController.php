@@ -16,7 +16,6 @@ class ZhibiaoController extends Controller
     use Data;
 
     private $excel;
-    private $guzzleexcel;
     private $getperson;
     private $repository_zb;
     private $repository_zfpz;
@@ -33,7 +32,6 @@ class ZhibiaoController extends Controller
         // $this->middleware('sudo');
         $this->excel = $excel;
         $this->getdetail = $getdetail;
-        $this->guzzleexcel = \App::make(Excel::class, ['excel']);
     }
 
     /**
@@ -43,28 +41,6 @@ class ZhibiaoController extends Controller
      */
     public function index(Request $request, Guzzle $guzzle)
     {
-        if (strstr($request->ip(), '192.168') and !(\Request::has('show'))  And FALSE) {
-            $zb_data = $guzzle->get_ZB();
-            $collection = collect($zb_data);
-            $collection = $collection->map(function ($item) {
-                $info = $this->repository_zb->scopeQuery(function ($query) use ($item) {
-                    return $query->updateOrCreate(['ZBID' => $item['ZBID']], $item);
-                });
-
-                return $info;
-            });
-            if (\Request::has('update') And FALSE) {
-                $zfpzdatas = $this->getdetail->getdata($this->zfpz, [
-                                ["'20170101'", "'20170801'"],
-                                ["'20170821'", "to_char(sysdate,'yyyymmdd')"],
-                                ]);
-                foreach ($zfpzdatas as $zfpzdata) {
-                    $this->repository_zfpz->scopeQuery(function ($query) {
-                        return $query->updateOrCreate(['PDH' => $zfpzdata['PDH']], $zfpzdata);
-                    });
-                }
-            }
-        }
         $results = $this->repository_zb->orderBy('LR_RQ', 'desc')->with('zfpzs')->all()->unique();
 
         return $this->excel->exportBlade('zhibiao.index', compact('results'))->render();
@@ -72,6 +48,7 @@ class ZhibiaoController extends Controller
 
     /**
      * 进行数据并查，看看有zbdetails里面有没有数据差错进行调整.
+     * url: '/up'
      *
      * @param $zfpzdatas 来自大平台的数据
      */
@@ -121,28 +98,6 @@ class ZhibiaoController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param int $id
@@ -154,31 +109,6 @@ class ZhibiaoController extends Controller
         $results = $this->repository_zfpz->findByField('ZBID', $zbid)->all();
 
         return $this->excel->exportBlade('zhibiao.showzbdetail', compact('results'))->render();
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showzf($id)
-    {
-        $person = $this->getperson->getpersondata($id);
-        dd($person);
-    }
-
-    public function showallzf()
-    {
-        $person = $this->getzf->getpersondata();
-        dd($person);
-    }
-
-    public function showallsf()//申请
-    {
-        $person = $this->getsf->getpersondata();
-        dd($person);
     }
 
     public function getdetails()
@@ -202,23 +132,7 @@ class ZhibiaoController extends Controller
         $zfpz->JE = $request->JE;
         $zfpz->account_number = $request->account_number;
         $zfpz->save();
-
-
-        //\App\Model\Zfpz::where('id', $request->id)->update($request->except(['_method','_token']));
-
         return back()->with('success','更新成功');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function inco()
@@ -232,15 +146,13 @@ class ZhibiaoController extends Controller
     public function edit($id)
     {
        $result = $this->repository_zfpz->find($id);
-
-
        return view('zhibiao.editaccount', compact('result'));
     }
 
     public function shenqing()
     {
         $results = ZbApply::all();
-        return view('zhibiao.showapply', compact('results'));
+        return $this->excel->exportBlade('zhibiao.showapply', compact('results'));
 
     }
 }
