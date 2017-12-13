@@ -82,7 +82,7 @@ class InsertSq extends Command
 
                 if (!isset($value['zbid'])) throw new Exception('没有设置足够的zbid');
 
-                if (strlen($value['zbid'])!=15) throw new Exception('zbid长度错误');
+                if (strlen($value['zbid'])!=15 AND strlen($value['zbid'])!=16) throw new Exception('zbid长度错误');
                 if (preg_match("/001\.201\d\.0\.\d{4,4}/", $value['zbid']) != 1) 
                     throw new Exception('zbid格式不正确');
                 $KYJHJE = $this->guzz->get_zbdata($value['zbid'])['KYJHJE'];       

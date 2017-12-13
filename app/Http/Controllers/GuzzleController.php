@@ -270,9 +270,7 @@ EOF;
         'FJ_data'             => $this->FJ_data,
         'zhibiao_sql'         => $this->zhibiao_sql,
 
-        'zfpz' => $this->zfpz,
-        //'get_person_zj' => $this->get_person_zj,
-
+        'zfpz'                => $this->zfpz,
         ];
 
         foreach ($datas as $key => $data) {

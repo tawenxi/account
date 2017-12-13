@@ -117,7 +117,8 @@ class Guzzle extends Model
         }elseif ($this->payee['zhaiyao']=='zhaiyao'){
             throw new Exception('摘要必须修改');
         } elseif (substr($this->payee['zbid'], 0,11) != '001.2017.0.' OR 
-            strlen($this->payee['zbid']) != 15) {
+            strlen($this->payee['zbid']) != 15 AND
+            strlen($this->payee['zbid']) != 16 ) {
             throw new Exception('指标格式不正确'.substr($this->payee['zbid'], 0,11));
         }  elseif (!is_numeric($this->payee['payeeaccount'])) {
             throw new Exception('账号非全数值');

@@ -39,7 +39,7 @@
 				</td>
 				<td class="small">
 				
-					<a href="showzbdetail/{{ $result->ZBID }}">{{$result->ZBID}} 
+					<a href="/showzbdetail/{{ $result->ZBID }}">{{$result->ZBID}} 
 
 					</a>
 				
@@ -49,7 +49,7 @@
 					{{$result->LR_RQ}}
 				
 				</td>
-				<td class="small">
+				<td class="col-md-3">
 				
 					{{$result->ZY}}
 				
@@ -80,10 +80,10 @@
 			
 				{{ $result->zfpzs->count() }}
 				</td>
-					<td class="small">
+					<td class="">
 				
 			
-				{{ $result->YSDWMC }}
+				{{ substr($result->YSDWMC, 9) }}
 				</td>
 			</tr>	
 			@endforeach
