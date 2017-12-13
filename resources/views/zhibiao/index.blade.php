@@ -12,7 +12,7 @@
 		<thead>
 			<tr class='success'>
 			 <th>id</th>
-			<th>科目</th>
+			{{-- <th>科目</th> --}}
 				<th>指标ID</th>
 				<th>日期</th>
 				<th>摘要</th>
@@ -30,13 +30,13 @@
 			   <td>{{ $loop->index+1 }}</td>
 
 
-				<td class="small">
+{{-- 				<td class="small">
 				
 					@if (!is_null($result->account))
 					{{$result->account->name}} 
 					@endif
 				
-				</td>
+				</td> --}}
 				<td class="small">
 				
 					<a href="/showzbdetail/{{ $result->ZBID }}">{{$result->ZBID}} 
@@ -90,7 +90,7 @@
 		</tbody>
 					<tr class='success'>
 					<th>id</th>
-				<th>科目</th>
+				{{-- <th>科目</th> --}}
 				<th>指标ID</th>
 				<th>日期</th>
 				<th>摘要</th>

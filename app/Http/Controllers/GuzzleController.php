@@ -109,6 +109,7 @@ class GuzzleController extends Controller
      */
     public function store(\Illuminate\Http\Request $request)
     {
+        $request->body = trim($request->body);
         $zbid = $request->zbid;
         $zbidmowei = substr($zbid, -4);
         $this->validate($request,

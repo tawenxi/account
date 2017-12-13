@@ -27,7 +27,7 @@
 				@foreach ($results as $result)
 			<tr>
 			 <td>{{ $loop->index+1 }}</td>
-				<td class="small">
+				<td class="col-md-2 small">
 				<a href="{{ route('zbdetail.edit',['id'=>$result->id]) }}">
 					@if (!is_null($result->account))
 					{{$result->account->name}} 
@@ -52,7 +52,7 @@
 				</td>
 				<td >
 				
-					<h6>{{$result->SKR}}</h6>
+					<h4>{{$result->SKR}}</h4>
 				
 				</td>
 				<td>

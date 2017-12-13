@@ -41,7 +41,7 @@ class ZhibiaoController extends Controller
      */
     public function index(Request $request, Guzzle $guzzle)
     {
-        $results = $this->repository_zb->orderBy('LR_RQ', 'desc')->with('zfpzs')->all()->unique();
+        $results = $this->repository_zb->with('zfpzs')->all()->unique();
 
         return $this->excel->exportBlade('zhibiao.index', compact('results'))->render();
     }
