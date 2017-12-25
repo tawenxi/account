@@ -5,7 +5,7 @@
 <div class="col-md-offset-2 col-md-8">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h5>更新指标数据</h5>
+      <h1>更新指标数据</h1>
     </div>
       <div class="panel-body">
 
@@ -30,9 +30,6 @@
               <input type="text" name="zbid" class="form-control" value={{ $guzzledb->ZBID }}>
             </div>
             <input type="hidden" name="id" value={{ $guzzledb->id }}>
-            
-
-
             <div class="form-group">
               <label for="total">总金额：</label>
               <input type="text" name="total" class="form-control" value={{ $guzzledb->YKJHZB }} disabled>

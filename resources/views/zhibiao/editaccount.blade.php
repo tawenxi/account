@@ -3,17 +3,15 @@
 
 @section('content')
 
-
-
       <h1>更新ACCOUNT数据</h1>
       <hr>
-
-      <div class="panel-body">
-        @include('shared.errors')
-       {!! Form::model($result,['method' => 'PATCH', 'url' => ['zbdetail/update'], 'class' => 'form-horizontal']) !!}
+      <div class="row col-md-6 col-lg-offset-3">
+        <div class="panel-body">
+          @include('shared.errors')
+        {!! Form::model($result,['method' => 'PATCH', 'url' => ['zbdetail/update'], 'class' => 'form-horizontal']) !!}
           {{ csrf_field() }}
 
-           <div class="form-group{{ $errors->has('id') ? ' has-error' : '' }}">
+          <div class="form-group{{ $errors->has('id') ? ' has-error' : '' }}">
                {!! Form::label('id', 'ID') !!}
                {!! Form::text('id',$result->id, ['class' => 'form-control', 'required' => 'required']) !!}
                <small class="text-danger">{{ $errors->first('id') }}</small>
@@ -44,10 +42,9 @@
            </div>
 
                <button type="submit" class="btn btn-block btn-success">更新</button>
-        
-       
        {!! Form::close() !!}
     </div>
+      </div>
 
 
 @stop

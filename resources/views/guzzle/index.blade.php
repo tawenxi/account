@@ -5,83 +5,57 @@
 
 <article>
 	
-	<h2>
-	<table class="table table-bordered table-striped table-hover table-condensed">
-		<caption><center>{{ date("Y-m-d H:i:s") }}</center></caption>
-
-		<thead>
-			<tr class='success'>
-			<th>ID</th>
+	<row class='h4'>
+		<table class="table table-bordered table-striped table-hover table-condensed">
+			<caption>
+				<center>{{ date("Y-m-d H:i:s") }}</center>
+			</caption>
+			<thead>
+				<tr class='success'>
+				<th>ID</th>
 				<th>指标ID</th>
 				<th>摘要</th>
 				<th>预算项目</th>
 				<th>总金额</th>
 				<th>可用金额</th>
 				<th>编辑</th>
-			</tr>
-		</thead>
-		<tbody class='alert-info'>
+				</tr>
+			</thead>
+			<tbody class='alert-info'>
 				@foreach ($guzzledbs as $guzzledb)
-			<tr class={{ empty($guzzledb->body)?'alert-danger':(
+					<tr class={{ empty($guzzledb->body)?'alert-danger':(
 						$guzzledb->useable?'alert-success':'')}}>
 						<td>{{ $loop->index+1 }}</td>
-				<td>
-				
-					<a href="{{ $guzzledb->ZBID }}/show">{{$guzzledb->ZBID}} 
+						<td>
+							<a href="{{ $guzzledb->ZBID }}/show">{{$guzzledb->ZBID}}
+							</a>
+						</td>
+						<td>{{$guzzledb->ZY}}</td>
+						<td>{{$guzzledb->ZJXZMC}}</td>
+						<td>{{$guzzledb->YKJHZB}}</td>
+						<td>{{$guzzledb->KYJHJE}}</td>
+						<td class='btn btn-link'>
 
-					</a>
-				
-				</td>
-				<td>
-				
-					{{$guzzledb->ZY}}
-				
-				</td>
-				<td>
-				
-					{{$guzzledb->ZJXZMC}}
-				
-				</td>
-				<td>
-				
-					{{$guzzledb->YKJHZB}}
-				
-				</td>
-				
-				<td>
-				
-					{{$guzzledb->KYJHJE}}
-				
-				</td>
-				<td class='btn btn-link'>
-				
-			{!! Form::open(['method' => 'get', 'route' => ['guzzle.edit',$guzzledb->id], 'class' => 'form-horizontal']) !!}
-          {!! Form::submit('编辑', ['class' => 'btn btn-success pull-right']) !!}
-          
-          {!! Form::close() !!}
-				
-				</td>
-			</tr>	
-			@endforeach
-		</tbody>
-					<tr class='success'>
+							{!! Form::open(['method' => 'get', 'route' => ['guzzle.edit',$guzzledb->id], 'class' => 'form-horizontal']) !!}
+	          				{!! Form::submit('编辑', ['class' => 'btn btn-success pull-right']) !!}
+	          
+	          				{!! Form::close() !!}
+					
+						</td>
+					</tr>	
+				@endforeach
+			</tbody>
+				<tr class='success'>
 					<th>ID</th>
-				<th>指标ID</th>
-				<th>摘要</th>
-				<th>预算项目</th>
-				<th>{{div(($guzzledbs->sum('YKJHZB'))/10000)}}</th>
-				<th>{{div($guzzledbs->sum('KYJHJE')/10000)}}</th>
-				<th>编辑</th>
-			</tr>
-	</table>
-
-
-
-			<hr>
-	
-	</h2>
+					<th>指标ID</th>
+					<th>摘要</th>
+					<th>预算项目</th>
+					<th>{{div(($guzzledbs->sum('YKJHZB'))/10000)}}</th>
+					<th>{{div($guzzledbs->sum('KYJHJE')/10000)}}</th>
+					<th>编辑</th>
+				</tr>
+		</table>
+		<hr>
+	</row>
 </article>
-{{-- {!! Form::open() !!}
- {!! Form::text("name") !!}
-{!! Form::close() !!} --}}
 @stop

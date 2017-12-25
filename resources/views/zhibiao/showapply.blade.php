@@ -4,7 +4,6 @@
 @include('shared.errors')
 
 <article>
-	
 	<h2>
 	<table class="table table-bordered table-striped table-hover table-condensed">
 		<caption><center>{{ date("Y-m-d H:i:s") }}</center></caption>
@@ -43,21 +42,13 @@
 				<th>预算单位</th>
 				<th>项目名称</th>
 				<th class="text-center">摘要</th>
-
 				<th >{{$result->sum('ZBJE')}}</th>
 				<th >{{$result->sum('YFPJE')}}</th>
 				<th>{{$result->sum('ZBYE')}}</th>
 				<th>{{$result->sum('KYJHJE')}}</th>
 			</tr>
 	</table>
-
-
-
 			<hr>
-	
 	</h2>
 </article>
-{{-- {!! Form::open() !!}
- {!! Form::text("name") !!}
-{!! Form::close() !!} --}}
 @stop

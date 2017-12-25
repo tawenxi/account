@@ -10,7 +10,6 @@
 		<thead>
 			<tr class='success'>				
 				<th>姓名</th>
-				{{-- <th>账号</th> --}}
 				@include('salary.table')
 </article>
 @stop

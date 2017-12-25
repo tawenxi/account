@@ -128,12 +128,16 @@ Route::get('/shenqing', 'zhibiaoController@shenqing');
 
 
 Route::get('ff', function(){
+    dd(1);
+    dd(\DB::connection('sqlsrv')->table('GL_Pzml')->first());
     $search = array('A'=>'B', 'B'=>'C', 'C'=>'D', 'D'=>'E', 'E'=>'F');
 
 $subject = 'ABCDE';
 echo strtr($subject,$search); // output: 'BCDEF'
     //dd('2222'.config('myconfig.kjnd').'sss');
 });
+
+
 
 
 

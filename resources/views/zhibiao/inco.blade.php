@@ -23,55 +23,36 @@
 		<tbody class='alert-info'>
 				@foreach ($results as $result)
 			<tr>
-
 				<td>
 					{{ $result->QS_RQ }}
 				</td>
 				<td class="small">
-				
-					
 					{{$result->zb->account?
 						$result->zb->account->name:
-						''
-					}} 
-				
+						''}} 
 				</td>
 				<td>
-				
-					{{$result->zb->JE}} 
-
-					
-				
+					{{$result->zb->JE}}
 				</td>
 				<td class="small">
-				
 					{{$result->zb->ZY}}
-				
 				</td>
 				<td class="small">
-				
 					{{$result->ZY}}
-				
 				</td>
 				<td>
-				
 					{{$result->JE}}
-				
 				</td>
 				
 				<td class="small">
-				
 					{{$result->account?
 						$result->account->name:
-						''
-					}} 
-				
+						''}} 
 				</td>
-				
 			</tr>	
 			@endforeach
 		</tbody>
-					<tr class='success'>
+			<tr class='success'>
 				<th>日期</th>
 				<th>收入科目</th>				
 				<th></th>
@@ -81,14 +62,7 @@
 				<th>支出科目</th>
 			</tr>
 	</table>
-
-
-
 			<hr>
-	
 	</h2>
 </article>
-{{-- {!! Form::open() !!}
- {!! Form::text("name") !!}
-{!! Form::close() !!} --}}
 @stop

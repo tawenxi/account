@@ -10,6 +10,7 @@ use App\Model\Respostory\Http;
 use App\Model\Respostory\Getsqzb;
 use App\Model\Respostory\GetSqlResult;
 use App\Model\Tt\Data;
+use App\Model\Zfpz;
 
 
 class Pulldata extends Command
@@ -58,7 +59,7 @@ class Pulldata extends Command
     {
         //PullSQ::dispatch();
         //PullZfpz::dispatch();
-        $this->PullShenqing();
+        //$this->PullShenqing();
         $this->PullZfpz();
         $this->Pullsq();
         $this->update_yeamount();
@@ -68,7 +69,7 @@ class Pulldata extends Command
 
     public function PullZfpz()
     {
-
+        Zfpz::where('QS_RQ','')->ORwhere('QS_RQ',NULL)->delete();
         $zb_data = $this->guzzle->get_ZB();
         $collection = collect($zb_data);
         $collection = $collection->reject(function($item,$key){
@@ -84,8 +85,12 @@ class Pulldata extends Command
             ["'20170101'", "'20170801'"], //每年修改
             ["'20170821'", "to_char(sysdate,'yyyymmdd')"],
         ]);
+
         foreach ($zfpzdatas as $zfpzdata) {
-            \App\Model\Zfpz::updateOrCreate(['PDH' => $zfpzdata['PDH']], $zfpzdata);
+            if (!isset($zfpzdata['MXZBWH'])) {
+                $zfpzdata['MXZBWH'] = '';
+            }
+            Zfpz::updateOrCreate(['PDH' => $zfpzdata['PDH']], $zfpzdata);
         }
         $this->info('SUCCESS-更新收支指标成功');          
     }
