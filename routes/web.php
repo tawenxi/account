@@ -138,6 +138,20 @@ echo strtr($subject,$search); // output: 'BCDEF'
 });
 
 
+Route::get('tb', function(){
+
+    $qq = \App\Model\Guzzledb::first();
+    $me = $qq->getArray(1);
+
+    //dd(\App\Model\Guzzledb::first()->updateSqarray()->generateSqData());
+
+    $you = $qq->getArray(1, urlencode(iconv('UTF-8','GB2312', \App\Model\Guzzledb::first()->updateSqarray()->generateSqData())));
+
+    dd($you,$me);
+
+
+    
+});
 
 
 
