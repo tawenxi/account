@@ -77,8 +77,8 @@ public function setCompareBody($body = NULL)
     {
         $zbid = $this->payee['zbid'];
         $zbidmowei = substr($zbid, -4);
-        $pattern = "/<?xml.+to_char%28iPDh%2B1%29%2C%270%27%2C%20%20zfpzdjbh.+178190121002547948.+zhaiyao.+$zbidmowei.+<\/R9PACKET>/";
-        $vali_result = preg_match($pattern, $this->insertbody);
+        $pattern = "/<?xml version.+from zb_zfpzdjbh.+\d{10,40}.+zhaiyao.+$zbidmowei.+<\/R9PACKET>/";
+        $vali_result = preg_match($pattern, decode($this->insertbody));
         return $vali_result?TRUE:FALSE;
     }
 
@@ -237,6 +237,7 @@ public function setCompareBody($body = NULL)
             //确保银行数据接收
             )
         {
+            //dd('ok');
             //dd($this->insertbody);
             //这里的insertBody的一个非中文的半明码
             $response2 = $this->http->makerequest($this->insertbody);
