@@ -64,6 +64,10 @@ class Guzzledb extends Model
         $this->table2['ysgllxdm'] = "'{$this->YSGLLXDM}'";
         $this->table2['zblydm'] = "'{$this->ZBLYDM}'";
         $this->table2['xmdm'] = "'{$this->XMDM}'";
+        $this->table2['YWLXDM'] = "'{$this->_findInZb('YWLXDM')}'";
+        $this->table2['XMFLDM'] = "'{$this->_findInZb('XMFLDM')}'";
+
+
 
         $this->table3['YSDWMC'] = "'{$this->YSDWMC}'";
         $this->table3['YSDWQC'] = "'{$this->YSDWMC}'";
