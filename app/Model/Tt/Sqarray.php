@@ -29,7 +29,7 @@ trait Sqarray
                 'Skryhbh'     =>  "''",    //
                 'Skzh'        =>  "'178190121002547948'",    //
                 'Skrkhyh'     =>  "'遂川县农商合作银行'",    //
-                'Skyhhh'      =>  "''",    //
+                'Skyhhh'      =>  "'_'",    //
                 'Zy'          =>  "'zhaiyao'",    //
                 'FJS'         =>  "0",    //
                 'lrr_ID'      =>  "899",    //

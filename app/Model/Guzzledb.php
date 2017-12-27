@@ -5,11 +5,14 @@ namespace App\Model;
 use Illuminate\Database\Eloquent\Model;
 use App\Model\Tt\Sqarray;
 use App\Model\ZB;
+use App\Model\Respostory\Guzzle;
 
 
 class Guzzledb extends Model
 {
     use Sqarray;
+
+    public $mybody;
 
     public $fillable = ['DZKDM', 'DZKMC', 'YSDWDM', 'YSDWMC', 'ZJXZDM', 'ZJXZMC', 'ZFFSDM', 'YSKMDM', 'YSKMMC', 'JFLXDM', 'JFLXMC', 'ZCLXDM', 'ZCLXMC', 'XMDM', 'XMMC', 'ZBLYDM', 'ZBLYMC', 'ZJLYMC', 'YKJHZB', 'YYJHJE', 'KYJHJE', 'YSGLLXDM',  'YSGLLXMC', 'NEWYSKMDM', 'ZBID', 'ZY', 'ZBWH', 'body', 'ZBID','useable'];
 
@@ -51,25 +54,27 @@ class Guzzledb extends Model
 
     public function updateSqarray()
     {
-        $this->table1['Dzkdm'] = "'$this->DZKDM'";
-        $this->table1['Ysdwdm'] = "'$this->YSDWDM'";
+        $this->table1['Dzkdm'] = "'{$this->DZKDM}'";
+        $this->table1['Ysdwdm'] = "'{$this->YSDWDM}'";
 
-        $this->table2['ZBID'] = "'$this->ZBID'";
-        $this->table2['zjxzdm'] = "'$this->ZJXZDM'";
-        $this->table2['Yskmdm'] = "'$this->YSKMDM'";
-        $this->table2['Jflxdm'] = "'$this->JFLXDM'";
-        $this->table2['ysgllxdm'] = "'$this->YSGLLXDM'";
-        $this->table2['zblydm'] = "'$this->ZBLYDM'";
-        $this->table2['xmdm'] = "'$this->XMDM'";
+        $this->table2['ZBID'] = "'{$this->ZBID}'";
+        $this->table2['zjxzdm'] = "'{$this->ZJXZDM}'";
+        $this->table2['Yskmdm'] = "'{$this->YSKMDM}'";
+        $this->table2['Jflxdm'] = "'{$this->JFLXDM}'";
+        $this->table2['ysgllxdm'] = "'{$this->YSGLLXDM}'";
+        $this->table2['zblydm'] = "'{$this->ZBLYDM}'";
+        $this->table2['xmdm'] = "'{$this->XMDM}'";
 
-        $this->table3['DZKMC'] = "'$this->DZKMC'";
-        $this->table3['XMMC'] = "'$this->XMMC'";
-        $this->table3['MXZBWH'] = "'$this->ZBWH'";
-        $this->table3['MXZBXH'] = "{$this->findInZb('MXZBXH')}";
+        $this->table3['YSDWMC'] = "'{$this->YSDWMC}'";
+        $this->table3['YSDWQC'] = "'{$this->YSDWMC}'";
+        $this->table3['DZKMC'] = "'{$this->DZKMC}'";
+        $this->table3['XMMC'] = "'{$this->XMMC}'";
+        $this->table3['MXZBWH'] = "'{$this->ZBWH}'";
+        $this->table3['MXZBXH'] = "{$this->_findInZb('MXZBXH')}";
         $this->table3['ZBLYMC'] = "'{$this->ZBLYMC}'";
-        $this->table3['ZJXZMC'] = "'{$this->findInZb('ZJXZMC')}'";
+        $this->table3['ZJXZMC'] = "'{$this->_findInZb('ZJXZMC')}'";
         $this->table3['YSKMMC'] = "'{$this->YSKMMC}'";
-        $this->table3['YSKMQC'] = "'{$this->findInZb('YSKMQC')}'";
+        $this->table3['YSKMQC'] = "'{$this->_findInZb('YSKMQC')}'";
         $this->table3['JFLXMC'] = "'{$this->JFLXMC}'";
 
         switch ($this->JFLXMC) {
@@ -80,8 +85,14 @@ class Guzzledb extends Model
             case '其他支出':
                 $jjfl = '其他支出-其他支出';
                 break;
+            case '基础设施建设':
+                $jjfl = '基本建设支出-基础设施建设';
+                break;
+            case '其他基本建设支出':
+                $jjfl = '基本建设支出-其他基本建设支出';
+                break;
             default:
-            throw new Exception('全称错误');
+            throw new \Exception('全称错误'.$this->JFLXMC);
         }
         $this->table3['JFLXQC'] = "'{$jjfl}'";
         $this->table3['YSGLLXMC'] = "'{$this->YSGLLXMC}'";
@@ -90,16 +101,23 @@ class Guzzledb extends Model
     }
 
 
-    public function findInZb ($attribute)
+    private function _findInZb ($attribute)
     {
         return ZB::where('ZBID', $this->ZBID)->value($attribute);
     }
 
 
 
-
-    public function generateSqData ()
+    /**
+     *
+     * 生成新的数据源(生成明码mybody，并且返回$this)
+     * @return $this
+     *
+     */
+    
+    public function generateMybody()
     {
+        $this->updateSqarray();
         extract($this->updateSqarray()->table1);
         $tawenxi1 = sprintf('%s, %s, %s,  %s,%s,  %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s,%s,%s, %s, %s,%s,%s, %s ,%s,%s,%s,%s',$Gsdm,$Kjnd,$Pdqj,$Pdh,$zflb,$Djbh,$xjbz,$zphm,$Pdrq,$Dzkdm,$Ysdwdm,$Fkrdm,$Fkr,$Fkryhbh,$Fkzh,$Fkrkhyh,$Fkyhhh,$PJPCHM,$Skrdm,$Skr,$Skryhbh,$Skzh,$Skrkhyh,$Skyhhh,$Zy,$FJS,$lrr_ID,$lrr,$lr_rq,$dwshr_id,$dwshr,$dwsh_rq,$cxbz,$bz2,$zt,$dybz,$ZZPZ);
         unset($Gsdm,$Kjnd,$Pdqj,$Pdh,$zflb,$Djbh,$xjbz,$zphm,$Pdrq,$Dzkdm,$Ysdwdm,$Fkrdm,$Fkr,$Fkryhbh,$Fkzh,$Fkrkhyh,$Fkyhhh,$PJPCHM,$Skrdm,$Skr,$Skryhbh,$Skzh,$Skrkhyh,$Skyhhh,$Zy,$FJS,$lrr_ID,$lrr,$lr_rq,$dwshr_id,$dwshr,$dwsh_rq,$cxbz,$bz2,$zt,$dybz,$ZZPZ);
@@ -111,10 +129,32 @@ class Guzzledb extends Model
         $tawenxi3 = sprintf('%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s',$GSDM,$KJND,$ZFLB,$PDH,$PDQJ,$JSFSMC,$NEWDYBZ,$NEWZZPZ,$NEWCXBZ,$NEWPZLY,$NEWZT,$PDXH,$DZKMC,$XMMC,$XMFLMC,$YSDWMC,$YSDWQC,$YWLXMC,$ZFFSMC,$MXZBWH,$MXZBXH,$ZBLYMC,$ZJXZMC,$YSKMMC,$YSKMQC,$JFLXMC,$JFLXQC,$ZCLXMC,$YSGLLXMC,$KZZLMC1,$KZZLMC2);
         unset($GSDM,$KJND,$ZFLB,$PDH,$PDQJ,$JSFSMC,$NEWDYBZ,$NEWZZPZ,$NEWCXBZ,$NEWPZLY,$NEWZT,$PDXH,$DZKMC,$XMMC,$XMFLMC,$YSDWMC,$YSDWQC,$YWLXMC,$ZFFSMC,$MXZBWH,$MXZBXH,$ZBLYMC,$ZJXZMC,$YSKMMC,$YSKMQC,$JFLXMC,$JFLXQC,$ZCLXMC,$YSGLLXMC,$KZZLMC1,$KZZLMC2);
 
-        return $result = strtr($this->sqmoban, compact('tawenxi1','tawenxi2','tawenxi3'));
+        $this->mybody = strtr($this->sqmoban, compact('tawenxi1','tawenxi2','tawenxi3'));
+        return $this;
     }
 
+    /**
+     *
+     * 对生成的Mybody 进行加密操作，一般用在 generateMybody() 之后
+     *  @return $mybody (明码)
+     */
+    
 
+    public function encodeMybody()
+    {
+        $this->mybody = encode($this->mybody);
+        return $this->mybody;
+    }
+
+    
+    /**
+     *
+     * 根据加密的body进行分析，提取出数组数据
+     * @param $id 第几张表格
+     * @param $body 需要进行分析的数据源  如果不传入则为数据库中的body字段
+     * @retuen Array
+     */
+    
     public function getArray($id, $body=null)
     {
         $table1_regex1 = "/Gsdm,Kjnd,Pdqj,Pdh.+dybz,ZZPZ/";
@@ -145,29 +185,53 @@ class Guzzledb extends Model
                  break;
          } 
 
-         $body = $body?$body:$this->body;
+        $body = $body?encode($body):$this->body;
         $result = $this->_getTable($body,$key,$value);
         return $result;
     }
 
+
+    //传入的是加密的data
     private function _getTable($data,$regex1 ,$regex2) 
     {
-        preg_match($regex1, 
-                   iconv('GB2312', 'UTF-8',
-                   urldecode($data)), 
-                   $res);
+        preg_match($regex1, decode($data), $res);
 
         $table1_key = explode(',', str_replace(' ', '', $res[0]));
 
-        preg_match($regex2, 
-                   iconv('GB2312', 
-                   'UTF-8',
-                   urldecode($data)), 
-                   $res);
+        preg_match($regex2, decode($data), $res);
 
         $table1_value = preg_split("/(?<!date),(?!'培训')/", 
                                    str_replace(' ', '', $res[0]));
 
         return $table = array_combine($table1_key, $table1_value);
     }
+
+
+
+    /**
+     *
+     * 进行数据的双body 验证
+     *
+     */
+
+    public function comparebody()
+    {
+        $accountdata = ['zhaiyao'=>'zhaiyao',
+                        'amount'=>1,
+                        'payee'=>'罗旭东',
+                        'payeeaccount'=>'1781577500001008',
+                        'payeebanker'=>'中国工商银行',
+                        'zbid'=>$this->ZBID];
+        $guzzle = app(Guzzle::class);
+        $mybody = $guzzle->setPayee($accountdata)
+                         ->setCompareBody($this->generateMybody()->encodeMybody())
+                         ->handleCompareBody();
+
+        $originBody = $guzzle->setPayee($accountdata)
+                             ->setCompareBody()
+                             ->handleCompareBody();
+                             //dd($originBody,$mybody);
+        return $mybody === $originBody;
+    }
+    
 }

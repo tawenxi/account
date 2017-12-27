@@ -45,6 +45,7 @@ if (!function_exists('preg_replace_with_count')) {
         if ($count === $fcount) {
             return $result;
         } else {
+            dd($count, $fcount);
             throw new Exception('替换次数错误');
         }
     }
@@ -74,6 +75,16 @@ if (!function_exists('preg_replace_with_count')) {
     function begoodself($amount)
     {
         return number_format($amount, 2, '.', '');
+    }
+
+    function encode($data) //传入的是中文明码
+    {
+        return urlencode(iconv('UTF-8','GB2312', $data));
+    }
+
+    function decode($data) //传入的是最原始的data 暗码
+    {
+        return iconv('GB2312', 'UTF-8', urldecode($data));
     }
 
      

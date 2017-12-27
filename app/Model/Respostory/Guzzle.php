@@ -39,10 +39,37 @@ class Guzzle extends Model
     public function setBody()
     {
         $zb = Guzzledb::where('ZBID', $this->payee['zbid'])->firstOrFail();
-        $this->insertbody = trim($zb->body);
-        if (!$this->validateSql()) {
-            throw new Exception('验证数据源错误');
-        } 
+            $this->insertbody = trim($zb->body);
+            
+                if (!$this->validateSql()) {
+                    throw new Exception('验证数据源错误');
+                } 
+        return $this;
+    }
+
+
+public function setCompareBody($body = NULL)
+    {
+        if (!is_null($body) && strlen($body)>3000) {
+
+            $this->insertbody = trim($body);
+        } else {
+            $zb = Guzzledb::where('ZBID', $this->payee['zbid'])->firstOrFail();
+            $this->insertbody = trim($zb->body);
+                $search = [
+                    '190207313396'      =>'178190121002547948',
+                    '99900114'          =>'',
+                    '吉安遂川县财政局'  =>'叶涛',
+                    '中行遂川支行'      =>'遂川县农商合作银行',
+                    "'005'"             =>"'_'",
+                    '99991528'          => '',
+                ];
+                
+                $this->insertbody = encode(strtr(decode($this->insertbody), $search));  
+                $this->insertbody = encode(preg_replace("/'\d+', 'zhaiyao'/", "'_', 'zhaiyao'", decode($this->insertbody)));
+                $this->insertbody = encode(preg_replace("/'\d+', '叶涛', '\d+'/", "'', '叶涛', ''", decode($this->insertbody)));
+                //dd(decode($this->insertbody));              
+        }
         return $this;
     }
 
@@ -133,21 +160,16 @@ class Guzzle extends Model
             $this->payee['amount'] = div($this->payee['amount']);
         };
     }
-    
+
 
     /**
-     * TODO:发送制单请求
-     * - 传入@
-     * - 返回@response.
+     *
+     * 处理数据源
+     *  @return 处理后的明码数据源
      */
-    public function add_post()
+    
+    public function handleBody()
     {
-        
-        //-----------------------------------------   
-        $this->test_input();
-        //-----------------------------------
-
-
         Test::log(__METHOD__.'根据一行数据获取对象的指标信息');
         $zb = $this->get_zbdata($this->payee['zbid']); //获取最新数据
 
@@ -164,14 +186,48 @@ class Guzzle extends Model
 
         $zbamount = $zb['YKJHZB'].','.$zb['YYJHJE'].','.$zb['KYJHJE'].','.$this->payee['amount'];
         Test::log(__METHOD__.'生成金额数据');
-
         $this->accountreplace($this->payee);
         $this->amountreplace($zbamount);
         $this->insertbody = $this->timereplace($this->insertbody,5,3,1);
         Test::log(__METHOD__.'替换时间金额账户信息');
 
         //--------------------------------------------
-        $vali_var = iconv('GB2312', 'UTF-8', $this->insertbody);
+        return iconv('GB2312', 'UTF-8', $this->insertbody);
+    }
+
+
+
+/**
+     *
+     * 处理数据源
+     *  @return 处理后的明码数据源
+     */
+    
+    public function handleCompareBody()
+    {
+        $zb['YKJHZB'] = '10000.00';
+        $zb['YYJHJE'] = '10000.00';
+        $zb['KYJHJE'] = '10000.00';
+        $this->payee['amount'] = div($this->payee['amount']);
+        $zbamount = $zb['YKJHZB'].','.$zb['YYJHJE'].','.$zb['KYJHJE'].','.$this->payee['amount'];
+        $this->accountreplace($this->payee);
+        $this->amountreplace($zbamount);
+        $this->insertbody = $this->timereplace($this->insertbody,5,3,1);
+        return iconv('GB2312', 'UTF-8', $this->insertbody);
+    }
+
+    
+
+    /**
+     * TODO:发送制单请求
+     * - 传入@
+     * - 返回@response.
+     */
+    public function add_post()
+    {
+        $this->test_input();
+        $vali_var = $this->handleBody();
+        
         if (stristr($vali_var, $this->payee['payeeaccount']) and 
             stristr($vali_var, $this->payee['amount']) and 
             stristr($vali_var, $this->payee['payee']) and 
@@ -181,6 +237,8 @@ class Guzzle extends Model
             //确保银行数据接收
             )
         {
+            //dd($this->insertbody);
+            //这里的insertBody的一个非中文的半明码
             $response2 = $this->http->makerequest($this->insertbody);
             Test::log(__METHOD__.'发送POST请求');
         }else {
@@ -254,7 +312,7 @@ class Guzzle extends Model
         $pattern3 = '/\d{1,}(\.[0-9]{1,})?,\s+\d{1,}(\.[0-9]{1,})?,\s+\d{1,}(\.[0-9]{1,})?,\s+\d{1,}(\.[0-9]{1,2})?/';//这里的\s+\d{1,}(.[0-9]{1,})?可以不改为0，但是在setamount里需要改为0
         $copydata = $this->insertbody;
         $this->setAmountData($zbamount);
-        $this->insertbody = preg_replace_with_count($pattern3, $this->getAmountData(), $this->insertbody, 1);
+        $this->insertbody = preg_replace_with_count($pattern3, $this->getAmountData(), $this->insertbody,1);
         $this->checkreplace($copydata, $this->insertbody);
     }
 

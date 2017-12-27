@@ -140,14 +140,21 @@ echo strtr($subject,$search); // output: 'BCDEF'
 
 Route::get('tb', function(){
 
-    $qq = \App\Model\Guzzledb::first();
-    $me = $qq->getArray(1);
+    $qq = \App\Model\Guzzledb::find(78);
+    //$me = $qq->getArray(1);
+    //dd(encode(\App\Model\Guzzledb::first()->generateMybody()));
+    dd($qq->comparebody());
 
-    //dd(\App\Model\Guzzledb::first()->updateSqarray()->generateSqData());
 
-    $you = $qq->getArray(1, urlencode(iconv('UTF-8','GB2312', \App\Model\Guzzledb::first()->updateSqarray()->generateSqData())));
+    $qq->generateMybody()->encodeMybody(); //可以放在boot里面
 
-    dd($you,$me);
+    //dd(decode($qq->mybody));
+
+    //dd(\App\Model\Guzzledb::first()->generateMybody());
+    //dd(\App\Model\Guzzledb::first()->generateMybody()->mybody);
+    $you = $qq->getArray(1, (\App\Model\Guzzledb::first()->generateMybody()->mybody));
+
+    //dd($you,$me);
 
 
     

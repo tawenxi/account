@@ -52,6 +52,8 @@ class InsertSq extends Command
      */
     public function handle()
     {
+        $this->call('pull:shujuyuan');
+
         $this->excelData = $this->getExcelData();
 
         $this->excelData = $this->validate_arr($this->excelData);
