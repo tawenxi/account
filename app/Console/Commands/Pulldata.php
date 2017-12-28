@@ -59,7 +59,7 @@ class Pulldata extends Command
     {
         //PullSQ::dispatch();
         //PullZfpz::dispatch();
-        //$this->PullShenqing();
+        $this->PullShenqing();
         $this->PullZfpz();
         $this->Pullsq();
         $this->update_yeamount();
@@ -75,7 +75,8 @@ class Pulldata extends Command
         $collection = $collection->reject(function($item,$key){
             return !array_key_exists('SHR', $item);
         })->map(function ($item) {
-            
+            if ($item["YWLXDM"] !="_" OR $item["XMFLDM"] !="_") 
+                dd("发现YWLXDM，XMFLDM异常会影响数据源".$item["YWLXDM"].$item["XMFLDM"] !="_");
             \App\Model\Zb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
         });
 
@@ -108,7 +109,7 @@ class Pulldata extends Command
         $year = '20'.date('y');
         $data = [];
 
-
+        \DB::table('zb_applies')->truncate();
         foreach ($YSDWDMS as $YSDW) 
         {
             $once_data = $this->getdetail->getdata($this->shenqingsql, [
@@ -120,7 +121,7 @@ class Pulldata extends Command
         }
 
         if (!empty($data) AND !in_array(null,$data)) {
-            \DB::table('zb_applies')->truncate();
+            
             \DB::table('zb_applies')->insert($data);   
         }
        

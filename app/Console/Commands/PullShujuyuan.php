@@ -43,6 +43,9 @@ class PullShujuyuan extends Command
             return trim($item->body)=='';
         })->each(function($item){
             $body = $item->generateMybody()->encodeMybody();
+            if (strstr(decode($body), '~')) {
+                throw new Exception('数据源包含~');
+            }
             $item->update(['body'=>$body]);  
         });
 

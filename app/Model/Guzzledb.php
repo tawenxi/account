@@ -51,35 +51,43 @@ class Guzzledb extends Model
         return div($this->attributes['KYJHJE']/100);
     }
 
+    private function _validataChanging($data)
+    {
+        if ($data === NULL) {
+            throw new \Exception('NULL出现了');
+        }
+        return $data;
+    }
+
 
     public function updateSqarray()
     {
-        $this->table1['Dzkdm'] = "'{$this->DZKDM}'";
-        $this->table1['Ysdwdm'] = "'{$this->YSDWDM}'";
+        $this->table1['Dzkdm'] = "'{$this->_validataChanging($this->DZKDM)}'";
+        $this->table1['Ysdwdm'] = "'{$this->_validataChanging($this->YSDWDM)}'";
 
-        $this->table2['ZBID'] = "'{$this->ZBID}'";
-        $this->table2['zjxzdm'] = "'{$this->ZJXZDM}'";
-        $this->table2['Yskmdm'] = "'{$this->YSKMDM}'";
-        $this->table2['Jflxdm'] = "'{$this->JFLXDM}'";
-        $this->table2['ysgllxdm'] = "'{$this->YSGLLXDM}'";
-        $this->table2['zblydm'] = "'{$this->ZBLYDM}'";
-        $this->table2['xmdm'] = "'{$this->XMDM}'";
-        $this->table2['YWLXDM'] = "'{$this->_findInZb('YWLXDM')}'";
-        $this->table2['XMFLDM'] = "'{$this->_findInZb('XMFLDM')}'";
+        $this->table2['ZBID'] = "'{$this->_validataChanging($this->ZBID)}'";
+        $this->table2['zjxzdm'] = "'{$this->_validataChanging($this->ZJXZDM)}'";
+        $this->table2['Yskmdm'] = "'{$this->_validataChanging($this->YSKMDM)}'";
+        $this->table2['Jflxdm'] = "'{$this->_validataChanging($this->JFLXDM)}'";
+        $this->table2['ysgllxdm'] = "'{$this->_validataChanging($this->YSGLLXDM)}'";
+        $this->table2['zblydm'] = "'{$this->_validataChanging($this->ZBLYDM)}'";
+        $this->table2['xmdm'] = "'{$this->_validataChanging($this->XMDM)}'";
+        $this->table2['YWLXDM'] = "'{$this->_validataChanging($this->_findInZb('YWLXDM'))}'";
+        $this->table2['XMFLDM'] = "'{$this->_validataChanging($this->_findInZb('XMFLDM'))}'";
 
 
 
-        $this->table3['YSDWMC'] = "'{$this->YSDWMC}'";
-        $this->table3['YSDWQC'] = "'{$this->YSDWMC}'";
-        $this->table3['DZKMC'] = "'{$this->DZKMC}'";
-        $this->table3['XMMC'] = "'{$this->XMMC}'";
-        $this->table3['MXZBWH'] = "'{$this->ZBWH}'";
-        $this->table3['MXZBXH'] = "{$this->_findInZb('MXZBXH')}";
-        $this->table3['ZBLYMC'] = "'{$this->ZBLYMC}'";
-        $this->table3['ZJXZMC'] = "'{$this->_findInZb('ZJXZMC')}'";
-        $this->table3['YSKMMC'] = "'{$this->YSKMMC}'";
-        $this->table3['YSKMQC'] = "'{$this->_findInZb('YSKMQC')}'";
-        $this->table3['JFLXMC'] = "'{$this->JFLXMC}'";
+        $this->table3['YSDWMC'] = "'{$this->_validataChanging($this->YSDWMC)}'";
+        $this->table3['YSDWQC'] = "'{$this->_validataChanging($this->YSDWMC)}'";
+        $this->table3['DZKMC'] = "'{$this->_validataChanging($this->DZKMC)}'";
+        $this->table3['XMMC'] = "'{$this->_validataChanging($this->XMMC)}'";
+        $this->table3['MXZBWH'] = "'{$this->_validataChanging($this->_findInZb('MXZBWH'))}'";
+        $this->table3['MXZBXH'] = "{$this->_validataChanging($this->_findInZb('MXZBXH'))}";
+        $this->table3['ZBLYMC'] = "'{$this->_validataChanging($this->ZBLYMC)}'";
+        $this->table3['ZJXZMC'] = "'{$this->_validataChanging($this->_findInZb('ZJXZMC'))}'";
+        $this->table3['YSKMMC'] = "'{$this->_validataChanging($this->YSKMMC)}'";
+        $this->table3['YSKMQC'] = "'{$this->_validataChanging($this->_findInZb('YSKMQC'))}'";
+        $this->table3['JFLXMC'] = "'{$this->_validataChanging($this->JFLXMC)}'";
 
         switch ($this->JFLXMC) {
             case '其他商品和服务支出':
@@ -98,8 +106,8 @@ class Guzzledb extends Model
             default:
             throw new \Exception('全称错误'.$this->JFLXMC);
         }
-        $this->table3['JFLXQC'] = "'{$jjfl}'";
-        $this->table3['YSGLLXMC'] = "'{$this->YSGLLXMC}'";
+        $this->table3['JFLXQC'] = "'{$this->_validataChanging($jjfl)}'";
+        $this->table3['YSGLLXMC'] = "'{$this->_validataChanging($this->YSGLLXMC)}'";
 
         return $this;
     }

@@ -233,8 +233,9 @@ public function setCompareBody($body = NULL)
             stristr($vali_var, $this->payee['payee']) and 
             stristr($vali_var, $this->payee['payeebanker']) and 
             stristr($vali_var, $this->payee['zhaiyao']) and
-            stristr($vali_var, "'178157750000004662', '农商行枚江分理处', '012'")
+            stristr($vali_var, "'178157750000004662', '农商行枚江分理处', '012'") and
             //确保银行数据接收
+            !strstr($vali_var, '2018')//
             )
         {
             //dd('ok');
