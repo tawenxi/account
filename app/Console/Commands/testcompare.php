@@ -43,10 +43,11 @@ class Testcompare extends Command
         })->each(function($item){
             $res = $item->comparebody();
             if ($res) {
-                $this->info($item->id);
+                //$this->info($item->id);
             } else {
-                $this->error($item->id);
+                throw new \Exception('验证数据源失败'.$item->id.'号失败');
             }
         });
-        }
+        $this->info('SUCCESS-验证数据源成功');
+    }
 }

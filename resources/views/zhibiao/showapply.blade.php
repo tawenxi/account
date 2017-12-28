@@ -24,6 +24,8 @@
 		<tbody class='alert-info'>
 				@foreach ($results as $result)
 			<tr>
+
+
 			 	<td>{{ $loop->index+1 }}</td>
 				<td>{{$result->ZBID}} </td>
 				<td >{{ substr($result->YSDWMC, 9) }}</td>
@@ -42,10 +44,10 @@
 				<th>预算单位</th>
 				<th>项目名称</th>
 				<th class="text-center">摘要</th>
-				<th >{{$result->sum('ZBJE')}}</th>
-				<th >{{$result->sum('YFPJE')}}</th>
-				<th>{{$result->sum('ZBYE')}}</th>
-				<th>{{$result->sum('KYJHJE')}}</th>
+				<th >{{$results->sum('ZBJE')}}</th>
+				<th >{{$results->sum('YFPJE')}}</th>
+				<th>{{$results->sum('ZBYE')}}</th>
+				<th>{{$results->sum('KYJHJE')}}</th>
 			</tr>
 	</table>
 			<hr>

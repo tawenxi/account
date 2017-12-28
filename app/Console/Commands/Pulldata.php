@@ -59,10 +59,14 @@ class Pulldata extends Command
     {
         //PullSQ::dispatch();
         //PullZfpz::dispatch();
+        $this->call('pull:shujuyuan');
+        $this->call('test:compare');
+
         $this->PullShenqing();
         $this->PullZfpz();
         $this->Pullsq();
         $this->update_yeamount();
+
         
     }
 

@@ -49,6 +49,6 @@ class PullShujuyuan extends Command
             $item->update(['body'=>$body]);  
         });
 
-        $this->info('更新数据源成功');
+        $this->info('SUCCESS-更新数据源成功');
     }
 }
