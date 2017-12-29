@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Scopes\KJNDScope;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
@@ -9,6 +10,13 @@ class Zfpz extends Model
 {
     use SearchableTrait;
     public $timestamps = false;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new KJNDScope);
+    }
 
     public function getZySkrAttribute()
     {

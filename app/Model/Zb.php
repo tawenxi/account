@@ -4,10 +4,19 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Illuminate\Database\Eloquent\Builder;
+use App\Scopes\KJNDScope;
 
 class Zb extends Model
 {
     use SearchableTrait;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new KJNDScope);
+    }
 
     /**
      * Searchable rules.

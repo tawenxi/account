@@ -13,6 +13,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        //session()->flush();
+        //session(['ND' => '2017']);
     }
 
     /**

@@ -59,6 +59,8 @@ class Pulldata extends Command
     {
         //PullSQ::dispatch();
         //PullZfpz::dispatch();
+
+        $this->info(session('ND'));
         $this->call('pull:shujuyuan');
         $this->call('test:compare');
 

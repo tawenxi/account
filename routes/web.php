@@ -87,6 +87,16 @@ Route::get('/viewdetail', 'HomeController@viewdetail');
 Route::post('/storeaccount', 'MakeAccountController@storeAccount');
 Route::get('/zhibiaos', 'HomeController@zhibiao');
 
+Route::get('/session', function(){
+    if (session('ND') == '2017') {
+        session(['ND'=>'2018']);
+    } else {
+        session(['ND'=>'2017']);
+    }
+    return back();
+    
+});
+
 Route::get('/muxing/{user}', function (\App\Model\User $user) {
     dd($user);
 });
@@ -108,6 +118,8 @@ Route::get('/test', function(App\Acc\Llj $a){
     });
 
 });
+
+
 
 Route::get('/5', 'LearnController@index');
 Route::get('/2', 'LearnController@index2');

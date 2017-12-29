@@ -2,7 +2,7 @@
 @section('content')
 @include('salary.date')
 
-<h1>枚江镇工资部门汇总({{ $resv[0]['date'] }})</h1>
+<h1>枚江镇工资部门汇总({{ isset($resv[0]['date'])?$resv[0]['date']:'' }})</h1>
 @include('shared.errors')
 
 <article>

@@ -2,10 +2,12 @@
 
 namespace App\Model;
 
+use App\Scopes\GuzzledbScope;
 use Illuminate\Database\Eloquent\Model;
 use App\Model\Tt\Sqarray;
 use App\Model\ZB;
 use App\Model\Respostory\Guzzle;
+
 
 
 class Guzzledb extends Model
@@ -13,6 +15,13 @@ class Guzzledb extends Model
     use Sqarray;
 
     public $mybody;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new GuzzledbScope);
+    }
 
     public $fillable = ['DZKDM', 'DZKMC', 'YSDWDM', 'YSDWMC', 'ZJXZDM', 'ZJXZMC', 'ZFFSDM', 'YSKMDM', 'YSKMMC', 'JFLXDM', 'JFLXMC', 'ZCLXDM', 'ZCLXMC', 'XMDM', 'XMMC', 'ZBLYDM', 'ZBLYMC', 'ZJLYMC', 'YKJHZB', 'YYJHJE', 'KYJHJE', 'YSGLLXDM',  'YSGLLXMC', 'NEWYSKMDM', 'ZBID', 'ZY', 'ZBWH', 'body', 'ZBID','useable'];
 
@@ -54,7 +63,7 @@ class Guzzledb extends Model
     private function _validataChanging($data)
     {
         if ($data === NULL) {
-            throw new \Exception('NULL出现了..'.$data);
+            throw new \Exception('NULL出现了..Guzzledb.php:57'.$data);
         }
         return $data;
     }
@@ -62,8 +71,6 @@ class Guzzledb extends Model
 
     public function updateSqarray()
     {
-        //$this->table1['Gsdm'] = "'{$this->_validataChanging($this->_findInZb('GSDM'))}'";
-        //$this->table1['Kjnd'] = "'{$this->_validataChanging($this->_findInZb('KJND'))}'";
         $this->table1['Dzkdm'] = "'{$this->_validataChanging($this->DZKDM)}'";
         $this->table1['Ysdwdm'] = "'{$this->_validataChanging($this->YSDWDM)}'";
 
@@ -74,7 +81,6 @@ class Guzzledb extends Model
         $this->table2['ysgllxdm'] = "'{$this->_validataChanging($this->YSGLLXDM)}'";
         $this->table2['zblydm'] = "'{$this->_validataChanging($this->ZBLYDM)}'";
         $this->table2['xmdm'] = "'{$this->_validataChanging($this->XMDM)}'";
-        //$this->table2['SJWH'] = "'{$this->_validataChanging($this->_findInZb('SJWH'))}'";
         $this->table2['YWLXDM'] = "'{$this->_validataChanging($this->_findInZb('YWLXDM'))}'";
         $this->table2['XMFLDM'] = "'{$this->_validataChanging($this->_findInZb('XMFLDM'))}'";
 
@@ -82,14 +88,12 @@ class Guzzledb extends Model
 
         $this->table3['YSDWMC'] = "'{$this->_validataChanging($this->YSDWMC)}'";
         $this->table3['YSDWQC'] = "'{$this->_validataChanging($this->YSDWMC)}'";
-        //$this->table3['YWLXMC'] = "'{$this->_validataChanging($this->_findInZb('YWLXMC'))}'";
         $this->table3['DZKMC'] = "'{$this->_validataChanging($this->DZKMC)}'";
         $this->table3['XMMC'] = "'{$this->_validataChanging($this->XMMC)}'";
-        //$this->table3['XMFLMC'] = "'{$this->_validataChanging($this->_findInZb('XMFLMC'))}'";
         $this->table3['MXZBWH'] = "'{$this->_validataChanging($this->_findInZb('MXZBWH'))}'";
         $this->table3['MXZBXH'] = "{$this->_validataChanging($this->_findInZb('MXZBXH'))}";
         $this->table3['ZBLYMC'] = "'{$this->_validataChanging($this->ZBLYMC)}'";
-        $this->table3['ZJXZMC'] = "'{$this->_validataChanging($this->ZJXZMC)}'";
+        $this->table3['ZJXZMC'] = "'{$this->_validataChanging($this->ZJXZMC)}'";//更改了从sq表获得数据
         $this->table3['YSKMMC'] = "'{$this->_validataChanging($this->YSKMMC)}'";
         $this->table3['YSKMQC'] = "'{$this->_validataChanging($this->_findInZb('YSKMQC'))}'";
         $this->table3['JFLXMC'] = "'{$this->_validataChanging($this->JFLXMC)}'";

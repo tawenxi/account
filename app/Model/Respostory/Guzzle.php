@@ -36,10 +36,13 @@ class Guzzle extends Model
         return $this;
     }
 //   ->setPayee()->setBody()
+    private $_bodySaving;
     public function setBody()
     {
         $zb = Guzzledb::where('ZBID', $this->payee['zbid'])->firstOrFail();
             $this->insertbody = trim($zb->body);
+            $this->_bodySaving = trim($zb->body);
+
             
                 if (!$this->validateSql()) {
                     throw new Exception('验证数据源错误');
@@ -217,7 +220,29 @@ public function setCompareBody($body = NULL)
     }
 
     
-
+    private function compare2body()
+    {
+        foreach ([1,2] as $_value) {
+            $guzzledb = new Guzzledb();
+            $nowBody = $guzzledb->getArray($_value,iconv('GB2312','UTF-8', $this->insertbody));
+            $startBody = $guzzledb->getArray($_value,decode($this->_bodySaving));
+            $diff= collect($nowBody)->diffAssoc($startBody)
+                                 ->keys()->toArray();
+            $result = collect($diff)->each(function ($value, $key)use ($_value) 
+            {
+                    switch ($_value) {
+                        case 1:
+                            $changed = [ "Kjnd","Pdqj","Pdrq","Skrdm","Skr","Skryhbh","Skzh","Zy"];
+                            break;
+                        case 2:
+                            $changed = ["Kjnd","Pdqj","zbje","yyzbje","kyzbje","JE"];
+                            break;
+                    }
+                    $bool = in_array($value, $changed);
+                    if (!$bool) dd('compare比较数组错误（guzzle.php:243）');
+            });
+        }
+    }
     /**
      * TODO:发送制单请求
      * - 传入@
@@ -227,7 +252,7 @@ public function setCompareBody($body = NULL)
     {
         $this->test_input();
         $vali_var = $this->handleBody();
-        
+        $this->compare2body();     
         if (stristr($vali_var, $this->payee['payeeaccount']) and 
             stristr($vali_var, $this->payee['amount']) and 
             stristr($vali_var, $this->payee['payee']) and 
@@ -238,8 +263,8 @@ public function setCompareBody($body = NULL)
             !strstr($vali_var, '2018')//
             )
         {
-            //dd('ok');
-            //dd($this->insertbody);
+            dd('ok');
+            //dd($this->insertbodyody);
             //这里的insertBody的一个非中文的半明码
             $response2 = $this->http->makerequest($this->insertbody);
             Test::log(__METHOD__.'发送POST请求');

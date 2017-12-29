@@ -5,7 +5,9 @@
   <div class="container">
     <div class="col-md-offset-0 col-md-12">
      @if (\Auth::check())
-      <a href="{{ (\Auth::user()->id==39)?'/preview':'/geren'}}" id="logo">枚江镇</a>
+      {{-- <a href="{{ (\Auth::user()->id==39)?'/preview':'/geren'}}" id="logo"> --}}
+      <a href="{{ (\Auth::user()->id==39)?'/session':'/geren'}}" id="logo">
+      {{ session('ND') }}</a>
       @else
       <a href="" id="logo">枚江镇工资查询系统</a>
       @endif
