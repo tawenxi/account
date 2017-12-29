@@ -62,7 +62,7 @@ class Pulldata extends Command
         $this->call('pull:shujuyuan');
         $this->call('test:compare');
 
-        $this->PullShenqing();
+        //$this->PullShenqing();
         $this->PullZfpz();
         $this->Pullsq();
         $this->update_yeamount();
@@ -79,8 +79,13 @@ class Pulldata extends Command
         $collection = $collection->reject(function($item,$key){
             return !array_key_exists('SHR', $item);
         })->map(function ($item) {
-            if ($item["YWLXDM"] !="_" OR $item["XMFLDM"] !="_") 
+            //dd($item["SJWH"]);
+            if ($item["YWLXDM"] !="_" OR
+                $item["XMFLDM"] !="_" ) 
                 dd("发现YWLXDM，XMFLDM异常会影响数据源".$item["YWLXDM"].$item["XMFLDM"] !="_");
+            if (isset($item["SJWH"]) AND $item["SJWH"] !=="" AND $item["SJWH"] !="_") {
+                dd("发现SJWH异常会影响数据源");
+            }
             \App\Model\Zb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
         });
 

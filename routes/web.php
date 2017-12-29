@@ -140,7 +140,7 @@ echo strtr($subject,$search); // output: 'BCDEF'
 
 Route::get('tb', function(){
 
-    $qq = \App\Model\Guzzledb::find(78);
+    $qq = \App\Model\Guzzledb::find(30);
     //$me = $qq->getArray(1);
     //dd(encode(\App\Model\Guzzledb::first()->generateMybody()));
     dd($qq->comparebody());
