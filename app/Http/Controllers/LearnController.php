@@ -46,6 +46,11 @@ class LearnController extends Controller
 
     function index3 ()
     {
-        app()->call('Myhelp', [1]);
+        
+    }
+
+        function index5 ()
+    {
+       
     }
 }

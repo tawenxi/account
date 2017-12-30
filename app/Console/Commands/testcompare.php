@@ -11,7 +11,7 @@ class Testcompare extends Command
      *
      * @var string
      */
-    protected $signature = 'test:compare';
+    protected $signature = 'test:compare {year?}';
 
     /**
      * The console command description.
@@ -37,17 +37,17 @@ class Testcompare extends Command
      */
     public function handle()
     {
-        $qq = \App\Model\Guzzledb::all();
-        $qq->reject(function($item){
+        $Guzzledb = \App\Model\Guzzledb::all();
+        $Guzzledb->reject(function($item){
             return trim($item->body)=='';
         })->each(function($item){
             $res = $item->comparebody();
             if ($res) {
-                //$this->info($item->id);
+               // $this->info($item->id);
             } else {
                 throw new \Exception('验证数据源失败'.$item->id.'号失败');
             }
         });
-        $this->info('SUCCESS-验证数据源成功');
+        $this->info('SUCCESS-验证'.$this->argument('year').'年数据源成功');
     }
 }

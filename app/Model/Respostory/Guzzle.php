@@ -40,13 +40,12 @@ class Guzzle extends Model
     public function setBody()
     {
         $zb = Guzzledb::where('ZBID', $this->payee['zbid'])->firstOrFail();
-            $this->insertbody = trim($zb->body);
-            $this->_bodySaving = trim($zb->body);
+        $this->insertbody = trim($zb->body);
+        $this->_bodySaving = trim($zb->body);
 
-            
-                if (!$this->validateSql()) {
+        if (!$this->validateSql()) {
                     throw new Exception('验证数据源错误');
-                } 
+        } 
         return $this;
     }
 

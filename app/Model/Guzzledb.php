@@ -124,7 +124,7 @@ class Guzzledb extends Model
 
     private function _findInZb ($attribute)
     {
-        return ZB::where('ZBID', $this->ZBID)->value($attribute);
+        return \DB::table('zbs')->where('ZBID', $this->ZBID)->value($attribute);
     }
 
 

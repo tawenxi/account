@@ -34,12 +34,9 @@ class GuzzleController extends Controller
      */
     public function dpt(Guzzle $guzzle)  //带了更新功能
     {
-        $info = $guzzle->updatedb();
-        $guzzledbs = $this->repository->orderBy('ZJXZMC', 'Asc')
-                        ->orderBy('KYJHJE', 'desc')
-                        ->all();
-
-        return $this->excel->exportBlade('guzzle.index', compact('guzzledbs'));
+        \Artisan::call('pull:data');
+        \Session::flash('success', '更新平台成功');
+        return redirect('/hyy');
     }
 
     /**

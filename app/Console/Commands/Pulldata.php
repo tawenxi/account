@@ -59,17 +59,27 @@ class Pulldata extends Command
     {
         //PullSQ::dispatch();
         //PullZfpz::dispatch();
-
-        $this->info(session('ND'));
-        $this->call('pull:shujuyuan');
-        $this->call('test:compare');
-
+        //dd(session('ND'));
+        $this->info('现在的session是'.session('ND'));
+        $this->testCompare();
         //$this->PullShenqing();
-        $this->PullZfpz();
-        $this->Pullsq();
-        $this->update_yeamount();
+        //$this->PullZfpz();
+        //$this->Pullsq();
+        //$this->update_yeamount();
 
-        
+        $this->info('现在的session是'.session('ND'));
+    }
+
+    public function testCompare()
+    {
+        $session = session('ND');
+        session(['ND'=>'2017']);
+        $this->call('pull:shujuyuan');
+        $this->call('test:compare',['year'=>session('ND')]);
+        session(['ND'=>'2018']);
+        $this->call('pull:shujuyuan');
+        $this->call('test:compare',['year'=>session('ND')]);
+        session(['ND'=>$session]);
     }
 
 
