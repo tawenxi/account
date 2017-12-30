@@ -15,15 +15,11 @@ class RccountController extends Controller
     }
 
     public $list = '~month~~政府    id~date~0~9~刘小勇~-1~~~-1~~date~~~0~0~1~abstract~amount~~~遂川财政局~';
-    //month 201706
-    //id 空1
-    //date 20170601
-    //abstract 摘要
-    //amount 金额
+
 
     public $content = '~month~~政府    id~row~abstract~kemu~~1~JD~0~amount~~date~0~0~~001~xmdm~~~~~~~~~~0~~~0~0~~~~~~~~~';
 
-    //month 201705
+    //month 
     //id 空1
     //row 行号
     //abstract 摘要

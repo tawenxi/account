@@ -27,8 +27,7 @@ class MakeAccountController extends Controller
                 $account = zfpz::where('PDH', $key)->first();
                 dump($account->toArray());
             }
-            //001.2017.201708.0.35103
-            //001.2017.201708.0.35102
+
         });
 
         return redirect('/zbdetail');
@@ -50,8 +49,7 @@ class MakeAccountController extends Controller
                 $account = Zb::where('ZBID', $key)->first();
                 dump($account->toArray());
             }
-            //001.2017.201708.0.35103
-            //001.2017.201708.0.35102
+
         });
 
         return redirect('http://account.app/zhibiao?show=1');

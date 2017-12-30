@@ -104,8 +104,8 @@ class Pulldata extends Command
         
 
         $zfpzdatas = $this->getdetail->getdata($this->zfpz, [
-            ["'20170101'", "'20170801'"], //每年修改
-            ["'20170821'", "to_char(sysdate,'yyyymmdd')"],
+            ["'20180101'", "'20180101'"], //每年修改
+            ["'20180821'", "to_char(sysdate,'yyyymmdd')"],
         ]);
 
         foreach ($zfpzdatas as $zfpzdata) {
@@ -134,8 +134,8 @@ class Pulldata extends Command
         foreach ($YSDWDMS as $YSDW) 
         {
             $once_data = $this->getdetail->getdata($this->shenqingsql, [
-                ["20171207", "{$date}"],
-                ["'2017'", "'{$year}'"],
+                ["20181207", "{$date}"],
+                ["'2018'", "'{$year}'"],
                 ['901006001', $YSDW],
             ]);
             if (!in_array(null,$once_data)) $data = array_merge($once_data,$data);

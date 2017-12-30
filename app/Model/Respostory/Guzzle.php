@@ -145,7 +145,7 @@ public function setCompareBody($body = NULL)
             throw new Exception('金额不能小于 且必须为数值');
         }elseif ($this->payee['zhaiyao']=='zhaiyao'){
             throw new Exception('摘要必须修改');
-        } elseif (substr($this->payee['zbid'], 0,11) != '001.2017.0.' OR 
+        } elseif (substr($this->payee['zbid'], 0,11) != '001.2018.0.' OR 
             strlen($this->payee['zbid']) != 15 AND
             strlen($this->payee['zbid']) != 16 ) {
             throw new Exception('指标格式不正确'.substr($this->payee['zbid'], 0,11));
