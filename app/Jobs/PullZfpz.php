@@ -47,7 +47,7 @@ class PullZfpz implements ShouldQueue
         });
 
         $zfpzdatas = $getdetail->getdata($this->zfpz, [
-            ["'20180101'", "'20180801'"], //每年修改
+            ["'20180101'", "'20180101'"], //每年修改
             ["'20180821'", "to_char(sysdate,'yyyymmdd')"],
         ]);
         foreach ($zfpzdatas as $zfpzdata) {

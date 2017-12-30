@@ -65,8 +65,8 @@
                 <ul class="dropdown-menu">      
                     <li><a href="">月工资表</a></li>
                     <li><a href="/bumen">月部门</a></li>
-                    <li><a href="/byear/2017/">分部汇总</a></li>
-                    <li><a href="/myear/2017/">分月汇总</a></li>
+                    <li><a href="/byear/2018/">分部汇总</a></li>
+                    <li><a href="/myear/2018/">分月汇总</a></li>
                     <li><a href="/geren">个人</a></li>
                     <li><a href="/phb">封神榜</a></li>     
                     <li class="divider"></li>

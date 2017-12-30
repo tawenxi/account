@@ -19,19 +19,13 @@ class SqlController extends Controller
     {
 
         // $res = $getdetail->getdata($this->mysql,[
-        //     ['mysql',"select * from  PUBAUDITLOG       where KJND='2017' and Gsdm='001' and AUDITORID = '897'"]]);  //和直接支付申请，计划申请和作废有关系
+        //     ['mysql',"select * from  PUBAUDITLOG       where KJND='' and Gsdm='001' and AUDITORID = '897'"]]);  //和直接支付申请，计划申请和作废有关系
 
         // $res = $getdetail->getdata($this->mysql,[
-        //     ['mysql',"select * From ZB_ZFSQDNR  where  GSDM='001'       and KJND='2017'       and ZFPZPDQJ='201708'  and LRR_ID = '897'"]]);   //只和直接支付有关系 ZFFSDM": "01",
+        //     ['mysql',"select * From ZB_ZFSQDNR  where  GSDM='001'       and KJND=''       and ZFPZPDQJ='08'  and LRR_ID = '897'"]]);   //只和直接支付有关系 ZFFSDM": "01",
 
          $res = $getdetail->getdata($this->mysql,[
-             ['mysql',"select * From zb_zfpzml_y where Pdrq='20171107'"]]);
-
-       // $res = $getdetail->getdata($this->mysql, [
-        //    ['mysql', "update zb_zfpzml_y set Fkyhhh='012' where Pdrq='20171107' and Fkzh='178157750000004662'; commit;"], ]);
-
-        // $res = $getdetail->getdata($this->mysql,[
-        //     ['mysql',"select * From ZB_VIEW_ZFPZ A  where   PDQJ='201708' and LRR_ID = '897'"]]);
+             ['mysql',"select * From zb_zfpzml_y where Pdrq='20181107'"]]);
         return $res;
     }
 

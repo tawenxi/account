@@ -99,16 +99,16 @@ class SalaryController extends Controller
         return $this->excel->exportBlade('salary.geren', compact('res', 'dates', 'resv', 'real_title'))->render();
     }
 
-    public function byear($year = '20'.date('y'), $jj = null)//1只显示工资，2只显示奖金
+    public function byear($year = '2018', $jj = null)//1只显示工资，2只显示奖金
     {
         $res = $this->repository
-              ->pushCriteria(new YearSearchCriteria($year))
+              ->pushCriteria(new YearSearchCriteria(session('ND')))
               ->pushCriteria(new HasJJCriteria($jj))
               ->all()
               ->groupBy('bumen');
 
         $resv = $this->repository
-              ->pushCriteria(new YearSearchCriteria($year))
+              ->pushCriteria(new YearSearchCriteria(session('ND')))
               ->pushCriteria(new HasJJCriteria($jj))
               ->all();
 
@@ -130,13 +130,13 @@ class SalaryController extends Controller
     public function myear($year = 2018, $jj = null)//1只显示工资，2只显示奖金
     {
         $res = $this->repository
-              ->pushCriteria(new YearSearchCriteria($year))
+              ->pushCriteria(new YearSearchCriteria(session('ND')))
               ->pushCriteria(new HasJJCriteria($jj))
               ->all()
               ->groupBy('date');
 
         $resv = $this->repository
-              ->pushCriteria(new YearSearchCriteria($year))
+              ->pushCriteria(new YearSearchCriteria(session('ND')))
               ->pushCriteria(new HasJJCriteria($jj))
               ->all();
 
@@ -154,10 +154,10 @@ class SalaryController extends Controller
         return $this->excel->exportBlade('salary.myear', compact('res', 'dates', 'resv', 'real_title'))->render();
     }
 
-    public function phb($year = date('20y'), $jj = null)//1只显示工资，2只显示奖金
+    public function phb($year = '2018', $jj = null)//1只显示工资，2只显示奖金
     {
         $res = $this->repository
-                ->pushCriteria(new YearSearchCriteria($year))
+                ->pushCriteria(new YearSearchCriteria(session('ND')))
                 ->pushCriteria(new HasJJCriteria($jj))
                 ->all()
                 ->groupBy('name')
@@ -195,7 +195,7 @@ class SalaryController extends Controller
                     );
                 });
         $resv = $this->repository
-                   ->pushCriteria(new YearSearchCriteria($year))
+                   ->pushCriteria(new YearSearchCriteria(session('ND')))
                    ->pushCriteria(new HasJJCriteria($jj))
                    ->all();
 
