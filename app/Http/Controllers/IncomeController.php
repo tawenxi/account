@@ -53,7 +53,7 @@ class IncomeController extends Controller
             'cost'  => 'numeric',
             ]);
         Income::create($request->all());
-        \Session::flash('success', '添加收入成功');
+        Session::flash('success', '添加收入成功');
 
         return redirect()->to('/incomes');
     }

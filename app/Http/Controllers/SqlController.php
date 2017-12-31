@@ -25,7 +25,7 @@ class SqlController extends Controller
         //     ['mysql',"select * From ZB_ZFSQDNR  where  GSDM='001'       and KJND=''       and ZFPZPDQJ='08'  and LRR_ID = '897'"]]);   //只和直接支付有关系 ZFFSDM": "01",
 
          $res = $getdetail->getdata($this->mysql,[
-             ['mysql',"select * From zb_zfpzml_y where Pdrq='20181107'"]]);
+             ['mysql',"select * From zb_zfpzml_y where Pdrq='".config('app.MYND')."1107'"]]);
         return $res;
     }
 

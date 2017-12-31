@@ -13,10 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        session()->flush();
-        session(['ND' => '2018']);
-        session()->keep(['ND']);
-   
+        session(['ND' => config('app.MYND')]);  
     }
 
     /**

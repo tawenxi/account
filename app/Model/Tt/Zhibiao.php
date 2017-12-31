@@ -38,12 +38,12 @@ trait Zhibiao
     {
         $this->balancebody = $this->jiema($findquery);
 
-        $this->balancebody = str_replace('001.2018.0.2470', $zbid, $this->balancebody); //过滤sql2
+        $this->balancebody = str_replace('001.'.config('app.MYND').'.0.2470', $zbid, $this->balancebody); //过滤sql2
 
-        $this->balancebody = str_replace('001.2018.0.3035', $zbid, $this->balancebody);
+        $this->balancebody = str_replace('001.'.config('app.MYND').'.0.3035', $zbid, $this->balancebody);
 
 
-        $this->balancebody = str_replace("'20180728'", "to_char(sysdate,'yyyymmdd')", $this->balancebody);
+        $this->balancebody = str_replace("'".config('app.MYND')."0728'", "to_char(sysdate,'yyyymmdd')", $this->balancebody);
         //dd($this->balancebody);
         return $this->http->makerequest($this->balancebody);
     }

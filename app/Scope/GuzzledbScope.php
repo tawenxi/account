@@ -17,6 +17,6 @@ class GuzzledbScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        return $builder->where('zbid', 'like',"%".session('ND','2018')."%");
+        return $builder->where('zbid', 'like',"%".session('ND',config('app.MYND'))."%");
     }
 }

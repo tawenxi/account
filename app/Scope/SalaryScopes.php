@@ -17,6 +17,6 @@ class SalaryScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        return $builder->where('date', 'like',"%".session('ND','2018')."%");
+        return $builder->where('date', 'like',"%".session('ND',config('app.MYND'))."%");
     }
 }

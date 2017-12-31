@@ -145,7 +145,7 @@ public function setCompareBody($body = NULL)
             throw new Exception('金额不能小于 且必须为数值');
         }elseif ($this->payee['zhaiyao']=='zhaiyao'){
             throw new Exception('摘要必须修改');
-        } elseif (substr($this->payee['zbid'], 0,11) != '001.2018.0.' OR 
+        } elseif (substr($this->payee['zbid'], 0,11) != '001.'.config('app.MYND').'.0.' OR 
             strlen($this->payee['zbid']) != 15 AND
             strlen($this->payee['zbid']) != 16 ) {
             throw new Exception('指标格式不正确'.substr($this->payee['zbid'], 0,11));
@@ -259,7 +259,7 @@ public function setCompareBody($body = NULL)
             stristr($vali_var, $this->payee['zhaiyao']) and
             stristr($vali_var, "'178157750000004662', '农商行枚江分理处', '012'") and
             //确保银行数据接收
-            !strstr($vali_var, '2018')//
+            !strstr($vali_var, config('app.MYND'))//
             )
         {
             dd('ok');

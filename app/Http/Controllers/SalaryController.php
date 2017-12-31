@@ -27,8 +27,10 @@ class SalaryController extends Controller
         $this->validator = $validator;
     }
 
-    public function index($date = '201801', $jj = null)
+    public function index($date = "", $jj = null)
     {
+
+        $date = ($date!='')?$date:config('app.MYND')."01";
         $dt = $date;
         $res = $this->repository
                 ->pushCriteria(new MonthSearchCriteria($dt))
@@ -48,8 +50,9 @@ class SalaryController extends Controller
         return $this->excel->exportBlade('salary.index', compact('resv', 'res', 'dates', 'real_title'))->render();
     }
 
-    public function bumen($date = '201801', $jj = null)
+    public function bumen($date = '', $jj = null)
     {
+        $date = ($date!='')?$date:config('app.MYND')."01";
         $dt = $date;
         $res = $this->repository
                 ->pushCriteria(new MonthSearchCriteria($dt))
@@ -99,9 +102,10 @@ class SalaryController extends Controller
         return $this->excel->exportBlade('salary.geren', compact('res', 'dates', 'resv', 'real_title'))->render();
     }
 
-    public function byear($year = '2018', $jj = null)//1只显示工资，2只显示奖金
+    public function byear($year = '', $jj = null)//1只显示工资，2只显示奖金
     {
-        $res = $this->repository
+      $year = ($year!='')?$year:config('app.MYND');
+      $res = $this->repository
               ->pushCriteria(new YearSearchCriteria(session('ND')))
               ->pushCriteria(new HasJJCriteria($jj))
               ->all()
@@ -127,9 +131,11 @@ class SalaryController extends Controller
         return $this->excel->exportBlade('salary.byear', compact('res', 'dates', 'resv', 'real_title'))->render();
     }
 
-    public function myear($year = 2018, $jj = null)//1只显示工资，2只显示奖金
+    public function myear($year = '', $jj = null)//1只显示工资，2只显示奖金
     {
-        $res = $this->repository
+      $year = ($year!='')?$year:config('app.MYND');
+
+      $res = $this->repository
               ->pushCriteria(new YearSearchCriteria(session('ND')))
               ->pushCriteria(new HasJJCriteria($jj))
               ->all()
@@ -154,9 +160,11 @@ class SalaryController extends Controller
         return $this->excel->exportBlade('salary.myear', compact('res', 'dates', 'resv', 'real_title'))->render();
     }
 
-    public function phb($year = '2018', $jj = null)//1只显示工资，2只显示奖金
+    public function phb($year = '', $jj = null)//1只显示工资，2只显示奖金
     {
-        $res = $this->repository
+      $year = ($year!='')?$year:config('app.MYND');
+
+      $res = $this->repository
                 ->pushCriteria(new YearSearchCriteria(session('ND')))
                 ->pushCriteria(new HasJJCriteria($jj))
                 ->all()

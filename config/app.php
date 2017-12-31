@@ -14,7 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-
+    'MYND' => '2017',  //config('app.MYND')
     /*
     |--------------------------------------------------------------------------
     | Application Environment

@@ -17,6 +17,6 @@ class KJNDScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        return $builder->where('kjnd', session('ND','2018'));
+        return $builder->where('kjnd', session('ND',config('app.MYND')));
     }
 }

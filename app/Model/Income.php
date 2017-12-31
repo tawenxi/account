@@ -50,7 +50,7 @@ class Income extends Model
                 break;
 
             case '8':
-                return $query->where('date', \Carbon\Carbon::parse('2018/04/01')->toDateTimeString());
+                return $query->where('date', \Carbon\Carbon::parse(config('app.MYND').'/04/01')->toDateTimeString());
                 break;
 
             case '2016':
