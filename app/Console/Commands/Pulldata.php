@@ -73,10 +73,10 @@ class Pulldata extends Command
     public function testCompare()
     {
         $session = session('ND');
-        session(['ND'=>'2017']);
+        session(['ND'=>(string)((int)config('app.MYND')-1)]);
         $this->call('pull:shujuyuan');
         $this->call('test:compare',['year'=>session('ND')]);
-        session(['ND'=>'2018']);
+        session(['ND'=>config('app.MYND')]);
         $this->call('pull:shujuyuan');
         $this->call('test:compare',['year'=>session('ND')]);
         session(['ND'=>$session]);

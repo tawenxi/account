@@ -8,10 +8,10 @@ class PageController extends Controller
 {
     public function session(){
     	
-	    if (session('ND') == '2017') {
-	        session(['ND'=>'2018']);
+	    if (session('ND') == (string)(config('app.MYND')-1)) {
+	        session(['ND'=>(string)config('app.MYND')]);
 	    } else {
-	        session(['ND'=>'2017']);
+	        session(['ND'=>(string)(config('app.MYND')-1)]);
 	    }
 	    return back();
     

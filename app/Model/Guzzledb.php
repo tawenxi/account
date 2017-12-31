@@ -118,7 +118,23 @@ class Guzzledb extends Model
         $this->table3['JFLXQC'] = "'{$this->_validataChanging($jjfl)}'";
         $this->table3['YSGLLXMC'] = "'{$this->_validataChanging($this->YSGLLXMC)}'";
 
+        $this->updateDate();
+
         return $this;
+    }
+
+
+    private function updateDate ()
+    {
+        $this->table1['Kjnd'] = "'".config('app.MYND')."'";
+        $this->table1['Pdqj'] = "'".config('app.MYND')."01'";
+        $this->table1['Pdrq'] = "'".config('app.MYND')."0101'";
+
+        $this->table2['Kjnd'] = "'".config('app.MYND')."'";
+        $this->table2['Pdqj'] = "'".config('app.MYND')."01'";
+
+        $this->table3['KJND'] = "'".config('app.MYND')."'";
+        $this->table3['PDQJ'] = "'".config('app.MYND')."01'";
     }
 
 
