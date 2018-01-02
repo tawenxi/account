@@ -60,12 +60,12 @@ class Pulldata extends Command
         //PullSQ::dispatch();
         //PullZfpz::dispatch();
         //dd(session('ND'));
-        $this->info('现在的session是'.session('ND'));
-        $this->testCompare();
+        //$this->info('现在的session是'.session('ND'));
+        //$this->testCompare();
         //$this->PullShenqing();
-        //$this->PullZfpz();
+        $this->PullZfpz();
         //$this->Pullsq();
-        //$this->update_yeamount();
+        $this->update_yeamount();
 
         $this->info('现在的session是'.session('ND'));
     }
@@ -108,6 +108,7 @@ class Pulldata extends Command
             ["'".config('app.MYND')."0821'", "to_char(sysdate,'yyyymmdd')"],
         ]);
 
+        if ($zfpzdatas[0] === null) return true;
         foreach ($zfpzdatas as $zfpzdata) {
             if (!isset($zfpzdata['MXZBWH'])) {
                 $zfpzdata['MXZBWH'] = '';

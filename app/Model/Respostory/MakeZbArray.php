@@ -7,6 +7,7 @@ class MakeZbArray
     public static function MakeZbArray($sqldata) //将<ROWDATA></ROWDATA>之间的数据转化为数组
     {
         $sqldata = (string) $sqldata;
+        $sqldata = preg_replace('/="\s+/', '="', $sqldata);
         $sqldata = str_replace(["\r\n", "\r", "\n"], '', $sqldata);
         //dd($sqldata);
         $sqldata = substr($sqldata, strpos($sqldata, '<ROWDATA>'), (strpos($sqldata, '</ROWDATA>') - strpos($sqldata, '<ROWDATA>')));

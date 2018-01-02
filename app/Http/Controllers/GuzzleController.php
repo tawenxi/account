@@ -70,7 +70,7 @@ class GuzzleController extends Controller
             $Validator = \Validator::make($arr[$key], [
                 'payeeaccount'=> 'numeric',
                 'amount'      => 'numeric|between:0.01,3000000',
-                'zbid'        => 'size:15',
+                'zbid'        => 'min:15|max:16',
                 ], [
                 'numeric'     => ':attribute 必须为纯数字',
                 'size'        => ':attribute 必须为15位',
