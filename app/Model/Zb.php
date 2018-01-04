@@ -15,7 +15,7 @@ class Zb extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new KJNDScope);
+        //static::addGlobalScope(new KJNDScope);
     }
 
     /**

@@ -1,7 +1,10 @@
 <?php
-Route::get('/', function () {
-    return redirect('/geren');
+Route::get('/ss', function () {
+    \App\Model\Post::create(['title'=>'title1','content'=>'mycontent']);
+    //return redirect('/geren');
 });
+
+Route::get('users/{userid}/activity', 'ActivityController@show');
 
 Auth::routes();
 

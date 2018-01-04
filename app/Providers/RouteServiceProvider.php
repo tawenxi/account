@@ -26,6 +26,10 @@ class RouteServiceProvider extends ServiceProvider
         set_time_limit(0);
 
         parent::boot();
+
+        Route::bind('userid',function($userid){
+            return \App\Model\User::whereId($userid)->firstOrfail();
+        });
     }
 
     /**

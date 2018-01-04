@@ -57,4 +57,16 @@ class User extends Model implements
         //return !!$role->intersect($this->roles)->count();
         return (bool) $this->roles->intersect($role)->count();
     }
+
+
+    public function activity()
+    {
+        return $this->hasMany(\App\Model\Activity::class);
+    }
+
+
+    public function getActivities()
+    {
+        return $this->activity()->with(['user', 'subject'])->latest()->get();;
+    }
 }
