@@ -1,7 +1,9 @@
 <?php
-Route::get('/ss', function () {
-    \App\Model\Post::create(['title'=>'title1','content'=>'mycontent']);
-    //return redirect('/geren');
+
+require('myweb.php');
+
+Route::get('/', function () {
+    return redirect('/geren');
 });
 
 Route::get('users/{userid}/activity', 'ActivityController@show');
@@ -46,7 +48,6 @@ Route::post('/postsql', 'GuzzleController@postsql')->name('postsql');
 Route::get('exportaccount', 'GuzzleController@export_account');
 
 Route::get('/salary/{date?}/{jj?}', 'SalaryController@index')->name('salary');
-//Route::get('/addmember', 'TestController@member');
 Route::get('/bumen/{date?}/{jj?}', 'SalaryController@bumen')->name('bumen');
 Route::get('/geren/{id?}/{jj?}', 'SalaryController@geren')->name('geren');
 Route::get('/byear/{year?}/{jj?}', 'SalaryController@byear')->name('byear');
@@ -92,84 +93,13 @@ Route::get('/zhibiaos', 'HomeController@zhibiao');
 
 Route::get('/session', 'PageController@session');
 
-Route::get('/muxing/{user}', function (\App\Model\User $user) {
-    dd($user);
-});
+
 
 Route::get('/r9', 'RccountController@index');
 
 Route::get('/rr', 'RccountController@rr');
 Route::get('/up', 'zhibiaoController@checkoutZFPZ');
 
-Route::get('/test', function(App\Acc\Llj $a){
-    //s(1,[1,2]);
-    // sss_if(11111111, 'User has a last name', 22);
-    // sss(str_wrap('foo', '*'));
-    // dd(rand_bool());
-    $a->getknite(function($a){
-        dump($a);
-    })->getknite(function($a){
-        dump(str_wrap($a,'#'));
-    });
-
-});
-
-
-Route::get('/5', 'LearnController@index5');
-Route::get('/2', 'LearnController@index2');
-Route::get('/3', 'LearnController@index3');
-
-Route::get('/bc', function(){
-    $a = (random_int(0, 500000)+random_int(0, 1))/random_int(01, 100);
-    dump('bcdiv'.bcdiv($a,1,'2'));
-    dump('rount'.round($a,2));
-    echo div($a);
-});
-
-
 Route::get('zbdetail/{id}/edit', 'zhibiaoController@edit')->name('zbdetail.edit');
 Route::patch('zbdetail/update', 'zhibiaoController@update');
 Route::get('/shenqing', 'zhibiaoController@shenqing');
-
-
-
-Route::get('ff', function(){
-    dd(1);
-    dd(\DB::connection('sqlsrv')->table('GL_Pzml')->first());
-    $search = array('A'=>'B', 'B'=>'C', 'C'=>'D', 'D'=>'E', 'E'=>'F');
-
-$subject = 'ABCDE';
-echo strtr($subject,$search); // output: 'BCDEF'
-    //dd('2222'.config('myconfig.kjnd').'sss');
-});
-
-
-Route::get('tb', function(){
-
-    $qq = \App\Model\Guzzledb::find(30);
-    //$me = $qq->getArray(1);
-    //dd(encode(\App\Model\Guzzledb::first()->generateMybody()));
-    dd($qq->comparebody());
-
-
-    $qq->generateMybody()->encodeMybody(); //可以放在boot里面
-
-    //dd(decode($qq->mybody));
-
-    //dd(\App\Model\Guzzledb::first()->generateMybody());
-    //dd(\App\Model\Guzzledb::first()->generateMybody()->mybody);
-    $you = $qq->getArray(1, (\App\Model\Guzzledb::first()->generateMybody()->mybody));
-
-    //dd($you,$me);
-
-
-    
-});
-
-
-
-
-
-
-
-
