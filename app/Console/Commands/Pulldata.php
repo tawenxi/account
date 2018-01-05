@@ -60,12 +60,12 @@ class Pulldata extends Command
         //PullSQ::dispatch();
         //PullZfpz::dispatch();
         //dd(session('ND'));
-        //$this->info('现在的session是'.session('ND'));
-        //$this->testCompare();
+        $this->info('现在的session是'.session('ND'));
+        $this->testCompare();
         //$this->PullShenqing();
-        $this->PullZfpz();
+        //$this->PullZfpz();
         //$this->Pullsq();
-        $this->update_yeamount();
+        //$this->update_yeamount();
 
         $this->info('现在的session是'.session('ND'));
     }

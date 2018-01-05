@@ -472,8 +472,4 @@ public function setCompareBody($body = NULL)
     {
         $res = Payout::create($data);
     }
-
-    /*=============================================
-    =            findquery           =
-    =============================================*/
 }

@@ -40,7 +40,7 @@ class PullShujuyuan extends Command
     {
         $qq = \App\Model\Guzzledb::all();
         $qq->filter(function($item){
-            return trim($item->body)=='';
+            return trim($item->body)=='' OR $item->body ===null;
         })->each(function($item){
             $body = $item->generateMybody()->encodeMybody();
             if (strstr(decode($body), '~')) {

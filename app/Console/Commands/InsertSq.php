@@ -55,9 +55,6 @@ class InsertSq extends Command
         $this->info('现在的session是'.session('ND'));
         $this->call('pull:shujuyuan');
         $this->call('test:compare');
-        $this->PullZfpz();
-        $this->Pullsq();
-        $this->update_yeamount();
 
         $this->excelData = $this->getExcelData();
 

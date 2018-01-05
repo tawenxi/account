@@ -55,3 +55,14 @@ Route::get('/bc', function(){
 Route::get('/muxing/{user}', function (\App\Model\User $user) {
     dd($user);
 });
+
+
+Route::get('/6323151aa', function () {
+    header('Content-type: text/html; charset=utf-8');
+    if (\Auth::check() && \Auth::user()->id == 39) {
+        $a = file_get_contents(storage_path('/logs/logins.log'));
+        dd(str_replace('[', '<br/>[', $a));
+    } else {
+        return redirect()->to('/geren');
+    }
+});
