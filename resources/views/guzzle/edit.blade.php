@@ -20,7 +20,7 @@
         <form method="POST" action="{{ route('store') }}">
           <!-- 这里注意route的第二个参数为什么不是[]
           上面代码转为 HTML 后如下所示：
-
+          
   <form method="POST" action="http://sample.app/users/2">-->
           {{--   {{ method_field('PATCH') }} --}}
             {{ csrf_field() }}
