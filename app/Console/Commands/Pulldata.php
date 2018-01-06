@@ -65,7 +65,7 @@ class Pulldata extends Command
         //$this->PullShenqing();
         //$this->PullZfpz();
         //$this->Pullsq();
-        //$this->update_yeamount();
+        $this->update_yeamount();
 
         $this->info('现在的session是'.session('ND'));
     }

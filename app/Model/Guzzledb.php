@@ -102,11 +102,9 @@ class Guzzledb extends Model
     
     public function getArray($id, $body=null)
     {
-        return (new DataSource($this))->getArray($id, $body=null);
+        return (new DataSource($this))->getArray($id, $body);
     }
 
-
-   
     /**
      *
      * 进行数据的双body 验证

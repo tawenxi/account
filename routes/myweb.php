@@ -1,4 +1,4 @@
-<?
+<?php
 Route::get('ss', function () {
     \App\Model\Post::create(['title'=>'title1','content'=>'mycontent']);
 });

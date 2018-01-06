@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Model\ZB;
+use App\Model\Zfpz;
 use App\Scopes\KJNDScope;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -30,5 +31,6 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
 
         ZB::addGlobalScope(new KJNDScope);
+        Zfpz::addGlobalScope(new KJNDScope);
     }
 }

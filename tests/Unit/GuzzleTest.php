@@ -24,15 +24,15 @@ class GuzzleTest extends TestCase
           "payee" => "遂川县枚江镇财政所",
           "payeeaccount" => "178157750000001088",
           "payeebanker" => "遂川县农商合作银行",
-          "zbid" => "001.2017.0.8320",
+          "zbid" => "001.2018.0.8320",
           "kemu" => "@",
           "kemuname" => "@",
         ];
       
-        $this->guzz = \App::make(Guzzle::class, [
-            'Getsqzb'=> app()->make(Getsqzb::class),
-            'http'   => app()->make(Http::class),
-            'payee'  => $this->data, ]); //传入一个一位数组（账户信息）
+        $this->guzz = \App::make(Guzzle::class)->setPayee($this->data);
+
+
+            ; //传入一个一位数组（账户信息）
     }
 
 
@@ -77,7 +77,7 @@ class GuzzleTest extends TestCase
     /** @test */
     public function zbid_must_be_begin_with_right_lenth()
     {
-        $this->guzz->payee['zbid'] = '001.2017.0.12345';
+        $this->guzz->payee['zbid'] = '001.2018.0.123456';
         $this->expectExceptionMessage('指标格式不正确');
         $this->guzz->add_post(); 
     }

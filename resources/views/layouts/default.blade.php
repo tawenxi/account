@@ -27,6 +27,8 @@
     </div>
       
       <script src="{{ mix('/js/app.js') }}"></script>
+      <script src="https://cdn.bootcss.com/jquery/3.0.0-alpha1/jquery.min.js"></script>
+      <script src="https://cdn.bootcss.com/jquery.pjax/1.9.6/jquery.pjax.min.js"></script>
       @yield('js')
   </body>
 </html>

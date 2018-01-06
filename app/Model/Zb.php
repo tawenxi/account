@@ -10,13 +10,7 @@ use App\Scopes\KJNDScope;
 class Zb extends Model
 {
     use SearchableTrait;
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        //static::addGlobalScope(new KJNDScope);
-    }
+    use \App\Model\Tt\RecordsActivity;
 
     /**
      * Searchable rules.

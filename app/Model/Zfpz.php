@@ -9,15 +9,9 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 class Zfpz extends Model
 {
     use SearchableTrait;
+    use \App\Model\Tt\RecordsActivity;
     public $timestamps = false;
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::addGlobalScope(new KJNDScope);
-    }
-
+    
     public function getZySkrAttribute()
     {
         return $this->attributes['ZY'].' '.$this->attributes['SKR'].' '.$this->attributes['JE'];

@@ -41,6 +41,13 @@ class SendcloudMail extends Mailable
         ]);//带参数，通过with方法，具体的参数可以通过依赖注入获得
     }
 
+/**
+
+    TODO:
+    - 
+    - 这一点Sendto暂时无用处
+
+ */
 
     public function sendTo($template, $email, array $data)
     {
