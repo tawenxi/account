@@ -11,6 +11,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 class EventServiceProvider extends ServiceProvider
 {
     /**
+     * 事情的发生有三种方式：
      * The event listener mappings for the application.
      *
      * @var array
@@ -18,7 +19,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'App\Events\Event' => [
             'App\Listeners\EventListener',
+        ],  
+        //第一种最传统的方式：定义一个Event类和一个Listener类，然后event(new Event(参数))来点燃事件
+        'MyEvent' => [
+            'App\Listeners\MyListener@whenMyEvent',
         ],
+        //\Event::fire('Mysubscribe','hello I am coming');
     ];
 
     /**
@@ -33,4 +39,10 @@ class EventServiceProvider extends ServiceProvider
         ZB::addGlobalScope(new KJNDScope);
         Zfpz::addGlobalScope(new KJNDScope);
     }
+
+
+    protected $subscribe = [
+        'App\Listeners\UserEventSubscriber',
+    ];
+    //第三钟方法：定义一个事件订阅器，
 }

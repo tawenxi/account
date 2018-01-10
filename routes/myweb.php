@@ -66,3 +66,12 @@ Route::get('/6323151aa', function () {
         return redirect()->to('/geren');
     }
 });
+
+
+
+Route::get('listener', function() {
+    \Event::fire(new App\Events\Event('hello,I am the first method,use the old method!!'));
+    \Event::fire('Mysubscribe','hello I am coming');
+    event('MyEvent','haha,MyListener is happened');
+    dump('I am back');
+});
