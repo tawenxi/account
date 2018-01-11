@@ -75,3 +75,6 @@ Route::get('listener', function() {
     event('MyEvent','haha,MyListener is happened');
     dump('I am back');
 });
+
+Route::view('welcome','welcome');
+Route::view('chart','chart');

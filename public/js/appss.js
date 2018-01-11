@@ -106,6 +106,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -113,12 +114,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         labels: {},
         values: {},
         color: {
-            default: 'rgba(220,220,220,0.2)'
+            default: 'rgba(0,220,220,100)'
         }
     },
+    //props:['labels','values',''],
     mounted: function mounted() {
         var data = {
 
+            //labels:this.labels,
             labels: this.labels,
             datasets: [{
                 fillColor: this.color,
@@ -130,9 +133,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }]
         };
 
-        var context = document.querySelector('#graph').getContext('2d');
+        // var context = document.querySelector('#graph').getContext('2d');
 
-        new __WEBPACK_IMPORTED_MODULE_0_chart_js___default.a(context).LIne(data);
+
+        new __WEBPACK_IMPORTED_MODULE_0_chart_js___default.a(this.$el.getContext('2d')).Line(data);
     }
 });
 
@@ -3757,8 +3761,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('canvas', {
     attrs: {
       "width": "400",
-      "height": "400",
-      "id": "graph"
+      "height": "400"
     }
   })
 },staticRenderFns: []}
@@ -13906,7 +13909,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./resources/assets/js/app.js":
+/***/ "./resources/assets/js/appss.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -14020,7 +14023,7 @@ module.exports = Component.exports
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/assets/js/app.js");
+module.exports = __webpack_require__("./resources/assets/js/appss.js");
 
 
 /***/ })

@@ -109,30 +109,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: {
-        labels: {},
-        values: {},
-        color: {
-            default: 'rgba(220,220,220,0.2)'
-        }
-    },
+    // props:{
+    //     labels:{},
+    //     values:{},
+    //     color:{
+    //         default:'rgba(220,220,220,0.2)'
+    //     }
+    // },
+    props: ['labels', 'values'],
     mounted: function mounted() {
         var data = {
 
-            labels: this.labels,
+            //labels:this.labels,
+            labels: ['Jan', 'feb', 'mar'],
             datasets: [{
-                fillColor: this.color,
+                fillColor: 'red',
                 strokeColor: "rgba(220,220,110,1)",
                 pointColor: "rgba(220,220,110,1)",
                 pointStrokeColor: "#fff",
                 PointHighlightStroke: "rgba(220,220,110,1)",
-                data: this.values
+                //data:this.values
+                data: [100, 200, 300]
             }]
         };
 
         var context = document.querySelector('#graph').getContext('2d');
 
-        new __WEBPACK_IMPORTED_MODULE_0_chart_js___default.a(context).LIne(data);
+        new __WEBPACK_IMPORTED_MODULE_0_chart_js___default.a(context).Line(data);
     }
 });
 
@@ -13906,7 +13909,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./resources/assets/js/app.js":
+/***/ "./resources/assets/js/apps.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -14020,7 +14023,7 @@ module.exports = Component.exports
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/assets/js/app.js");
+module.exports = __webpack_require__("./resources/assets/js/apps.js");
 
 
 /***/ })
