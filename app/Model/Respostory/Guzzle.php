@@ -147,7 +147,9 @@ public function setCompareBody($body = NULL)
             throw new Exception('摘要必须修改');
         } elseif (substr($this->payee['zbid'], 0,11) != '001.'.config('app.MYND').'.0.' OR 
             strlen($this->payee['zbid']) != 15 AND
-            strlen($this->payee['zbid']) != 16 ) {
+            strlen($this->payee['zbid']) != 16 AND
+            strlen($this->payee['zbid']) != 14
+            ) {
             throw new Exception('指标格式不正确'.substr($this->payee['zbid'], 0,11));
         }  elseif (!is_numeric($this->payee['payeeaccount'])) {
             throw new Exception('账号非全数值');
@@ -251,18 +253,19 @@ public function setCompareBody($body = NULL)
     {
         $this->test_input();
         $vali_var = $this->handleBody();
-        $this->compare2body();     
+       // dd($vali_var);
+        //$this->compare2body();     
         if (stristr($vali_var, $this->payee['payeeaccount']) and 
             stristr($vali_var, $this->payee['amount']) and 
             stristr($vali_var, $this->payee['payee']) and 
             stristr($vali_var, $this->payee['payeebanker']) and 
             stristr($vali_var, $this->payee['zhaiyao']) and
-            stristr($vali_var, "'178157750000004662', '农商行枚江分理处', '012'") and
+            stristr($vali_var, "'178157750000004662', '农商行枚江分理处', '012'") //and
             //确保银行数据接收
-            !strstr($vali_var, config('app.MYND'))//
+           // !strstr($vali_var, config('app.MYND'))//
             )
         {
-            dd('ok');
+            //dd('ok');
             //dd($this->insertbodyody);
             //这里的insertBody的一个非中文的半明码
             $response2 = $this->http->makerequest($this->insertbody);
@@ -290,7 +293,7 @@ public function setCompareBody($body = NULL)
             Test::log(__METHOD__.'插入数据库');
             /*=====  End of 进行增加的sql日志  ======*/
 
-            if (!(is_numeric($pid) && is_numeric($djbh) && $pid > 20000 && $pid < 100000 && $djbh > 700 && $djbh < 1000000)) {
+            if (!(is_numeric($pid) && is_numeric($djbh) && $pid > 700 && $pid < 100000 && $djbh > 200 && $djbh < 1000000)) {
                 Test::log(__METHOD__.'!!!取回的编码错误');
 
                 throw new Exception('取回的编码错误'.__LINE__, 1);

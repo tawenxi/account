@@ -52,9 +52,9 @@ class InsertSq extends Command
      */
     public function handle()
     {
-        $this->info('现在的session是'.session('ND'));
-        $this->call('pull:shujuyuan');
-        $this->call('test:compare');
+        //$this->info('现在的session是'.session('ND'));
+        //$this->call('pull:shujuyuan');
+        //$this->call('test:compare');
 
         $this->excelData = $this->getExcelData();
 
@@ -86,8 +86,8 @@ class InsertSq extends Command
 
                 if (!isset($value['zbid'])) throw new Exception('没有设置足够的zbid');
 
-                if (strlen($value['zbid'])!=15 AND strlen($value['zbid'])!=16) throw new Exception('zbid长度错误');
-                if (preg_match("/001\.201\d\.0\.\d{4,5}/", $value['zbid']) != 1) 
+                if (strlen($value['zbid'])!=14 AND strlen($value['zbid'])!=15 AND strlen($value['zbid'])!=16) throw new Exception('zbid长度错误');
+                if (preg_match("/001\.201\d\.0\.\d{3,5}/", $value['zbid']) != 1) 
                     throw new Exception('zbid格式不正确');
                 $KYJHJE = $this->guzz->get_zbdata($value['zbid'])['KYJHJE'];     
                 if ($KYJHJE == 0)  continue;
