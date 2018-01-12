@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-//require('./bootstrap'); 这里先注销这一步 避免 xsrf错误提示
+require('./bootstrap');
 
 window.Vue = require('vue');
 

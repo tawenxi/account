@@ -22,6 +22,6 @@
         </div>	
 	    </div>
         
-        <script src={{ asset('js/appss.js') }}></script>
+        <script src={{ asset('js/app.js') }}></script>
     </body>
 </html>

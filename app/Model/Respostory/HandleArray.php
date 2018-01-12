@@ -59,6 +59,9 @@ class HandleArray
             case '其他基本建设支出':
                 $jjfl = '基本建设支出-其他基本建设支出';
                 break;
+            case '办公经费':
+                $jjfl = '基本建设支出-其他基本建设支出';
+                break;
             default:
             throw new \Exception('全称错误'.$this->JFLXMC);
         }

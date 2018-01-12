@@ -60,9 +60,9 @@ class Pulldata extends Command
         //PullSQ::dispatch();
         //PullZfpz::dispatch();
         //dd(session('ND'));
-        $this->info('现在的session是'.session('ND'));
+        //$this->info('现在的session是'.session('ND'));
         //$this->testCompare();
-        $this->PullShenqing();
+        //$this->PullShenqing();
         $this->PullZfpz();
         $this->Pullsq();
         $this->update_yeamount();
@@ -76,6 +76,7 @@ class Pulldata extends Command
         session(['ND'=>(string)((int)config('app.MYND')-1)]);
         $this->call('pull:shujuyuan');
         $this->call('test:compare',['year'=>session('ND')]);
+        dd(1);
         session(['ND'=>config('app.MYND')]);
         $this->call('pull:shujuyuan');
         $this->call('test:compare',['year'=>session('ND')]);

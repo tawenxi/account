@@ -383,9 +383,10 @@ public function setCompareBody($body = NULL)
     {
         $finddata = $this->Getsqzb->getsqdata();
         $collection = collect($finddata);
-        $collection = $collection->map(function ($item) {
+        $collection = $collection->filter(function($value){
+            return $value != null;
+        })->map(function ($item) {
             $info = Guzzledb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
-
             return $info;
         });
 
