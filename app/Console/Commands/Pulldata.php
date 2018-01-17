@@ -63,8 +63,9 @@ class Pulldata extends Command
         //$this->info('现在的session是'.session('ND'));
         //$this->testCompare();
         //$this->PullShenqing();
-        $this->PullZfpz();
+        //$this->PullZfpz();
         $this->Pullsq();
+  
         $this->update_yeamount();
 
         $this->info('现在的session是'.session('ND'));
@@ -102,7 +103,7 @@ class Pulldata extends Command
             \App\Model\Zb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
         });
 
-        
+  
 
         $zfpzdatas = $this->getdetail->getdata($this->zfpz, [
             ["'".config('app.MYND')."0101'", "'".config('app.MYND')."0101'"], //每年修改

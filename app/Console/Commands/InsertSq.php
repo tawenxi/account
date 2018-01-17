@@ -84,7 +84,9 @@ class InsertSq extends Command
                 
                 $value['zbid'] = array_shift($money_id);
 
+
                 if (!isset($value['zbid'])) throw new Exception('没有设置足够的zbid');
+                echo 1;
 
                 if (strlen($value['zbid'])!=14 AND strlen($value['zbid'])!=15 AND strlen($value['zbid'])!=16) throw new Exception('zbid长度错误');
                 if (preg_match("/001\.201\d\.0\.\d{3,5}/", $value['zbid']) != 1) 
