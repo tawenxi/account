@@ -8,6 +8,13 @@ Route::get('users/{userid}/activity', 'ActivityController@show');
 
 Auth::routes();
 
+Route::get('project/{project_id}/project-payout', 'ZhibiaoController@project_payout');
+Route::get('project/{project_id}/project-income', 'ProjectController@project_income');
+
+Route::resource('project', 'ProjectController');
+Route::get('village', 'ProjectController@village');
+
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/store', 'GuzzleController@store')->name('store');

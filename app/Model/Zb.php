@@ -2,10 +2,11 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
-use Nicolaslopezj\Searchable\SearchableTrait;
-use Illuminate\Database\Eloquent\Builder;
 use App\Scopes\KJNDScope;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Nicolaslopezj\Searchable\SearchableTrait;
+use App\Model\Project\Project;
 
 class Zb extends Model
 {
@@ -71,6 +72,11 @@ class Zb extends Model
     public function getJeAttribute($amount)
     {
         return div($this->attributes['JE']/100);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class)->withPivot('amount');
     }
 
     protected $fillable = [

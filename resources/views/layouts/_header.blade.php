@@ -9,13 +9,24 @@
       <a href="{{ (\Auth::user()->id==39)?'/session':'/geren'}}" id="logo">
       {{ session('ND') }}</a>
       @else
-      <a href="" id="logo">枚江镇工资查询系统</a>
+      <a href="" id="logo">左安镇工资查询系统</a>
       @endif
       @auth
       <nav>
         <ul class="nav navbar-nav navbar-right">
         <li><a href="{{ url()->full().(stristr(Request::getRequestUri(), '?')?'&':'?').'export=1' }}">导出excel</a></li>
                {{--     @can('showAllSalary')      --}}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                 项目管理 <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">      
+                  <li><a href="/project">所有项目</a></li>
+                  <li><a href="/village">平困村</a></li>
+ 
+                    <li class="divider"></li>
+                </ul>
+              </li>
              <li><a href="/searchacc">查询</a></li> 
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -72,6 +83,7 @@
                     <li class="divider"></li>
                 </ul>
               </li>
+
                {{--        @endcan    --}} 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">

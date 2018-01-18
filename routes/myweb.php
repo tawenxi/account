@@ -78,3 +78,10 @@ Route::get('listener', function() {
 
 Route::view('welcome','welcome');
 Route::view('chart','chart');
+
+
+Route::get('hahaha', function(){
+        $zb = \App\Model\Zb::first();
+        //dd($zb->toarray());
+        dd($zb->projects);
+});
