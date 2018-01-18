@@ -253,14 +253,14 @@ public function setCompareBody($body = NULL)
     {
         $this->test_input();
         $vali_var = $this->handleBody();
-       // dd($vali_var);
+        //dd($vali_var);
         //$this->compare2body();     
         if (stristr($vali_var, $this->payee['payeeaccount']) and 
             stristr($vali_var, $this->payee['amount']) and 
             stristr($vali_var, $this->payee['payee']) and 
             stristr($vali_var, $this->payee['payeebanker']) and 
             stristr($vali_var, $this->payee['zhaiyao']) and
-            stristr($vali_var, "'178157750000004662', '农商行枚江分理处', '012'") //and
+            stristr($vali_var, "'178347750000004247', '农商行左安支行', '012'") //and
             //确保银行数据接收
            // !strstr($vali_var, config('app.MYND'))//
             )

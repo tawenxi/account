@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('content')
-<h1>枚江镇指标支出明细表({{ count($results).'条' }})</h1>
+<h1>左安镇指标支出明细表({{ count($results).'条' }})</h1>
 @include('shared.errors')
 
 <article>

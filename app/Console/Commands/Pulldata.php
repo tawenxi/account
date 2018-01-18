@@ -63,7 +63,7 @@ class Pulldata extends Command
         //$this->info('现在的session是'.session('ND'));
         //$this->testCompare();
         //$this->PullShenqing();
-        //$this->PullZfpz();
+        $this->PullZfpz();
         $this->Pullsq();
   
         $this->update_yeamount();
@@ -128,7 +128,7 @@ class Pulldata extends Command
      */
     public function PullShenqing()
     {
-        $YSDWDMS = ['901006000','901006001','901006013','901006010'];
+        $YSDWDMS = ['901012000','901012001','901012013','901012010'];
         $date = '20'.date('ymd');
         $year = '20'.date('y');
         $data = [];

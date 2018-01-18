@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('content')
-<h1>枚江镇授权支付指标明细表({{ $guzzledbs->count() }}条数据)</h1>
+<h1>左安镇授权支付指标明细表({{ $guzzledbs->count() }}条数据)</h1>
 @include('shared.errors')
 
 <article>
