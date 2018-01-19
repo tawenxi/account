@@ -23,7 +23,7 @@
             {{ csrf_field() }}
             <div class="form-group">
               <label for="project">项目名称</label>
-              <input type="text" name=" project" class="form-control" value={{ $zfpz->project->name }}>
+              <input type="text" name=" project" class="form-control" value={{ isset($zfpz->project->name)?$zfpz->project->name:'' }}>
             </div>
 
             <div class="form-group">

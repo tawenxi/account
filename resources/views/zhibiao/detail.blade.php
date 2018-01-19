@@ -39,8 +39,10 @@
 					<td>
 						{{$result->QS_RQ}} 
 					</td>
-					<td class="">
-						{{$result->ZY}}
+					<td>
+						<a href="/point/{{$result->id}}">
+							{{$result->ZY}}
+						</a>
 					</td>
 					<td >
 						<h4>{{$result->SKR}}</h4>
