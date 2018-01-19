@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Zb;
 use App\Model\Zfpz;
 use Illuminate\Http\Request;
 use App\Model\Project\Village;
@@ -17,7 +18,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $village_id = $request->village?$request->village:'0';
-        $projects = project::with(['zfpzs','village'])->village($village_id)->orderBy('year')->get();
+        $projects = project::with(['zfpzs','village','zbs'])->village($village_id)->orderBy('year')->get();
 
         return view('project.index',compact('projects'));
     }
@@ -74,7 +75,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Project::withoutGlobalScopes()->locatedAt($id)->update($request->except(['_method','_token']));
+        Project::locatedAt($id)->update($request->except(['_method','_token','village']));
         \Session::flash('success', '项目信息更新成功');
         return redirect()->route('project.index');
     }
@@ -106,6 +107,30 @@ class ProjectController extends Controller
     {
         $villages = Village::where('year','<>',0)->with('projects')->get();
         return view('project.village',compact('villages'));
+    }
+
+    public function divider($zb)
+    {
+        $zb = Zb::find($zb);
+
+
+        $projects = Project::all();
+        return view('project.divider',compact('projects','zb'));
+    }
+
+    public function handleDivider(Request $request)
+    {
+        Zb::find($request['id'])->divide($request['project_id'], $request['amount']);
+        \Session::flash('success', '指标分配成功');
+        return redirect()->back();
+    }
+
+
+    public function deletezb(Request $request)
+    {
+        Zb::find($request['zb_id'])->deletedivide($request['project_id'], $request['amount']);
+        \Session::flash('success', '删除分配成功');
+        return redirect()->back();
     }
 
 }

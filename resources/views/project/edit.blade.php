@@ -28,10 +28,11 @@
 
             <div class="form-group">
               <label for="village">村别</label>
-              <input type="text" name=" village" class="form-control" value={{ $project->village }}>
+              <input type="text" name=" village" class="form-control" value={{ $project->village->name }}>
             </div>
 
             <input type="hidden" name="id" value={{ $project->id }}>
+            <input type="hidden" name="village_id" value={{ $project->village_id }}>
 
             <div class="form-group">
               <label for="year">年份：</label>

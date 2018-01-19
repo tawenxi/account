@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('content')
-<h1>左安镇指标明细表({{ $results->count().'条' }})</h1>
+<h1>左安镇指标明细表!({{ $results->count().'条' }})</h1>
 @include('shared.errors')
 
 <article>
@@ -22,6 +22,10 @@
 					<th>预算项目</th>
 					<th>总金额</th>
 					<th>可用金额</th>
+					@if (strstr(url()->full(),'%3A%E6%89%B6%E8%B4%AB'))
+						<th>已分配</th>
+					@endif
+					
 					<th>支出数</th>
 					<th>单位</th>
 				</tr>
@@ -39,8 +43,28 @@
 						<td>{{substr($result->ZJXZMC,0,12)}}</td>
 						<td>{{$result->JE}}</td>
 						<td>{{div($result->yeamount)}}</td>
+						@if (strstr(url()->full(),'%3A%E6%89%B6%E8%B4%AB'))
+							<td> {{ $result->projects->sum(function($item){
+	                                return $item->pivot->amount;
+	                           }) }}
+	                       </td>
+	                    @endif
+
 						<td >{{ $result->zfpzs->count() }}</td>
-						<td class="">{{ substr($result->YSDWMC, 9) }}</td>
+						
+						@if (strstr($result->YSDWMC,'扶贫'))
+							<td class="btn btn-block btn-success "><a href="{{ strstr($result->YSDWMC,'扶贫')?"divider/$result->id":'' }}" >
+						@else
+							<td >
+						@endif
+						
+						@if (strstr($result->YSDWMC,'扶贫'))
+						<font class="text-danger">{{ substr($result->YSDWMC, 9) }}</font>
+							</a>
+						@else
+						{{ substr($result->YSDWMC, 9) }}
+						@endif
+					</td>
 					</tr>	
 				@endforeach
 			</tbody>
@@ -52,6 +76,9 @@
 					<th>预算项目</th>
 					<th>{{round($results->sum('JE')/10000,2)}}</th>
 					<th>{{round(round(($results->sum('JE'))/10000,2)-round($results->sum('detail')/10000,2),2)}}</th>
+					@if (strstr(url()->full(),'%3A%E6%89%B6%E8%B4%AB'))
+						<th>已分配</th>
+					@endif
 					<th>支出数</th>
 					<th>单位</th>
 				</tr>

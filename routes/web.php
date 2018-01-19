@@ -13,6 +13,10 @@ Route::get('project/{project_id}/project-income', 'ProjectController@project_inc
 
 Route::resource('project', 'ProjectController');
 Route::get('village', 'ProjectController@village');
+Route::get('divider/{zb}', 'ProjectController@divider');
+Route::put('divider', 'ProjectController@handleDivider')->name('project.divider');
+Route::post('deletezb', 'ProjectController@deletezb')->name('project.deletezb');
+
 
 
 Route::get('/home', 'HomeController@index')->name('home');

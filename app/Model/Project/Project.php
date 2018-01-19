@@ -15,6 +15,7 @@ class Project extends Model
     public static function locatedAt($id)
     {
     	return Static::whereId($id);
+
     }
 
     public function zfpzs()
