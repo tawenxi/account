@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Scopes\KJNDScope;
+use App\Model\Project\Project;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
@@ -46,6 +47,17 @@ class Zfpz extends Model
     public function getJeAttribute($amount)
     {
         return div($this->attributes['JE']/100);
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+
+
+    public function point($project_id)
+    {
+        $this->project()->associate($project_id)->save();
     }
 
     protected $fillable = [

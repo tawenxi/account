@@ -17,6 +17,9 @@ Route::get('divider/{zb}', 'ProjectController@divider');
 Route::put('divider', 'ProjectController@handleDivider')->name('project.divider');
 Route::post('deletezb', 'ProjectController@deletezb')->name('project.deletezb');
 
+Route::get('point/{zb}', 'ProjectController@point');
+Route::put('point', 'ProjectController@handlepoint')->name('project.point');
+
 
 
 Route::get('/home', 'HomeController@index')->name('home');

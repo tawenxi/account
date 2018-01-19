@@ -112,8 +112,6 @@ class ProjectController extends Controller
     public function divider($zb)
     {
         $zb = Zb::find($zb);
-
-
         $projects = Project::all();
         return view('project.divider',compact('projects','zb'));
     }
@@ -132,5 +130,22 @@ class ProjectController extends Controller
         \Session::flash('success', '删除分配成功');
         return redirect()->back();
     }
+
+    public function point($zfpz)
+    {
+        $zfpz = Zfpz::find($zfpz);
+
+        $projects = Project::all();
+
+        return view('project.point',compact('projects','zfpz'));
+    } 
+
+    public function handlePoint(Request $request)
+    {
+        //dd($request->all());
+        Zfpz::find($request['id'])->point($request['project_id']);
+        \Session::flash('success', '指标分配成功');
+        return redirect()->back();
+    }   
 
 }

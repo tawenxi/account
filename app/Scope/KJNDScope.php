@@ -19,7 +19,8 @@ class KJNDScope implements Scope
     {
         if (strstr(url()->current(),'/project') OR 
             strstr(url()->current(),'/village') OR 
-            strstr(url()->current(),'/divider')) {
+            strstr(url()->current(),'/divider') OR 
+            strstr(url()->current(),'/point')) {
             return $builder;
         }
         return $builder->where('kjnd', session('ND',config('app.MYND')));
