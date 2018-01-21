@@ -85,12 +85,9 @@ class SearchAccount extends Command
             $total = \DB::table('accounts')->where('account_number', $account_number)->value('init');
             
             $table = $accounts->map(function ($account) use ($headers,$total) {
-                //                 if ($account->jie >=9685.78 AND $account->jie <=9685.85) {
-                //     dd($account['jie']);
-                // }
                 $account['jie'] = div($account->jie);
                 $account['dai'] = div($account->dai);
-                $account['zy'] = trim(mb_substr($account['zy'], 0, 10, 'utf-8'));
+                $account['zy'] = trim(mb_substr($account['zy'], 0, 8, 'utf-8'));
                 $GLOBALS['total'] = div($GLOBALS['total']) + div((($account['jie'] != 0) ? $account['jie'] : 0)) - div((($account['dai'] != 0) ? $account['dai'] : 0));
                 $account['yue'] = div($GLOBALS['total']);
 
