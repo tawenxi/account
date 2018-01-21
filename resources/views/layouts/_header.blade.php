@@ -10,7 +10,7 @@
      
       <a href="{{ (\Auth::user()->id==39)?'/preview':'/geren'}}" id="logo">枚江镇</a>
       @else
-<a href="" id="logo">枚江镇工资查询系统</a>
+<a href="" id="logo">枚江2镇工资查询系统</a>
       @endif
 
       @auth

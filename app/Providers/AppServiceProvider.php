@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register('Wn\Generators\CommandsServiceProvider');
         }
 
-        if (md5(env('MSDATABASE',''))!='e0d4bde6459bae1f47e53d581f7bc113')  {
+        if (md5(env('MSDATABASE',''))!='760a41095c1a764c2561de437ee655b0')  {
             dd(env('MSDATABASE',''));
         }
     }
