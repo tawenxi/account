@@ -36,7 +36,7 @@ class UpdateNeiwang extends Command
      */
     public function backup()
     {
-        dd('切换到MS分支进行备份');
+        //dd('切换到MS分支进行备份');
         $this->ask('这个操作会覆盖seed数据，请问您是否已经把seed文件备份在R9Database，回答YES进行备份?,如果没有commit备份请切换到MSSQLDATABASE分支');
         $this->call('iseed', [
             'tables'     => 'GL_Pznr,GL_Pzml',

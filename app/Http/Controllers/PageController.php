@@ -7,11 +7,20 @@ use Illuminate\Http\Request;
 class PageController extends Controller
 {
     public function session(){
-    	
-	    if (session('ND') == (string)(config('app.MYND')-1)) {
-	        session(['ND'=>(string)config('app.MYND')]);
-	    } else {
-	        session(['ND'=>(string)(config('app.MYND')-1)]);
+
+	    switch (session('ND')) {
+	    	case '2018':
+	    		session(['ND'=>'2017']);
+	    		break;
+	    	case '2017':
+	    		session(['ND'=>'2016']);
+	    		break;	
+	    	case '2016':
+	    		session(['ND'=>'2018']);
+	    		break;	     	
+	    	default:
+	    		session(['ND'=>'2018']);
+	    		break;
 	    }
 	    return back();
     

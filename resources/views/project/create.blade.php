@@ -5,7 +5,7 @@
 <div class="col-md-offset-2 col-md-8">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1>更新项目数据</h1>
+      <h1>更新指标数据</h1>
     </div>
       <div class="panel-body">
 
@@ -16,55 +16,52 @@
             <img src="" alt="" class="gravatar"/>
           </a>
         </div>
-
-            @if($project->id)
-                <form action="{{ route('project.update', $project->id) }}" method="POST" accept-charset="UTF-8">
-                    <input type="hidden" name="_method" value="PUT">
-            @else
-                    <form action="{{ route('project.store') }}" method="POST" accept-charset="UTF-8">
-            @endif
-
+        <form action="{{ route('project.store') }}" method="POST" accept-charset="UTF-8">
             {{ csrf_field() }}
-
             <div class="form-group">
-              <label for="village">村别</label>
-              <input type="text" name=" village" class="form-control" value={{ $project->village->name }}>
+              <label for="village_id">分配金额到项目：</label>
+              <select  class="form-control" name="village_id" >
+                @foreach (\App\Model\Project\Village::all() as $village)
+                  <option value="{{ $village->id }}">{{ $village->name }}</option>
+                @endforeach
+              </select>
             </div>
-
-            <input type="hidden" name="id" value={{ $project->id }}>
-            <input type="hidden" name="village_id" value={{ $project->village_id }}>
 
             <div class="form-group">
               <label for="year">年份：</label>
-              <input type="text" name="year" class="form-control" value={{ $project->year }}>
+              <select  class="form-control" name="year" >
+                @foreach (['2016','2017','2018'] as $year)
+                  <option value="{{ $year }}">{{ $year }}</option>
+                @endforeach
+              </select>
             </div>
 
             <div class="form-group">
               <label for="category">项目类别:</label>
-              <input type="text" name="category" class="form-control" value={{ $project->category }}>
+              <input type="text" name="category" class="form-control" >
             </div>
 
             <div class="form-group">
               <label for="name"><font color="red">项目名称:</font></label>
-              <input type="text" name="name" class="form-control" value={{ $project->name }}>
+              <input type="text" name="name" class="form-control" >
 
             </div>
             <div class="form-group">
               <label for="bidprice">中标金额：</label>
-              <input type="text" name="bidprice" class="form-control" value={{ $project->bidprice }}>
+              <input type="text" name="bidprice" class="form-control" >
             </div>
             <div class="form-group">
               <label for="contractprice">合同金额：</label>
-              <input type="text" name="contractprice" class="form-control" value={{ $project->contractprice }}>
+              <input type="text" name="contractprice" class="form-control" >
             </div>
             <div class="form-group">
               <label for="settlementprice">预算金额：</label>
-              <input type="text" name="settlementprice" class="form-control" value={{ $project->settlementprice }}>
+              <input type="text" name="settlementprice" class="form-control" >
             </div>
 
             <div class="form-group">
               <label for="describe"><font color="black">描述：</font></label>
-              <textarea type="textarea" name="describe" class="form-control" rows="10" >{{ $project->describe }}</textarea>
+              <textarea type="textarea" name="describe" class="form-control" rows="10" ></textarea>
             </div>
 
             <button type="submit" class="btn btn-block btn-success">更新</button>

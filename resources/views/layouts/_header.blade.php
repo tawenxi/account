@@ -26,6 +26,7 @@
                   <li class="divider"></li>
                   <li><a href="/zhibiao?search=YSDWMC:扶贫">[扶贫指标]</a></li>
                   <li><a href="/zbdetail?search=YSDWMC:扶贫">[扶贫支付令]</a></li>
+                  <li><a href="/project/create">新建项目</a></li>
 
 
                 </ul>

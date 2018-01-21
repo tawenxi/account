@@ -17,11 +17,16 @@
 				<th>年份</th>
 				<th>项目类型</th>
 				<th>项目名称</th>
+				<th>中标价格</th>
+				<th>合同价格</th>
+				<th>决算价格</th>
+
 				
 				<th>资金来源</th>
 				<th>已付资金</th>
 				<th>拨付率</th>
 				<th>编辑</th>
+				<th>删除</th>
 				</tr>
 			</thead>
 			<tbody class='alert-info'>
@@ -32,6 +37,12 @@
 						<td>{{$project->year}}</td>
 						<td>{{$project->category}}</td>
 						<td>{{$project->name}}</td>
+						<td>{{$project->bidprice}}</td>
+
+						<td>{{$project->contractprice}}</td>
+
+						<td>{{$project->settlementprice}}</td>
+
 						<td>
 							<a href="project/{{ $project->id }}/project-income">
 								{{$income_save = $project->zbs->sum(function($item){
@@ -48,10 +59,16 @@
 						<td class='btn btn-link'>
 
 							{!! Form::open(['method' => 'get', 'route' => ['project.edit',$project->id], 'class' => 'form-horizontal']) !!}
-	          				{!! Form::submit('编辑', ['class' => 'btn btn-success pull-right']) !!}
+	          				{!! Form::submit('编辑', ['class' => 'btn btn-success pull-left']) !!}
 	          
 	          				{!! Form::close() !!}
 					
+						</td>
+						<td>
+							{!! Form::open(['method' => 'delete', 'route' => ['project.destroy',$project->id], 'class' => 'form-horizontal']) !!}
+	          				{!! Form::submit('删除', ['class' => 'btn btn-danger pull-right']) !!}
+	          
+	          				{!! Form::close() !!}
 						</td>
 					</tr>	
 				@endforeach
@@ -68,6 +85,7 @@
 				<th>已付资金</th>
 				<th>拨付率</th>
 				<th>编辑</th>
+				<th>删除</th>
 				</tr>
 			
 		</table>

@@ -9,7 +9,7 @@ use App\Model\Project\Village;
 
 class Project extends Model
 {
-    public $fillable = ['name','village','category','year','bidprice','contractprice','settlementprice','describe'];
+    public $fillable = ['name','village_id','category','year','bidprice','contractprice','settlementprice','describe'];
     public $timestamps = false;
 
     public static function locatedAt($id)

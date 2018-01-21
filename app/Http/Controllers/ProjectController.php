@@ -30,7 +30,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('project.create');
     }
 
     /**
@@ -41,7 +41,16 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+        'category' => 'required',
+        'name' => 'required',
+        'bidprice' => 'required|numeric',
+        'contractprice' => 'required|numeric',
+        'settlementprice' => 'required|numeric',
+        ]);
+        Project::create($request->all());
+        \Session::flash('success', '新建项目成功');
+        return redirect()->route('project.index');
     }
 
     /**
@@ -88,7 +97,9 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Project::find($id)->delete();
+        \Session::flash('success', '项目信息删除成功');
+        return redirect()->route('project.index');
     }
 
 

@@ -72,7 +72,7 @@
             </div>
             <div class="form-group">
               <label for="already_divided">分配金额到项目：</label>
-              <select name="project_id" >
+              <select name="project_id" class="form-control" >
                 @foreach ($projects as $project)
                   <option value="{{ $project->id }}">{{ $project->name }}</option>
                 @endforeach
