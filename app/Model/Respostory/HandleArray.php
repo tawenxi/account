@@ -45,27 +45,8 @@ class HandleArray
         $this->table3['YSKMQC'] = "'{$this->_validataChanging($this->_findInZb('YSKMQC'))}'";
         $this->table3['JFLXMC'] = "'{$this->_validataChanging($this->guzzledb->JFLXMC)}'";
 
-        switch ($this->guzzledb->JFLXMC) {
-            case '其他商品和服务支出':
-                $jjfl = '商品和服务支出-其他商品和服务支出';
-                break;
-            
-            case '其他支出':
-                $jjfl = '其他支出-其他支出';
-                break;
-            case '基础设施建设':
-                $jjfl = '基本建设支出-基础设施建设';
-                break;
-            case '其他基本建设支出':
-                $jjfl = '基本建设支出-其他基本建设支出';
-                break;
-            case '办公经费':
-                $jjfl = '基本建设支出-其他基本建设支出';
-                break;
-            default:
-            throw new \Exception('全称错误'.$this->JFLXMC);
-        }
-        $this->table3['JFLXQC'] = "'{$this->_validataChanging($jjfl)}'";
+        
+        $this->table3['JFLXQC'] = "'{$this->_validataChanging($this->_findInZb('JFLXQC'))}'";
         $this->table3['YSGLLXMC'] = "'{$this->_validataChanging($this->guzzledb->YSGLLXMC)}'";
 
         $this->updateDate();
