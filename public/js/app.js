@@ -1645,7 +1645,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Mychart.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Graph.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1662,25 +1662,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-/* harmony default export */ __webpack_exports__["default"] = ({
+
+/* harmony default export */ __webpack_exports__["default"] = (Vue.extend({
+    data: function data() {
+        return { legend: '' };
+    },
+
+
+    methods: {
+        renda: function renda(data) {
+            var context = document.querySelector('#graph').getContext('2d');
+            // new Chart(context).Line(data);
+            var chart = new __WEBPACK_IMPORTED_MODULE_0_chart_js___default.a(context).Bar(data);
+            this.legend = chart.generateLegend();
+        }
+    }
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Mychart.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Graph_vue__ = __webpack_require__("./resources/assets/js/components/Graph.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Graph_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Graph_vue__);
+
+
+/* harmony default export */ __webpack_exports__["default"] = (__WEBPACK_IMPORTED_MODULE_0__Graph_vue___default.a.extend({
     props: {
-        labels: {},
+        keys: {},
         values: {},
         color: {
             default: 'rgba(0,220,220,100)'
         }
     },
-
-    data: function data() {
-        return { legend: '' };
-    },
-
-    //props:['labels','values',''],
+    //props:['keys','values',''],
     mounted: function mounted() {
-        var data = {
-
-            //labels:this.labels,
-            labels: this.labels,
+        this.renda({
+            labels: this.keys,
             datasets: [{
                 label: "Monthly point",
                 fillColor: this.color,
@@ -1689,25 +1711,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 pointStrokeColor: "#fff",
                 PointHighlightStroke: "red",
                 data: this.values
-            }, {
-                label: "Other point",
-                fillColor: 'red',
-                strokeColor: "rgba(220,220,110,1)",
-                pointColor: "rgba(220,220,110,1)",
-                pointStrokeColor: "#fff",
-                PointHighlightStroke: "rgba(220,220,110,1)",
-                data: [21, 500, 60]
             }]
-        };
-
-        var context = document.querySelector('#graph').getContext('2d');
-
-        // new Chart(context).Line(data);
-        var chart = new __WEBPACK_IMPORTED_MODULE_0_chart_js___default.a(context).Bar(data);
-
-        this.legend = chart.generateLegend();
+        });
     }
-});
+}));
 
 /***/ }),
 
@@ -35250,6 +35257,33 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-03678e49\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Graph.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('canvas', {
+    attrs: {
+      "width": "1400",
+      "height": "700",
+      "id": "graph"
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "line-legend",
+    domProps: {
+      "innerHTML": _vm._s(_vm.legend)
+    }
+  })])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-03678e49", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2ff7a3a5\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Example.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35275,33 +35309,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-2ff7a3a5", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-43c6b826\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Mychart.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('canvas', {
-    attrs: {
-      "width": "400",
-      "height": "400",
-      "id": "graph"
-    }
-  }), _vm._v(" "), _c('div', {
-    staticClass: "line-legend",
-    domProps: {
-      "innerHTML": _vm._s(_vm.legend)
-    }
-  })])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-43c6b826", module.exports)
   }
 }
 
@@ -45600,6 +45607,47 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/components/Graph.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")(
+  /* script */
+  __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Graph.vue"),
+  /* template */
+  __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-03678e49\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Graph.vue"),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/home/vagrant/Code/account/resources/assets/js/components/Graph.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Graph.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-03678e49", Component.options)
+  } else {
+    hotAPI.reload("data-v-03678e49", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/components/Mychart.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -45608,7 +45656,7 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   /* script */
   __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0!./resources/assets/js/components/Mychart.vue"),
   /* template */
-  __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-43c6b826\",\"hasScoped\":false}!./node_modules/vue-loader/lib/selector.js?type=template&index=0!./resources/assets/js/components/Mychart.vue"),
+  null,
   /* styles */
   null,
   /* scopeId */
@@ -45618,7 +45666,6 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
 )
 Component.options.__file = "/home/vagrant/Code/account/resources/assets/js/components/Mychart.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Mychart.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {

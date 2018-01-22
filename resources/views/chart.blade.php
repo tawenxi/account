@@ -13,8 +13,8 @@
     <body >
 	    <div id="app">
 	    	<div class="container" >
-               <Mychart :labels="['Jan','Feb','Mar']" 
-               			:values="[100,400,100]"
+               <Mychart :keys="{{ $projects->keys() }}" 
+               			:values="{{ $projects->values() }}"
           
                			> 
                	</Mychart>	

@@ -23,6 +23,21 @@ class ProjectController extends Controller
         return view('project.index',compact('projects'));
     }
 
+    public function index_chart(Request $request)
+    {
+               $village_id = $request->village?$request->village:'0';
+        $projects = project::with(['zfpzs','village','zbs'])->village($village_id)->orderBy('year')->get();
+
+        $projects = $projects->mapWithKeys(function($project){
+            return [$project->name=>$project->zbs->sum(function($item){
+                                    return $item->pivot->amount;
+                                })];
+        });
+
+        return view('chart',compact('projects'));
+        
+    }
+
     /**
      * Show the form for creating a new resource.
      *

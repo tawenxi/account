@@ -77,7 +77,7 @@ Route::get('listener', function() {
 });
 
 Route::view('welcome','welcome');
-Route::view('chart','chart');
+Route::get('projects-chart','ProjectController@index_chart');
 
 
 Route::get('hahaha', function(){
