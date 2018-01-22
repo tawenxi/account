@@ -1,6 +1,9 @@
 <template>
    <!--  <canvas width="400" height="400" id="graph"></canvas> -->
-    <canvas width="400" height="400"></canvas>
+    <div>
+        <canvas width="400" height="400" id='graph'></canvas>
+        <div class="line-legend" v-html="legend"></div>
+    </div>
 </template>
 
 <script>
@@ -13,6 +16,10 @@
                 default:'rgba(0,220,220,100)'
             }
         },
+
+        data(){
+            return { legend:'' };
+        },
         //props:['labels','values',''],
         mounted() {
         var data = {
@@ -21,23 +28,33 @@
           labels:this.labels,
           datasets : [
             {
+                label:"Monthly point",
                 fillColor:this.color,
+                strokeColor: "red",
+                pointColor: "rgba(220,220,110,1)",
+                pointStrokeColor: "#fff",
+                PointHighlightStroke: "red",
+                data:this.values
+            },
+            {
+                label:"Other point",
+                fillColor:'red',
                 strokeColor: "rgba(220,220,110,1)",
                 pointColor: "rgba(220,220,110,1)",
                 pointStrokeColor: "#fff",
                 PointHighlightStroke: "rgba(220,220,110,1)",
-                data:this.values
+                data:[21,500,60]
             }
 
           ]
         };
 
-            // var context = document.querySelector('#graph').getContext('2d');
+            var context = document.querySelector('#graph').getContext('2d');
 
             // new Chart(context).Line(data);
-            new Chart(
-                this.$el.getContext('2d')
-            ).Line(data);
+            const chart = new Chart(context).Bar(data);
+
+            this.legend = chart.generateLegend();
         }
     }
 </script>

@@ -1657,6 +1657,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1667,6 +1670,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             default: 'rgba(0,220,220,100)'
         }
     },
+
+    data: function data() {
+        return { legend: '' };
+    },
+
     //props:['labels','values',''],
     mounted: function mounted() {
         var data = {
@@ -1674,19 +1682,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //labels:this.labels,
             labels: this.labels,
             datasets: [{
+                label: "Monthly point",
                 fillColor: this.color,
+                strokeColor: "red",
+                pointColor: "rgba(220,220,110,1)",
+                pointStrokeColor: "#fff",
+                PointHighlightStroke: "red",
+                data: this.values
+            }, {
+                label: "Other point",
+                fillColor: 'red',
                 strokeColor: "rgba(220,220,110,1)",
                 pointColor: "rgba(220,220,110,1)",
                 pointStrokeColor: "#fff",
                 PointHighlightStroke: "rgba(220,220,110,1)",
-                data: this.values
+                data: [21, 500, 60]
             }]
         };
 
-        // var context = document.querySelector('#graph').getContext('2d');
+        var context = document.querySelector('#graph').getContext('2d');
 
         // new Chart(context).Line(data);
-        new __WEBPACK_IMPORTED_MODULE_0_chart_js___default.a(this.$el.getContext('2d')).Line(data);
+        var chart = new __WEBPACK_IMPORTED_MODULE_0_chart_js___default.a(context).Bar(data);
+
+        this.legend = chart.generateLegend();
     }
 });
 
@@ -35265,12 +35284,18 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('canvas', {
+  return _c('div', [_c('canvas', {
     attrs: {
       "width": "400",
-      "height": "400"
+      "height": "400",
+      "id": "graph"
     }
-  })
+  }), _vm._v(" "), _c('div', {
+    staticClass: "line-legend",
+    domProps: {
+      "innerHTML": _vm._s(_vm.legend)
+    }
+  })])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -46742,18 +46767,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ "./resources/assets/sass/app.scss":
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__("./resources/assets/js/app.js");
-module.exports = __webpack_require__("./resources/assets/sass/app.scss");
+module.exports = __webpack_require__("./resources/assets/js/app.js");
 
 
 /***/ })

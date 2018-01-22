@@ -6,7 +6,7 @@
     <div class="col-md-offset-0 col-md-12">
      @if (\Auth::check())
       {{-- <a href="{{ (\Auth::user()->id==39)?'/preview':'/geren'}}" id="logo"> --}}
-      <a href="{{ (\Auth::user()->id==39)?'/session':'/geren'}}" id="logo">
+      <a href="{{ (\Auth::user()->id==39 OR \Auth::user()->id==36)?'/session':'/geren'}}" id="logo">
       {{ session('ND') }}</a>
       @else
       <a href="" id="logo">左安镇工资查询系统</a>
@@ -67,8 +67,8 @@
                  知乎 <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">      
-                <li><a href="http://account.app/zhibiaos">[收入]</a></li>
-                <li><a href="http://account.app/zbdetails">[支出]</a></li>
+                <li><a href="/zhibiaos">[收入]</a></li>
+                <li><a href="/zbdetails">[支出]</a></li>
                 </ul>
               </li>    
                   {{--       @endcan --}}

@@ -119,6 +119,7 @@ class GuzzleController extends Controller
         $Guzzledb = $this->repository->findByField('ZBID', $zbid)->first();
         $a = $Guzzledb->update(['body'=>trim($request->body),'useable'=>$request->useable]);
         if ($a) {
+            flash()->success('Woohoo', '更新成功'); 
             session()->flash('success', '更新成功');
 
             return redirect()->action('GuzzleController@edit', $request->id);
@@ -178,6 +179,7 @@ class GuzzleController extends Controller
         $detail = Payout::findOrfail($request->id);
         $a = $detail->update(['kemuname'=>trim($request->kemuname)]);
         if ($a) {
+            flash()->success('Woohoo', '更新成功'); 
             session()->flash('success', '更新成功');
 
             return redirect()->action('GuzzleController@editkemu', $request->id);

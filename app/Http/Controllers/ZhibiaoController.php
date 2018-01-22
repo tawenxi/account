@@ -142,6 +142,7 @@ class ZhibiaoController extends Controller
         $zfpz->JE = $request->JE;
         $zfpz->account_number = $request->account_number;
         $zfpz->save();
+        flash()->success('Woohoo', '更新成功'); 
         return back()->with('success','更新成功');
     }
 

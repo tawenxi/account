@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>@yield('title', '枚江镇财务查询系统')</title>
+    <title>@yield('title', '左安镇财务查询系统')</title>
     <link rel="stylesheet" href={{ asset('css/app.css') }}>
     <link rel="stylesheet" href="/css/libs.css">
   </head>
