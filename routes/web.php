@@ -1,8 +1,9 @@
 <?php
+
+Route::get('/', function () {return redirect('/geren');});
 Route::get('/jiema', 'GuzzleController@jiema');
 require('myweb.php');
 
-Route::get('/', function () {return redirect('/geren');});
 
 Route::get('users/{userid}/activity', 'ActivityController@show');
 
