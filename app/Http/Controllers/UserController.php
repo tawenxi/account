@@ -25,6 +25,7 @@ class UserController extends Controller
     public function logout()
     {
         \Auth::logout();
+        flash()->success('Woohoo', '您已经成功退出登录');
         \Session::flash('success', '您已经成功退出登录');
 
         return redirect()->route('login');

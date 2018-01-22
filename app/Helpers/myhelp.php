@@ -87,6 +87,18 @@ if (!function_exists('preg_replace_with_count')) {
         return iconv('GB2312', 'UTF-8', urldecode($data));
     }
 
+
+    function flash($title = null, $message = null)
+    {
+        $flash = app('App\Http\Flash');
+
+        if (func_num_args() == 0) {
+            return $flash;
+        }
+
+        return $flash->info($title, $message);
+    }
+
      
 
 

@@ -3,6 +3,7 @@
   <head>
     <title>@yield('title', '枚江镇财务查询系统')</title>
     <link rel="stylesheet" href={{ asset('css/app.css') }}>
+    <link rel="stylesheet" href="/css/libs.css">
   </head>
   <body>
 @if (!\Auth::check())
@@ -27,7 +28,8 @@
     </div>
       
       <script src="{{ mix('/js/app.js') }}"></script>
-
+      <script src="/js/libs.js"></script>
+      @include('shared._flash')
       @yield('js')
   </body>
 </html>

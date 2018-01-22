@@ -49,6 +49,7 @@ class ProjectController extends Controller
         'settlementprice' => 'required|numeric',
         ]);
         Project::create($request->all());
+        flash()->success('Woohoo', '新建项目成功');
         \Session::flash('success', '新建项目成功');
         return redirect()->route('project.index');
     }
@@ -85,6 +86,7 @@ class ProjectController extends Controller
     public function update(Request $request, $id)
     {
         Project::locatedAt($id)->update($request->except(['_method','_token','village']));
+        flash()->success('Woohoo', '项目信息更新成功');        
         \Session::flash('success', '项目信息更新成功');
         return redirect()->route('project.index');
     }
@@ -98,6 +100,7 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         Project::find($id)->delete();
+        flash()->success('Woohoo', '项目信息删除成功');
         \Session::flash('success', '项目信息删除成功');
         return redirect()->route('project.index');
     }
@@ -130,6 +133,7 @@ class ProjectController extends Controller
     public function handleDivider(Request $request)
     {
         Zb::find($request['id'])->divide($request['project_id'], $request['amount']);
+        flash()->success('Woohoo', '指标分配成功');
         \Session::flash('success', '指标分配成功');
         return redirect()->back();
     }
@@ -138,6 +142,7 @@ class ProjectController extends Controller
     public function deletezb(Request $request)
     {
         Zb::find($request['zb_id'])->deletedivide($request['project_id'], $request['amount']);
+        flash()->success('Woohoo', '删除分配成功');
         \Session::flash('success', '删除分配成功');
         return redirect()->back();
     }
@@ -155,6 +160,7 @@ class ProjectController extends Controller
     {
         //dd($request->all());
         Zfpz::find($request['id'])->point($request['project_id']);
+        flash()->success('Woohoo', '指标分配成功');
         \Session::flash('success', '指标分配成功');
         return redirect()->back();
     }   

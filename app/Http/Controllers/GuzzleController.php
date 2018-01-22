@@ -35,6 +35,7 @@ class GuzzleController extends Controller
     public function dpt(Guzzle $guzzle)  //带了更新功能
     {
         \Artisan::call('pull:data');
+        flash()->success('Woohoo', '更新平台成功');
         \Session::flash('success', '更新平台成功');
         return redirect('/hyy');
     }
