@@ -224,16 +224,16 @@ public function setCompareBody($body = NULL)
     private function compare2body()
     {
         foreach ([1,2] as $_value) {
-            $guzzledb = new Guzzledb();
+            $guzzledb = Guzzledb::first();
             $nowBody = $guzzledb->getArray($_value,iconv('GB2312','UTF-8', $this->insertbody));
-            $startBody = $guzzledb->getArray($_value,decode($this->_bodySaving));
+            $startBody = $guzzledb->getArray($_value,decode($this->_bodySaving));//最开始的原始数据
             $diff= collect($nowBody)->diffAssoc($startBody)
                                  ->keys()->toArray();
             $result = collect($diff)->each(function ($value, $key)use ($_value) 
             {
                     switch ($_value) {
                         case 1:
-                            $changed = [ "Kjnd","Pdqj","Pdrq","Skrdm","Skr","Skryhbh","Skzh","Zy"];
+                            $changed = [ "Kjnd","Pdqj","Pdrq","Skrdm","Skr","Skryhbh","Skzh","Zy","Skrkhyh"];
                             break;
                         case 2:
                             $changed = ["Kjnd","Pdqj","zbje","yyzbje","kyzbje","JE"];
@@ -254,15 +254,14 @@ public function setCompareBody($body = NULL)
         $this->test_input();
         $vali_var = $this->handleBody();
         //dd($vali_var);
-        //$this->compare2body();     
+        $this->compare2body();     
         if (stristr($vali_var, $this->payee['payeeaccount']) and 
             stristr($vali_var, $this->payee['amount']) and 
             stristr($vali_var, $this->payee['payee']) and 
             stristr($vali_var, $this->payee['payeebanker']) and 
             stristr($vali_var, $this->payee['zhaiyao']) and
-            stristr($vali_var, "'178347750000004247', '农商行左安支行', '012'") //and
-            //确保银行数据接收
-           // !strstr($vali_var, config('app.MYND'))//
+            stristr($vali_var, "'178347750000004247', '农商行左安支行', '012'") and
+            strstr($vali_var, config('app.MYND'))//确保银行数据接收
             )
         {
             //dd('ok');

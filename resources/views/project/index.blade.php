@@ -27,6 +27,7 @@
 				<th>拨付率</th>
 				<th>编辑</th>
 				<th>删除</th>
+				<th>图</th>
 				</tr>
 			</thead>
 			<tbody class='alert-info'>
@@ -70,6 +71,9 @@
 	          
 	          				{!! Form::close() !!}
 						</td>
+						<td class="">
+							<a href="/projects-chart?village={{ $project->village->id }}" >图</a>
+						</td>
 					</tr>	
 				@endforeach
 			</tbody>
@@ -90,6 +94,8 @@
 				<th>拨付率</th>
 				<th>编辑</th>
 				<th>删除</th>
+				<th>图</th>
+
 				</tr>
 			
 		</table>

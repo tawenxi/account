@@ -14,7 +14,9 @@ class DataSource
     public $guzzledb;
     public $tableToreplaced;
 
-
+    /* 可以分析出本授权指标《替换的组数数据》 */
+    /* 可以分析新生成的《new body》 */
+    
     public function __construct(Guzzledb $guzzledb)
     {
         $this->guzzledb = $guzzledb;
