@@ -18,7 +18,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $village_id = $request->village?$request->village:'0';
-        $projects = project::with(['zfpzs','village','zbs'])->village($village_id)->orderBy('year')->get();
+        $projects = project::with(['zfpzs','village','zbs'])->where('village_id','>=',$village_id)->orderBy('year')->get();
 
         return view('project.index',compact('projects'));
     }
@@ -60,6 +60,7 @@ class ProjectController extends Controller
         'category' => 'required',
         'name' => 'required',
         'bidprice' => 'required|numeric',
+        'budget' => 'required|numeric',
         'contractprice' => 'required|numeric',
         'settlementprice' => 'required|numeric',
         ]);
@@ -132,9 +133,10 @@ class ProjectController extends Controller
 
 
 
-    public function village()
+    public function village(Request $request)
     {
-        $villages = Village::where('year','<>',0)->with('projects')->get();
+        $biaozhi = $request->year?2:0;
+        $villages = Village::where('year','<>',$biaozhi)->with('projects')->get();
         return view('project.village',compact('villages'));
     }
 
@@ -173,7 +175,6 @@ class ProjectController extends Controller
 
     public function handlePoint(Request $request)
     {
-        //dd($request->all());
         Zfpz::find($request['id'])->point($request['project_id']);
         flash()->success('Woohoo', '指标分配成功');
         \Session::flash('success', '指标分配成功');

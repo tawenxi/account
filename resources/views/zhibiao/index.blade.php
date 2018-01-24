@@ -27,12 +27,15 @@
 					@endif
 					
 					<th>支出数</th>
+					<th>已分配</th>
 					<th>单位</th>
 				</tr>
 			</thead>
 			<tbody class='alert-info'>
 				@foreach ($results as $result)
-					<tr class={{ abs($result->JE-$result->zfpzs->sum('JE'))<1?'alert-danger':""}}>
+					<tr class={{ ($divider = $result->projects->sum(function($item){
+					                                return $item->pivot->amount;
+					                           })>0)?'alert-warning':(abs($result->JE-$result->zfpzs->sum('JE'))<1?'alert-danger':"") }}>
 					   	<td>{{ $loop->index+1 }}</td>					
 						<td class="small">
 							<a href="/showzbdetail/{{ $result->ZBID }}">{{$result->ZBID}} 
@@ -51,19 +54,22 @@
 	                    @endif
 
 						<td >{{ $result->zfpzs->count() }}</td>
+						<td >{{ $result->projects->sum(function($item){
+                                return $item->pivot->amount;
+                           }) }}</td>
 						
-						@if (strstr($result->YSDWMC,'扶贫'))
-							<td class="btn btn-block btn-success "><a href="{{ strstr($result->YSDWMC,'扶贫')?"divider/$result->id":'' }}" >
-						@else
+						{{-- @if (strstr($result->YSDWMC,'扶贫')) --}}
+							<td class="btn btn-block btn-success "><a href="{{ strstr($result->YSDWMC,'扶贫')?"/divider/$result->id":"/divider/$result->id" }}" >
+				{{-- 		@else
 							<td >
-						@endif
+						@endif --}}
 						
-						@if (strstr($result->YSDWMC,'扶贫'))
+				{{-- 		@if (strstr($result->YSDWMC,'扶贫')) --}}
 						<font class="text-danger">{{ substr($result->YSDWMC, 9) }}</font>
 							</a>
-						@else
+{{-- 						@else
 						{{ substr($result->YSDWMC, 9) }}
-						@endif
+						@endif --}}
 					</td>
 					</tr>	
 				@endforeach
@@ -80,6 +86,7 @@
 						<th>已分配</th>
 					@endif
 					<th>支出数</th>
+					<th>已分配</th>
 					<th>单位</th>
 				</tr>
 		</table>

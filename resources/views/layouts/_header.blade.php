@@ -52,7 +52,7 @@
                 <ul class="dropdown-menu">      
                 <li><a href="/inco">收支对照</a></li>
                 <li><a href="/zhibiao/?search=yeamount:0&orderBy=LR_RQ">[收入(update)]</a></li>
-                <li><a href="{{ session('ND')==2018?'zbdetail':'zbdetail?search=YSDWMC:扶贫' }}">[支出]</a></li>
+                <li><a href="{{ session('ND')==2018?'/zbdetail':'/zbdetail?search=YSDWMC:扶贫' }}">[支出]</a></li>
                 <li><a href="/shenqing">申请单</a></li>
                 <li><a href="/incomes">收入</a></li> 
                 <li><a href="/costs">支出</a></li>

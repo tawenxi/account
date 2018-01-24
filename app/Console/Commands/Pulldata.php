@@ -62,7 +62,7 @@ class Pulldata extends Command
         //dd(session('ND'));
         //$this->info('现在的session是'.session('ND'));
         //$this->testCompare();
-        //$this->PullShenqing();
+        $this->PullShenqing();
         $this->PullZfpz();
         $this->Pullsq();
   

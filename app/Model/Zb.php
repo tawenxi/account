@@ -81,8 +81,13 @@ class Zb extends Model
 
     public function divide($project_id, $amount)
     {
-        if ($project = $this->projects->where('id', $project_id)->first()) {
+        $project = $this->projects->where('id', $project_id)->first();
+        if ($project) {
             $amount = $project->pivot->amount + $amount;
+            if ($amount > $this->yeamount) {
+                flash()->error('Woohoo', '指标分配成功');
+                return redirect()->back();
+            }; 
             $this->projects()->updateExistingPivot($project_id, compact('amount'));
         } else {
             $this->projects()->attach($project_id,compact('amount'));

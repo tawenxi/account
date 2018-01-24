@@ -58,7 +58,11 @@
               <input type="text" name="contractprice" class="form-control" value={{ $project->contractprice }}>
             </div>
             <div class="form-group">
-              <label for="settlementprice">预算金额：</label>
+              <label for="budget">预算金额：</label>
+              <input type="text" name="budget" class="form-control" value={{ $project->budget }}>
+            </div>
+            <div class="form-group">
+              <label for="settlementprice">决算金额：</label>
               <input type="text" name="settlementprice" class="form-control" value={{ $project->settlementprice }}>
             </div>
 

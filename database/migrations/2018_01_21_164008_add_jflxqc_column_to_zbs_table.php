@@ -14,7 +14,7 @@ class AddJflxqcColumnToZbsTable extends Migration
         public function up()
     {
         Schema::table('zbs', function (Blueprint $table) {
-             $table->string('JFLXMC')->nullable();
+             $table->string('JFLXQC')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddJflxqcColumnToZbsTable extends Migration
     public function down()
     {
         Schema::table('zbs', function (Blueprint $table) {
-            $table->dropColumn('JFLXMC');
+            $table->dropColumn('JFLXQC');
         });
     }
 }

@@ -25,7 +25,7 @@
 				<tr class={{ empty($result->body)?'alert-danger':""}}>
 				<td>{{$result->QS_RQ}}</td>
 				<td>
-					<a href="showzbdetail/{{ $result->ZBID }}">{{$result->ZY}}</a>
+					<a href="/point/{{ $result->id }}">{{$result->ZY}}</a>
 				</td>
 				<td>{{$result->JE}} </td>
 				<td>{{$result->YSDWMC}}</td>

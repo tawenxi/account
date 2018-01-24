@@ -19,6 +19,7 @@
 				<th>项目名称</th>
 				<th>中标价格</th>
 				<th>合同价格</th>
+				<th>预算价格</th>
 				<th>决算价格</th>
 
 				
@@ -41,7 +42,7 @@
 						<td>{{$project->bidprice}}</td>
 
 						<td>{{$project->contractprice}}</td>
-
+						<td>{{$project->budget}}</td>
 						<td>{{$project->settlementprice}}</td>
 
 						<td>
@@ -86,6 +87,7 @@
 				<th>项目名称</th>
 				<th>中标价格</th>
 				<th>合同价格</th>
+				<th>预算价格</th>
 				<th>决算价格</th>
 
 				

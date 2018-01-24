@@ -30,7 +30,7 @@
             <div class="form-group">
               <label for="year">年份：</label>
               <select  class="form-control" name="year" >
-                @foreach (['2016','2017','2018'] as $year)
+                @foreach (['0','2016','2017','2018'] as $year)
                   <option value="{{ $year }}">{{ $year }}</option>
                 @endforeach
               </select>
@@ -55,7 +55,11 @@
               <input type="text" name="contractprice" class="form-control" >
             </div>
             <div class="form-group">
-              <label for="settlementprice">预算金额：</label>
+              <label for="budget">预算金额：</label>
+              <input type="text" name="budget" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label for="settlementprice">决算金额：</label>
               <input type="text" name="settlementprice" class="form-control" >
             </div>
 

@@ -56,6 +56,7 @@
 					<th>预算项目</th>
 					<th>{{round($zbs->sum('JE')/10000,2)}}</th>
 					<th>{{round(round(($zbs->sum('JE'))/10000,2)-round($zbs->sum('detail')/10000,2),2)}}</th>
+					<th>分配金额</th>
 					<th>支出数</th>
 					<th>单位</th>
 				</tr>
