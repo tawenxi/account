@@ -84,14 +84,24 @@ class Zb extends Model
         $project = $this->projects->where('id', $project_id)->first();
         if ($project) {
             $amount = $project->pivot->amount + $amount;
-            if ($amount > $this->yeamount) {
-                flash()->error('Woohoo', '指标分配成功');
-                return redirect()->back();
-            }; 
             $this->projects()->updateExistingPivot($project_id, compact('amount'));
         } else {
             $this->projects()->attach($project_id,compact('amount'));
         }
+    }
+
+    public function judgeAmountEnough($request)
+    {
+        $project = $this->projects->where('id', $request['project_id'])->first();
+        if (isset($project)) {
+            $amount_would_divided = $project->pivot->amount + $request['amount'];
+        } else {
+            $amount_would_divided = $request['amount'];
+        }
+        if ($amount_would_divided > $this->JE) {
+            return false;
+        } 
+         return true;
     }
 
     public function deletedivide($project_id, $amount)

@@ -12,6 +12,7 @@
 				<tr class='success'>
 					<th>日期</th>
 					<th>摘要</th>
+					<th>收款人</th>
 					<th>金额</th>
 					<th>单位</th>
 					<th>项目名称</th>
@@ -22,11 +23,13 @@
 			</thead>
 			<tbody class='alert-info'>
 					@foreach ($results as $result)
-				<tr class={{ empty($result->body)?'alert-danger':""}}>
+				<tr class={{ isset($result->project)?'alert-warning':""}}>
 				<td>{{$result->QS_RQ}}</td>
 				<td>
 					<a href="/point/{{ $result->id }}">{{$result->ZY}}</a>
 				</td>
+				<td>{{$result->SKR}} </td>
+
 				<td>{{$result->JE}} </td>
 				<td>{{$result->YSDWMC}}</td>
 				<td>{{$result->XMMC}}</td>

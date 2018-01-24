@@ -60,7 +60,9 @@
             </div>
             <div class="form-group">
               <label for="already_divided" class="alert-danger">绑定支付令到项目项目：</label>
+              <label for="already_divided" class="alert-success"> {{ isset( $zfpz->project->name )? $zfpz->project->name :"" }} </label>
               <select name="project_id" class="form-control">
+
                 <option value="0">无项目</option>
                 @foreach ($projects as $project)
                   <option value="{{ $project->id }}">{{ $project->name }}</option>

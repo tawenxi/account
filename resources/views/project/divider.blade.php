@@ -71,6 +71,13 @@
                            }) }}>
             </div>
             <div class="form-group">
+              <label for="already_divided" class="text-success">剩余分配金额：</label>
+              <input type="text"  class="form-control" 
+                     value={{ $zb->JE - $zb->projects->sum(function($item){
+                                return $item->pivot->amount;
+                           }) }}>
+            </div>
+            <div class="form-group">
               <label for="already_divided">分配金额到项目：</label>
               <select name="project_id" class="form-control" >
                 @foreach ($projects as $project)
