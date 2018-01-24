@@ -15,6 +15,7 @@
 			<tr class='success'>
 				<th>id</th>
 				<th>支出ID</th>
+				<th>ZBID</th>
 				<th>日期</th>
 				<th>摘要</th>
 				<th>收款人</th>
@@ -35,6 +36,9 @@
 								{{$result->account->name}} 
 							@endif
 						</a>
+					</td>
+					<td>
+						<a href="/showzbdetail/{{ $result->ZBID }}">{{substr($result->ZBID, 11)}}</a> 
 					</td>
 					<td>
 						{{$result->QS_RQ}} 
@@ -62,6 +66,7 @@
 		<tr class='success'>
 			<th>id</th>
 			<th>支出ID</th>
+			<th>ZBID</th>
 			<th>日期</th>
 			<th>摘要</th>
 			<th>收款人</th>

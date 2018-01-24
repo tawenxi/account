@@ -62,7 +62,7 @@ class Pulldata extends Command
         //dd(session('ND'));
         //$this->info('现在的session是'.session('ND'));
         //$this->testCompare();
-        $this->PullShenqing();
+        //$this->PullShenqing();
         $this->PullZfpz();
         $this->Pullsq();
   
@@ -87,6 +87,7 @@ class Pulldata extends Command
 
     public function PullZfpz()
     {
+        session(['ND'=>'2018']);
         Zfpz::where('QS_RQ','')->ORwhere('QS_RQ',NULL)->delete();
         $zb_data = $this->guzzle->get_ZB();
         $collection = collect($zb_data);
