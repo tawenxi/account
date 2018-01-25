@@ -85,3 +85,6 @@ Route::get('hahaha', function(){
         //dd($zb->toarray());
         dd($zb->projects);
 });
+
+
+Route::view('received','received');

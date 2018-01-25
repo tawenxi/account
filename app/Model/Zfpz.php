@@ -100,5 +100,6 @@ class Zfpz extends Model
             'MXZBWH',
             'BJWH',
             'account_number',
+            'received'
 ];
 }

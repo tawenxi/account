@@ -5,7 +5,7 @@
 
 <article>
 	
-	<row class='h4'>
+	<div  class='h4 row'>
 	<table class="table table-bordered table-striped table-hover table-condensed">
 		<caption>
 			<center>{{ date("Y-m-d H:i:s") }}</center>
@@ -22,6 +22,7 @@
 				<th>预算单位</th>
 				<th>总金额</th>
 				<th>支出类型</th>
+				<th>received</th>
 			</tr>
 		</thead>
 		<tbody class='alert-info'>
@@ -60,6 +61,9 @@
 					<td>
 						{{ substr($result->ZFFSMC, 0,3) }}
 					</td>	
+					<td>
+						  <received :zfpz = {{ $result->id }} ></received>
+					</td>
 				</tr>	
 			@endforeach
 		</tbody>
@@ -73,9 +77,16 @@
 			<th>预算单位</th>
 			<th>{{($results->sum('JE'))/10000}}</th>
 			<th>支出类型</th>
+			<th>received</th>
 		</tr>
 	</table>
 			<hr>
-	</row class='h4'>
+	</div>
 </article>
+@stop
+
+@section('js')
+	<script>
+	Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name=csrf-token]').getAttribute('content')
+	</script>
 @stop

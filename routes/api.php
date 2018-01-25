@@ -23,3 +23,22 @@ Route::get('/topics2', function (Request $request) {
 
     return $topics;
 })->middleware('api');
+
+Route::get('/zfpz/{zfpz}', function ($zfpz) {
+	$received = \App\Model\Zfpz::find($zfpz)->received;
+    return response()->json(['received' => $received]);
+})->middleware('api');
+
+
+Route::post('/zfpz/receive', function() {
+		$zfpz = \App\Model\Zfpz::find(request('zfpz'));
+        $received = $zfpz->received;
+
+        if ($received == '1' ) {
+            $zfpz->update(['received' => '0']);
+        } else {
+        	$zfpz->update(['received' => '1']);
+        }
+        
+        return response()->json(['received' => \App\Model\Zfpz::find(request('zfpz'))->received]);
+    });
