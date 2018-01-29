@@ -25,13 +25,13 @@ Route::get('/topics2', function (Request $request) {
 })->middleware('api');
 
 Route::get('/zfpz/{zfpz}', function ($zfpz) {
-	$received = \App\Model\Zfpz::find($zfpz)->received;
+	$received = \App\Model\Zfpz::withoutGlobalScopes()->find($zfpz)->received;
     return response()->json(['received' => $received]);
 })->middleware('api');
 
 
 Route::post('/zfpz/receive', function() {
-		$zfpz = \App\Model\Zfpz::find(request('zfpz'));
+		$zfpz = \App\Model\Zfpz::withoutGlobalScopes()->find(request('zfpz'));
         $received = $zfpz->received;
 
         if ($received == '1' ) {
@@ -40,5 +40,5 @@ Route::post('/zfpz/receive', function() {
         	$zfpz->update(['received' => '1']);
         }
         
-        return response()->json(['received' => \App\Model\Zfpz::find(request('zfpz'))->received]);
+        return response()->json(['received' => \App\Model\Zfpz::withoutGlobalScopes()->find(request('zfpz'))->received]);
     });

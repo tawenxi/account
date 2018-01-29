@@ -3,7 +3,7 @@
 
 <h1>枚江镇工资个人汇总({{ isset($resv[0]['name'])?$resv[0]['name']:'' }})</h1>
 
-<h3><center><a href="/edit" "email me">点我修改密码</a>
+<h3><center><a href="/edit">点我修改密码</a>
 </center></h3>
 @include('shared.errors')
 

@@ -13,7 +13,7 @@
 
 		<thead>
 			<tr class='success'>
-				<th>id</th>
+				<th>isd</th>
 				<th>支出ID</th>
 				<th>ZBID</th>
 				<th>日期</th>
@@ -22,7 +22,7 @@
 				<th>预算单位</th>
 				<th>总金额</th>
 				<th>支出类型</th>
-				<th>received</th>
+				@receive<th>received</th>@endreceive
 			</tr>
 		</thead>
 		<tbody class='alert-info'>
@@ -61,9 +61,12 @@
 					<td>
 						{{ substr($result->ZFFSMC, 0,3) }}
 					</td>	
-					<td>
-						  <received :zfpz = {{ $result->id }} ></received>
-					</td>
+					@receive
+						<td>
+							<received :zfpz = {{ $result->id }} ></received>
+						</td>
+					@endreceive
+
 				</tr>	
 			@endforeach
 		</tbody>
@@ -77,7 +80,7 @@
 			<th>预算单位</th>
 			<th>{{($results->sum('JE'))/10000}}</th>
 			<th>支出类型</th>
-			<th>received</th>
+			@receive<th>received</th>@endreceive
 		</tr>
 	</table>
 			<hr>
