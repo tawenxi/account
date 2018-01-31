@@ -1,5 +1,5 @@
 @component('mail::message')
-# 枚江镇财政收支信息
+# 左安镇财政收支信息
 
 {{ date('y-m-d') }}收支日表
 

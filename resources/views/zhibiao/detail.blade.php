@@ -13,7 +13,7 @@
 
 		<thead>
 			<tr class='success'>
-				<th>isd</th>
+				<th>id</th>
 				<th>支出ID</th>
 				<th>ZBID</th>
 				<th>日期</th>
@@ -32,11 +32,20 @@
 			 			{{ $loop->index+1 }}
 			 		</td>
 					<td class="col-md-2 small">
-						<a href="{{ route('zbdetail.edit',['id'=>$result->id]) }}">
+						
 							@if (!is_null($result->account))
-								{{$result->account->name}} 
+								<a href="{{ route('zbdetail.edit',['id'=>$result->id]) }}">
+									{{$result->account->name}} 
+								</a>
+							@else
+								<form 	 method="GET"
+										 action="{{ route('zbdetail.edit',['id'=>$result->id]) }}" 
+										 enctype="multipart/form-data">
+									<button type="submit" class="btn btn-success center-block">编辑科目</button>
+								</form>
+								
 							@endif
-						</a>
+						
 					</td>
 					<td>
 						<a href="/showzbdetail/{{ $result->ZBID }}">{{substr($result->ZBID, 11)}}</a> 

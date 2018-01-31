@@ -6,7 +6,6 @@
 @include('shared.errors')
 
 <article>
-	
 	<h2>
 	<form action="/storeaccount" method="post">
 	{!! csrf_field() !!}
@@ -30,49 +29,17 @@
 		@foreach ($results as $result)
 			<tr>
 				<td class="small">
-				
-					
 						{{$result->account?
-						$result->account->account_name:''}} 
-					
-					
-
-					
-				
+						$result->account->account_name:''}}
 				</td>
-
-				<td>
-				
-					{{$result->LR_RQ}} 
-
-					
-				
-				</td>
-				<td>
-				
-					{{$result->ZY}}
-				
-				</td>
-				<td>
-				
-					{{$result->YSDWMC}}
-				
-				</td>
-				<td>
-				
-					{{$result->JE}}
-				
-				</td>
-				
-				<td>
-				
-					{{$result->ZFFSMC}}
-				
-				</td>
-				
+				<td>{{ $result->QS_RQ }} </td>
+				<td>{{$result->ZY}}</td>
+				<td>{{$result->YSDWMC}}</td>
+				<td>{{$result->JE}}</td>
+				<td>{{$result->ZFFSMC}}</td>	
 			</tr>
-			<tr><td colspan="7">
-
+			<tr>
+				<td colspan="7">
 				<input type="hidden" name="">
                  {!! csrf_field() !!}				
 					<div class="form-group">
@@ -86,36 +53,23 @@
                         style="width:600px">
                         </select>
                     </div>
-                   
-              
 			</td></tr>
 
 		@endforeach
-
-			     			     	
-			     
-			     	
-			
-
-
 		</tbody>
 			
-					<tr class='success'>
+			<tr class='success'>
 				<th>指标ID</th>
 				<th>摘要</th>
 				<th>预算项目</th>
 				<th></th>
 				<th>{{($results->sum('JE'))/10000}}</th>
-				
 				<th>支出类型</th>
 			</tr>
 	</table>
 	<button type="submit" class="btn btn-default btn-block">设置科目</button>	
 </form>  
-
-
 			<hr>
-	
 	</h2>
 </article>
 {{-- {!! Form::open() !!}
@@ -144,9 +98,6 @@
     ue.ready(function() {
         ue.execCommand('serverparam', '_token', '{{ csrf_token() }}'); // 设置 CSRF token.
     });
-
-
-
 
             $(document).ready(function() {
             function formatTopic (topic) {
