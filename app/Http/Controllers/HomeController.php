@@ -33,7 +33,7 @@ class HomeController extends Controller
 
     public function zbdetail()
     {
-        $results = $this->repository->orderBy('PDRQ', 'desc')->all()->unique();
+        $results = $this->repository->orderBy('account_number', 'desc')->all()->unique();
 
         return view('guzzle.zbdetail', compact('results'))->render();
     }

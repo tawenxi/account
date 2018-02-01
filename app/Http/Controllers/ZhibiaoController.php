@@ -139,8 +139,9 @@ class ZhibiaoController extends Controller
     public function update(Request $request)
     {
         $zfpz = \App\Model\Zfpz::find($request->id);
+        $account_number = \App\Model\Account::find($request->account_id)->account_number;
         $zfpz->JE = $request->JE;
-        $zfpz->account_number = $request->account_number;
+        $zfpz->account_number = $account_number;
         $zfpz->save();
         flash()->success('Woohoo', '更新成功'); 
         return back()->with('success','更新成功');
