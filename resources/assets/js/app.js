@@ -10,6 +10,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
+import vSelect from 'vue-select';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -20,6 +21,10 @@ Vue.use(VueResource);
 Vue.component('Example', require('./components/Example.vue'));
 Vue.component('Mychart', require('./components/Mychart.vue'));
 Vue.component('Received', require('./components/Received.vue'));
+Vue.component('v-select', vSelect);
+Vue.component('Vselect', require('./components/Vselect.vue'));
+Vue.component('Makeaccount', require('./components/Makeaccount.vue'));
+
 
 
 const app = new Vue({

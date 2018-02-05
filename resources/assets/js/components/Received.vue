@@ -11,7 +11,7 @@
 
 <script>
     export default {
-        props:['zfpz'],
+        props:['zfpz','is_received'],
         data() {
             return {
                 received: 0
@@ -24,10 +24,7 @@
             }
         },
         mounted() {
-            this.$http.get('/api/zfpz/'+ this.zfpz)
-            .then(response => {
-                this.received = response.data.received
-            });
+            this.received = this.is_received;  
         },
 
         methods:{

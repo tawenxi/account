@@ -72,7 +72,8 @@
 					</td>	
 					@receive
 						<td>
-							<received :zfpz = {{ $result->id }} ></received>
+							<received :zfpz = {{ $result->id }} 
+									  :is_received = {{ $result->received }} ></received>
 						</td>
 					@endreceive
 

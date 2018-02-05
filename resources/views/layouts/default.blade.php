@@ -28,7 +28,7 @@
       </div>
     </div>
       
-      <script src='/js/app.js'></script>
+      <script src={{ mix('/js/app.js') }}></script>
       <script src="/js/libs.js"></script>
       @include('shared._flash')
       @yield('js')

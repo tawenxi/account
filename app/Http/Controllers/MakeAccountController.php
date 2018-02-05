@@ -11,12 +11,12 @@ class MakeAccountController extends Controller
 {
     public function storeAccount(Request $request)
     {
-
-        //dd($request->all());
-        $request = collect($request)->each(function ($item, $key) {
+       // dd($request->all());
+        $request = collect($request)->filter(function($value){
+            return $value != 0;
+        })->each(function ($item, $key) {
             if (is_numeric($item)) {
                 //dump($key);
-                $key = str_replace('_', '.', $key);
                 $account = Account::where('id', $item)->first();
                 $account_number = $account->account_number;
                 //dd($key);
@@ -35,18 +35,20 @@ class MakeAccountController extends Controller
 
     public function storeaccount_for_zb(Request $request)
     {
-        $request = collect($request)->each(function ($item, $key) {
+        $request = collect($request)->filter(function($value){
+            return $value != 0;
+        })->each(function ($item, $key) {
             if (is_numeric($item)) {
                 //dump($key);
                 $key = str_replace('_', '.', $key);
                 $account = Account::where('id', $item)->first();
                 $account_number = $account->account_number;
                 //dd($key);
-                $zb = Zb::where('ZBID', $key)->first();
+                $zb = Zb::where('id', $key)->first();
                 //dd($zb->toArray());
                 $zb->account_number = $account_number;
                 $zb->save();
-                $account = Zb::where('ZBID', $key)->first();
+                $account = Zb::where('id', $key)->first();
                 dump($account->toArray());
             }
 

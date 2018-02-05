@@ -88,3 +88,4 @@ Route::get('hahaha', function(){
 
 
 Route::view('received','received');
+Route::view('select','select');
