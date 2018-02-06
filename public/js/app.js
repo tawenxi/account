@@ -1779,7 +1779,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     computed: {
         text: function text() {
-            return this.received == 1 ? '已收到' : '请核票';
+            return this.received == 1 ? '已收到' : this.received == 0 ? '请核票' : '康所';
         }
     },
     mounted: function mounted() {
@@ -35484,7 +35484,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('button', {
     staticClass: "btn btn-default",
     class: {
-      'btn-success': _vm.received
+      'btn-success': (_vm.received == 1), 'btn-danger': (_vm.received == 2)
     },
     domProps: {
       "textContent": _vm._s(_vm.text)
@@ -35519,7 +35519,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       expression: "selected"
     }
-  }), _vm._v(" "), _c('br'), _vm._v(" "), _c('input', {
+  }), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",

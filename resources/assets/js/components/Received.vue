@@ -2,7 +2,7 @@
  
     <button
         class="btn btn-default"
-        v-bind:class="{'btn-success': received}"
+        v-bind:class="{'btn-success': (received==1), 'btn-danger':(received==2)}"
         v-text="text"
         v-on:click="receive"
     >
@@ -20,7 +20,7 @@
 
         computed: {
             text() {
-                return (this.received == 1) ? '已收到' : '请核票'
+                return (this.received == 1) ? '已收到' : ((this.received == 0) ? '请核票' : '康所')
             }
         },
         mounted() {

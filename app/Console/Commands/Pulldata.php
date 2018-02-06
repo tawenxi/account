@@ -88,7 +88,7 @@ class Pulldata extends Command
     public function PullZfpz()
     {
         session(['ND'=>'2018']);
-        Zfpz::where('QS_RQ','')->ORwhere('QS_RQ',NULL)->delete();
+        Zfpz::where(['QS_RQ'=>NULL,'received'=>'0'])->delete();
         $zb_data = $this->guzzle->get_ZB();
         $collection = collect($zb_data);
         $collection = $collection->reject(function($item,$key){

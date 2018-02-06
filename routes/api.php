@@ -39,6 +39,19 @@ Route::post('/zfpz/receive', function() {
         } else {
         	$zfpz->update(['received' => '1']);
         }
+
+        switch ($received) {
+            case '1':
+                $zfpz->update(['received' => '2']);
+                break;
+            case '2':
+                $zfpz->update(['received' => '0']);
+                break;
+            case '0':
+                $zfpz->update(['received' => '1']);
+                break;
+
+        }
         
         return response()->json(['received' => \App\Model\Zfpz::withoutGlobalScopes()->find(request('zfpz'))->received]);
     });
