@@ -1,10 +1,25 @@
+
 @extends('layouts.default')
 @section('content')
 <h1>左安镇指标支出所有明细表({{ $results->count().'条' }})</h1>
 @include('shared.errors')
 
 <article>
+	<?php $i=0 ?>
 	
+	@if (session('ND') == config('app.MYND'))
+		@while ($i++<\Carbon\carbon::now()->month)
+			<a href="?search=QS_RQ:{{ session('ND').(($i<9)?('0'.$i):$i )}}"  class="btn btn-success">{{ $i }}</a>
+	    @endwhile
+	@else
+		@while ($i++<12)
+		<a href="?search=QS_RQ:{{ session('ND').(($i<9)?('0'.$i):$i )}}"  class="btn btn-success">{{ $i }}</a>
+	    @endwhile
+	@endif
+		
+	
+	
+
 	<div  class='h4 row'>
 	<table class="table table-bordered table-striped table-hover table-condensed">
 		<caption>
@@ -22,7 +37,7 @@
 				<th>预算单位</th>
 				<th>总金额</th>
 				<th>支出类型</th>
-				@receive<th>received</th>@endreceive
+				<th>received</th>
 			</tr>
 		</thead>
 		<tbody class='alert-info'>
@@ -70,12 +85,12 @@
 					<td>
 						{{ substr($result->ZFFSMC, 0,3) }}
 					</td>	
-					@receive
+					{{-- @receive --}}
 						<td>
 							<received :zfpz = {{ $result->id }} 
 									  :is_received = {{ $result->received }} ></received>
 						</td>
-					@endreceive
+					{{-- @endreceive --}}
 
 				</tr>	
 			@endforeach
@@ -90,7 +105,7 @@
 			<th>预算单位</th>
 			<th>{{($results->sum('JE'))/10000}}</th>
 			<th>支出类型</th>
-			@receive<th>received</th>@endreceive
+			<th>received</th>
 		</tr>
 	</table>
 			<hr>

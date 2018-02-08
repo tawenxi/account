@@ -21,7 +21,7 @@ class Pulldata extends Command
      *
      * @var string
      */
-    protected $signature = 'pull:data';
+    protected $signature = 'pull:data {sq?}';
 
     /**
      * The console command description.
@@ -61,8 +61,11 @@ class Pulldata extends Command
         //PullZfpz::dispatch();
         //dd(session('ND'));
         //$this->info('现在的session是'.session('ND'));
+        if ($this->argument('sq') == 'shenqin') {
+        	$this->PullShenqing();
+        }
         //$this->testCompare();
-        //$this->PullShenqing();
+        
         $this->PullZfpz();
         $this->Pullsq();
   
@@ -88,7 +91,7 @@ class Pulldata extends Command
     public function PullZfpz()
     {
         session(['ND'=>'2018']);
-        Zfpz::where(['QS_RQ'=>NULL,'received'=>'0'])->delete();
+        //Zfpz::where(['QS_RQ'=>NULL,'received'=>'0'])->delete();
         $zb_data = $this->guzzle->get_ZB();
         $collection = collect($zb_data);
         $collection = $collection->reject(function($item,$key){

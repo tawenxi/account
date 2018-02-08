@@ -47,7 +47,7 @@
                 {{--  @can('showAllSalary')   --}}   
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                 指标查询 <b class="caret"></b>
+                 指标查询<b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">      
                 <li><a href="/inco">收支对照</a></li>
@@ -58,7 +58,15 @@
                 <li><a href="/costs">支出</a></li>
                 <li><a href="/income/create">新建收入</a></li> 
                     <li class="divider"></li>
+                <li><a href="{{ strstr(url()->full(),'ZFFSMC')?(strstr(url()->full(),'%E7%9B%B4%E6%8E%A5')?str_replace('%E7%9B%B4%E6%8E%A5','%E6%8E%88%E6%9D%83',url()->full()):url()->full()):url()->full().';ZFFSMC:授权&searchJoin=and' }}">授权</a></li> 
+                <li><a href="{{ strstr(url()->full(),'ZFFSMC')?(strstr(url()->full(),'%E6%8E%88%E6%9D%83')?str_replace('%E6%8E%88%E6%9D%83','%E7%9B%B4%E6%8E%A5',url()->full()):url()->full()):url()->full().';ZFFSMC:直接&searchJoin=and' }}">直接</a></li> 
+
+
+                    <li class="divider"></li>
+                <li><a href="?search=received:0">缺失账单</a></li> 
+
                 </ul>
+
               </li>
                {{--  @endcan --}}
                {{-- @can('showAllSalary')      --}}
