@@ -39,9 +39,13 @@ class Zfpz extends Model
 
     public function setJeAttribute($amount)
     {
-
         $this->attributes['JE'] = beint100($amount);
         //dd($this->attributes['JE']);
+    }
+
+    public function setQsAttribute()
+    {
+        $this->attributes['qs'] = $this->attributes['QS_RQ']?1:0;
     }
 
     public function getJeAttribute($amount)
@@ -100,6 +104,7 @@ class Zfpz extends Model
             'MXZBWH',
             'BJWH',
             'account_number',
-            'received'
+            'received',
+            'qs'
 ];
 }

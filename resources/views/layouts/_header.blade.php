@@ -63,7 +63,8 @@
 
 
                     <li class="divider"></li>
-                <li><a href="?search=received:0">缺失账单</a></li> 
+                    <li><a href="/zbdetail?search=received:0">缺失账单</a></li> 
+                    <li><a href="/zbdetail?search=qs:0&searchFields=qs:=">尚未生效</a></li>
 
                 </ul>
 
