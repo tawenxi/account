@@ -70,6 +70,10 @@
 
               </select>
             </div>
+            <div class="form-group">
+                <label for="describe">备注：</label>
+                <textarea name="describe" id="describe" class="form-control">{{ $zfpz->beizhu }}</textarea>
+            </div>
             <button type="submit" class="btn btn-block btn-success">更新</button>
         </form>
         

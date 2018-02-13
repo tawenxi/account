@@ -52,8 +52,11 @@
 					</td>
 					<td>{{$result->QS_RQ}}</td>
 					<td>
-						<a href="/point/{{$result->id}}">
-							{{$result->ZY}}
+						<a href="/point/{{$result->id}}" title="{{ $result->beizhu }}">
+							@if ($result->beizhu)
+								<button type="submit" class="btn btn-primary btn-sm">备注</button>
+							@endif
+							{{$result->ZY}} 
 						</a>
 					</td>
 					<td >
