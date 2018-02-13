@@ -1,25 +1,10 @@
 
 @extends('layouts.default')
 @section('content')
-<h1>左安镇指标支出所有明细表({{ $results->count().'条' }})</h1>
+<h1>{{ $results->first()->SKR }}({{ $results->count().'条' }})</h1>
 @include('shared.errors')
 
 <article>
-	<?php $i=0 ?>
-	
-	@if (session('ND') == config('app.MYND'))
-		@while ($i++<\Carbon\carbon::now()->month)
-			<a href="?search=QS_RQ:{{ session('ND').(($i<9)?('0'.$i):$i )}}"  class="btn btn-success">{{ $i }}</a>
-	    @endwhile
-	@else
-		@while ($i++<12)
-		<a href="?search=QS_RQ:{{ session('ND').(($i<9)?('0'.$i):$i )}}"  class="btn btn-success">{{ $i }}</a>
-	    @endwhile
-	@endif
-		
-	
-	
-
 	<div  class='h4 row'>
 	<table class="table table-bordered table-striped table-hover table-condensed">
 		<caption>
@@ -62,12 +47,10 @@
 							@endif
 						
 					</td>
-					<td class="small">
+					<td class="small initialism">
 						<a href="/showzbdetail/{{ $result->ZBID }}" title="{{$result->zb?$result->zb->ZY:'' }}" >{{$result->zb->ZY}}</a> 
 					</td>
-					<td>
-						{{$result->QS_RQ}} 
-					</td>
+					<td>{{$result->QS_RQ}}</td>
 					<td>
 						<a href="/point/{{$result->id}}">
 							{{$result->ZY}}
@@ -76,22 +59,13 @@
 					<td >
 						<h4>{{$result->SKR}}</h4>
 					</td>
+					<td>{{ substr($result->YSDWMC, 9) }}</td>
+					<td>{{div($result->JE)}}</td>
+					<td>{{ substr($result->ZFFSMC, 0,3) }}</td>	
 					<td>
-						{{ substr($result->YSDWMC, 9) }}
-					</td>
-					<td>
-						{{div($result->JE)}}
-					</td>
-					<td>
-						{{ substr($result->ZFFSMC, 0,3) }}
-					</td>	
-					{{-- @receive --}}
-						<td>
 							<received :zfpz = {{ $result->id }} 
 									  :is_received = {{ $result->received }} ></received>
-						</td>
-					{{-- @endreceive --}}
-
+					</td>
 				</tr>	
 			@endforeach
 		</tbody>

@@ -34,7 +34,7 @@ class Zfpz extends Model
 
     public function zb()
     {
-        return $this->belongsTo(Zb::class, 'ZBID', 'ZBID');
+        return $this->belongsTo(Zb::class, 'ZBID', 'ZBID')->withoutGlobalScopes();
     }
 
     public function setJeAttribute($amount)

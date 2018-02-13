@@ -93,3 +93,17 @@ Route::get('/up', 'zhibiaoController@checkoutZFPZ');
 Route::get('zbdetail/{id}/edit', 'zhibiaoController@edit')->name('zbdetail.edit');
 Route::patch('zbdetail/update', 'zhibiaoController@update');
 Route::get('/shenqing', 'zhibiaoController@shenqing');
+
+Route::get('/boss', function(){
+	$bosses = \App\Model\Zfpz::withoutGlobalScopes()->get()
+			->groupBy('SKR')
+			->sortByDesc(function($qq){
+				return $qq->sum('JE');
+				});
+	return view('zhibiao.bosses',compact('bosses'));
+});
+
+Route::get('/{boss}/boss', function($boss){
+	$results = \App\Model\Zfpz::withoutGlobalScopes()->where('SKR',$boss)->get();
+	return view('zhibiao.boss',compact('results'));
+});
