@@ -77,7 +77,10 @@
 						</a>
 					</td>
 					<td >
-						<h4>{{$result->SKR}}</h4>
+						<a href="{{$result->SKR}}/boss">
+							<h4>{{$result->SKR}}</h4>
+						</a>
+						
 					</td>
 					<td>
 						{{ substr($result->YSDWMC, 9) }}

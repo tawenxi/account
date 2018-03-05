@@ -92,7 +92,7 @@ class Pulldata extends Command
     {
         session(['ND'=>'2018']);
         \DB::table('zfpzs')->where('QS_RQ','!=',NULL)->update(['qs'=>1]);
-        //Zfpz::where(['QS_RQ'=>NULL,'received'=>'0'])->delete();
+        Zfpz::where(['QS_RQ'=>NULL,'received'=>'0'])->delete();
         $zb_data = $this->guzzle->get_ZB();
         $collection = collect($zb_data);
         $collection = $collection->reject(function($item,$key){
