@@ -77,6 +77,19 @@
                                 return $item->pivot->amount;
                            }) }}>
             </div>
+
+            <div class="form-group">
+              <label for="KYX" class="text-success">可用性：</label>
+              <input type="text"  class="form-control" name="KYX" 
+                     value={{ $zb->KYX }}>
+            </div>
+
+            <div class="form-group">
+              <label for="beizhu" class="text-success">备注：</label>
+              <input type="text"  class="form-control" name="beizhu" 
+                     value={{ $zb->beizhu }}>
+            </div>
+
             <div class="form-group">
               <label for="already_divided">分配金额到项目：</label>
               <select name="project_id" class="form-control" >
@@ -89,7 +102,7 @@
 
             <div class="form-group">
               <label for="amount">分配指标金额：</label>
-              <input type="text" name="amount" class="form-control" value='' required="true">
+              <input type="text" name="amount" class="form-control" value="0"required="true">
             </div>
 
             

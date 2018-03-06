@@ -150,13 +150,16 @@ class ProjectController extends Controller
     public function handleDivider(Request $request)
     {
         $zb = Zb::find($request['id']);
+        $zb->KYX = $request['KYX'];
+        $zb->beizhu = $request['beizhu'];
+        $zb->save();
         $is_enough = $zb->judgeAmountEnough($request);
         if (!$is_enough) {
-            flash()->error('Woohoo', '指标分配成功');
+            flash()->error('Woohoo', '指标分配失败');
             return redirect()->back();
         }
 
-        $zb->divide($request['project_id'], $request['amount']);
+        if ($request['amount'] != 0) $zb->divide($request['project_id'], $request['amount']);
         flash()->success('Woohoo', '指标分配成功');
         \Session::flash('success', '指标分配成功');
         return redirect()->back();

@@ -50,5 +50,6 @@ class ZbRepositoryEloquent extends BaseRepository implements ZbRepository, Cache
         'yeamount'=>'>',
         'YSDWMC'=> 'like',
         'LR_RQ'=>'like',
+        'KYX'=>'=',
     ];
 }

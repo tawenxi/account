@@ -29,6 +29,7 @@
 					<th>支出数</th>
 					<th>已分配</th>
 					<th>单位</th>
+					<th>可用性</th>
 				</tr>
 			</thead>
 			<tbody class='alert-info'>
@@ -42,7 +43,17 @@
 							</a>
 						</td>
 						<td>{{$result->LR_RQ}}</td>
-						<td class="col-md-3">{{$result->ZY}}</td>
+						<td class="col-md-3" >
+							@if ($result->beizhu)
+								<button type="submit" title="{{$result->zb?$result->zb->ZY:'' }}" class="btn btn-primary btn-sm">备注</button>
+								<a href="/divider/{{ $result->id }}" title="{{$result->beizhu?$result->beizhu:'' }}" >
+							@endif
+							{{$result->ZY}}
+							@if ($result->beizhu)
+								</a>
+							@endif
+
+						</td>
 						<td>{{substr($result->ZJXZMC,0,12)}}</td>
 						<td>{{$result->JE}}</td>
 						<td>{{div($result->yeamount)}}</td>
@@ -71,6 +82,13 @@
 						{{ substr($result->YSDWMC, 9) }}
 						@endif --}}
 					</td>
+					<td >
+						@if ($result->KYX)
+							<button type="submit" class="btn btn-primary btn-sm">可用</button>
+						@else
+							<button type="submit" class="btn btn-danger btn-sm">不可用</button>
+						@endif
+					</td>
 					</tr>	
 				@endforeach
 			</tbody>
@@ -88,6 +106,7 @@
 					<th>支出数</th>
 					<th>已分配</th>
 					<th>单位</th>
+					<th>可用性</th>
 				</tr>
 		</table>
 		<hr>	
