@@ -122,6 +122,10 @@ class Pulldata extends Command
             }
             Zfpz::updateOrCreate(['PDH' => $zfpzdata['PDH']], $zfpzdata);
         }
+        $PDH_count1 = Zfpz::all()->pluck(['PDH'])->unique()->count();
+        $PDH_count2 = Zfpz::all()->pluck(['PDH'])->count();
+        if ($PDH_count1 != $PDH_count2) dd('PDH重复');
+        Zfpz::where(['received'=>1,'qs'=>0])->whereNotIn('PDH',collect($zfpzdatas)->pluck(['PDH'])->toArray())->update(['deleted'=>1]);
         $this->info('SUCCESS-更新收支指标成功');          
     }
 

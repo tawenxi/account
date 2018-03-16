@@ -106,6 +106,7 @@ class Zfpz extends Model
             'account_number',
             'received',
             'qs',
+            'deleted',
             'beizhu'
 ];
 }

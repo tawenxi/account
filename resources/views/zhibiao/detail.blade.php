@@ -2,6 +2,7 @@
 @extends('layouts.default')
 @section('content')
 <h1>左安镇指标支出所有明细表({{ $results->count().'条' }})</h1>
+<h2 class="alert-danger">已被删除({{ $results->where('deleted',1)->count().'条' }})</h2>
 @include('shared.errors')
 
 <article>
@@ -31,6 +32,7 @@
 				<th>id</th>
 				<th>支出ID</th>
 				<th class="col-md-1">ZBID</th>
+				<th>制单日期</th>
 				<th>日期</th>
 				<th>摘要</th>
 				<th>收款人</th>
@@ -65,7 +67,11 @@
 					<td class="small">
 						<a href="/showzbdetail/{{ $result->ZBID }}" title="{{$result->zb?$result->zb->ZY:'' }}" >{{$result->zb->ZY}}</a> 
 					</td>
-					<td>
+
+					<td class="alert-danger">
+						{{ $result->PDRQ }}
+					</td>
+					<td class="alert-success">
 						{{$result->QS_RQ}} 
 					</td>
 					<td>
@@ -95,6 +101,9 @@
 						<td>
 							<received :zfpz = {{ $result->id }} 
 									  :is_received = {{ $result->received }} ></received>
+							@if ($result->deleted)	
+									<button type="submit" class="btn-sm btn-danger btn">已删除</button>
+							@endif
 						</td>
 					{{-- @endreceive --}}
 
@@ -105,6 +114,7 @@
 			<th>id</th>
 			<th>支出ID</th>
 			<th>ZBID</th>
+			<th>制单日期</th>
 			<th>日期</th>
 			<th>摘要</th>
 			<th>收款人</th>
