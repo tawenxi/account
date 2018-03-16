@@ -53,6 +53,7 @@ class ZfpzRepositoryEloquent extends BaseRepository implements ZfpzRepository, C
         'QS_RQ'=> 'like',
         'PDRQ'=> 'like',
         'received',
-
+        'fail',
+        'deleted'
     ];
 }

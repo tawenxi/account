@@ -186,7 +186,7 @@ class ProjectController extends Controller
     public function handlePoint(Request $request)
     {
         $zfpz = Zfpz::find($request['id']);
-        $zfpz->update(['beizhu'=>$request['describe']]);
+        $zfpz->update(['beizhu'=>$request['describe'], 'fail'=>$request['fail']]);
         $zfpz->point($request['project_id']);
         flash()->success('Woohoo', '指标分配成功');
         \Session::flash('success', '指标分配成功');

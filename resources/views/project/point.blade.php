@@ -7,6 +7,17 @@
     <div class="panel-heading">
       <h1>绑定支付令到项目</h1>
     </div>
+    <div class="panel-heading">
+      <div class="alert alert-info">
+       {{ $zfpz->SKR }}
+      </div>
+      <div class="alert alert-info">
+       {{ $zfpz->SKZH }}
+      </div>
+      <div class="alert alert-info">
+       {{ $zfpz->SKRKHYH }}
+      </div>
+    </div>
       <div class="panel-body">
 
         @include('shared.errors')
@@ -31,6 +42,11 @@
             <div class="form-group">
               <label for="year">年份：</label>
               <input type="text" name="year" class="form-control" value={{ $zfpz->KJND }}>
+            </div>
+
+            <div class="form-group">
+              <label for="SKZH">银行账号：</label>
+              <input type="text" name="SKZH" class="form-control" value={{ $zfpz->SKZH }}>
             </div>
 
             <div class="form-group">
@@ -70,6 +86,12 @@
 
               </select>
             </div>
+
+            <div class="form-group">
+                <label for="fail">支付失败：</label>
+                <input type="text" name="fail" class="form-control" value={{ $zfpz->fail }}>
+            </div>
+
             <div class="form-group">
                 <label for="describe">备注：</label>
                 <textarea name="describe" id="describe" class="form-control">{{ $zfpz->beizhu }}</textarea>

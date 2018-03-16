@@ -107,6 +107,7 @@ class Zfpz extends Model
             'received',
             'qs',
             'deleted',
+            'fail',
             'beizhu'
 ];
 }

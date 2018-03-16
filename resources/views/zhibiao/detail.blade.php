@@ -2,7 +2,24 @@
 @extends('layouts.default')
 @section('content')
 <h1>左安镇指标支出所有明细表({{ $results->count().'条' }})</h1>
-<h2 class="alert-danger">已被删除({{ $results->where('deleted',1)->count().'条' }})</h2>
+@if ($results->where('deleted',1)->count())
+	<div class="alert alert-danger text-center">
+		已被删除({{ $results->where('deleted',1)->count().'条' }})
+	</div>
+@endif
+
+@if ($results->where('received',0)->count())
+	<div class="alert alert-info text-center">
+		未收到({{ $results->where('received',0)->count().'条' }})
+	</div>
+@endif
+
+@if ($results->where('fail',1)->count())
+	<div class="alert alert-info text-center">
+		支付失败({{ $results->where('fail',1)->count().'条' }})
+	</div>
+@endif
+
 @include('shared.errors')
 
 <article>
@@ -103,6 +120,9 @@
 									  :is_received = {{ $result->received }} ></received>
 							@if ($result->deleted)	
 									<button type="submit" class="btn-sm btn-danger btn">已删除</button>
+							@endif
+							@if ($result->fail)	
+									<button type="submit" class="btn-sm btn-danger btn">支付失败</button>
 							@endif
 						</td>
 					{{-- @endreceive --}}
