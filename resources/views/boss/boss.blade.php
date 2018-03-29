@@ -1,7 +1,11 @@
-
 @extends('layouts.default')
 @section('content')
-<h1>{{ $results->first()->SKR }}({{ $results->count().'条' }})</h1>
+
+@if (null !== $results->first())
+	<h1>{{ strstr(url()->current(),'tozfl')?filterVillage($results->first()->ZY):$results->first()->SKR }}({{ $results->count().'条' }})</h1>
+@endif
+
+
 @include('shared.errors')
 
 <article>
@@ -22,6 +26,7 @@
 				<th>预算单位</th>
 				<th>总金额</th>
 				<th>支出类型</th>
+				<th>项目村</th>
 				<th>received</th>
 			</tr>
 		</thead>
@@ -60,11 +65,14 @@
 						</a>
 					</td>
 					<td >
-						<h4>{{$result->SKR}}</h4>
+						<h4><a href="/{{$result->SKR}}/boss/1" class="btn btn-success">{{$result->SKR}}</a></h4>
 					</td>
 					<td>{{ substr($result->YSDWMC, 9) }}</td>
 					<td>{{div($result->JE)}}</td>
 					<td>{{ substr($result->ZFFSMC, 0,3) }}</td>	
+					<td >
+						<a href="/project/tozfl/{{ filterVillage($result->ZY) }}"
+							class="{{ filterVillage($result->ZY)?'btn btn-success':'' }}">{{ filterVillage($result->ZY) }}</a></td>
 					<td>
 							<received :zfpz = {{ $result->id }} 
 									  :is_received = {{ $result->received }} ></received>
@@ -82,6 +90,7 @@
 			<th>预算单位</th>
 			<th>{{($results->sum('JE'))/10000}}</th>
 			<th>支出类型</th>
+			<th>项目村</th>
 			<th>received</th>
 		</tr>
 	</table>

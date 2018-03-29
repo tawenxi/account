@@ -11,6 +11,7 @@ use App\Model\Respostory\Getsqzb;
 use App\Model\Respostory\GetSqlResult;
 use App\Model\Tt\Data;
 use App\Model\Zfpz;
+use App\Model\Boss;
 
 
 class Pulldata extends Command
@@ -64,6 +65,7 @@ class Pulldata extends Command
         if ($this->argument('sq') == 'shenqin') {
         	$this->PullShenqing();
         }
+        $this->update_boss();
         //$this->testCompare();
         
         $this->PullZfpz();
@@ -180,5 +182,28 @@ class Pulldata extends Command
             \App\Model\Zb::where('ZBID',$val['ZBID'])->update(['yeamount'=>($val['JE']-$val->zfpzs->sum('JE'))*100]);
         });
         $this->info('SUCCESS-更新指标余额成功');     
+    }
+
+    public function update_boss()
+    {
+        $supportPoorer = \App\Model\Zfpz::withoutGlobalScopes()->where('YSDWDM','901012013')->get()->pluck('SKR')->unique();
+        $bosses = \App\Model\Zfpz::withoutGlobalScopes()->get()->groupBy('SKR')
+            ->sortByDesc(function($qq){
+                return $qq->sum('JE');
+                })->map(function($item,$key) use ($supportPoorer){
+                    return ['name'=>$key,
+                            'bank'=>$item->last()->SKRKHYH,
+                            'bankaccount'=>$item->last()->SKZH,
+                            'totalpayout'=>$item->sum('JE'),
+                            'payoutcount'=>$item->count(),
+                            'supportpoor'=>$supportPoorer->contains($key)?1:0
+                           ];
+
+                })->values()->each(function($item){
+                    Boss::updateOrCreate(
+                       ['name' => $item['name']],$item
+                    );
+                });
+        $this->info('SUCCESS-更新收款人信息成功');
     }
 }

@@ -28,6 +28,11 @@
 						<td>{{ $loop->index+1 }}</td>
 						<td><a href="/project?village={{ $village->id }}">
 							{{ $village->name }}
+							</a>
+
+							<a href="/project/tozfl/{{ $village->name }}"  class="btn btn-success">
+							支付令
+							</a>
 						</td>
 						<td>{{$village->year}}</td>
 						<td>{{ $income_save = $village->projects->sum(function($item){

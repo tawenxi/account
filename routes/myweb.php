@@ -87,5 +87,10 @@ Route::get('hahaha', function(){
 });
 
 
+Route::get('lllll', function(){
+        dd(boss_village('遂川县祥发市政工程有限公司'));
+});
+
+
 Route::view('received','received');
 Route::view('select','select');

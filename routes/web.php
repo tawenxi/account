@@ -94,16 +94,10 @@ Route::get('zbdetail/{id}/edit', 'zhibiaoController@edit')->name('zbdetail.edit'
 Route::patch('zbdetail/update', 'zhibiaoController@update');
 Route::get('/shenqing', 'zhibiaoController@shenqing');
 
-Route::get('/boss', function(){
-	$bosses = \App\Model\Zfpz::withoutGlobalScopes()->get()
-			->groupBy('SKR')
-			->sortByDesc(function($qq){
-				return $qq->sum('JE');
-				});
-	return view('zhibiao.bosses',compact('bosses'));
-});
+Route::get('/boss', 'BossController@bosslist');
+Route::get('/poorboss', 'BossController@poorbosslist');
+Route::get('/{boss}/boss/{supportpoor?}', 'BossController@bossDetail');
+Route::get('/boss/{boss}/edit', 'BossController@edit')->name('boss.edit');
+Route::post('boss/store', 'BossController@update')->name('boss.update');
 
-Route::get('/{boss}/boss', function($boss){
-	$results = \App\Model\Zfpz::withoutGlobalScopes()->where('SKR',$boss)->get();
-	return view('zhibiao.boss',compact('results'));
-});
+Route::get('/project/tozfl/{village?}', 'BossController@villagezfl')->name('boss.edit');
