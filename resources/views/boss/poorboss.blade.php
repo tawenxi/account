@@ -34,16 +34,21 @@
 					<th class="col-md-4">账号</th>
 					<th class="col-md-2">开户行</th>
 					<th class="col-md-2">编辑</th>
+					
 				</tr>
 			</thead>
 			<tbody class='alert-info'>
 				@foreach ($bosses as $name=>$boss)
 						<td >
-							<a href="/{{ $name }}/boss/1" title={{ boss_village($name,1) }}>{{ $name }}</a>
+							<a href="/{{ $name }}/boss/1" }}>{{ $name }}</a>
 						</td>
 						<td >{{ $boss->count() }}</td>
 						<td >{{ $boss->sum('JE') }}</td>
-						<td>{{ $boss->last()->SKZH }}</td>
+						<td>{{ $boss->last()->SKZH }}<br>
+							@foreach (boss_village($name,1) as $village)
+								<a href="project/tozfl/{{ $village }}" class="btn btn-success btn-sm">{{ $village }}</a>
+							@endforeach 
+						</td>
 						<td>{{ $boss->last()->SKRKHYH }}</td>
 						<td class='btn btn-link'>
 
@@ -53,6 +58,7 @@
 	          				{!! Form::close() !!}
 					
 						</td>
+
 
 						
 					</tr>	

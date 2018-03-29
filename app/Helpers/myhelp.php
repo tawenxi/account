@@ -118,7 +118,8 @@ if (!function_exists('preg_replace_with_count')) {
             if (strstr($ZY, $village)) 
                 $filter_village[] = $village;
         }
-        return implode($filter_village, '-');
+        //return implode($filter_village, '-');
+        return $filter_village;
    } 
 
    function boss_village($boss,$poor = null)

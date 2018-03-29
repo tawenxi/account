@@ -13,23 +13,26 @@
 
 			<thead>
 				<tr class='success'>
-				 	
 					<th class="col-md-2">老板</th>
-					<th class="col-md-2">支付数量</th>
+					<th class="col-md-1">支付数量</th>
 					<th class="col-md-2">总金额</th>
 					<th class="col-md-4">账号</th>
 					<th class="col-md-2">开户行</th>
-					<th class="col-md-2">编辑</th>
-									</tr>
+					<th class="col-md-1">编辑</th>
+				</tr>
 			</thead>
 			<tbody class='alert-info'>
 				@foreach ($bosses as $boss)
 						<td >
-							<a href="/{{ $boss->name }}/boss" title={{ boss_village($boss->name) }}>{{ $boss->name }}</a>
+							<a href="/{{ $boss->name }}/boss"}}>{{ $boss->name }}</a>
 						</td>
 						<td >{{ $boss->payoutcount }}</td>
 						<td >{{ $boss->totalpayout }}</td>
-						<td>{{ $boss->bankaccount }}</td>
+						<td>{{ $boss->bankaccount }}<br>
+							@foreach (boss_village($boss->name,1) as $village)
+								<a href="project/tozfl/{{ $village }}" class="btn btn-success btn-sm">{{ $village }}</a>
+							@endforeach 
+						</td>
 						<td>{{ $boss->bank }}</td>
 						<td class='btn btn-link'>
 
@@ -43,12 +46,12 @@
 				@endforeach
 			</tbody>
 				<tr class='success'>
-					<th class="col-md-2">老板</th>
+					<th class="col-md-1">老板</th>
 					<th class="col-md-2">支付数量</th>
 					<th class="col-md-2">{{ $bosses->sum('totalpayout') }}</th>
 					<th class="col-md-4">账号</th>
 					<th class="col-md-2">开户行</th>
-					<th class="col-md-2">编辑</th>
+					<th class="col-md-1">编辑</th>
 
 				</tr>
 		</table>
