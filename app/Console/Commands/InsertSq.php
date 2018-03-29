@@ -120,7 +120,10 @@ class InsertSq extends Command
         $this->guzz->updatedb()->pluck('KYJHJE')->each(function ($val) {
             ($val >= 0) ? '' : $this->error('出大错了，出现可用金额负数'.$val);
         });
-        //dump(Test::$info);
+
+        $this->info('================数据更新=============');
+        $this->call('pull:data');
+        //dump(Test::$info); 
     }
 
 

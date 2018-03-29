@@ -61,7 +61,7 @@
 		</thead>
 		<tbody class='alert-info'>
 			@foreach ($results as $result)
-				<tr>
+				<tr class={{ isset($result->project)?'alert-warning':""}}>
 			 		<td>
 			 			{{ $loop->index+1 }}
 			 		</td>
@@ -100,7 +100,7 @@
 						</a>
 					</td>
 					<td >
-						<a href="{{$result->SKR}}/boss">
+						<a href="/{{$result->SKR}}/boss">
 							<h4>{{$result->SKR}}</h4>
 						</a>
 						

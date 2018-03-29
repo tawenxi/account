@@ -18,8 +18,10 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $village_id = $request->village?$request->village:'0';
-        $projects = project::with(['zfpzs','village','zbs'])->where('village_id','>=',$village_id)->orderBy('year')->get();
-
+        $projects = project::with(['zfpzs','village','zbs']);
+        if ($request->village) 
+            $projects = $projects->where('village_id','=',$village_id)->orderBy('year');
+        $projects = $projects->get();
         return view('project.index',compact('projects'));
     }
 
