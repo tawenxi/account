@@ -41,7 +41,7 @@ class ZhibiaoController extends Controller
      */
     public function index()
     {
-        $results = $this->repository_zb->with('zfpzs')->all()->unique();
+        $results = $this->repository_zb->with('zfpzs','projects')->all()->unique();
 
         return $this->excel->exportBlade('zhibiao.index', compact('results'))->render();
     }
@@ -73,11 +73,11 @@ class ZhibiaoController extends Controller
         $results = $this->repository_zfpz->scopeQuery(function($query) use ($request) {
             if ($request->has('orderBy')) {
                 return $query;
-            } else {
+            } else { 
                 return $query->orderBy('QS_RQ', 'desc');
             }
             
-        })->all()->unique();
+        })->with(['zb','account','project'])->all();
 
         return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
     }

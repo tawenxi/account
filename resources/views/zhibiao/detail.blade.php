@@ -143,6 +143,8 @@
 			<th>支出类型</th>
 			<th>received</th>
 		</tr>
+		
+		{{-- {{ $results->appends(['sort' => 'votes'])->links() }} --}}
 	</table>
 			<hr>
 	</div>

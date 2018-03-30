@@ -22,7 +22,9 @@
                  收款人 <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">      
-                  <li><a href="/boss">所有收款人</a></li>
+                  <li><a href="/company">公司收款人</a></li>
+                  <li><a href="/personalboss">个人收款人</a></li>
+                  <li class="divider"></li> 
                   <li><a href="/poorboss">扶贫者</a></li>
                   <li class="divider"></li>
                 </ul>

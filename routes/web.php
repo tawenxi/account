@@ -94,7 +94,11 @@ Route::get('zbdetail/{id}/edit', 'zhibiaoController@edit')->name('zbdetail.edit'
 Route::patch('zbdetail/update', 'zhibiaoController@update');
 Route::get('/shenqing', 'zhibiaoController@shenqing');
 
+Route::get('/company', 'BossController@companylist');
+Route::get('/personalboss', 'BossController@personalbosslist');
+
 Route::get('/boss', 'BossController@bosslist');
+
 Route::get('/poorboss', 'BossController@poorbosslist');
 Route::get('/{boss}/boss/{supportpoor?}', 'BossController@bossDetail');
 Route::get('/boss/{boss}/edit', 'BossController@edit')->name('boss.edit');

@@ -7,11 +7,22 @@ use Illuminate\Http\Request;
 
 class BossController extends Controller
 {
-    public function bosslist()
+    public function companylist()
     {
-        $bosses = Boss::all();
+        $bosses = Boss::all()->filter(function($item ,$key) {
+            return strstr($item->name,'公司');
+        });
         
 		return view('boss.bosses',compact('bosses'));
+    }
+
+    public function personalbosslist()
+    {
+        $bosses = Boss::all()->filter(function($item ,$key) {
+            return !strstr($item->name,'公司');
+        });
+        
+        return view('boss.bosses',compact('bosses'));
     }
 
     public function poorbosslist()
@@ -51,7 +62,6 @@ class BossController extends Controller
             [
                 'description' => 'required',
             ]);
-
 
         $boss = Boss::findOrfail($request->id);
         $result = $boss->update(['description'=>trim($request->description)]);
