@@ -22,6 +22,8 @@ class PageController extends Controller
 	    		session(['ND'=>'2018']);
 	    		break;
 	    }
+
+	    session()->flash('z-turbolinks','session');
 	    return back();
     
 	}

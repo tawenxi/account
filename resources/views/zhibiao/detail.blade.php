@@ -82,7 +82,9 @@
 						
 					</td>
 					<td class="small">
-						<a href="/showzbdetail/{{ $result->ZBID }}" title="{{$result->zb?$result->zb->ZY:'' }}" >{{$result->zb->ZY}}</a> 
+						<a href="/showzbdetail/{{ $result->ZBID }}" >
+							{{$result->zb->ZY}}
+						</a> 
 					</td>
 
 					<td class="alert-danger">

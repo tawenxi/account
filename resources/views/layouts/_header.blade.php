@@ -6,7 +6,9 @@
     <div class="col-md-offset-0 col-md-12">
      @if (\Auth::check())
       {{-- <a href="{{ (\Auth::user()->id==39)?'/preview':'/geren'}}" id="logo"> --}}
-      <a href="{{ (\Auth::user()->id==39 OR \Auth::user()->id==36)?'/session':'/geren'}}" id="logo">
+      <a href="{{ (\Auth::user()->id==39 OR \Auth::user()->id==36)?'/session':'/geren'}}" 
+         id="logo"
+        data-turbolinks="false">
       {{ session('ND') }}</a>
       @else
       <a href="" id="logo">左安镇工资查询系统</a>
