@@ -12,6 +12,9 @@ import VueResource from 'vue-resource';
 Vue.use(VueResource);
 import vSelect from 'vue-select';
 
+import TurbolinksAdapter from 'vue-turbolinks';
+Vue.use(TurbolinksAdapter);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -26,7 +29,11 @@ Vue.component('Vselect', require('./components/Vselect.vue'));
 Vue.component('Makeaccount', require('./components/Makeaccount.vue'));
 
 
-
-const app = new Vue({
-    el: '#app'
+document.addEventListener('turbolinks:load', () => {
+	const app = new Vue({
+    	el: '#app'
+	});
 });
+
+
+

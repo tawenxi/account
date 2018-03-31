@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('content')
-<h1>枚江镇收入指标明细表(<a href="/incomes/1" "email me">1</a>)</h1>
+<h1>枚江镇收入指标明细表(<a href="/incomes/1">1</a>)</h1>
 @include('shared.errors')
 
 <article>

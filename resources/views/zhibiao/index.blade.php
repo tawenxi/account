@@ -5,7 +5,7 @@
 
 <article>
 	
-	<row class='h4'>
+	<div class='h4'>
 		<table class="table table-bordered table-striped table-hover table-condensed">
 			<caption>
 				<center>{{ date("Y-m-d H:i:s") }}</center>
@@ -110,6 +110,6 @@
 				</tr>
 		</table>
 		<hr>	
-	</row class='h4'>
+	</div>
 </article>
 @stop

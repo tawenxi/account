@@ -102,7 +102,7 @@ if (!function_exists('preg_replace_with_count')) {
 
     function filterVillage($ZY) 
     {
-        $villages = ['东光','石窝','樟木','洋溪','安全','望月','鹤坑','桃源','横岗','冲溪','白云','梯岭','安溪','丰城','圆溪','下圆','红裕','扬芬','曲溪','龙颈','黄金','瓜塘','莲塘','连河'];
+        $villages = ['东光','石窝','樟木','洋溪','安全','望月','鹤坑','桃源'];
         foreach ($villages as $village) {
             if (strstr($ZY, $village)) 
                 return $village;
@@ -112,7 +112,7 @@ if (!function_exists('preg_replace_with_count')) {
 
     function filterVillage_all($ZY) 
     {
-        $villages = ['东光','石窝','樟木','洋溪','安全','望月','鹤坑','桃源','横岗','冲溪','白云','梯岭','安溪','丰城','圆溪','下圆','红裕','扬芬','曲溪','龙颈','黄金','瓜塘','莲塘','连河'];
+        $villages = ['东光','石窝','樟木','洋溪','安全','望月','鹤坑','桃源'];
         $filter_village = [];
         foreach ($villages as $village) {
             if (strstr($ZY, $village)) 

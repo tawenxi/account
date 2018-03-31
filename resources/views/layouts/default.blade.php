@@ -5,6 +5,8 @@
     <link rel="stylesheet" href={{ asset('css/app.css') }}>
     <link rel="stylesheet" href="/css/libs.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="turbolinks-cache-control" content="no-preview">
+    <script src={{ mix('/js/app.js') }}></script>
   </head>
   <body >
 @if (!\Auth::check())
@@ -27,9 +29,6 @@
 @endif
       </div>
     </div>
-      
-      <script src={{ mix('/js/app.js') }}></script>
-     <script src={{ mix('/js/turbolinks.js') }}></script>
       <script src="/js/libs.js"></script>
       @include('shared._flash')
       @yield('js')

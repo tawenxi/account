@@ -5,7 +5,7 @@
 
 <article>
 	
-	<row class='h4'>
+	<div class='h4 row'>
 		<table class="table table-bordered table-striped table-hover table-condensed">
 			<caption>
 				<center>{{ date("Y-m-d H:i:s") }}</center>
@@ -33,7 +33,7 @@
 			</thead>
 			<tbody class='alert-info'>
 				@foreach ($projects as $project)
-					<tr class='alert-default'}}>
+					<tr class='alert-default'>
 						<td>{{ $loop->index+1 }}</td>
 						<td>{{ $project->village->name }}</td>
 						<td>{{$project->year}}</td>
@@ -102,6 +102,6 @@
 			
 		</table>
 		<hr>
-	</row>
+	</div>
 </article>
 @stop

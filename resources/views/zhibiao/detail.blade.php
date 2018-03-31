@@ -82,7 +82,7 @@
 						
 					</td>
 					<td class="small">
-						<a href="/showzbdetail/{{ $result->ZBID }}" >
+						<a href="/showzbdetail/{{ str_replace('.', '-', $result->ZBID) }}" >
 							{{$result->zb->ZY}}
 						</a> 
 					</td>

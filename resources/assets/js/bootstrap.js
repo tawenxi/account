@@ -11,6 +11,10 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap-sass');
+
+    var Turbolinks = require("turbolinks");
+	Turbolinks.start();
+	
     require('./select2.min');
 } catch (e) {}
 

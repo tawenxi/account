@@ -5,7 +5,7 @@
 
 <article>
 	
-	<row class='h4'>
+	<div class='h4'>
 		<table class="table table-bordered table-striped table-hover table-condensed">
 			<caption>
 				<center>{{ date("Y-m-d H:i:s") }}</center>
@@ -23,16 +23,25 @@
 			</thead>
 			<tbody class='alert-info'>
 				@foreach ($bosses as $boss)
+				<tr>
+
+
+
 						<td >
-							<a href="/{{ $boss->name }}/boss"}}>{{ $boss->name }}</a>
+							<a href="/{{ $boss->name }}/boss">{{ $boss->name }}</a>
 						</td>
 						<td >{{ $boss->payoutcount }}</td>
 						<td >{{ $boss->totalpayout }}</td>
+
 						<td>{{ $boss->bankaccount }}<br>
 							@foreach (boss_village($boss->name,1) as $village)
 								<a href="project/tozfl/{{ $village }}" class="btn btn-success btn-sm">{{ $village }}</a>
 							@endforeach 
 						</td>
+
+
+
+
 						<td>{{ $boss->bank }}</td>
 						<td class='btn btn-link'>
 
@@ -56,6 +65,6 @@
 				</tr>
 		</table>
 		<hr>	
-	</row class='h4'>
+	</div>
 </article>
 @stop
