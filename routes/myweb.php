@@ -94,3 +94,27 @@ Route::get('lllll', function(){
 
 Route::view('received','received');
 Route::view('select','select');
+
+
+use Illuminate\Support\Facades\Redis;
+
+Route::get('redis', function(){
+    //Redis::set('name','tawenxi');
+    //echo  Redis::get('name');
+
+    //1.publish events with redis
+
+
+    
+    $data = [
+        'event' => 'UserSignup',
+        'data' => [
+            'username'=>'tawenxi'
+        ]
+    ];
+
+    Redis::publish('test-channel',json_encode($data));
+    // event(new \App\Events\UserSignup('tawenxi'));
+
+    return view('welcome');
+});

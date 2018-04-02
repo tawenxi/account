@@ -5,12 +5,15 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Jobs\PullSQ;
 use App\Jobs\PullZfpz;
+use Illuminate\Support\Facades\Redis;
 use App\Model\Respostory\Guzzle;
 use App\Model\Respostory\Http;
 use App\Model\Respostory\Getsqzb;
 use App\Model\Respostory\GetSqlResult;
 use App\Model\Tt\Data;
 use App\Model\Zfpz;
+use App\Model\ZB;
+
 
 
 
@@ -41,6 +44,9 @@ class Pulldpt extends Command
 
     public $guzzle;
     public $getdetail;
+    public $newpass = [];
+    public $newzb = [];
+
 
 
 
@@ -59,6 +65,7 @@ class Pulldpt extends Command
     public function handle()
     { 
         $this->PullZfpz();
+        $this->cast();
         $this->Pullsq();
         $this->update_yeamount();
         $this->info('现在的session是'.session('ND'));
@@ -81,13 +88,20 @@ class Pulldpt extends Command
             if (isset($item["SJWH"]) AND $item["SJWH"] !=="" AND $item["SJWH"] !="_") {
                 dd("发现SJWH异常会影响数据源");
             }
+            $newzb = \App\Model\Zb::where('ZBID',$item['ZBID'])->first();
+
+            if (!$newzb) {
+                $this->newzb[] = $item['ZBID'];
+            }
             \App\Model\Zb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
         });
 
-  
+        $month = \Carbon\carbon::now()->month-1;
+        $month = ($month<10)?'0'.(string)$month:(string)$month;
+        
 
         $zfpzdatas = $this->getdetail->getdata($this->zfpz, [
-            ["'".config('app.MYND')."0101'", "'".config('app.MYND')."0101'"], //每年修改
+            ["'".config('app.MYND')."0101'", "'".config('app.MYND').$month."01'"], //每年修改
             ["'".config('app.MYND')."0821'", "to_char(sysdate,'yyyymmdd')"],
         ]);
 
@@ -96,6 +110,14 @@ class Pulldpt extends Command
             if (!isset($zfpzdata['MXZBWH'])) {
                 $zfpzdata['MXZBWH'] = '';
             }
+
+            $qs = Zfpz::where('PDH',$zfpzdata['PDH'])->value('QS_RQ');
+
+            if (!($qs) AND isset($zfpzdata['QS_RQ'])?$zfpzdata['QS_RQ']:false) {
+
+                $this->newpass[] = $zfpzdata['PDH'];
+            }
+
             Zfpz::updateOrCreate(['PDH' => $zfpzdata['PDH']], $zfpzdata);
         }
         $PDH_count1 = Zfpz::all()->pluck(['PDH'])->unique()->count();
@@ -103,6 +125,26 @@ class Pulldpt extends Command
         if ($PDH_count1 != $PDH_count2) dd('PDH重复');
         Zfpz::where(['received'=>1,'qs'=>0])->whereNotIn('PDH',collect($zfpzdatas)->pluck(['PDH'])->toArray())->update(['deleted'=>1]);
         $this->info('SUCCESS-更新收支指标成功');          
+    }
+
+    public function cast()
+    {
+        if ($this->newpass != []) {
+            $datas = zfpz::whereIn('PDH',$this->newpass)->get()->toarray();
+            foreach ($datas as $data) {
+                $data['LX'] = 1;
+                Redis::publish('test-channel',json_encode($data));
+            }
+        }
+
+        if ($this->newzb != []) {
+            $zbs = ZB::whereIn('ZBID',$this->newzb)->get()->toarray();
+            foreach ($zbs as $data) {
+                $data['LX'] = 2;
+                Redis::publish('test-channel',json_encode($data));
+            }
+        }
+        
     }
 
 

@@ -1,95 +1,177 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.default')
+@section('content')
 
-        <title>Laravel</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+<h1>监控台</h1>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+<article id="app">
+    <div  class='h4 row'>
+    <table class="table table-bordered table-striped table-hover table-condensed">
+        <caption>
+            <center>{{ date("Y-m-d H:i:s") }}</center>
+        </caption>
 
-            .full-height {
-                height: 100vh;
-            }
+        <thead>
+            <tr class='success'>
+              
+                <th>制单日期</th>
+                <th>日期</th>
+                <th>摘要</th>
+                <th>收款人</th>
+                <th>预算单位</th>
+                <th>总金额</th>
+                <th>支出类型</th>
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+            </tr>
+        </thead>
+        <tbody class='alert-info'>
+           
+                <tr v-repeat="zfpz: zfpzs">
 
-            .position-ref {
-                position: relative;
-            }
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
 
-            .content {
-                text-align: center;
-            }
+                    <td class="alert-danger">
+                         @{{ zfpz.PDRQ }}
+                    </td>
+                    <td class="alert-success">
+                        @{{ zfpz.QS_RQ }}
+                    </td>
+                    <td>
+                        
+                             @{{ zfpz.ZY }}
+                      
+                    </td>
+                    <td >
+                         @{{ zfpz.SKR }}
+                        
+                    </td>
+                    <td>
+                         @{{ zfpz.YSDWMC }}
+                    </td>
+                    <td>
+                         @{{ zfpz.JE }}
+                    </td>
+                    <td>
+                         @{{ zfpz.ZFFSMC }}
+                    </td>   
 
-            .title {
-                font-size: 84px;
-            }
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+                </tr>   
+        
+        </tbody>
+        <tr class='success'>
+            <th>制单日期</th>
+            <th>日期</th>
+            <th>摘要</th>
+            <th>收款人</th>
+            <th>预算单位</th>
+            <th></th>
+            <th>支出类型</th>
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
+        </tr>
+        
+        {{-- {{ $results->appends(['sort' => 'votes'])->links() }} --}}
+    </table>
+            <hr>
+    </div>
+</article>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+<article id="app">
+    <div  class='h4 row'>
+    <table class="table table-bordered table-striped table-hover table-condensed">
+        <caption>
+            <center>{{ date("Y-m-d H:i:s") }}</center>
+        </caption>
+
+        <thead>
+            <tr class='success'>
+              
+                <th>指标ID</th>
+                <th>日期</th>
+                <th>摘要</th>
+                <th>预算项目</th>
+                <th>总金额</th>
+                <th>单位</th>
+          
+
+            </tr>
+        </thead>
+        <tbody class='alert-info'>
+           
+                <tr v-repeat="zb: zbs">
+
+                    <td class="alert-success">
+                        @{{ zb.ZBID }}
+                    </td>
+                    <td>
+                        
+                             @{{ zb.LR_RQ }}
+                      
+                    </td>
+                    <td >
+                         @{{ zb.ZY }}
+                        
+                    </td>
+                    <td>
+                         @{{ zb.ZJXZMC }}
+                    </td>
+                    <td>
+                         @{{ zb.JE }}
+                    </td>
+                    <td>
+                         @{{ zb.YSDWMC }}
+                    </td>   
+
+
+                </tr>   
+        
+        </tbody>
+        <tr class='success'>
+                <th>指标ID</th>
+                <th>日期</th>
+                <th>摘要</th>
+                <th>预算项目</th>
+                <th>总金额</th>
+                <th>单位</th>
+
+        </tr>
+        
+        {{-- {{ $results->appends(['sort' => 'votes'])->links() }} --}}
+    </table>
+            <hr>
+    </div>
+</article>
+@stop
+
+@section('js')
+<script src="js/vue.min.js"></script>
+<script src="js/socket.io.slim.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data:{
+            zfpzs:[],
+            zbs:[]
+        },
+
+        ready: function() {
+            console.log('a');
+            console.log('b');
+            let socket = io('http://127.0.0.1:3000');
+            socket.on('updatenewpass',function(data){
+                if (data.LX == 1){
+                    this.zfpzs.push(data);
+                } else {
+                    this.zbs.push(data);
+                }
+                
+                console.log(this.zfpzs);
+            }.bind(this));
+        }
+    });
+</script>       
+
+@stop
+
+

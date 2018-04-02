@@ -48,6 +48,7 @@
                 </ul>
               </li>
              <li><a href="/searchacc">查询</a></li> 
+             <li><a href="/redis">监控台</a></li> 
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                  大平台 <b class="caret"></b>
