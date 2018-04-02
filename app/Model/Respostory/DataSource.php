@@ -5,6 +5,14 @@ namespace App\Model\Respostory;
 use App\Model\Tt\Data;
 use App\Model\Guzzledb;
 
+/**
+
+    TODO:
+    - 传入Guzzledb模型生产数据模型generateMybody()->mybody
+    - 根据mybody生成数组数据
+    - Second todo item
+
+ */
 
 class DataSource
 {
