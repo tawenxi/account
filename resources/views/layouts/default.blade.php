@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="/css/libs.css">
     <link href="/css/toastr.css" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="turbolinks-cache-control" content="no-preview">
+    <meta name="turbolinks-visit-control" content="reload">
+
     <script src={{ mix('/js/app.js') }}></script>
   </head>
   <body >
