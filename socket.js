@@ -10,10 +10,9 @@ redis.subscribe('test-channel');
 
 redis.on('message', function(channel, message) {
 	message = JSON.parse(message);
+	
+	if (message.event == 'App\\Events\\UpdateData') {message = message.data.zfpz;}
 	console.log(message);
-
-
-
 	io.emit('updatenewpass',message);
 });
 

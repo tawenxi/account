@@ -11,6 +11,7 @@ use App\Model\Respostory\Http;
 use App\Model\Respostory\Getsqzb;
 use App\Model\Respostory\GetSqlResult;
 use App\Model\Tt\Data;
+use App\Events\UpdateData;
 use App\Model\Zfpz;
 use App\Model\ZB;
 
@@ -133,7 +134,8 @@ class Pulldpt extends Command
             $datas = zfpz::whereIn('PDH',$this->newpass)->get()->toarray();
             foreach ($datas as $data) {
                 $data['LX'] = 1;
-                Redis::publish('test-channel',json_encode($data));
+                // Redis::publish('test-channel',json_encode($data));
+                event(new UpdateData($data));
             }
         }
 

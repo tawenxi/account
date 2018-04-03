@@ -98,4 +98,9 @@ Route::view('select','select');
 
 use Illuminate\Support\Facades\Redis;
 
+use App\Events\UserSignup;
 
+Route::get('bibi', function(){
+    event(new UserSignup('tawenxi'));
+    return 'done';
+});

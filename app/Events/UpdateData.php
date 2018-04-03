@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UserSignup implements ShouldBroadcast
+class UpdateData implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -19,13 +19,12 @@ class UserSignup implements ShouldBroadcast
      *
      * @return void
      */
-    public $username;
-    public $age = 30;
 
+    public $zfpz;
 
-    public function __construct($username)
+    public function __construct(Array $zfpz)
     {
-        $this->username = $username;
+        $this->zfpz = $zfpz;
     }
 
     /**

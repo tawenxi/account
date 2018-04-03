@@ -168,7 +168,8 @@
                 if (data.LX == 1){
                     toastr.info('更新支出成功');
                     this.zfpzs.push(data);
-                } else {
+                } 
+                if (data.LX == 2) {
                     toastr.info('更新收入成功');
                     this.zbs.push(data);
                 }
