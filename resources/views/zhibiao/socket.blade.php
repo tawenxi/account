@@ -1,4 +1,5 @@
 @extends('layouts.default')
+@section('title','监控台')
 @section('content')
 
 
@@ -147,7 +148,10 @@
 @section('js')
 <script src="js/vue.min.js"></script>
 <script src="js/socket.io.slim.js"></script>
+
+<script src="js/toastr.min.js"></script>
 <script>
+
     new Vue({
         el: '#app',
         data:{
@@ -156,13 +160,16 @@
         },
 
         ready: function() {
+            toastr.info('欢迎来到监控台');
             console.log('a');
             console.log('b');
             let socket = io('http://127.0.0.1:3000');
             socket.on('updatenewpass',function(data){
                 if (data.LX == 1){
+                    toastr.info('更新支出成功');
                     this.zfpzs.push(data);
                 } else {
+                    toastr.info('更新收入成功');
                     this.zbs.push(data);
                 }
                 
@@ -170,6 +177,9 @@
             }.bind(this));
         }
     });
+
+
+
 </script>       
 
 @stop
