@@ -33,5 +33,6 @@
       <script src="/js/libs.js"></script>
       @include('shared._flash')
       @yield('js')
+      @include('shared.socket')
   </body>
 </html>
