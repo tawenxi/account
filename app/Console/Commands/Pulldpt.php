@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Cache;
 use Illuminate\Console\Command;
 use App\Jobs\PullSQ;
 use App\Jobs\PullZfpz;
@@ -135,9 +136,10 @@ class Pulldpt extends Command
 
     public function cast()
     {
+        $zbs = [];$datas1 = [];$datas2 = [];
         if ($this->newpass != []) {
-            $datas = zfpz::whereIn('PDH',$this->newpass)->get()->toarray();
-            foreach ($datas as $data) {
+            $datas1 = zfpz::whereIn('PDH',$this->newpass)->get()->toarray();
+            foreach ($datas1 as $data) {
                 $data['LX'] = '已清算';
                 // Redis::publish('test-channel',json_encode($data));
                 event(new UpdateData($data));
@@ -153,14 +155,20 @@ class Pulldpt extends Command
         }
 
         if ($this->newsh != []) {
-            $datas = zfpz::whereIn('PDH',$this->newsh)->get()->toarray();
-            foreach ($datas as $data) {
+            $datas2 = zfpz::whereIn('PDH',$this->newsh)->get()->toarray();
+            foreach ($datas2 as $data) {
                 $data['LX'] = '已审核';
                 // Redis::publish('test-channel',json_encode($data));
                 event(new UpdateData($data));
             }
         }
-        
+        $save_zfpzs = array_merge($datas2,$datas1);
+        $zbs = array_merge($zbs,Cache::get('updatedZb'));
+        $save_zfpzs = array_merge($save_zfpzs,Cache::get('updatedZfpz'));
+
+
+        Cache::put('updatedZb', $zbs, 600);
+        Cache::put('updatedZfpz', $save_zfpzs, 600);
     }
 
 

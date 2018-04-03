@@ -48,7 +48,20 @@
                 </ul>
               </li>
              <li><a href="/searchacc">查询</a></li> 
-             <li><a href="/redis">监控台</a></li> 
+             
+
+             <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                 监控台 <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">      
+                  <li><a href="/redis">实时监控</a></li>
+                  <li><a href="/rediscache">缓存监控</a></li>
+                  <li class="divider"></li>
+                  <li><a href="/dpt">平台更新</a></li>  
+                </ul>
+              </li>
+
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                  大平台 <b class="caret"></b>

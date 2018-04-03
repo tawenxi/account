@@ -168,4 +168,13 @@ class ZhibiaoController extends Controller
         return $this->excel->exportBlade('zhibiao.showapply', compact('results'));
 
     }
+
+
+    public function rediscache()
+    {
+        $updatedZfpzs = \Cache::get('updatedZfpz');
+        $updatedZbs = \Cache::get('updatedZb');
+
+        return view('zhibiao.rediscache',compact('updatedZfpzs','updatedZbs'));
+    }
 }
