@@ -22,6 +22,8 @@
                 <th>预算单位</th>
                 <th>总金额</th>
                 <th>支出类型</th>
+                <th>支出类型</th>
+
 
             </tr>
         </thead>
@@ -56,6 +58,12 @@
                          @{{ zfpz.ZFFSMC }}
                     </td>   
 
+                    <td>
+                         <div class="@{{  zfpz.class }}">
+                             @{{  zfpz.LX }}
+                         </div>
+                    </td>  
+
 
                 </tr>   
         
@@ -68,6 +76,8 @@
             <th>预算单位</th>
             <th></th>
             <th>支出类型</th>
+            <th>支出类型</th>
+
 
         </tr>
         
@@ -160,21 +170,40 @@
         },
 
         ready: function() {
+            toastr.options.closeButton = true;
+            toastr.options.closeHtml = '<button><i class="icon-off">LOVE</i></button>';
+            toastr.options.onShown = function() { console.log('hello'); }
+            toastr.options.onHidden = function() { console.log('goodbye'); }
+            toastr.options.onclick = function() { console.log('clicked'); }
+            toastr.options.onCloseClick = function() { console.log('close button clicked'); }
             toastr.info('欢迎来到监控台');
+            toastr.success('Have fun storming the castle!', 'Miracle Max Says');
+            toastr.success('加油吧.', 'tawenxi', {timeOut: 500000000});
             console.log('a');
             console.log('b');
             let socket = io('http://127.0.0.1:3000');
             socket.on('updatenewpass',function(data){
-                if (data.LX == 1){
-                    toastr.info('更新支出成功');
+                if (data.LX == '已清算'){
+                    data.class = 'btn btn-success';
+                    toastr.success('清算成功了', {timeOut: 500000000});
                     this.zfpzs.push(data);
                 } 
-                if (data.LX == 2) {
-                    toastr.info('更新收入成功');
+                if (data.LX == '收到新指标') {
+                    toastr.success('更新收入成功', {timeOut: 500000000});
                     this.zbs.push(data);
                 }
+
+                if (data.LX == '已审核') {
+                    data.class = 'btn btn-primary';
+                    toastr.success('审核成功了!!!', {timeOut: 500000000});
+                    this.zfpzs.push(data);
+                }
+
                 
                 console.log(this.zfpzs);
+                this.zfpzs.sort(function(x, y){
+                  return x[0];
+                });
             }.bind(this));
         }
     });

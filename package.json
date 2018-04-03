@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "chart.js": "1.0.2",
+        "forever-monitor": "^1.7.1",
         "ioredis": "^3.2.2",
         "socket.io": "^2.1.0",
         "turbolinks": "^5.0.0",

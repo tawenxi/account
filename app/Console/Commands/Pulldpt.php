@@ -47,9 +47,7 @@ class Pulldpt extends Command
     public $getdetail;
     public $newpass = [];
     public $newzb = [];
-
-
-
+    public $newsh = [];
 
     public function __construct(Guzzle $guzzle,GetSqlResult $getdetail)
     {
@@ -119,6 +117,13 @@ class Pulldpt extends Command
                 $this->newpass[] = $zfpzdata['PDH'];
             }
 
+            $sh = Zfpz::where('PDH',$zfpzdata['PDH'])->value('SH_RQ');
+
+            if (!($sh) AND isset($zfpzdata['SH_RQ'])?$zfpzdata['SH_RQ']:false) {
+
+                $this->newsh[] = $zfpzdata['PDH'];
+            }
+
             Zfpz::updateOrCreate(['PDH' => $zfpzdata['PDH']], $zfpzdata);
         }
         $PDH_count1 = Zfpz::all()->pluck(['PDH'])->unique()->count();
@@ -133,7 +138,7 @@ class Pulldpt extends Command
         if ($this->newpass != []) {
             $datas = zfpz::whereIn('PDH',$this->newpass)->get()->toarray();
             foreach ($datas as $data) {
-                $data['LX'] = 1;
+                $data['LX'] = '已清算';
                 // Redis::publish('test-channel',json_encode($data));
                 event(new UpdateData($data));
             }
@@ -142,8 +147,17 @@ class Pulldpt extends Command
         if ($this->newzb != []) {
             $zbs = ZB::whereIn('ZBID',$this->newzb)->get()->toarray();
             foreach ($zbs as $data) {
-                $data['LX'] = 2;
+                $data['LX'] = '收到新指标';
                 Redis::publish('test-channel',json_encode($data));
+            }
+        }
+
+        if ($this->newsh != []) {
+            $datas = zfpz::whereIn('PDH',$this->newsh)->get()->toarray();
+            foreach ($datas as $data) {
+                $data['LX'] = '已审核';
+                // Redis::publish('test-channel',json_encode($data));
+                event(new UpdateData($data));
             }
         }
         

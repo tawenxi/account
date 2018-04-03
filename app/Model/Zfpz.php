@@ -108,6 +108,7 @@ class Zfpz extends Model
             'qs',
             'deleted',
             'fail',
-            'beizhu'
+            'beizhu',
+            'SH_RQ',
 ];
 }
