@@ -163,8 +163,9 @@ class Pulldpt extends Command
             }
         }
         $save_zfpzs = array_merge($datas2,$datas1);
-        $zbs = array_merge($zbs,Cache::get('updatedZb'));
-        $save_zfpzs = array_merge($save_zfpzs,Cache::get('updatedZfpz'));
+
+        $zbs = Cache::get('updatedZb')?array_merge($zbs,Cache::get('updatedZb')):$zbs;
+        $save_zfpzs = Cache::get('updatedZfpz')?array_merge($save_zfpzs,Cache::get('updatedZfpz')):$save_zfpzs;
 
 
         Cache::put('updatedZb', $zbs, 600);

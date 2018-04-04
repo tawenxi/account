@@ -3,7 +3,7 @@
 @section('content')
 
 
-<h1>缓存监控台</h1>
+<h1>缓存监控台({{ count($updatedZfpzs) }})</h1>
 
 <article id="app">
     <div  class='h4 row'>
@@ -48,7 +48,7 @@
                          {{ $zfpz['YSDWMC'] }}
                     </td>
                     <td>
-                         {{ $zfpz['JE'] }}
+                         {{ div($zfpz['JE']/100) }}
                     </td>
                     <td>
                          {{ $zfpz['ZFFSMC'] }}
@@ -120,7 +120,7 @@
                          {{ $zb['ZJXZMC'] }}
                     </td>
                     <td>
-                         {{ $zb['JE'] }}
+                         {{ div($zb['JE']/100) }}
                     </td>
                     <td>
                          {{ $zb['YSDWMC'] }}

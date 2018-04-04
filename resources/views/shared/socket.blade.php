@@ -27,15 +27,18 @@
                     console.log(data.LX);
                     data.class = 'btn btn-success';
                     toastr.success('清算成功了','', {timeOut: 5000000000});
+                    data.JE = data.JE/100;
                     this.zfpzs.push(data);
                 } 
                 if (data.LX == '收到新指标') {
                     toastr.info('更新收入成功','', {timeOut: 5000000000});
+                    data.JE = data.JE/100;
                     this.zbs.push(data);
                 }
 
                 if (data.LX == '已审核') {
                     data.class = 'btn btn-primary';
+                    data.JE = data.JE/100;
                     toastr.error('审核成功了!!!', '',{timeOut: 5000000000});
                     this.zfpzs.push(data);
                 }

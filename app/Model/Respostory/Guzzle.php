@@ -158,8 +158,8 @@ public function setCompareBody($body = NULL)
         } elseif (strpos($this->payee['amount'],'.') !== FALSE AND ((int)substr($this->payee['amount'], strpos($this->payee['amount'],'.')+1) > 100)){
             throw new Exception('输入了多位小数:'.$this->payee['amount']);
         } else {
-            if ($this->payee['payee'] == '遂川县枚江镇财政所2') {
-                $this->payee['payee'] = '遂川县枚江镇财政所';
+            if ($this->payee['payee'] == '遂川县左安镇财政所2') {
+                $this->payee['payee'] = '遂川县左安镇财政所';
             }
             $this->payee['amount'] = div($this->payee['amount']);
         };
