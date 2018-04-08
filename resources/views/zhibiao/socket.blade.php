@@ -29,7 +29,7 @@
         </thead>
         <tbody class='alert-info'>
            
-                <tr v-repeat="zfpz: zfpzs">
+                <tr v-for="zfpz in zfpzs">
 
 
 
@@ -59,7 +59,7 @@
                     </td>   
 
                     <td>
-                         <div class="@{{  zfpz.class }}">
+                         <div :class=zfpz.class >
                              @{{  zfpz.LX }}
                          </div>
                     </td>  
@@ -110,7 +110,7 @@
         </thead>
         <tbody class='alert-info'>
            
-                <tr v-repeat="zb: zbs">
+                <tr v-for="zb in zbs">
 
                     <td class="alert-success">
                         @{{ zb.ZBID }}
@@ -156,7 +156,4 @@
 @stop
 
 @section('js')
-
-@stop
-
 

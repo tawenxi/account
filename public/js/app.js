@@ -48692,9 +48692,61 @@ Vue.component('Vselect', __webpack_require__("./resources/assets/js/components/V
 Vue.component('Makeaccount', __webpack_require__("./resources/assets/js/components/Makeaccount.vue"));
 
 document.addEventListener('turbolinks:load', function () {
-  var app = new Vue({
-    el: '#app'
-  });
+    var app = new Vue({
+        el: '#app',
+        data: {
+            zfpzs: [],
+            zbs: []
+        },
+        mounted: function mounted() {
+
+            toastr.options.closeButton = true;
+            toastr.options.closeHtml = '<button><i class="icon-off">LOVE</i></button>';
+            toastr.options.onShown = function () {
+                console.log('hello');
+            };
+            toastr.options.onHidden = function () {
+                console.log('goodbye');
+            };
+            toastr.options.onclick = function () {
+                console.log('clicked');
+            };
+            toastr.options.onCloseClick = function () {
+                console.log('close button clicked');
+            };
+            toastr.info('欢迎来到监控台');
+            toastr.success('Have fun storming the castle!', 'Miracle Max Says');
+            toastr.success('加油吧.', 'tawenxi', { timeOut: 5000000000 });
+
+            var socket = io('http://127.0.0.1:3000');
+            socket.on('updatenewpass', function (data) {
+                if (data.LX == '已清算') {
+                    console.log(data.LX);
+                    data.class = 'btn btn-success';
+                    toastr.success('清算成功了', '', { timeOut: 5000000000 });
+                    data.JE = data.JE / 100;
+                    this.zfpzs.push(data);
+                }
+                if (data.LX == '收到新指标') {
+                    toastr.info('更新收入成功', '', { timeOut: 5000000000 });
+                    data.JE = data.JE / 100;
+                    this.zbs.push(data);
+                }
+
+                if (data.LX == '已审核') {
+                    data.class = 'btn btn-primary';
+                    data.JE = data.JE / 100;
+                    toastr.error('审核成功了!!!', '', { timeOut: 5000000000 });
+                    this.zfpzs.push(data);
+                }
+
+                console.log(this.zfpzs);
+                this.zfpzs.sort(function (x, y) {
+                    return x[0];
+                });
+            }.bind(this));
+        }
+    });
 });
 
 /***/ }),
@@ -48712,14 +48764,14 @@ window._ = __webpack_require__("./node_modules/lodash/lodash.js");
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__("./node_modules/jquery/dist/jquery.js");
+    window.$ = window.jQuery = __webpack_require__("./node_modules/jquery/dist/jquery.js");
 
-  __webpack_require__("./node_modules/bootstrap-sass/assets/javascripts/bootstrap.js");
+    __webpack_require__("./node_modules/bootstrap-sass/assets/javascripts/bootstrap.js");
 
-  var Turbolinks = __webpack_require__("./node_modules/turbolinks/dist/turbolinks.js");
-  Turbolinks.start();
+    var Turbolinks = __webpack_require__("./node_modules/turbolinks/dist/turbolinks.js");
+    Turbolinks.start();
 
-  __webpack_require__("./resources/assets/js/select2.min.js");
+    __webpack_require__("./resources/assets/js/select2.min.js");
 } catch (e) {}
 
 /**
@@ -48741,9 +48793,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
