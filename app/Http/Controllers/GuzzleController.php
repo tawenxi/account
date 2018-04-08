@@ -274,6 +274,7 @@ EOF;
 
         'zfpz'                => $this->zfpz,
         'shenqingsql'         => $this->shenqingsql,
+        'zhijie_zhifu_data'   => $this->zhijie_zhifu_data,
         ];
 
         foreach ($datas as $key => $data) {

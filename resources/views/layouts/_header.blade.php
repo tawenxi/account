@@ -67,9 +67,12 @@
                  大平台 <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">      
-                  <li><a href="/payout">授权登记</a></li>
-                  <li><a href="/hyy?search=KYJHJE:0">外网查询</a></li>
+                  
+                  <li><a href="/hyy?search=KYJHJE:0">授权指标</a></li>
+                  <li><a href="/zhijie?search=KYJHJE:0">直接指标</a></li>
+
                   <li><a href="/dpt">平台更新</a></li>   
+                  <li><a href="/payout">授权登记</a></li>
                     <li class="divider"></li>
                 </ul>
               </li>

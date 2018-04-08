@@ -130,5 +130,10 @@ class Guzzledb extends Model
                     //dd($originBody,$mybody);
         return $mybody === $originBody;
     }
+
+    public function zb()
+    {
+        return $this->belongsTo(\App\Zb::class,'ZBID','ZBID');
+    }
     
 }

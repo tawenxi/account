@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Acc\Acc;
+use App\Model\Payout;
 use App\Model\Respostory\Excel;
 use App\Model\Respostory\Getsqzb;
 use App\Model\Respostory\Guzzle;
@@ -71,6 +72,17 @@ class InsertSq extends Command
                 throw new Exception('金额无效');
             }
 
+            if ($value['label'] > 0 && is_numeric($value['label'])) {
+                $value['label'] = (integer)($value['label']);
+            } else {
+                throw new Exception('标签无效');
+            }
+
+            $labels =  Payout::all()->pluck('label')->unique();
+
+            if ($labels->contains($value['label'])) {
+                throw new Exception('重复拨款');
+            } 
             // $guzz = \App::make(Guzzle::class, [
             // 'Getsqzb'=> app()->make(Getsqzb::class),
             // 'http'   => app()->make(Http::class),
@@ -167,7 +179,7 @@ class InsertSq extends Command
 
         
 
-            if (count($value) != 8) {
+            if (count($value) != 9) {
                 throw new Exception('warning:输入字段数量不为8'.__line__);
             }
 

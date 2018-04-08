@@ -15,9 +15,7 @@ use App\Model\Tt\Data;
 use App\Events\UpdateData;
 use App\Model\Zfpz;
 use App\Model\ZB;
-
-
-
+use App\Model\ZJzb;
 
 class Pulldpt extends Command
 {
@@ -67,6 +65,7 @@ class Pulldpt extends Command
         $this->PullZfpz();
         $this->cast();
         $this->Pullsq();
+        $this->pullzjzb();
         $this->update_yeamount();
         $this->info('现在的session是'.session('ND'));
     }
@@ -185,5 +184,28 @@ class Pulldpt extends Command
             \App\Model\Zb::where('ZBID',$val['ZBID'])->update(['yeamount'=>($val['JE']-$val->zfpzs->sum('JE'))*100]);
         });
         $this->info('SUCCESS-更新指标余额成功');     
+    }
+
+
+
+
+    public function pullzjzb()
+    {
+        $zjzbs = $this->getdetail->getdata($this->zhijie_zhifu_data, [
+            ["'".config('app.MYND')."0408'", "to_char(sysdate,'yyyymmdd')"],
+        ]);
+
+        if ($zjzbs[0] === null) return true;
+
+        foreach ($zjzbs as $zjzb) {
+            Zjzb::updateOrCreate(['ZBID' => $zjzb['ZBID'],
+                                  'ZCLXDM'=>$zjzb['ZCLXDM'],
+                                  'ZY'=>$zjzb['ZY'],
+                                  'ZFFSDM'=>$zjzb['ZFFSDM'],
+                                  'YSDWDM'=>$zjzb['YSDWDM'],
+                                  'ZBLYDM'=>$zjzb['ZBLYDM'],
+                                 ],$zjzb);
+        }
+        $this->info('SUCCESS-更新直接指标余额成功');     
     }
 }

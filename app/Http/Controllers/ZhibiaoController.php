@@ -8,6 +8,7 @@ use App\Model\Respostory\Guzzle;
 use App\Model\Tt\Data;
 use App\Repositories\ZbRepository;
 use App\Repositories\ZfpzRepository;
+use App\Repositories\ZjzbRepository;
 use Illuminate\Http\Request;
 use App\Model\ZbApply;
 
@@ -19,11 +20,13 @@ class ZhibiaoController extends Controller
     private $getperson;
     private $repository_zb;
     private $repository_zfpz;
+    private $repository_zjzb;
 
     public function __construct(ZfpzRepository $repository_zfpz,
                                 ZbRepository $repository_zb,
                                 Excel $excel,
-                                GetSqlResult $getdetail)
+                                GetSqlResult $getdetail,
+                                ZjzbRepository $repository_zjzb)
     {
         $this->repository_zfpz = $repository_zfpz;
         $this->repository_zb = $repository_zb;
@@ -32,6 +35,7 @@ class ZhibiaoController extends Controller
         // $this->middleware('sudo');
         $this->excel = $excel;
         $this->getdetail = $getdetail;
+        $this->repository_zjzb = $repository_zjzb;
     }
 
     /**
@@ -41,7 +45,7 @@ class ZhibiaoController extends Controller
      */
     public function index()
     {
-        $results = $this->repository_zb->with('zfpzs','projects')->all()->unique();
+        $results = $this->repository_zb->with(['zfpzs','projects','shouquan','zhijie','shouquan'])->all();
 
         return $this->excel->exportBlade('zhibiao.index', compact('results'))->render();
     }
@@ -177,4 +181,12 @@ class ZhibiaoController extends Controller
 
         return view('zhibiao.rediscache',compact('updatedZfpzs','updatedZbs'));
     }
+
+    public function zhijie()
+    {
+        $results = $this->repository_zjzb->all()->unique();
+       
+        return $this->excel->exportBlade('zhibiao.zhijie', compact('results'))->render();
+    }
+
 }

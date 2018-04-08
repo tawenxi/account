@@ -30,6 +30,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\ZfpzRepository::class, \App\Repositories\ZfpzRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\ZbRepository::class, \App\Repositories\ZbRepositoryEloquent::class);
         $this->app->bind(\App\Repositories\GuzzledbRepository::class, \App\Repositories\GuzzledbRepositoryEloquent::class);
+        $this->app->bind(\App\Repositories\ZjzbRepository::class, \App\Repositories\ZjzbRepositoryEloquent::class);
         //:end-bindings:
     }
 }

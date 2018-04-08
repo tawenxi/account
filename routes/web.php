@@ -107,3 +107,4 @@ Route::post('boss/store', 'BossController@update')->name('boss.update');
 Route::get('/project/tozfl/{village?}', 'BossController@villagezfl')->name('boss.edit');
 Route::view('redis', 'zhibiao.socket');
 Route::get('rediscache', 'zhibiaoController@rediscache');
+Route::get('zhijie', 'zhibiaoController@zhijie');

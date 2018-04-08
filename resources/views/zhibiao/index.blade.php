@@ -28,6 +28,8 @@
 					
 					<th>支出数</th>
 					<th>已分配</th>
+					<th>构成</th>
+					<th>构成</th>
 					<th>单位</th>
 					<th>可用性</th>
 				</tr>
@@ -43,7 +45,7 @@
 							</a>
 						</td>
 						<td>{{$result->LR_RQ}}</td>
-						<td class="col-md-3" >
+						<td class="col-md-2 small text-warning" >
 							@if ($result->beizhu)
 								<button type="submit" title="{{$result->zb?$result->zb->ZY:'' }}" class="btn btn-primary btn-sm">备注</button>
 								<a href="/divider/{{ $result->id }}" title="{{$result->beizhu?$result->beizhu:'' }}" >
@@ -68,6 +70,17 @@
 						<td >{{ $result->projects->sum(function($item){
                                 return $item->pivot->amount;
                            }) }}</td>
+
+                        <td>
+                        	@if ($result->shouquan->sum('YKJHZB'))
+                        		<a href="#"  class="btn btn-success btn-sm" title="{{ $result->shouquan->sum('YKJHZB') }}">{{ 'o' }}</a>
+                        	@endif
+                        </td>
+                        <td>
+                        	@if ($result->zhijie->sum('YKJHZB'))
+                        		<a href="#"  class="btn btn-primary btn-sm" title="{{ $result->zhijie->sum('YKJHZB') }}">{{ 'o' }}</a>
+                        	@endif
+                        </td>
 						
 						{{-- @if (strstr($result->YSDWMC,'扶贫')) --}}
 							<td class="btn btn-block btn-success "><a href="{{ strstr($result->YSDWMC,'扶贫')?"/divider/$result->id":"/divider/$result->id" }}" >
@@ -105,6 +118,8 @@
 					@endif
 					<th>支出数</th>
 					<th>已分配</th>
+					<th>构成</th>
+					<th>构成</th>
 					<th>单位</th>
 					<th>可用性</th>
 				</tr>
