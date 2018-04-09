@@ -5,10 +5,13 @@
     <link rel="stylesheet" href={{ asset('css/app.css') }}>
     <link rel="stylesheet" href="/css/libs.css">
     <link href="/css/toastr.css" rel="stylesheet">
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="turbolinks-visit-control" content="reload">
+    {{-- <meta name="turbolinks-visit-control" content="reload"> --}}
 
     <script src={{ mix('/js/app.js') }}></script>
+    <script src="js/socket.io.slim.js"></script>
+    <script src="js/toastr.min.js"></script>
   </head>
   <body >
 @if (!\Auth::check())
@@ -34,6 +37,5 @@
       <script src="/js/libs.js"></script>
       @include('shared._flash')
       @yield('js')
-      @include('shared.socket')
   </body>
 </html>
