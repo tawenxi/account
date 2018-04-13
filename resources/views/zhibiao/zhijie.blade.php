@@ -25,11 +25,11 @@
 					<tr >
 						<td>{{ $loop->index+1 }}</td>
 						<td>
-							<a href="{{ $result->ZBID }}/show">{{$result->ZBID}}
+							<a class="badge badge-primary" href="{{ $result->ZBID }}/show">{{$result->ZBID}}
 							</a>
 						</td>
-						<td>{{$result->ZY}}</td>
-						<td>{{$result->ZJXZMC}}</td>
+						<td><h6>{{$result->ZY}}</h6></td>
+						<td><h6>{{$result->ZJXZMC}}</h6></td>
 						<td>{{$result->YKJHZB}}</td>
 						<td>{{$result->KYJHJE}}</td>
 				

@@ -11538,7 +11538,7 @@ document.addEventListener('turbolinks:load', function () {
                     this.zfpzs.push(data);
                 }
                 if (data.LX == '收到新指标') {
-                    this.$toast.danger({ title: '更新收入成功', message: '' });
+                    this.$toast.error({ title: '更新收入成功', message: '' });
                     data.JE = data.JE / 100;
                     this.zbs.push(data);
                 }
