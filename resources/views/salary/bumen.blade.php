@@ -7,13 +7,13 @@
 
 <article>
 	<h2>
-		<table class="table table-bordered table-striped table-hover table-condensed">
+		<table class="table table-bordered table-striped table-hover table-condensed table-sm table-dark">
 			<caption>
 				<center>{{ date("Y-m-d H:i:s") }}
 				</center>
 			</caption>
 		<thead>
-			<tr class='success'>
+			<tr class='bg-primary'>
 				<th>部门</th>
 @include('salary.table')
 @stop

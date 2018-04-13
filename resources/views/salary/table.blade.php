@@ -34,10 +34,10 @@
 			</tr>
 		    </thead>
 
-		    <tbody class='alert-info'>
+		    <tbody class='table-hover'>
 	    	@foreach($res->chunk(10) as $ck)
 			@foreach ($ck as $k=>$re)
-			<tr class='alert-info'>
+			<tr class=''>
 				
 				<td><a href={{ route('geren',$re[0]->member_id)}}>
 
@@ -103,7 +103,7 @@
 			   @endforeach
 			   @endforeach
 		       </tbody>
-			   <tr>
+			   <tr class="bg-primary">
 		       <td>汇总</td>
 				
 				{{-- <th>账号</th> --}}

@@ -6,22 +6,22 @@
 <article>
 	
 	<div class='h4'>
-		<table class="table table-bordered table-striped table-hover table-condensed">
+		<table class="table table-bordered table-dark table-striped table-hover table-condensed table-sm">
 			<caption>
 				<center>{{ date("Y-m-d H:i:s") }}</center>
 			</caption>
 
 			<thead>
-				<tr class='success'>
-					<th class="col-md-2">老板</th>
-					<th class="col-md-1">支付数量</th>
-					<th class="col-md-2">总金额</th>
-					<th class="col-md-4">账号</th>
-					<th class="col-md-2">开户行</th>
-					<th class="col-md-1">编辑</th>
+				<tr class='bg-danger'>
+					<th >老板</th>
+					<th >支付数量</th>
+					<th >总金额</th>
+					<th >账号</th>
+					<th /th>
+					<th class="">编辑</th>
 				</tr>
 			</thead>
-			<tbody class='alert-info'>
+			<tbody class='table-hover'>
 				@foreach ($bosses as $boss)
 				<tr>
 
@@ -54,13 +54,13 @@
 					</tr>	
 				@endforeach
 			</tbody>
-				<tr class='success'>
-					<th class="col-md-1">老板</th>
-					<th class="col-md-2">支付数量</th>
-					<th class="col-md-2">{{ $bosses->sum('totalpayout') }}</th>
-					<th class="col-md-4">账号</th>
-					<th class="col-md-2">开户行</th>
-					<th class="col-md-1">编辑</th>
+				<tr class='bg-danger'>
+					<th>老板</th>
+					<th>支付数量</th>
+					<th>{{ $bosses->sum('totalpayout') }}</th>
+					<th>账号</th>
+					<th>开户行</th>
+					<th>编辑</th>
 
 				</tr>
 		</table>

@@ -6,11 +6,11 @@
 <article>
 	
 	<h2>
-	<table class="table table-bordered table-striped table-hover table-condensed">
+	<table class="table table-bordered table-striped table-hover table-condensed table-dark table-sm">
 		<caption><center>{{ date("Y-m-d H:i:s") }}</center></caption>
 
 		<thead>
-			<tr class='success'>
+			<tr class='bg-primary'>
 				<th>日期</th>
 				<th>收入科目</th>				
 				<th>金额</th>
@@ -20,7 +20,7 @@
 				<th>支出科目</th>
 			</tr>
 		</thead>
-		<tbody class='alert-info'>
+		<tbody class='table-hover'>
 				@foreach ($results as $result)
 			<tr>
 				<td>
@@ -52,7 +52,7 @@
 			</tr>	
 			@endforeach
 		</tbody>
-			<tr class='success'>
+			<tr class='bg-primary'>
 				<th>日期</th>
 				<th>收入科目</th>				
 				<th></th>

@@ -6,12 +6,12 @@
 <article>
 	
 	<div class='h4 row'>
-		<table class="table table-bordered table-striped table-hover table-condensed">
+		<table class="table table-bordered table-striped table-hover table-condensed table-sm table-dark">
 			<caption>
 				<center>{{ date("Y-m-d H:i:s") }}</center>
 			</caption>
 			<thead>
-				<tr class='success'>
+				<tr class='bg-primary'>
 				<th>ID</th>
 				<th>村别</th>
 				<th>年份</th>
@@ -22,7 +22,7 @@
 
 				</tr>
 			</thead>
-			<tbody class='alert-info'>
+			<tbody class='table-hover'>
 				@foreach ($villages as $village)
 					<tr class='alert-default'>
 						<td>{{ $loop->index+1 }}</td>
@@ -50,7 +50,7 @@
 				@endforeach
 			</tbody>
 			
-				<tr class='success'>
+				<tr class='bg-primary'>
 				<th>ID</th>
 				<th>村别</th>
 				<th>年份</th>

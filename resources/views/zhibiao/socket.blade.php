@@ -7,13 +7,13 @@
 
 <article id="app">
     <div  class='h4 row'>
-    <table class="table table-bordered table-striped table-hover table-condensed">
+    <table class="table table-bordered table-striped table-hover table-condensed table-sm table-dark">
         <caption>
             <center>{{ date("Y-m-d H:i:s") }}</center>
         </caption>
 
         <thead>
-            <tr class='success'>
+            <tr class='bg-primary'>
               
                 <th>制单日期</th>
                 <th>日期</th>
@@ -27,7 +27,7 @@
 
             </tr>
         </thead>
-        <tbody class='alert-info'>
+        <tbody class='table-hover'>
            
                 <tr v-for="zfpz in zfpzs">
 
@@ -68,7 +68,7 @@
                 </tr>   
         
         </tbody>
-        <tr class='success'>
+        <tr class='bg-primary'>
             <th>制单日期</th>
             <th>日期</th>
             <th>摘要</th>
@@ -96,7 +96,7 @@
         </caption>
 
         <thead>
-            <tr class='success'>
+            <tr class='bg-primary'>
               
                 <th>指标ID</th>
                 <th>日期</th>
@@ -138,7 +138,7 @@
                 </tr>   
         
         </tbody>
-        <tr class='success'>
+        <tr class='bg-primary'>
                 <th>指标ID</th>
                 <th>日期</th>
                 <th>摘要</th>

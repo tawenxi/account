@@ -1,4 +1,3 @@
-
 @extends('layouts.default')
 @section('content')
 <h1>左安镇指标支出所有明细表({{ $results->count().'条' }})</h1>
@@ -9,7 +8,7 @@
 @endif
 
 @if ($results->where('received',0)->count())
-	<div class="alert alert-info text-center">
+	<div class="alert alert-success text-center">
 		未收到({{ $results->where('received',0)->count().'条' }})
 	</div>
 @endif
@@ -36,40 +35,40 @@
 	@endif
 		
 	
-	
+	<hr>
 
 	<div  class='h4 row'>
-	<table class="table table-bordered table-striped table-hover table-condensed">
+	<table class="table table-dark table-bordered table-striped table-condensed table-sm table-hover">
 		<caption>
 			<center>{{ date("Y-m-d H:i:s") }}</center>
 		</caption>
 
 		<thead>
-			<tr class='success'>
-				<th>id</th>
-				<th>支出ID</th>
-				<th class="col-md-1">ZBID</th>
-				<th>制单日期</th>
-				<th>日期</th>
-				<th>摘要</th>
-				<th>收款人</th>
-				<th>预算单位</th>
-				<th>总金额</th>
-				<th>支出类型</th>
-				<th>received</th>
+			<tr class='bg-primary'>
+				<th><h6>id</h6></th>
+				<th><h6>支出ID</h6></th>
+				<th><h6>ZBID</h6></th>
+				<th><h6>制单日期</h6></th>
+				<th><h6>日期</h6></th>
+				<th><h6>摘要</h6></th>
+				<th><h6>收款人</h6></th>
+				<th><h6>预算单位</h6></th>
+				<th><h6>总金额</h6></th>
+				<th><h6>支出类型</h6></th>
+				<th><h6>received</h6></th>
 			</tr>
 		</thead>
-		<tbody class='alert-info'>
+		<tbody class='table-hover'>
 			@foreach ($results as $result)
-				<tr class={{ isset($result->project)?'alert-warning':""}}>
+				<tr class={{ isset($result->project)?'bg-warning':""}}>
 			 		<td>
 			 			{{ $loop->index+1 }}
 			 		</td>
-					<td class="col-md-2 small">
+					<td class="small">
 						
 							@if (!is_null($result->account))
 								<a href="{{ route('zbdetail.edit',['id'=>$result->id]) }}">
-									{{$result->account->name}} 
+									<h6>{{$result->account->name}} </h6>
 								</a>
 							@else
 								<form 	 method="GET"
@@ -83,7 +82,7 @@
 					</td>
 					<td class="small">
 						<a href="/showzbdetail/{{ str_replace('.', '-', $result->ZBID) }}" >
-							{{$result->zb->ZY}}
+							<h6>{{$result->zb->ZY}}</h6>
 						</a> 
 					</td>
 
@@ -93,22 +92,22 @@
 					<td class="alert-success">
 						{{$result->QS_RQ}} 
 					</td>
-					<td>
+					<td >
 						<a href="/point/{{$result->id}}" title={{ $result->beizhu }}>
 							@if ($result->beizhu)
 								<button type="submit" class="btn btn-primary btn-sm">备注</button>
 							@endif
-							{{$result->ZY}} 
+							<h6>{{$result->ZY}}</h6>
 						</a>
 					</td>
 					<td >
 						<a href="/{{$result->SKR}}/boss">
-							<h4>{{$result->SKR}}</h4>
+							<h6>{{$result->SKR}}</h6>
 						</a>
 						
 					</td>
 					<td>
-						{{ substr($result->YSDWMC, 9) }}
+						<h6>{{ substr($result->YSDWMC, 9) }}</h6>
 					</td>
 					<td>
 						{{div($result->JE)}}
@@ -132,18 +131,18 @@
 				</tr>	
 			@endforeach
 		</tbody>
-		<tr class='success'>
-			<th>id</th>
-			<th>支出ID</th>
-			<th>ZBID</th>
-			<th>制单日期</th>
-			<th>日期</th>
-			<th>摘要</th>
-			<th>收款人</th>
-			<th>预算单位</th>
-			<th>{{($results->sum('JE'))/10000}}</th>
-			<th>支出类型</th>
-			<th>received</th>
+		<tr class='bg-primary'>
+			<th><h6>id</h6></th>
+			<th><h6>支出ID</h6></th>
+			<th><h6>ZBID</h6></th>
+			<th><h6>制单日期</h6></th>
+			<th><h6>日期</h6></th>
+			<th><h6>摘要</h6></th>
+			<th><h6>收款人</h6></th>
+			<th><h6>预算单位</h6></th>
+			<th><h6>{{($results->sum('JE'))/10000}}</h6></th>
+			<th><h6>支出类型</h6></th>
+			<th><h6>received</h6></th>
 		</tr>
 		
 		{{-- {{ $results->appends(['sort' => 'votes'])->links() }} --}}

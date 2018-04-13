@@ -10,7 +10,7 @@
 <article>
 	
 	<h2>
-	<table class="table table-bordered table-striped table-hover table-condensed">
+	<table class="table table-bordered table-striped table-hover table-condensed table-sm table-dark">
 		<caption>
 			<center>
 				{{ date("Y-m-d H:i:s") }}
@@ -18,7 +18,7 @@
 		</caption>
 
 		<thead>
-			<tr class='success'>
+			<tr class='bg-primary'>
 				<th>日期</th>
 				@include('salary.table')
 </article>

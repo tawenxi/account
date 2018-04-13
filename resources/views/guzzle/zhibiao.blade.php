@@ -11,11 +11,11 @@
 	<h2>
 	<form action="/storeaccount_for_zb" method="post">
 	{!! csrf_field() !!}
-	<table class="table table-bordered table-striped table-hover table-condensed">
+	<table class="table table-bordered table-striped table-hover table-condensed table-sm table-dark">
 		<caption><center>{{ date("Y-m-d H:i:s") }}</center></caption>
 
 		<thead>
-			<tr class='success'>
+			<tr class='bg-primary'>
 				<th>指标ID</th>
 				<th>日期</th>
 				<th>摘要</th>
@@ -26,7 +26,7 @@
 				<th>单位</th>
 			</tr>
 		</thead>
-		<tbody class='alert-info'>
+		<tbody class='table-hover'>
 				@foreach ($results as $result)
 				
 			<tr class={{ abs($result->JE-$result->zfpzs->sum('JE'))<1?'alert-danger':""}}>
@@ -78,7 +78,7 @@
 			</tr>	
 
 			<tr>
-				<td colspan="8">
+				<td colspan="8" class="bg-danger">
 				
               			 <Makeaccount :account={{ $account->getAccount() }}
                                   :zfpz={{ $result->id }}  
@@ -88,7 +88,7 @@
 
 			@endforeach
 		</tbody>
-					<tr class='success'>
+					<tr class='bg-primary'>
 				<th>指标ID</th>
 				<th>日期</th>
 				<th>摘要</th>

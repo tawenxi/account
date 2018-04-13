@@ -5,7 +5,7 @@
 @section('content')
       <h1>更新ACCOUNT数据</h1>
       <hr>
-      <div class="row col-md-6 col-lg-offset-3">
+      <div class="col-md-8 offset-md-2">
         <div class="panel-body">
           @include('shared.errors')
         {!! Form::model($result,['method' => 'PATCH', 'url' => ['zbdetail/update'], 'class' => 'form-horizontal']) !!}

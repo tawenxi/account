@@ -15,6 +15,15 @@ import vSelect from 'vue-select';
 import TurbolinksAdapter from 'vue-turbolinks';
 Vue.use(TurbolinksAdapter);
 
+import CxltToastr from 'cxlt-vue2-toastr';
+import 'cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css';
+var toastrConfigs = {
+    position: 'top right',
+    showDuration: 20000,
+    timeOut: 20000,
+}
+Vue.use(CxltToastr, toastrConfigs);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -37,28 +46,29 @@ document.addEventListener('turbolinks:load', () => {
             zbs:[]
         },
     	mounted() {
-            
-            toastr.options.closeButton = true;
-            toastr.options.closeHtml = '<button><i class="icon-off">LOVE</i></button>';
-            toastr.options.onShown = function() { console.log('hello'); }
-            toastr.options.onHidden = function() { console.log('goodbye'); }
-            toastr.options.onclick = function() { console.log('clicked'); }
-            toastr.options.onCloseClick = function() { console.log('close button clicked'); }
-            toastr.info('欢迎来到监控台');
-            toastr.success('Have fun storming the castle!', 'Miracle Max Says');
-            toastr.success('加油吧.', 'tawenxi', {timeOut: 5000000000});
+
+            this.$toast.success({title:'加油吧！Tawenxi',message:''});
+            // toastr.options.closeButton = true;
+            // toastr.options.closeHtml = '<button><i class="icon-off">LOVE</i></button>';
+            // toastr.options.onShown = function() { console.log('hello'); }
+            // toastr.options.onHidden = function() { console.log('goodbye'); }
+            // toastr.options.onclick = function() { console.log('clicked'); }
+            // toastr.options.onCloseClick = function() { console.log('close button clicked'); }
+            // toastr.info('欢迎来到监控台');
+            // toastr.success('Have fun storming the castle!', 'Miracle Max Says');
+            // toastr.success('加油吧.', 'tawenxi', {timeOut: 5000000000});
 
             let socket = io('http://127.0.0.1:3000');
             socket.on('updatenewpass',function(data){
                 if (data.LX == '已清算'){
                     console.log(data.LX);
                     data.class = 'btn btn-success';
-                    toastr.success('清算成功了','', {timeOut: 5000000000});
+                    this.$toast.success({title:'清算成功',message:''});
                     data.JE = data.JE/100;
                     this.zfpzs.push(data);
                 } 
                 if (data.LX == '收到新指标') {
-                    toastr.info('更新收入成功','', {timeOut: 5000000000});
+                    this.$toast.danger({title:'更新收入成功',message:''});
                     data.JE = data.JE/100;
                     this.zbs.push(data);
                 }
@@ -66,7 +76,7 @@ document.addEventListener('turbolinks:load', () => {
                 if (data.LX == '已审核') {
                     data.class = 'btn btn-primary';
                     data.JE = data.JE/100;
-                    toastr.error('审核成功了!!!', '',{timeOut: 5000000000});
+                    this.$toast.info({title:'审核成功了',message:''});
                     this.zfpzs.push(data);
                 }
 

@@ -10,33 +10,33 @@
 
 <article>
 	<div  class='h4 row'>
-	<table class="table table-bordered table-striped table-hover table-condensed">
+	<table class="table table-bordered table-striped table-hover table-condensed table-dark table-sm">
 		<caption>
 			<center>{{ date("Y-m-d H:i:s") }}</center>
 		</caption>
 
 		<thead>
-			<tr class='success'>
-				<th>id</th>
-				<th>支出ID</th>
-				<th class="col-md-1">ZBID</th>
-				<th>日期</th>
-				<th>摘要</th>
-				<th>收款人</th>
-				<th>预算单位</th>
-				<th>总金额</th>
-				<th>支出类型</th>
-				<th>项目村</th>
-				<th>received</th>
+			<tr class='bg-danger'>
+				<th><h6>id</h6></th>
+				<th><h6>支出ID</h6></th>
+				<th><h6>ZBID</h6></th>
+				<th><h6>日期</h6></th>
+				<th><h6>摘要</h6></th>
+				<th><h6>收款人</h6></th>
+				<th><h6>预算单位</h6></th>
+				<th><h6>总金额</h6></th>
+				<th><h6>支出类型</h6></th>
+				<th><h6>项目村</h6></th>
+				<th><h6>received</h6></th>
 			</tr>
 		</thead>
-		<tbody class='alert-info'>
+		<tbody class='table-hover'>
 			@foreach ($results as $result)
 				<tr>
 			 		<td>
 			 			{{ $loop->index+1 }}
 			 		</td>
-					<td class="col-md-2 small">
+					<td>
 						
 							@if (!is_null($result->account))
 								<a href="{{ route('zbdetail.edit',['id'=>$result->id]) }}">
@@ -53,23 +53,25 @@
 						
 					</td>
 					<td class="small initialism">
-						<a href="/showzbdetail/{{ $result->ZBID }}" title="{{$result->zb?$result->zb->ZY:'' }}" >{{$result->zb->ZY}}</a> 
+						<h6>
+							<a href="/showzbdetail/{{ $result->ZBID }}" title="{{$result->zb?$result->zb->ZY:'' }}" >{{$result->zb->ZY}}</a> 
+						</h6>
 					</td>
-					<td>{{$result->QS_RQ}}</td>
+					<td><h6>{{$result->QS_RQ}}</h6></td>
 					<td>
 						<a href="/point/{{$result->id}}" title="{{ $result->beizhu }}">
 							@if ($result->beizhu)
 								<button type="submit" class="btn btn-primary btn-sm">备注</button>
 							@endif
-							{{$result->ZY}} 
+							<h6>{{$result->ZY}}</h6>
 						</a>
 					</td>
 					<td >
 						<h4><a href="/{{$result->SKR}}/boss/1" class="btn btn-success">{{$result->SKR}}</a></h4>
 					</td>
-					<td>{{ substr($result->YSDWMC, 9) }}</td>
-					<td>{{div($result->JE)}}</td>
-					<td>{{ substr($result->ZFFSMC, 0,3) }}</td>	
+					<td><h6>{{ substr($result->YSDWMC, 9) }}</h6></td>
+					<td><h5>{{div($result->JE)}}</h5></td>
+					<td><h6>{{ substr($result->ZFFSMC, 0,3) }}</h6></td>	
 					<td >
 						<a href="/project/tozfl/{{ filterVillage($result->ZY) }}"
 							class="{{ filterVillage($result->ZY)?'btn btn-success':'' }}">{{ filterVillage($result->ZY) }}</a></td>
@@ -80,18 +82,18 @@
 				</tr>	
 			@endforeach
 		</tbody>
-		<tr class='success'>
-			<th>id</th>
-			<th>支出ID</th>
-			<th>ZBID</th>
-			<th>日期</th>
-			<th>摘要</th>
-			<th>收款人</th>
-			<th>预算单位</th>
-			<th>{{($results->sum('JE'))/10000}}</th>
-			<th>支出类型</th>
-			<th>项目村</th>
-			<th>received</th>
+		<tr class='bg-danger'>
+			<th><h6>id</h6></th>
+			<th><h6>支出ID</h6></th>
+			<th><h6>ZBID</h6></th>
+			<th><h6>日期</h6></th>
+			<th><h6>摘要</h6></th>
+			<th><h6>收款人</h6></th>
+			<th><h6>预算单位</h6></th>
+			<th><h6>{{($results->sum('JE'))/10000}}</h6></th>
+			<th><h6>支出类型</h6></th>
+			<th><h6>项目村</h6></th>
+			<th><h6>received</h6></th>
 		</tr>
 	</table>
 			<hr>

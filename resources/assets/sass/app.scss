@@ -1,20 +1,19 @@
-
 // Fonts
-//@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
 // Variables
 @import "variables";
 
 // Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
-
-@import "resources/assets/sass/css/select2.min";
-
+@import "~bootstrap/scss/bootstrap";
 
 
 /* universal */
+a {
+  color: white;
+}
 body {
-  padding-top: 60px; }
+  padding-top: 0px; }
 
 section {
   overflow: auto; }
@@ -155,4 +154,3 @@ input {
     border-bottom: 1px solid #eeeeee; }
 
 /*# sourceMappingURL=app.css.map */
-

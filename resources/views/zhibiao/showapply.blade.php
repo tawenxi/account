@@ -5,11 +5,11 @@
 
 <article>
 	<h2>
-	<table class="table table-bordered table-striped table-hover table-condensed">
+	<table class="table table-bordered table-striped table-hover table-condensed table-sm table-dark">
 		<caption><center>{{ date("Y-m-d H:i:s") }}</center></caption>
 
 		<thead>
-			<tr class='success'>
+			<tr class='bg-primary'>
 				<th>id</th>
 				<th class="text-center">zbid</th>
 				<th>预算单位</th>
@@ -21,7 +21,7 @@
 				<th>剩余ZF金额</th>
 			</tr>
 		</thead>
-		<tbody class='alert-info'>
+		<tbody class='table-hover'>
 				@foreach ($results as $result)
 			<tr>
 
@@ -38,7 +38,7 @@
 			</tr>	
 			@endforeach
 		</tbody>
-			<tr class='success'>
+			<tr class='bg-primary'>
 				<th>id</th>
 				<th>zbid</th>
 				<th>预算单位</th>

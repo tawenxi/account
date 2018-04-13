@@ -2,7 +2,7 @@
 @section('title', '更新个人资料')
 
 @section('content')
-<div class="col-md-offset-2 col-md-8">
+<div class="col-md-8 offset-md-2">
   <div class="panel panel-default">
     <div class="panel-heading">
       <h2>更新指标数据</h2>
@@ -18,19 +18,9 @@
         </div>
 
         <form method="POST" action="{{ route('save') }}">
-          <!-- 这里注意route的第二个参数为什么不是[]
-          上面代码转为 HTML 后如下所示：
-
-  <form method="POST" action="http://sample.app/users/2">-->
-          {{--   {{ method_field('PATCH') }} --}}
             {{ csrf_field() }}
-
-
             <input type="hidden" name="id" value={{ $detail->id }}>
-            
 
-
-           
             <div class="form-group">
               <label for="ZY">收款人：</label>
               <input type="text" name="payee" class="form-control" value={{ $detail->payee }}>

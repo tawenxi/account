@@ -6,38 +6,38 @@
 <article>
 	
 	<div class='h4 row'>
-		<table class="table table-bordered table-striped table-hover table-condensed">
+		<table class="table table-bordered table-striped table-hover table-condensed table-sm table-dark">
 			<caption>
 				<center>{{ date("Y-m-d H:i:s") }}</center>
 			</caption>
 
 			<thead>
-				<tr class='success'>
+				<tr class='bg-danger'>
 				 	
-					<th class="col-md-2">老板</th>
-					<th class="col-md-2">支付数量</th>
-					<th class="col-md-2">总金额</th>
-					<th class="col-md-4">账号</th>
-					<th class="col-md-2">开户行</th>
-					<th class="col-md-2">编辑</th>
+					<th>老板</th>
+					<th>支付数量</th>
+					<th>总金额</th>
+					<th>账号</th>
+					<th>开户行</th>
+					<th>编辑</th>
 				</tr>
 
 				<tr class='warning'>
 				 	
-					<th class="col-md-2">老板</th>
-					<th class="col-md-2">({{ $bosses->sum(function($item){
+					<th>老板</th>
+					<th>({{ $bosses->sum(function($item){
 						return $item->count();
 					}) }})</th>
-					<th class="col-md-2">({{ $bosses->sum(function($item){
+					<th>({{ $bosses->sum(function($item){
 						return $item->sum('JE');
 					}) }})</th>
-					<th class="col-md-4">账号</th>
-					<th class="col-md-2">开户行</th>
-					<th class="col-md-2">编辑</th>
+					<th>账号</th>
+					<th>开户行</th>
+					<th>编辑</th>
 					
 				</tr>
 			</thead>
-			<tbody class='alert-info'>
+			<tbody class='table-hover'>
 				@foreach ($bosses as $name=>$boss)
 						<td >
 							<a href="/{{ $name }}/boss/1" }}>{{ $name }}</a>
@@ -66,14 +66,14 @@
 				@endforeach
 			</tbody>
 				<tr class='success'>
-					<th class="col-md-2">老板</th>
-					<th class="col-md-2">{{ $bosses->sum(function($item){
+					<th>老板</th>
+					<th>{{ $bosses->sum(function($item){
 						return $item->count();
 					}) }}</th>
-					<th class="col-md-2">总金额</th>
-					<th class="col-md-4">账号</th>
-					<th class="col-md-2">开户行</th>
-					<th class="col-md-2">编辑</th>
+					<th>总金额</th>
+					<th>账号</th>
+					<th>开户行</th>
+					<th>编辑</th>
 				</tr>
 		</table>
 		<hr>	

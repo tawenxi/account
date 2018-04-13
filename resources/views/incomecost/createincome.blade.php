@@ -2,10 +2,10 @@
 @section('title', '更新个人资料')
 
 @section('content')
-<div class="col-md-offset-2 col-md-8">
+<div class="offset-md-2 col-md-8">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h5>增加收入数据</h5>
+      <h1>增加收入数据</h1>
     </div>
       <div class="panel-body">
 
@@ -60,7 +60,7 @@
        
            <div class="btn-group pull-right">
                
-               {!! Form::submit("Add", ['class' => 'btn btn-success']) !!}
+               {!! Form::submit("Add", ['class' => 'btn btn-success btn-block']) !!}
            </div>
        
        {!! Form::close() !!}

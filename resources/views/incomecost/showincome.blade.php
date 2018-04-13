@@ -6,11 +6,11 @@
 <article>
   
   <h2>
-  <table class="table table-bordered table-striped table-hover table-condensed">
+  <table class="table table-bordered table-striped table-hover table-condensed table-sm table-dark">
     <caption><center>{{ date("Y-m-d H:i:s") }}</center></caption>
 
     <thead>
-      <tr class='success'>
+      <tr class='bg-primary'>
         <th>id</th>
         <th>日期</th>
         <th>摘要</th>
@@ -26,7 +26,7 @@
         @endcan
       </tr>
     </thead>
-    <tbody class='alert-info'>
+    <tbody class='table-hover'>
         @foreach ($incomes as $income)
       <tr class={{ 
 
@@ -74,7 +74,7 @@
            <td>
         
          {{--  {{substr($income->kemu, 1+strpos($income->kemu,"@"))}} --}}
-          {{$income->kemu }}
+          <h6>{{$income->kemu }}</h6>
         
         </td>
                <td>
@@ -103,7 +103,7 @@
       </tr> 
       @endforeach
       <thead>
-      <tr class='success'>
+      <tr class='bg-primary'>
         <th>id</th>
         <th>日期</th>
         <th>摘要</th>

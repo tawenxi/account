@@ -6,12 +6,12 @@
 <article>
 	
 	<div class='h4 row'>
-		<table class="table table-bordered table-striped table-hover table-condensed">
+		<table class="table table-bordered table-striped table-hover table-condensed table-sm table-dark">
 			<caption>
 				<center>{{ date("Y-m-d H:i:s") }}</center>
 			</caption>
 			<thead>
-				<tr class='success'>
+				<tr class='bg-danger'>
 				<th>ID</th>
 				<th>村别</th>
 				<th>年份</th>
@@ -31,14 +31,14 @@
 				<th>图</th>
 				</tr>
 			</thead>
-			<tbody class='alert-info'>
+			<tbody class='table-hover'>
 				@foreach ($projects as $project)
 					<tr class='alert-default'>
 						<td>{{ $loop->index+1 }}</td>
-						<td>{{ $project->village->name }}</td>
+						<td><h6>{{ $project->village->name }}</h6></td>
 						<td>{{$project->year}}</td>
-						<td>{{$project->category}}</td>
-						<td>{{$project->name}}</td>
+						<td><h6>{{$project->category}}</h6></td>
+						<td><h6>{{$project->name}}</h6></td>
 						<td>{{$project->bidprice}}</td>
 
 						<td>{{$project->contractprice}}</td>
@@ -79,7 +79,7 @@
 				@endforeach
 			</tbody>
 			
-				<tr class='success'>
+				<tr class='bg-danger'>
 				<th>ID</th>
 				<th>村别</th>
 				<th>年份</th>

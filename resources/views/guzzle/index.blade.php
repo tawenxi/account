@@ -6,28 +6,28 @@
 <article>
 	
 	<div class='h4'>
-		<table class="table table-bordered table-striped table-hover table-condensed">
+		<table class="table table-bordered table-striped table-hover table-dark table-sm">
 			<caption>
 				<center>{{ date("Y-m-d H:i:s") }}</center>
 			</caption>
 			<thead>
-				<tr class='success'>
-				<th>ID</th>
-				<th>指标ID</th>
-				<th>摘要</th>
-				<th>预算项目</th>
-				<th>总金额</th>
-				<th>可用金额</th>
-				<th>编辑</th>
+				<tr class="table-hover">
+				<th scope="col">ID</th>
+				<th scope="col">指标ID</th>
+				<th scope="col">摘要</th>
+				<th scope="col">预算项目</th>
+				<th scope="col">总金额</th>
+				<th scope="col">可用金额</th>
+				<th scope="col">编辑</th>
 				</tr>
 			</thead>
-			<tbody class='alert-info'>
+			<tbody class='table-hover'>
 				@foreach ($guzzledbs as $guzzledb)
-					<tr class={{ empty($guzzledb->body)?'alert-danger':(
+					<tr class={{ empty($guzzledb->body)?'bg-danger':(
 						$guzzledb->useable?'alert-success':'')}}>
 						<td>{{ $loop->index+1 }}</td>
 						<td>
-							<a href="{{ $guzzledb->ZBID }}/show">{{$guzzledb->ZBID}}
+							<a  class="badge badge-primary" href="{{ $guzzledb->ZBID }}/show">{{$guzzledb->ZBID}}
 							</a>
 						</td>
 						<td>{{$guzzledb->ZY}}</td>
@@ -45,7 +45,7 @@
 					</tr>	
 				@endforeach
 			</tbody>
-				<tr class='success'>
+				<tr class="table-hover">
 					<th>ID</th>
 					<th>指标ID</th>
 					<th>摘要</th>

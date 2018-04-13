@@ -6,35 +6,35 @@
 <article>
 	
 	<div class='h4'>
-		<table class="table table-bordered table-striped table-hover table-condensed">
+		<table class="table table-dark table-bordered table-striped table-hover table-condensed table-sm">
 			<caption>
 				<center>{{ date("Y-m-d H:i:s") }}</center>
 			</caption>
 
 			<thead>
-				<tr class='success'>
-				 	<th>id</th>
-					{{-- <th>科目</th> --}}
-					<th>指标ID</th>
-					<th>日期</th>
-					<th>摘要</th>
-					{{-- 	<th>指标来源</th> --}}
-					<th>预算项目</th>
-					<th>总金额</th>
-					<th>可用金额</th>
+				<tr class='bg-primary'>
+				 	<th><h6>id</h6></th>
+					{{-- <th><h6>科目</h6></th> --}}
+					<th><h6>指标ID</h6></th>
+					<th><h6>日期</h6></th>
+					<th><h6>摘要</h6></th>
+					{{-- 	<th><h6>指标来源</h6></th> --}}
+					<th><h6>预算项目</h6></th>
+					<th><h6>总金额</h6></th>
+					<th><h6>可用金额</h6></th>
 					@if (strstr(url()->full(),'%3A%E6%89%B6%E8%B4%AB'))
-						<th>已分配</th>
+						<th><h6>已分配</h6></th>
 					@endif
 					
-					<th>支出数</th>
-					<th>已分配</th>
-					<th>构成</th>
-					<th>构成</th>
-					<th>单位</th>
-					<th>可用性</th>
+					<th><h6>支出数</h6></th>
+					<th><h6>已分配</h6></th>
+					<th><h6>构成</h6></th>
+					<th><h6>构成</h6></th>
+					<th><h6>单位</h6></th>
+					<th><h6>可用性</h6></th>
 				</tr>
 			</thead>
-			<tbody class='alert-info'>
+			<tbody class='table-hover'>
 				@foreach ($results as $result)
 					<tr class={{ ($divider = $result->projects->sum(function($item){
 					                                return $item->pivot->amount;
@@ -45,7 +45,7 @@
 							</a>
 						</td>
 						<td>{{$result->LR_RQ}}</td>
-						<td class="col-md-2 small text-warning" >
+						<td class="small text-warning" >
 							@if ($result->beizhu)
 								<button type="submit" title="{{$result->zb?$result->zb->ZY:'' }}" class="btn btn-primary btn-sm">备注</button>
 								<a href="/divider/{{ $result->id }}" title="{{$result->beizhu?$result->beizhu:'' }}" >
@@ -56,7 +56,7 @@
 							@endif
 
 						</td>
-						<td>{{substr($result->ZJXZMC,0,12)}}</td>
+						<td>{{substr($result->ZJXZMC,0,3)}}</td>
 						<td>{{$result->JE}}</td>
 						<td>{{div($result->yeamount)}}</td>
 						@if (strstr(url()->full(),'%3A%E6%89%B6%E8%B4%AB'))
@@ -105,23 +105,23 @@
 					</tr>	
 				@endforeach
 			</tbody>
-				<tr class='success'>
-					<th>id</th>
-					<th>指标ID</th>
-					<th>日期</th>
-					<th>摘要</th>
-					<th>预算项目</th>
-					<th>{{round($results->sum('JE')/10000,2)}}</th>
-					<th>{{round(round(($results->sum('JE'))/10000,2)-round($results->sum('detail')/10000,2),2)}}</th>
+				<tr class='bg-primary'>
+					<th><h6>id</h6></th>
+					<th><h6>指标ID</h6></th>
+					<th><h6>日期</h6></th>
+					<th><h6>摘要</h6></th>
+					<th><h6>预算项目</h6></th>
+					<th><h6>{{round($results->sum('JE')/10000,2)}}</h6></th>
+					<th><h6>{{round(round(($results->sum('JE'))/10000,2)-round($results->sum('detail')/10000,2),2)}}</h6></th>
 					@if (strstr(url()->full(),'%3A%E6%89%B6%E8%B4%AB'))
-						<th>已分配</th>
+						<th><h6>已分配</h6></th>
 					@endif
-					<th>支出数</th>
-					<th>已分配</th>
-					<th>构成</th>
-					<th>构成</th>
-					<th>单位</th>
-					<th>可用性</th>
+					<th><h6>支出数</h6></th>
+					<th><h6>已分配</h6></th>
+					<th><h6>构成</h6></th>
+					<th><h6>构成</h6></th>
+					<th><h6>单位</h6></th>
+					<th><h6>可用性</h6></th>
 				</tr>
 		</table>
 		<hr>	

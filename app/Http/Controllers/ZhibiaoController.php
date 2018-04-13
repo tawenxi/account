@@ -154,7 +154,7 @@ class ZhibiaoController extends Controller
 
     public function inco()
     {
-        $results = $this->repository_zfpz->orderBy('PDRQ', 'desc')->all()->unique();
+        $results = $this->repository_zfpz->orderBy('PDRQ', 'desc')->with(['zb','account','project'])->all()->unique();
 
         return $this->excel->exportBlade('zhibiao.inco', compact('results'))->render();
     }
