@@ -108,3 +108,16 @@ Route::get('/project/tozfl/{village?}', 'BossController@villagezfl')->name('boss
 Route::view('redis', 'zhibiao.socket');
 Route::get('rediscache', 'zhibiaoController@rediscache');
 Route::get('zhijie', 'zhibiaoController@zhijie');
+
+use App\Model\Zfpz;
+use Illuminate\Http\Request;
+Route::get('es', function(Request $request){
+
+	$q = $request->get('q');
+    $results = [];
+    if ($q) {
+        $results = Zfpz::search($q)->paginate(100);
+    }
+    //dd($results->pluck('ZY'));
+    return view('zhibiao.detail', compact('results', 'q'));
+});

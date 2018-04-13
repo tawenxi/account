@@ -4,6 +4,7 @@ namespace App\Model;
 
 use App\Scopes\KJNDScope;
 use App\Model\Project\Project;
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
@@ -64,7 +65,7 @@ class Zfpz extends Model
         $this->project()->associate($project_id)->save();
     }
 
-    protected $fillable = [
+protected $fillable = [
             'XH',
             'KJND',
             'PDQJ',
@@ -111,4 +112,13 @@ class Zfpz extends Model
             'beizhu',
             'SH_RQ',
 ];
+
+
+    use Searchable;
+
+    public function toSearchableArray()
+    {
+        return $this->toarray();
+    }
+
 }

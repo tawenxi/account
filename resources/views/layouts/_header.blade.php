@@ -16,6 +16,7 @@
       @auth
      <nav class="navbar navbar-expand-lg navbar-dark  pull-right">
         <div class="collapse navbar-collapse" id="navbarsExample07">
+
           <ul class="navbar-nav mr-auto ">
         <li class="nav-item active"><a class="nav-link" href="{{ url()->full().(stristr(Request::getRequestUri(), '?')?'&':'?').'export=1' }}">导出excel</a></li>
                {{--     @can('showAllSalary')      --}}
@@ -140,6 +141,10 @@
                     <li class="divider"></li>
                 </ul>
               </li>
+            <form class="form-inline my-2 my-md-0" method="get" action="es">
+
+            <input class="form-control" name="q" type="text" placeholder="Search" aria-label="Search">
+            </form>
 
                {{--        @endcan    --}} 
             <li  class="nav-item dropdown">
