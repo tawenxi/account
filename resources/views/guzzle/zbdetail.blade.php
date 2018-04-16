@@ -10,7 +10,7 @@
 	<h2>
 	<form action="/storeaccount" method="post">
 	{!! csrf_field() !!}
-	<table class="table table-bordered table-striped table-hover table-condensed">
+	<table class="table table-bordered table-striped table-hover table-condensed table-sm table-dark">
 		<caption><center>{{ date("Y-m-d H:i:s") }}</center></caption>
 
 		<thead>
@@ -40,7 +40,7 @@
 				<td>{{$result->ZFFSMC}}</td>	
 			</tr>
 			<tr>
-				<td colspan="7">
+				<td colspan="7" class="btn-success">
 				
               			 <Makeaccount :account={{ $account->getAccount() }}
                                   :zfpz={{ $result->PDH }}  
