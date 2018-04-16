@@ -5,32 +5,16 @@ namespace App\Http\Controllers;
 use App\Model\Account;
 use App\Model\Payout;
 use Illuminate\Http\Request;
+use App\Model\Zfpz;
 
 class SearchController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-    }
-
     public function account()
     {
         return view('search.account')->render();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -99,54 +83,45 @@ class SearchController extends Controller
     public function modifyacc()
     {
         return view('search.modifyacc')->render();
-    }
+    }   
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function search(Request $request)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int                      $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $query = $request->get('q');
+        try {
+            $results = [];
+            if ($query) {
+                $results = Zfpz::search($query)->paginate(1000);
+            }
+        } catch (\Exception $e) {
+            if ($e->getmessage()!='') {
+                if (strstr($query, ' ')) {
+                    $keyWords = explode(' ', $query);
+                    $concatenated = collect();
+                    foreach ($keyWords as $keyword) {
+                        $result = Zfpz::withoutGlobalScopes()->where('ZY', 'like', '%'.$keyword.'%')->orWhere('SKR' ,'like', '%'.$keyword.'%')->get();
+                        $concatenated = $concatenated->merge($result);
+                    }
+                    $results = $concatenated->unique();
+                } elseif(strstr($query, '+')){
+                    $keyWords = explode('+', $query);
+                    $concatenated = collect();
+                    foreach ($keyWords as $keyword) {
+                        if (isset($result)) {
+                            $result = $result->where('ZY', 'like', '%'.$keyword.'%');
+                        } else {
+                            $result = Zfpz::withoutGlobalScopes()->where('ZY', 'like', '%'.$keyword.'%');
+                        }
+                    }
+                    $concatenated = $result->get();
+                    $results = $concatenated->unique();
+                } else{
+                    $results = Zfpz::withoutGlobalScopes()->where('ZY', 'like', '%'.$query.'%')->orWhere('SKR' ,'like', '%'.$query.'%')->get();
+                }
+                
+            }
+        }
+        return view('zhibiao.detail', compact('results', 'query'));
     }
 }

@@ -10,7 +10,7 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Zfpz extends Model
 {
-    use SearchableTrait;
+    // use SearchableTrait;
     use \App\Model\Tt\RecordsActivity;
     public $timestamps = false;
     
@@ -66,59 +66,15 @@ class Zfpz extends Model
     }
 
 protected $fillable = [
-            'XH',
-            'KJND',
-            'PDQJ',
-            'PDH',
-            'PDRQ',
-            'DJBH',
-            'YSDWDM',
-            'ZY',
-            'SKR',
-            'QS_RQ',
-            'SKZH',
-            'SKRKHYH',
-            'FKR',
-            'FKZH',
-            'FKRKHYH',
-            'ZBID',
-            'JE',
-            'DZKMC',
-            'YSDWMC',
-            'YSDWQC',
-            'ZJXZMC',
-            'JSFSMC',
-            'YSKMMC',
-            'YSKMQC',
-            'JFLXMC',
-            'JFLXQC',
-            'ZFFSMC',
-            'ZCLXMC',
-            'ZBLYMC',
-            'XMMC',
-            'YSGLLXMC',
-            'NEWDYBZ',
-            'NEWZZPZ',
-            'NEWPZLY',
-            'NEWZT',
-            'NEWCXBZ',
-            'MXZBWH',
-            'BJWH',
-            'account_number',
-            'received',
-            'qs',
-            'deleted',
-            'fail',
-            'beizhu',
-            'SH_RQ',
-];
+    'XH','KJND','PDQJ','PDH','PDRQ','DJBH','YSDWDM','ZY','SKR','QS_RQ','SKZH','SKRKHYH','FKR','FKZH','FKRKHYH','ZBID','JE','DZKMC','YSDWMC','YSDWQC','ZJXZMC','JSFSMC','YSKMMC','YSKMQC','JFLXMC','JFLXQC','ZFFSMC','ZCLXMC','ZBLYMC','XMMC','YSGLLXMC','NEWDYBZ','NEWZZPZ','NEWPZLY','NEWZT','NEWCXBZ','MXZBWH','BJWH','account_number','received','qs','deleted','fail','beizhu','SH_RQ',
+    ];
 
 
-    use Searchable;
+    // use Searchable;
 
-    public function toSearchableArray()
-    {
-        return $this->toarray();
-    }
+    // public function toSearchableArray()
+    // {
+    //     return ['ZY'=>$this->ZY,'SKR'=>$this->SKR];
+    // }
 
 }

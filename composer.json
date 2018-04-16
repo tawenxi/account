@@ -16,7 +16,7 @@
         "laravelbook/ardent": "^3.4",
         "laravelcollective/html": "^5.5",
         "league/fractal": "^0.17.0",
-        "maatwebsite/excel": "~2.1.18",
+        "maatwebsite/excel": "2.1.23",
         "naux/sendcloud": "^1.1",
         "nicolaslopezj/searchable": "^1.9",
         "overtrue/laravel-ueditor": "~1.0",
