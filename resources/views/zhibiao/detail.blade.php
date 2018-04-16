@@ -44,7 +44,7 @@
 		</caption>
 
 		<thead>
-			<tr class='bg-primary'>
+			<tr class='bg-primary  '>
 				<th><h6>id</h6></th>
 				<th><h6>支出ID</h6></th>
 				<th><h6>ZBID</h6></th>

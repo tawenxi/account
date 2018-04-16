@@ -1,5 +1,5 @@
 @inject('request',"Illuminate\Http\Request")
-<header class="navbar navbar-fixed-top navbar-inverse">
+<header class="navbar navbar-fixed-top navbar-inverse fixed-top">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <div class="container">
@@ -14,7 +14,7 @@
       <a href="" id="logo">左安镇工资查询系统</a>
       @endif
       @auth
-     <nav class="navbar navbar-expand-lg navbar-dark  pull-right">
+     <nav id="navtop" class="navbar navbar-expand-lg navbar-dark  pull-right">
         <div class="collapse navbar-collapse" id="navbarsExample07">
 
           <ul class="navbar-nav mr-auto ">
@@ -175,6 +175,7 @@
     </div>
   </div>
 </header>
+<br><br>
 
 
 

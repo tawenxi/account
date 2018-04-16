@@ -2,7 +2,7 @@
 @section('title', '更新个人资料')
 
 @section('content')
-<div class="col-md-offset-2 col-md-8">
+<div class="offset-md-2 col-md-8">
   <div class="panel panel-default">
     <div class="panel-heading">
       <h1>绑定支付令到项目</h1>

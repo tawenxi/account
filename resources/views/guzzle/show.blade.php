@@ -6,16 +6,16 @@
 <article>
 	
 	<h2>
-	<table class="table table-bordered table-striped table-hover table-condensed">
+	<table class="table table-bordered table-striped table-hover table-condensed table-sm table-dark">
 		<caption><center>{{ date("Y-m-d H:i:s") }}</center></caption>
 
 		<thead>
-			<tr class='success'>
+			<tr class='bg-primary'>
 				<th>时间</th><th>摘要</th><th>收款人</th><th>金额</th><th>科目</th><th>指标ID</th>
 			<th>T</th>
 			<th>D</th></tr>
 		</thead>
-		<tbody class='alert-info'>
+		<tbody class='table-hover'>
 				@foreach ($payoutdatas as $payoutdata)
 			<tr>
 				<td>

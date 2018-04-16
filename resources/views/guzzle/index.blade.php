@@ -12,13 +12,13 @@
 			</caption>
 			<thead>
 				<tr class="table-hover">
-				<th scope="col">ID</th>
-				<th scope="col">指标ID</th>
-				<th scope="col">摘要</th>
-				<th scope="col">预算项目</th>
-				<th scope="col">总金额</th>
-				<th scope="col">可用金额</th>
-				<th scope="col">编辑</th>
+				<th>ID</th>
+				<th>指标ID</th>
+				<th>摘要</th>
+				<th>预算项目</th>
+				<th>总金额</th>
+				<th>可用金额</th>
+				<th>编辑</th>
 				</tr>
 			</thead>
 			<tbody class='table-hover'>
@@ -30,17 +30,15 @@
 							<a  class="badge badge-primary" href="{{ $guzzledb->ZBID }}/show">{{$guzzledb->ZBID}}
 							</a>
 						</td>
-						<td>{{$guzzledb->ZY}}</td>
-						<td>{{$guzzledb->ZJXZMC}}</td>
+						<td><h5>{{$guzzledb->ZY}}</h5></td>
+						<td><h5>{{$guzzledb->ZJXZMC}}</h5></td>
 						<td>{{$guzzledb->YKJHZB}}</td>
 						<td>{{$guzzledb->KYJHJE}}</td>
-						<td class='btn btn-link'>
-
-							{!! Form::open(['method' => 'get', 'route' => ['guzzle.edit',$guzzledb->id], 'class' => 'form-horizontal']) !!}
-	          				{!! Form::submit('编辑', ['class' => 'btn btn-success pull-right']) !!}
-	          
-	          				{!! Form::close() !!}
-					
+						<td >
+	          				<form action="{{ route('guzzle.edit', $guzzledb->id) }}" method="get">
+					        {{ csrf_field() }}
+					        <button type="submit" class="btn btn-sm btn-success delete-btn">编辑</button>
+					      </form>
 						</td>
 					</tr>	
 				@endforeach
