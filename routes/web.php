@@ -110,3 +110,8 @@ Route::get('rediscache', 'zhibiaoController@rediscache');
 Route::get('zhijie', 'zhibiaoController@zhijie');
 
 Route::get('es', 'SearchController@search');
+
+
+Route::get('kk', function(){
+
+});

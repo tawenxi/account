@@ -2,7 +2,7 @@
 @section('title', '更新个人资料')
 
 @section('content')
-<div class="col-md-offset-2 col-md-8">
+<div class="offset-md-2 col-md-8">
   <div class="panel panel-default">
     <div class="panel-heading">
       <h1>分配指标数据</h1>
@@ -114,7 +114,7 @@
 
         <div class="form-group">
               <label for="describe"><font color="black">已分配到项目：</font></label>
-              <table class="table table-hover table-striped table-condensed">
+              <table class="table table-bordered table-striped table-hover table-dark table-sm">
                 <thead>
                   <tr>
                     <th>项目</th><th>金额</th><th>删除</th>
@@ -123,7 +123,7 @@
                 <tbody>
                   @foreach ($zb->projects as $project)
                     <tr>
-                    <td>{{ $project->name }}</td>
+                    <td class="col-md-4">{{ $project->name }}</td>
                     <td>{{ $project->pivot->amount }}</td>
                     <td class="col-md-1">
                         {!! Form::open(['method' => 'post',  'route' => ['project.deletezb'],'class' => 'form-horizontal']) !!}
