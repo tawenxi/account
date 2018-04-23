@@ -141,7 +141,7 @@
                     <li class="dropdown-divider"></li>
                 </ul>
               </li>
-            <form class="form-inline my-2 my-md-0" method="get" action="es">
+            <form class="form-inline my-2 my-md-0" method="get" action="/es">
 
             <input class="form-control" name="q" type="text" placeholder="Search" aria-label="Search">
             </form>

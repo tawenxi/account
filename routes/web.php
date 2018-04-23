@@ -100,6 +100,7 @@ Route::get('/personalboss', 'BossController@personalbosslist');
 Route::get('/boss', 'BossController@bosslist');
 
 Route::get('/poorboss', 'BossController@poorbosslist');
+Route::get('/jingguanzhan/boss/{personal?}', 'BossController@jingguanzhan');
 Route::get('/{boss}/boss/{supportpoor?}', 'BossController@bossDetail');
 Route::get('/boss/{boss}/edit', 'BossController@edit')->name('boss.edit');
 Route::post('boss/store', 'BossController@update')->name('boss.update');

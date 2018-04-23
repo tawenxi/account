@@ -40,7 +40,7 @@
 						
 							@if (!is_null($result->account))
 								<a href="{{ route('zbdetail.edit',['id'=>$result->id]) }}">
-									{{$result->account->name}} 
+									<h6>{{$result->account->name}} </h6>
 								</a>
 							@else
 								<form 	 method="GET"

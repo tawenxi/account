@@ -50,6 +50,17 @@ class BossController extends Controller
 		return view('boss.boss',compact('results'));
     }
 
+    public function jingguanzhan($personal=0)
+    {
+        if ($personal == 1) {
+            $results = \App\Model\Zfpz::withoutGlobalScopes()->where('SKR','遂川县左安镇财政所')->where('SKZH','1783401262206010010001')->get();
+        } else {
+            $results = \App\Model\Zfpz::withoutGlobalScopes()->where('SKR','遂川县左安镇财政所')->where('SKZH','178347750000002933')->get();
+        }
+        return view('boss.boss',compact('results'));
+    }
+
+
     public function edit($name)
     {
         $boss = Boss::whereName($name)->first();
