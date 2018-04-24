@@ -41,10 +41,29 @@ Vue.component('Makeaccount', require('./components/Makeaccount.vue'));
 document.addEventListener('turbolinks:load', () => {
 	const app = new Vue({
     	el: '#app',
-    	data:{
-            zfpzs:[],
-            zbs:[]
+    	data() {
+            return {
+                zfpzs:[],
+                zbs:[],
+                shouldHidden:true,
+                hiddenId :[],
+            }
         },
+
+        methods:{
+            hidden(id) {
+                this.shouldHidden = false;
+                this.hiddenId.push(id);
+            },
+            test(id) {
+                for (var i = 0; i < this.hiddenId.length; i++){
+                if (this.hiddenId[i] == id)//如果要求数据类型也一致，这里可使用恒等号===
+                    return false;
+                }
+                return true;
+            }
+        },
+
     	mounted() {
 
             this.$toast.success({title:'加油吧！Tawenxi',message:''});

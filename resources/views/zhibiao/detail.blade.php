@@ -55,12 +55,12 @@
 				<th><h6>预算单位</h6></th>
 				<th><h6>总金额</h6></th>
 				<th><h6>支出类型</h6></th>
-				<th><h6>received</h6></th>
+				<th><h6>Received</h6></th>
 			</tr>
 		</thead>
 		<tbody class='table-hover'>
 			@foreach ($results as $result)
-				<tr class={{ isset($result->project)?'bg-warning':""}}>
+				<tr v-show="test({{ $result->id }})" class={{ isset($result->project)?'bg-warning':""}}>
 			 		<td>
 			 			{{ $loop->index+1 }}
 			 		</td>
@@ -112,7 +112,7 @@
 					<td>
 						{{div($result->JE)}}
 					</td>
-					<td>
+					<td @click=hidden({{ $result->id }}) class="btn btn-primary">
 						{{ substr($result->ZFFSMC, 0,3) }}
 					</td>	
 					{{-- @receive --}}
