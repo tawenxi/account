@@ -26,11 +26,11 @@
 	
 	@if (session('ND') == config('app.MYND'))
 		@while ($i++<\Carbon\carbon::now()->month)
-			<a href="?search=QS_RQ:{{ session('ND').(($i<9)?('0'.$i):$i )}}"  class="btn btn-success">{{ $i }}</a>
+			<a href="/zbdetail?search=QS_RQ:{{ session('ND').(($i<9)?('0'.$i):$i )}}"  class="btn btn-success">{{ $i }}</a>
 	    @endwhile
 	@else
 		@while ($i++<12)
-		<a href="?search=QS_RQ:{{ session('ND').(($i<9)?('0'.$i):$i )}}"  class="btn btn-success">{{ $i }}</a>
+		<a href="/zbdetail?search=QS_RQ:{{ session('ND').(($i<9)?('0'.$i):$i )}}"  class="btn btn-success">{{ $i }}</a>
 	    @endwhile
 	@endif
 		
@@ -60,9 +60,10 @@
 		</thead>
 		<tbody class='table-hover'>
 			@foreach ($results as $result)
-				<tr v-show="test({{ $result->id }})" class={{ isset($result->project)?'bg-warning':""}}>
-			 		<td>
-			 			{{ $loop->index+1 }}
+				<tr v-show="isHiddenMe({{ $result->id }})" class={{ isset($result->project)?'bg-warning':""}}>
+			 		<td v-bind:class="{'btn btn-danger': isColorMe({{ $result->id }})}" 
+			 			@click=colored({{ $result->id }})>
+			 			{{ $loop->index+1 }} 
 			 		</td>
 					<td class="small">
 						

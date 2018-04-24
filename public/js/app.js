@@ -64197,7 +64197,8 @@ document.addEventListener('turbolinks:load', function () {
                 zfpzs: [],
                 zbs: [],
                 shouldHidden: true,
-                hiddenId: []
+                hiddenId: [],
+                coloredId: []
             };
         },
 
@@ -64207,12 +64208,28 @@ document.addEventListener('turbolinks:load', function () {
                 this.shouldHidden = false;
                 this.hiddenId.push(id);
             },
-            test: function test(id) {
+            colored: function colored(id) {
+                if (this.isColorMe(id)) {
+                    for (var i = 0; i < this.coloredId.length; i++) {
+                        if (this.coloredId[i] == id) this.coloredId.splice(i, 1);
+                    }
+                } else {
+                    this.coloredId.push(id);
+                }
+            },
+            isHiddenMe: function isHiddenMe(id) {
                 for (var i = 0; i < this.hiddenId.length; i++) {
                     if (this.hiddenId[i] == id) //如果要求数据类型也一致，这里可使用恒等号===
                         return false;
                 }
                 return true;
+            },
+            isColorMe: function isColorMe(id) {
+                for (var i = 0; i < this.coloredId.length; i++) {
+                    if (this.coloredId[i] == id) //如果要求数据类型也一致，这里可使用恒等号===
+                        return true;
+                }
+                return false;
             }
         },
 

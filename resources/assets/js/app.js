@@ -47,6 +47,7 @@ document.addEventListener('turbolinks:load', () => {
                 zbs:[],
                 shouldHidden:true,
                 hiddenId :[],
+                coloredId :[],
             }
         },
 
@@ -55,12 +56,29 @@ document.addEventListener('turbolinks:load', () => {
                 this.shouldHidden = false;
                 this.hiddenId.push(id);
             },
-            test(id) {
+            colored(id) {
+                if (this.isColorMe(id)) {
+                    for (var i = 0; i < this.coloredId.length; i++){
+                        if (this.coloredId[i] == id)  this.coloredId.splice(i,1);
+                    }
+                } else {
+                    this.coloredId.push(id);
+                }
+            },
+
+            isHiddenMe(id) {
                 for (var i = 0; i < this.hiddenId.length; i++){
                 if (this.hiddenId[i] == id)//如果要求数据类型也一致，这里可使用恒等号===
                     return false;
                 }
                 return true;
+            },
+            isColorMe(id) {
+                for (var i = 0; i < this.coloredId.length; i++){
+                if (this.coloredId[i] == id)//如果要求数据类型也一致，这里可使用恒等号===
+                    return true;
+                }
+                return false;
             }
         },
 
