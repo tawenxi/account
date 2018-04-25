@@ -68,8 +68,9 @@
 					<td class="small">
 						
 							@if (!is_null($result->account))
-								<a href="{{ route('zbdetail.edit',['id'=>$result->id]) }}">
-									<h6>{{$result->account->name}} </h6>
+								<a href="{{ route('zbdetail.edit',['id'=>$result->id]) }}" title="{{ $result->account->name }}">
+									{{-- <h6>{{$result->account->name}} </h6> --}}
+									<h6>{{substr($result->account->name,0,1+strrpos($result->account->name,'@')).substr($result->account->name,1+strrpos($result->account->name,'-'))}} </h6>
 								</a>
 							@else
 								<form 	 method="GET"
@@ -87,11 +88,11 @@
 						</a> 
 					</td>
 
-					<td class="alert-danger" style="word-break:break-all; word-wrap:break-all;">
-						<h6>{{ substr($result->PDRQ, 0) }}</h6>
+					<td >
+						<h6 class="btn btn-primary btn-sm" >{{ substr($result->PDRQ, 3) }}</h6>
 					</td>
-					<td class="alert-success" style="word-break:break-all; word-wrap:break-all;">
-						<h6>{{substr($result->QS_RQ,0)}} </h6>
+					<td  >
+						<h6 class="btn btn-success btn-sm">{{substr($result->QS_RQ,3)?:'未生效'}} </h6>
 					</td>
 					<td >
 						<a href="/point/{{$result->id}}" title={{ $result->beizhu }}>
@@ -108,13 +109,13 @@
 						
 					</td>
 					<td>
-						<h6>{{ substr($result->YSDWMC, 9) }}</h6>
+						<h6 class="btn btn-warning btn-sm">{{ substr($result->YSDWMC, 9) }}</h6>
 					</td>
 					<td>
 						<h6><a class="{{ ($result->village=='其他')?'btn btn-danger btn-sm':'btn btn-success btn-sm' }}" href={{ ($result->village=='其他')?'http://account.test/zbdetail?search=YSDWMC:%E6%89%B6%E8%B4%AB&only=other':"/project/tozfl/{$result->village}" }}>{{ $result->village }}</a></h6>
 					</td>
 					<td>
-						<h6>{{div($result->JE)}}</h6>
+						{{div($result->JE)}}
 					</td>
 					<td @click=hidden({{ $result->id }}) class="btn btn-primary">
 						{{ substr($result->ZFFSMC, 0,3) }}

@@ -1,8 +1,8 @@
 <template>
  
     <button
-        class="btn btn-default"
-        v-bind:class="{'btn-success': (received==1), 'btn-danger':(received==2)}"
+        class="btn btn-default btn-sm"
+        v-bind:class="{'btn-success btn-sm': (received==1), 'btn-danger btn-sm':(received==2)}"
         v-text="text"
         v-on:click="receive"
     >

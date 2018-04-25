@@ -51367,10 +51367,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("button", {
-    staticClass: "btn btn-default",
+    staticClass: "btn btn-default btn-sm",
     class: {
-      "btn-success": _vm.received == 1,
-      "btn-danger": _vm.received == 2
+      "btn-success btn-sm": _vm.received == 1,
+      "btn-danger btn-sm": _vm.received == 2
     },
     domProps: { textContent: _vm._s(_vm.text) },
     on: { click: _vm.receive }
