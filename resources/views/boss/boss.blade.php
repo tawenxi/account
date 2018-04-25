@@ -16,7 +16,7 @@
 		</caption>
 
 		<thead>
-			<tr class='bg-danger'>
+			<tr class='bg-primary'>
 				<th><h6>id</h6></th>
 				<th><h6>支出ID</h6></th>
 				<th><h6>ZBID</h6></th>
@@ -37,17 +37,18 @@
 			 			@click=colored({{ $result->id }})>
 			 			{{ $loop->index+1 }} 
 			 		</td>
-					<td>
+					<td class="small">
 						
 							@if (!is_null($result->account))
-								<a href="{{ route('zbdetail.edit',['id'=>$result->id]) }}">
-									<h6>{{$result->account->name}} </h6>
+								<a href="{{ route('zbdetail.edit',['id'=>$result->id]) }}" title="{{ $result->account->name }}">
+									{{-- <h6>{{$result->account->name}} </h6> --}}
+									<h6>{{substr($result->account->name,0,1+strrpos($result->account->name,'@')).substr($result->account->name,1+strrpos($result->account->name,'-'))}} </h6>
 								</a>
 							@else
 								<form 	 method="GET"
 										 action="{{ route('zbdetail.edit',['id'=>$result->id]) }}" 
 										 enctype="multipart/form-data">
-									<button type="submit" class="btn btn-success center-block">编辑科目</button>
+									<button type="submit" class="btn btn-success center-block">编辑</button>
 								</form>
 								
 							@endif
@@ -68,14 +69,14 @@
 						</a>
 					</td>
 					<td >
-						<h4><a href="/{{$result->SKR}}/boss/1" class="btn btn-success">{{$result->SKR}}</a></h4>
+						<h4><a href="/{{$result->SKR}}/boss/1" class="btn btn-success btn-sm">{{$result->SKR}}</a></h4>
 					</td>
 					<td><h6>{{ substr($result->YSDWMC, 9) }}</h6></td>
 					<td><h5>{{div($result->JE)}}</h5></td>
-					<td @click=hidden({{ $result->id }}) class="btn btn-primary"><h6>{{ substr($result->ZFFSMC, 0,3) }}</h6></td>	
+					<td @click=hidden({{ $result->id }}) class="btn btn-primary btn-sm"><h6>{{ substr($result->ZFFSMC, 0,3) }}</h6></td>	
 					<td >
 						<a href="/project/tozfl/{{ filterVillage($result->ZY) }}"
-							class="{{ filterVillage($result->ZY)?'btn btn-success':'' }}">{{ filterVillage($result->ZY) }}</a></td>
+							class="{{ filterVillage($result->ZY)?'btn btn-success btn-sm':'' }}">{{ filterVillage($result->ZY) }}</a></td>
 					<td>
 							<received :zfpz = {{ $result->id }} 
 									  :is_received = {{ $result->received }} ></received>
@@ -83,7 +84,7 @@
 				</tr>	
 			@endforeach
 		</tbody>
-		<tr class='bg-danger'>
+		<tr class='bg-primary'>
 			<th><h6>id</h6></th>
 			<th><h6>支出ID</h6></th>
 			<th><h6>ZBID</h6></th>

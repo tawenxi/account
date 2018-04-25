@@ -48,19 +48,19 @@
             </div>
             <div class="form-group">
               <label for="bidprice">中标金额：</label>
-              <input type="text" name="bidprice" class="form-control" >
+              <input type="text" name="bidprice" class="form-control" value="0">
             </div>
             <div class="form-group">
               <label for="contractprice">合同金额：</label>
-              <input type="text" name="contractprice" class="form-control" >
+              <input type="text" name="contractprice" class="form-control"  value="0">
             </div>
             <div class="form-group">
               <label for="budget">预算金额：</label>
-              <input type="text" name="budget" class="form-control" >
+              <input type="text" name="budget" class="form-control"  value="0">
             </div>
             <div class="form-group">
               <label for="settlementprice">决算金额：</label>
-              <input type="text" name="settlementprice" class="form-control" >
+              <input type="text" name="settlementprice" class="form-control"  value="0">
             </div>
 
             <div class="form-group">

@@ -109,7 +109,7 @@
 						
 					</td>
 					<td>
-						<h6 class="btn btn-warning btn-sm">{{ substr($result->YSDWMC, 9) }}</h6>
+						<h6 class="btn btn-primary btn-sm">{{ substr($result->YSDWMC, 9) }}</h6>
 					</td>
 					<td>
 						<h6><a class="{{ ($result->village=='其他')?'btn btn-danger btn-sm':'btn btn-success btn-sm' }}" href={{ ($result->village=='其他')?'http://account.test/zbdetail?search=YSDWMC:%E6%89%B6%E8%B4%AB&only=other':"/project/tozfl/{$result->village}" }}>{{ $result->village }}</a></h6>
