@@ -110,6 +110,8 @@ if (!function_exists('preg_replace_with_count')) {
         return false;
    }
 
+   /* 根据摘要返回所有的村别数组 */
+   
     function filterVillage_all($ZY) 
     {
         $villages = ['东光','石窝','樟木','洋溪','安全','望月','鹤坑','桃源'];

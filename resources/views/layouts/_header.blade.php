@@ -41,6 +41,7 @@
                 <ul class="dropdown-menu">      
                   <li><a class="dropdown-item"  href="/project">所有项目</a></li>
                   <li><a class="dropdown-item"  href="/village">平困村</a></li>
+                  <li><a class="dropdown-item"  href="/zbdetail?search=YSDWMC:扶贫&only=other">其他整合资金</a></li>
                   <li class="dropdown-divider"></li>
                   <li><a class="dropdown-item"  href="/zhibiao?search=YSDWMC:扶贫">[扶贫指标]</a></li>
                   <li><a class="dropdown-item"  href="/zbdetail?search=YSDWMC:扶贫">[扶贫支付令]</a></li>

@@ -32,9 +32,10 @@
 		</thead>
 		<tbody class='table-hover'>
 			@foreach ($results as $result)
-				<tr>
-			 		<td>
-			 			{{ $loop->index+1 }}
+				<tr v-show="isHiddenMe({{ $result->id }})" class={{ isset($result->project)?'bg-warning':""}}>
+			 		<td v-bind:class="{'btn btn-danger': isColorMe({{ $result->id }})}" 
+			 			@click=colored({{ $result->id }})>
+			 			{{ $loop->index+1 }} 
 			 		</td>
 					<td>
 						
@@ -71,7 +72,7 @@
 					</td>
 					<td><h6>{{ substr($result->YSDWMC, 9) }}</h6></td>
 					<td><h5>{{div($result->JE)}}</h5></td>
-					<td><h6>{{ substr($result->ZFFSMC, 0,3) }}</h6></td>	
+					<td @click=hidden({{ $result->id }}) class="btn btn-primary"><h6>{{ substr($result->ZFFSMC, 0,3) }}</h6></td>	
 					<td >
 						<a href="/project/tozfl/{{ filterVillage($result->ZY) }}"
 							class="{{ filterVillage($result->ZY)?'btn btn-success':'' }}">{{ filterVillage($result->ZY) }}</a></td>

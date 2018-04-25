@@ -19,6 +19,11 @@ class Zfpz extends Model
         return $this->attributes['ZY'].' '.$this->attributes['SKR'].' '.$this->attributes['JE'];
     }
 
+    public function getVillageAttribute()
+    {
+        return filterVillage($this->ZY)?:'其他';
+    }
+
     public function account()
     {
         return $this->belongsTo(Account::class, 'account_number', 'account_number');

@@ -11,6 +11,7 @@ use App\Repositories\ZfpzRepository;
 use App\Repositories\ZjzbRepository;
 use Illuminate\Http\Request;
 use App\Model\ZbApply;
+use App\Criteria\WithoutGlobalScopesCriteria;
 
 class ZhibiaoController extends Controller
 {
@@ -74,7 +75,12 @@ class ZhibiaoController extends Controller
 
     public function zb_detail(Request $request)
     {
-        $results = $this->repository_zfpz->scopeQuery(function($query) use ($request) {
+        if (request('only')=='other') {
+            $results = $this->repository_zfpz->pushCriteria(WithoutGlobalScopesCriteria::class);
+        } else {
+            $results = $this->repository_zfpz;
+        }
+        $results = $results->scopeQuery(function($query) use ($request) {
             if ($request->has('orderBy')) {
                 return $query;
             } else { 
@@ -82,6 +88,12 @@ class ZhibiaoController extends Controller
             }
             
         })->with(['zb','account','project'])->all();
+
+        if (request('only')=='other') {
+            $results = $results->filter(function($item){
+                return $item['village'] == '其他';
+            });
+        }
 
         return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
     }

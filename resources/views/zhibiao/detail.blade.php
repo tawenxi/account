@@ -26,11 +26,11 @@
 	
 	@if (session('ND') == config('app.MYND'))
 		@while ($i++<\Carbon\carbon::now()->month)
-			<a href="/zbdetail?search=QS_RQ:{{ session('ND').(($i<9)?('0'.$i):$i )}}"  class="btn btn-success">{{ $i }}</a>
+			<a href="/zbdetail?search=QS_RQ:{{ session('ND').(($i<10)?('0'.$i):$i )}}"  class="btn btn-success">{{ $i }}</a>
 	    @endwhile
 	@else
 		@while ($i++<12)
-		<a href="/zbdetail?search=QS_RQ:{{ session('ND').(($i<9)?('0'.$i):$i )}}"  class="btn btn-success">{{ $i }}</a>
+		<a href="/zbdetail?search=QS_RQ:{{ session('ND').(($i<10)?('0'.$i):$i )}}"  class="btn btn-success">{{ $i }}</a>
 	    @endwhile
 	@endif
 		
@@ -38,7 +38,7 @@
 	<hr>
 
 	<div  class='h4 row'>
-	<table class="table table-dark table-bordered table-striped table-condensed table-sm table-hover">
+	<table class="table table-dark table-bordered table-striped table-condensed table-sm table-hover "  >
 		<caption>
 			<center>{{ date("Y-m-d H:i:s") }}</center>
 		</caption>
@@ -52,7 +52,7 @@
 				<th><h6>日期</h6></th>
 				<th><h6>摘要</h6></th>
 				<th><h6>收款人</h6></th>
-				<th><h6>预算单位</h6></th>
+				<th><h6>预算单位</h6></th><th><h6>相关村</h6></th>
 				<th><h6>总金额</h6></th>
 				<th><h6>支出类型</h6></th>
 				<th><h6>Received</h6></th>
@@ -63,7 +63,7 @@
 				<tr v-show="isHiddenMe({{ $result->id }})" class={{ isset($result->project)?'bg-warning':""}}>
 			 		<td v-bind:class="{'btn btn-danger': isColorMe({{ $result->id }})}" 
 			 			@click=colored({{ $result->id }})>
-			 			{{ $loop->index+1 }} 
+			 			<h6>{{ $loop->index+1 }} </h6>
 			 		</td>
 					<td class="small">
 						
@@ -75,30 +75,30 @@
 								<form 	 method="GET"
 										 action="{{ route('zbdetail.edit',['id'=>$result->id]) }}" 
 										 enctype="multipart/form-data">
-									<button type="submit" class="btn btn-success center-block">编辑科目</button>
+									<button type="submit" class="btn btn-success center-block">编辑</button>
 								</form>
 								
 							@endif
 						
 					</td>
-					<td class="small">
+					<td class="small " style="word-break:break-all; word-wrap:break-all;">
 						<a href="/showzbdetail/{{ str_replace('.', '-', $result->ZBID) }}" >
 							<h6>{{$result->zb->ZY}}</h6>
 						</a> 
 					</td>
 
-					<td class="alert-danger">
-						{{ $result->PDRQ }}
+					<td class="alert-danger" style="word-break:break-all; word-wrap:break-all;">
+						<h6>{{ substr($result->PDRQ, 0) }}</h6>
 					</td>
-					<td class="alert-success">
-						{{$result->QS_RQ}} 
+					<td class="alert-success" style="word-break:break-all; word-wrap:break-all;">
+						<h6>{{substr($result->QS_RQ,0)}} </h6>
 					</td>
 					<td >
 						<a href="/point/{{$result->id}}" title={{ $result->beizhu }}>
 							@if ($result->beizhu)
 								<button type="submit" class="btn btn-primary btn-sm">备注</button>
 							@endif
-							<h6>{{$result->ZY}}</h6>
+							<h6 style="word-break:break-all; word-wrap:break-all;">{{$result->ZY}}</h6>
 						</a>
 					</td>
 					<td >
@@ -111,7 +111,10 @@
 						<h6>{{ substr($result->YSDWMC, 9) }}</h6>
 					</td>
 					<td>
-						{{div($result->JE)}}
+						<h6><a class="{{ ($result->village=='其他')?'btn btn-danger btn-sm':'btn btn-success btn-sm' }}" href={{ ($result->village=='其他')?'http://account.test/zbdetail?search=YSDWMC:%E6%89%B6%E8%B4%AB&only=other':"/project/tozfl/{$result->village}" }}>{{ $result->village }}</a></h6>
+					</td>
+					<td>
+						<h6>{{div($result->JE)}}</h6>
 					</td>
 					<td @click=hidden({{ $result->id }}) class="btn btn-primary">
 						{{ substr($result->ZFFSMC, 0,3) }}
@@ -140,7 +143,7 @@
 			<th><h6>日期</h6></th>
 			<th><h6>摘要</h6></th>
 			<th><h6>收款人</h6></th>
-			<th><h6>预算单位</h6></th>
+			<th><h6>预算单位</h6></th><th><h6>相关村</h6></th>
 			<th><h6>{{($results->sum('JE'))/10000}}</h6></th>
 			<th><h6>支出类型</h6></th>
 			<th><h6>received</h6></th>
