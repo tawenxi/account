@@ -3,7 +3,10 @@
 Route::get('/', function () {return redirect('/geren');});
 Route::get('/jiema', 'GuzzleController@jiema');
 require('myweb.php');
-
+Route::get('/2', function () {
+    $data = date('Ym',strtotime("-2 month"));
+    dd($data);
+});
 
 Route::get('users/{userid}/activity', 'ActivityController@show');
 
@@ -111,7 +114,7 @@ Route::get('rediscache', 'zhibiaoController@rediscache');
 Route::get('zhijie', 'zhibiaoController@zhijie');
 
 Route::get('es', 'SearchController@search');
-
+Route::view('taskmanager', 'task.index');
 
 Route::get('kk', function(){
 
