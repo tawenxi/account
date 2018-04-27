@@ -108,8 +108,8 @@
                     <li><a class="dropdown-item"  href="/zbdetail?search=deleted:1">[系统已删除]</a></li>
                     <li><a class="dropdown-item"  href="/zbdetail?search=fail:1">[账号错误]</a></li>
                     <li class="dropdown-divider"></li>
-                    <li><a class="dropdown-item"  href="/boss">Boss</a></li> 
-
+                   
+                    <li><a class="dropdown-item"  href="/taskmanager">taskmanager</a></li> 
 
 
                 </ul>

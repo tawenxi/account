@@ -5,16 +5,6 @@ Vue.use(VueResource);
   data() {
     return {
       todoList: [
-        {"id":0,
-         "ZY":"Go to codepen and get inspired",
-         'amount':'',
-         'SKR':'',
-         'SKZH':'',
-         'SKYH':'',
-         'ZFFS':'',
-         'label':'',
-         "done":false,
-        },
       ],
       new_todo:{"id":0,
                 "ZY":"",
@@ -27,6 +17,7 @@ Vue.use(VueResource);
                 "done":false,
         },
       showComplete: false,
+      note:'',
     };
   },
   mounted() {
@@ -122,9 +113,16 @@ Vue.use(VueResource);
       alert('haha2');
     },
     findSkr(data) {
+      this.note = '';
       this.$http.get('http://account.test/api/boss'+'/'+data).then(response => {
-        this.new_todo.SKZH = response.data.bankaccount;
-        this.new_todo.SKYH = response.data.bank;
+        console.log(response.data.bankaccount)
+        if (response.data.bankaccount) {
+          this.new_todo.SKZH = response.data.bankaccount;
+          this.new_todo.SKYH = response.data.bank;
+        } else {
+          this.note = '没有找到收款人';
+        }
+        
       });
     },
     // get all todos when loading the page
@@ -138,7 +136,9 @@ Vue.use(VueResource);
       // validation check
       if (this.new_todo.ZY) {
         this.todoList.unshift({
-          id: this.todoList.length,
+          id: (this.todoList.sort(function($item){
+                      return $item.id
+                    }).reverse()[0].id)+1,
           ZY: this.new_todo.ZY,
           amount: this.new_todo.amount,
           SKR: this.new_todo.SKR,

@@ -26,6 +26,7 @@
     <h1>财务任务管理器</h1>
     <section class="todo-wrapper">
       <h2 class="todo-title">@{{ today.day }}<br>@{{ today.date }}</h2>
+
       <form @keydown.enter.prevent="">
         <div class="form-group">
           <input type="text" class="form-control" v-bind:class="{ active: new_todo }" placeholder="摘要" v-model="new_todo.ZY" ref='ZY'>
@@ -33,6 +34,7 @@
         <div class="form-group">
           <input type="text" class="form-control" v-bind:class="{ active: new_todo }" placeholder="金额" v-model="new_todo.amount" >
         </div>
+        <span style="color: red">  @{{note}}</span>
         <div class="form-group">
         <input type="text" class="form-control" v-bind:class="{ active: new_todo }" placeholder="收款人" v-model="new_todo.SKR" 
           v-on:keyup.enter="findSkr(new_todo.SKR)">
@@ -93,7 +95,7 @@
             <input class="todo-checkbox" v-bind:id="'item_' + item.id" v-model="item.done" type="checkbox">
             <label v-bind:for="'item_' + item.id"></label>
              <div class="row">
-            <span class="col-md-2">@{{item.ZY}}</span>
+            <span class="col-md-2" @dblclick="editTask(item)">@{{item.ZY}}</span>
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.amount}}</span>
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKR}}</span>
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKZH}}</span>
@@ -110,6 +112,10 @@
         <div class="btn btn-success btn-secondary" v-if="completed.length > 0" @click="toggleShowComplete"><span v-if="!showComplete">Show</span><span v-else >Hide</span> Complete</div>
         <div class="btn btn-secondary btn-danger" v-if="todoList.length > 0" @click="clearAll">Clear All</div>
       </div>
+
+      <pre>
+        @{{$data.todoList}}
+      </pre>
     </section>
 <!--      <pre>
     @{{completed|json}}
