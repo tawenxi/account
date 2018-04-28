@@ -4,6 +4,7 @@ Vue.use(VueResource);
   el: '#app',
   data() {
     return {
+      error:false,
       todoList: [],
       new_todo:{"id":0,
                 "ZY":"",
@@ -72,7 +73,21 @@ Vue.use(VueResource);
     }
   },
   methods: {
-
+    validate(){
+            this.error = false;
+      var that = this.new_todo;
+      //console.log(that)
+      this.$http.get('http://account.test/api/validate').then(response => {    
+                  var res = response.data.filter(function(item){
+                      return that.ZY+that.amount+that.SKR == item.ZY+(item.JE/100)+item.SKR;  
+                  });
+                  //console.log(res)
+                  if (res[0]) {
+                      that.error=true;
+                      alert('可能以前做了一样的单子')
+                   }
+      });
+    },
     editTask(task){
       this.deleteItem(task);
       this.new_todo = task;
@@ -140,6 +155,7 @@ Vue.use(VueResource);
     },
     // add a new item
     addItem() {
+      this.validate()
       // validation check
       if (this.new_todo.ZY) {
         this.todoList.unshift({

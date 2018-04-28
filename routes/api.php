@@ -73,3 +73,9 @@ Route::get('/shengxiao', function () {
     $data = \App\Model\Zfpz::where('qs',1)->where('PDQJ','>=',$data)->get();
     return response()->json($data->toArray());
 })->middleware('api');
+
+Route::get('/validate', function () {
+    $data = date('Ym',strtotime("-1 month"));
+    $data = \App\Model\Zfpz::where('PDQJ','>=',$data)->get();
+    return response()->json($data->toArray());
+})->middleware('api');
