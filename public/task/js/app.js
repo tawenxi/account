@@ -35,6 +35,13 @@ Vue.use(VueResource);
     }
   },
   computed:{
+    pendingTotle: function() {
+      return this.sum(this.pending)
+    },
+
+    completedTotle: function() {
+      return this.sum(this.completed)
+    },
 
     pending: function() {
       return this.todoList.filter(function(item) {
@@ -73,6 +80,15 @@ Vue.use(VueResource);
     }
   },
   methods: {
+    sum(arr) {
+      var s = 0;
+      arr.forEach(function(val, idx, arr) {
+          s += val.amount*1;
+      });
+    
+      return s;
+    },
+
     validate(){
             this.error = false;
       var that = this.new_todo;

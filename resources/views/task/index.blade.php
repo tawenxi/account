@@ -49,7 +49,9 @@
    <!--      <input type="text" class="form-control" v-bind:class="{ active: new_todo }" placeholder="支付方式" v-model="new_todo.ZFFS" v-on:keyup.enter="addItem"> -->
         
        <select v-model="new_todo.ZFFS" class="form-control"  >
-        <option value="授权" selected="selected">授权</option>
+        <option value="待定" selected="selected">待定</option>
+
+        <option value="授权" >授权</option>
         <option value="直接" >直接</option>
       </select>
       </div>
@@ -67,15 +69,16 @@
 
       <div v-if="pending.length > 0">
         <h3  style="text-align: center;">You have @{{ pending.length }} pending item<span v-if="todoList.length>1">s</span></h3>
+        <h3  style="text-align: center; color:red">@{{ pendingTotle }}</h3>
         <transition-group name="todo-item" tag="ul" class="todo-list">
           <li v-for="(item, index) in pending" v-bind:key="item.ZY"
-          :id="[item.tagged?'tagged':(item.ZFFS == '授权')?'zhijie':'shouquan']">
+          :id="[item.tagged?'tagged':((item.ZFFS == '待定')?'':((item.ZFFS == '直接')?'zhijie':'shouquan'))]">
             <input class="todo-checkbox" v-bind:id="'item_' + item.id" v-model="item.done" type="checkbox">
             <label v-bind:for="'item_' + item.id"></label>
             <div class="row">
             <span class="col-md-2"  @dblclick="editTask(item)">@{{item.ZY}}</span>
             <span class="col-md-2" @dblclick="tag(item)"><span class="text-danger">|</span>@{{item.amount}}
-            <button v-show='item.beizhu' id="gg" >&#10004;</button> </span>
+            <button v-show='item.beizhu' id="gg"  v-bind:title="item.beizhu">&#10004;</button> </span>
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKR}}</span>
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKZH}}</span>
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKYH}}</span>
@@ -94,9 +97,10 @@
 
       <div v-if="completed.length > 0 && showComplete">
         <h3 style="text-align: center;">Completed tasks: @{{ completedPercentage }}</h3>
+        <h3  style="text-align: center; color:red">@{{ completedTotle }}</h3>
         <transition-group name="todo-item" tag="ul" class="todo-list">
           <li v-for="(item, index) in completed" v-bind:key="item.ZY" 
-          :id="[item.tagged?'tagged':(item.ZFFS == '授权')?'zhijie':'shouquan']">
+          :id="[item.tagged?'tagged':((item.ZFFS == '待定')?'':((item.ZFFS == '直接')?'zhijie':'shouquan'))]">
             <input class="todo-checkbox" v-bind:id="'item_' + item.id" v-model="item.done" type="checkbox">
             <label v-bind:for="'item_' + item.id"></label>
              <div class="row">
