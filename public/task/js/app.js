@@ -4,8 +4,7 @@ Vue.use(VueResource);
   el: '#app',
   data() {
     return {
-      todoList: [
-      ],
+      todoList: [],
       new_todo:{"id":0,
                 "ZY":"",
                 'amount':'',
@@ -136,9 +135,9 @@ Vue.use(VueResource);
       // validation check
       if (this.new_todo.ZY) {
         this.todoList.unshift({
-          id: (this.todoList.sort(function($item){
-                      return $item.id
-                    }).reverse()[0].id)+1,
+          id: this.todoList.length?((this.todoList.sort(function($item){
+                                return $item.id
+                              }).reverse()[0].id)+1):1,
           ZY: this.new_todo.ZY,
           amount: this.new_todo.amount,
           SKR: this.new_todo.SKR,

@@ -74,7 +74,7 @@
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKR}}</span>
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKZH}}</span>
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKYH}}</span>
-            <h6 class="col-md-1"><span class="text-danger">|</span>@{{item.label}}</h6>
+            <span class="col-md-1"><span class="text-danger">|</span>@{{item.label}}</span>
            
 
           </div>
@@ -100,7 +100,7 @@
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKR}}</span>
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKZH}}</span>
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKYH}}</span>
-            <h6 class="col-md-1"><span class="text-danger">|</span>@{{item.label}}</h6>
+            <span class="col-md-1"><span class="text-danger">|</span>@{{item.label}}</span>
                   
 
           </div>
@@ -113,13 +113,9 @@
         <div class="btn btn-secondary btn-danger" v-if="todoList.length > 0" @click="clearAll">Clear All</div>
       </div>
 
-      <pre>
-        @{{$data.todoList}}
-      </pre>
+
     </section>
-<!--      <pre>
-    @{{completed|json}}
-  </pre> -->
+
   </div>
 
  
