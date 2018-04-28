@@ -13,10 +13,13 @@ Vue.use(VueResource);
                 'SKYH':'',
                 'ZFFS':'',
                 'label':'',
+                'beizhu':'',
+                'tagged':false,
                 "done":false,
         },
       showComplete: false,
       note:'',
+
     };
   },
   mounted() {
@@ -83,7 +86,8 @@ Vue.use(VueResource);
             this.$http.get('http://account.test/api/unshengxiao').then(response => {
             response.data.forEach(function(item,index){
                   var a = that.todoList.filter(function($item){
-                      return $item.ZY+$item.amount+$item.SKR == item.ZY+(item.JE/100)+item.SKR;
+                      //return $item.ZY+$item.amount+$item.SKR == item.ZY+(item.JE/100)+item.SKR;
+                      return $item.ZY+$item.SKR == item.ZY+item.SKR;
                   }).forEach(function($$item){
                     $$item.done = true
                   });
@@ -110,6 +114,10 @@ Vue.use(VueResource);
 
     autoQs() {
       alert('haha2');
+    },
+
+    tag(task) {
+      task.tagged = !task.tagged
     },
     findSkr(data) {
       this.note = '';
@@ -145,6 +153,8 @@ Vue.use(VueResource);
           SKZH: this.new_todo.SKZH,
           ZFFS: this.new_todo.ZFFS,
           label: Date.parse(new Date()),
+          tagged: 0,
+          beizhu: this.new_todo.beizhu,
           done: false,
         });
       }
@@ -157,6 +167,8 @@ Vue.use(VueResource);
                 'SKYH':'',
                 'ZFFS':'',
                 'label':'',
+                'beizhu':'',
+                'tagged':false,
                 "done":false,
         };
 

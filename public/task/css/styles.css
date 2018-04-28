@@ -189,6 +189,19 @@ ul.todo-list.archived li{
 #shouquan {
   background: #c9e0f7;
 }
+#tagged {
+  background: #cff000;
+}
+
+#gg {
+  color: red;
+  font-weight: bold;
+  background: none;
+  border: 0;
+  padding: 0;
+  float: right;
+  margin-right: 10px;
+}
 
 #zhijie {
   background: #d2f7c9;
