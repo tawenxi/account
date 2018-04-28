@@ -95,10 +95,12 @@ class Pulldpt extends Command
             \App\Model\Zb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
         });
 
-        $month = \Carbon\carbon::now()->month-1;
-        $month = ($month<10)?'0'.(string)$month:(string)$month;
+        $month = '01';
+        if (\Carbon\carbon::now()->month>5) {
+            $month = \Carbon\carbon::now()->month-1;
+            $month = ($month<10)?'0'.(string)$month:(string)$month;
+        }
         
-
         $zfpzdatas = $this->getdetail->getdata($this->zfpz, [
             ["'".config('app.MYND')."0101'", "'".config('app.MYND').$month."01'"], //每年修改
             ["'".config('app.MYND')."0821'", "to_char(sysdate,'yyyymmdd')"],
