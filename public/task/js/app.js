@@ -100,8 +100,18 @@ Vue.use(VueResource);
                   //console.log(res)
                   if (res[0]) {
                       that.error=true;
-                      alert('可能以前做了一样的单子')
+                      alert('以前做了一样的单子')
                    }
+
+                  var res2 = response.data.filter(function(item){
+                     return that.ZY+that.SKR == item.ZY+item.SKR;  
+                  });
+                  //console.log(res)
+                  if (res2[0]) {
+                      that.error=true;
+                      alert('可能以前做了一样的单子,但是金额不准确')
+                   }
+
       });
     },
     editTask(task){
@@ -147,8 +157,29 @@ Vue.use(VueResource);
       alert('haha2');
     },
 
+
+    order(){
+      this.todoList.sort(function (obj1, obj2) {
+          var val1 = obj1['tagged'];
+          var val2 = obj2['tagged'];if (val1 < val2) {
+              return -1;
+          } else if (val1 > val2) {
+              return 1;
+          } else {
+              return 0;
+          }            
+      } ).reverse();
+    },
+
+    untagAll(){
+      this.todoList.forEach(function(item){
+         item.tagged = false;
+      });
+    },
+
     tag(task) {
-      task.tagged = !task.tagged
+      task.tagged = !task.tagged;
+      this.order();
     },
     findSkr(data) {
       this.note = '';
@@ -167,6 +198,7 @@ Vue.use(VueResource);
     getTodos() {
       if (localStorage.getItem('todo_list')) {
         this.todoList = JSON.parse(localStorage.getItem('todo_list'));
+        this.order();
       }
     },
     // add a new item

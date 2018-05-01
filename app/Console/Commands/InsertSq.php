@@ -153,7 +153,7 @@ class InsertSq extends Command
             $arr[$key]['payeeaccount'] = trim($arr[$key]['payeeaccount']);
             $arr[$key]['amount'] = trim($arr[$key]['amount']);
             $arr[$key]['zbid'] = trim($arr[$key]['zbid']);
-            $arr[$key]['amount'] = div($arr[$key]['amount']);
+            $arr[$key]['amount'] = div((float)$arr[$key]['amount']);
             $arr[$key]['kemu'] = $arr[$key]['kemuname'] = '@';   //为了不经常忘记加@所以这里就强制@
                 
             $Validator = \Validator::make($arr[$key], [
@@ -179,8 +179,8 @@ class InsertSq extends Command
 
         
 
-            if (count($value) != 9) {
-                throw new Exception('warning:输入字段数量不为8'.__line__);
+            if (count($value) != 10) {
+                throw new Exception('warning:输入字段数量不为10'.__line__);
             }
 
             if (count($arr[$key]['kemuname']) == 1 && is_array($arr[$key]['kemuname'])) {

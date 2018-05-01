@@ -121,7 +121,9 @@
       <div class="control-buttons">
         <div class="btn btn-success btn-secondary" v-if="completed.length > 0" @click="toggleShowComplete"><span v-if="!showComplete">Show</span><span v-else >Hide</span> Complete</div>
         <div class="btn btn-secondary btn-danger" v-if="todoList.length > 0" @click="clearAll">Clear All</div>
+        <div class="btn btn-secondary btn-primary" v-if="todoList.length > 0" @click="untagAll">Untag All</div>
       </div>
+
 
     </section>
 
