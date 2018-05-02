@@ -1,11 +1,14 @@
 Vue.use(VueResource);
-
+Vue.component('v-select', VueSelect.VueSelect);
   new Vue({
   el: '#app',
   data() {
     return {
+      options: [],
+      selected: {id: 9999999, label: '请输入收款人关键字'},
       error:false,
       todoList: [],
+      Zfpz:[],
       new_todo:{"id":0,
                 "ZY":"",
                 'amount':'',
@@ -25,8 +28,29 @@ Vue.use(VueResource);
   },
   mounted() {
     this.getTodos();
+    this.$http.get('http://account.test/api/allboss').then(response => {
+    if (response.data[0]) {
+      this.options = response.data;
+    }  
+});
+
   },
   watch: {
+    'selected':function(){
+      this.new_todo.SKR = this.selected.label;
+      this.Zfpz=[]
+      if (this.selected.id != 9999999) {
+        this.findSkr(this.selected.label)
+      }
+
+      this.$http.get('http://account.test/api/zfpzs'+'/'+this.new_todo.SKR).then(response => {
+          //console.log(this.new_todo.SKR)
+            if (response.data[0]) {
+              this.Zfpz = response.data;
+              console.log(this.Zfpz)
+            }  
+        });
+    },
     todoList: {
       handler: function(updatedList) {
         localStorage.setItem('todo_list', JSON.stringify(updatedList));
@@ -92,12 +116,11 @@ Vue.use(VueResource);
     validate(){
             this.error = false;
       var that = this.new_todo;
-      //console.log(that)
       this.$http.get('http://account.test/api/validate').then(response => {    
                   var res = response.data.filter(function(item){
                       return that.ZY+that.amount+that.SKR == item.ZY+(item.JE/100)+item.SKR;  
                   });
-                  //console.log(res)
+
                   if (res[0]) {
                       that.error=true;
                       alert('以前做了一样的单子')
@@ -106,12 +129,10 @@ Vue.use(VueResource);
                   var res2 = response.data.filter(function(item){
                      return that.ZY+that.SKR == item.ZY+item.SKR;  
                   });
-                  //console.log(res)
                   if (res2[0]) {
                       that.error=true;
                       alert('可能以前做了一样的单子,但是金额不准确')
                    }
-
       });
     },
     editTask(task){
@@ -207,9 +228,7 @@ Vue.use(VueResource);
       // validation check
       if (this.new_todo.ZY) {
         this.todoList.unshift({
-          id: this.todoList.length?((this.todoList.sort(function($item){
-                                return $item.id
-                              }).reverse()[0].id)+1):1,
+          id: this.todoList.length?((this.todoList.reverse()[0].id)+1):1,
           ZY: this.new_todo.ZY,
           amount: this.new_todo.amount,
           SKR: this.new_todo.SKR,
@@ -235,7 +254,7 @@ Vue.use(VueResource);
                 'tagged':false,
                 "done":false,
         };
-
+        this.selected = {id: 9999999, label: '请输入收款人关键字'}
         this.$refs.ZY.focus();
       // save the new item in localstorage
       return true;

@@ -7,9 +7,10 @@
   <link rel="stylesheet" type="text/css" href="/task/css/styles.css">
   <link rel="stylesheet" href="/task/css/app.css">
   <link href="/task/css/bs3.css" rel="stylesheet">
-  <script src="/task/js/vue.js"></script>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script src="/task/js/vue.js"></script>
+  <script src="/task/js/select.js"></script>
+
 
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -26,6 +27,18 @@
     <h1>财务任务管理器</h1>
     <section class="todo-wrapper">
       <h2 class="todo-title">@{{ today.day }}<br>@{{ today.date }}</h2>
+      <table class="table table-hover" v-if="Zfpz[0]">
+        <thead>
+          <tr>
+            <th class="col-md-3">日期</th><th class="col-md-3">摘要</th><th class="col-md-3">金额</th><th class="col-md-3">生效时间</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="pz of Zfpz" :key="pz.id">
+            <td>@{{ pz.PDRQ }} </td><td>@{{ pz.ZY }}</td><td> @{{ pz.JE }}</td><td> @{{ pz.QS_RQ }}</td>
+          </tr>
+        </tbody>
+      </table>
 
       <form @keydown.enter.prevent="">
         <div class="form-group">
@@ -34,11 +47,9 @@
         <div class="form-group">
           <input type="text" class="form-control" v-bind:class="{ active: new_todo }" placeholder="金额" v-model="new_todo.amount" >
         </div>
-        <span style="color: red">  @{{note}}</span>
         <div class="form-group">
-        <input type="text" class="form-control" v-bind:class="{ active: new_todo }" placeholder="收款人" v-model="new_todo.SKR" 
-          v-on:keyup.enter="findSkr(new_todo.SKR)">
-      </div>
+        <v-select v-model="selected" :options="options"></v-select>  
+        </div>
         <div class="form-group">
         <input type="text" class="form-control" v-bind:class="{ active: new_todo }" placeholder="收款账号" v-model="new_todo.SKZH" >
         </div>
@@ -123,13 +134,8 @@
         <div class="btn btn-secondary btn-danger" v-if="todoList.length > 0" @click="clearAll">Clear All</div>
         <div class="btn btn-secondary btn-primary" v-if="todoList.length > 0" @click="untagAll">Untag All</div>
       </div>
-
-
     </section>
-
   </div>
-
- 
   <script async defer src="/task/js/buttons.js"></script>
 </body>
 

@@ -62,20 +62,41 @@ Route::get('/boss/{name}', function () {
     return response()->json($data);
 })->middleware('api');
 
+Route::get('/possible/{name}', function () {
+    $data = \App\Model\Boss::where('name','like','%'.request('name').'%')->get();
+    return response()->json($data);
+})->middleware('api');
+
+Route::get('/allboss', function () {
+    $data = \App\Model\Boss::all()->map(function($item,$key){
+        return [
+            'id'=>$key,
+            'label'=>$item->name
+        ];
+    });
+    return response()->json($data);
+})->middleware('api');
+
+Route::get('/zfpzs/{name}', function () {
+    $data = date('Ym',strtotime("-2 month"));
+    $data = \App\Model\Zfpz::withoutGlobalScopes()->where('SKR',request('name'))->where('PDQJ','>=',$data)->get();
+    return response()->json($data);
+})->middleware('api');
+
 Route::get('/unshengxiao', function () {
-    $data = date('Ym',strtotime("-1 month"));
-    $data = \App\Model\Zfpz::where('qs',0)->where('PDQJ','>=',$data)->get();
+    $data = date('Ym',strtotime("-2 month"));
+    $data = \App\Model\Zfpz::withoutGlobalScopes()->where('qs',0)->where('PDQJ','>=',$data)->get();
     return response()->json($data->toArray());
 })->middleware('api');
 
 Route::get('/shengxiao', function () {
     $data = date('Ym',strtotime("-1 month"));
-    $data = \App\Model\Zfpz::where('qs',1)->where('PDQJ','>=',$data)->get();
+    $data = \App\Model\Zfpz::withoutGlobalScopes()->where('qs',1)->where('PDQJ','>=',$data)->get();
     return response()->json($data->toArray());
 })->middleware('api');
 
 Route::get('/validate', function () {
     $data = date('Ym',strtotime("-1 month"));
-    $data = \App\Model\Zfpz::where('PDQJ','>=',$data)->get();
+    $data = \App\Model\Zfpz::withoutGlobalScopes()->where('PDQJ','>=',$data)->get();
     return response()->json($data->toArray());
 })->middleware('api');
