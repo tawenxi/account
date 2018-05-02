@@ -51,6 +51,9 @@
         <v-select v-model="selected" :options="options"></v-select>  
         </div>
         <div class="form-group">
+        <input type="text" class="form-control" v-bind:class="{ active: new_todo }" placeholder="自写收款人" v-model="new_todo.SKR" >
+        </div>
+        <div class="form-group">
         <input type="text" class="form-control" v-bind:class="{ active: new_todo }" placeholder="收款账号" v-model="new_todo.SKZH" >
         </div>
         <div class="form-group">
@@ -80,7 +83,7 @@
 
       <div v-if="pending.length > 0">
         <h3  style="text-align: center;">You have @{{ pending.length }} pending item<span v-if="todoList.length>1">s</span></h3>
-        <h3  style="text-align: center; color:red">@{{ pendingTotle }}</h3>
+        <h3  style="text-align: center; color:red">@{{ Math.round(pendingTotle * 100) / 100 }}</h3>
         <transition-group name="todo-item" tag="ul" class="todo-list">
           <li v-for="(item, index) in pending" v-bind:key="item.ZY"
           :id="[item.tagged?'tagged':((item.ZFFS == '待定')?'':((item.ZFFS == '直接')?'zhijie':'shouquan'))]">
