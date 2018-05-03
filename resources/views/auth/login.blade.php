@@ -2,7 +2,7 @@
 @section('title',"")
 @section('content')
 
-<div class="col-md-offset-2 col-md-8">
+<div class="offset-md-2 col-md-8">
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title" ><center><b><h3>登 陆 </h3></b></center></h3>

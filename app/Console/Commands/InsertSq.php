@@ -81,6 +81,7 @@ class InsertSq extends Command
             $labels =  Payout::all()->pluck('label')->unique();
 
             if ($labels->contains($value['label'])) {
+                dump($value['label']);
                 throw new Exception('重复拨款');
             } 
             // $guzz = \App::make(Guzzle::class, [
