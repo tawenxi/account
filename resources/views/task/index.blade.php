@@ -35,7 +35,7 @@
         </thead>
         <tbody>
           <tr v-for="pz of Zfpz" :key="pz.id">
-            <td>@{{ pz.PDRQ }} </td><td>@{{ pz.ZY }}</td><td> @{{ pz.JE }}</td><td> @{{ pz.QS_RQ }}</td>
+            <td>@{{ pz.PDRQ }} </td><td>@{{ pz.ZY }}</td><td> @{{ pz.JE/100 }}</td><td> @{{ pz.QS_RQ }}</td>
           </tr>
         </tbody>
       </table>
@@ -78,12 +78,30 @@
         <div class="btn btn-add" v-bind:class="{ active: true }"  @click="addItem">增加任务</div>
         <div class="btn btn-add btn-success" v-bind:class="{ active: true }"  @click="autoCompleted">自动完成</div>
         <div class="btn btn-add btn-primary" v-bind:class="{ active: true }"  @click="autoPass">自动清算</div>
+        <hr>
+        <div class="btn btn-add btn-danger" v-bind:class="{ active: true }"  @click=setorderkey('tagged')>显示标记</div>
+        <div class="btn btn-add btn-success" v-bind:class="{ active: true }"  @click=savedata()>保存数据</div>
+        <div class="btn btn-add btn-primary" v-bind:class="{ active: true }"  @click=getdata()>恢复数据</div>
+
+
 
       </form>
 
       <div v-if="pending.length > 0">
         <h3  style="text-align: center;">You have @{{ pending.length }} pending item<span v-if="todoList.length>1">s</span></h3>
         <h3  style="text-align: center; color:red">@{{ Math.round(pendingTotle * 100) / 100 }}</h3>
+
+            <li class="list-group-item list-group-item-success glyphicon-th-list">
+                <span class="col-md-2"  @click=setorderkey('ZY')>摘要</span>
+              <span class="col-md-2" @click=setorderkey('amount')>金额</span>
+              <span class="col-md-2" @click=setorderkey('SKR')>收款人</span>
+
+              <span class="col-md-2" @click=setorderkey('SKZH')>收款账号</span>
+              <span class="col-md-2" @click=setorderkey('SKYH')>开户银行</span>
+              <span class="col-md-1" @click=setorderkey('label')>时间</span>
+            </li>
+
+
         <transition-group name="todo-item" tag="ul" class="todo-list">
           <li v-for="(item, index) in pending" v-bind:key="item.ZY"
           :id="[item.tagged?'tagged':((item.ZFFS == '待定')?'':((item.ZFFS == '直接')?'zhijie':'shouquan'))]">
@@ -97,8 +115,6 @@
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKZH}}</span>
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKYH}}</span>
             <span class="col-md-1"><span class="text-danger">|</span >@{{item.label}}</span>
-           
-
           </div>
             <span class="delete" @click="deleteItem(item)"></span>
           </li>
@@ -125,8 +141,7 @@
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKZH}}</span>
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKYH}}</span>
             <span class="col-md-1"><span class="text-danger">|</span>@{{item.label}}</span>
-                  
-
+                
           </div>
             <span class="delete" @click="deleteItem(item)"></span>
           </li>
@@ -142,5 +157,6 @@
   <script async defer src="/task/js/buttons.js"></script>
 </body>
 
+<script src="https://cdn.bootcss.com/lodash.js/4.17.5/lodash.core.min.js"></script>
 <script src="/task/js/resource.js"></script>
 <script src="/task/js/app.js" type="text/javascript" ></script>

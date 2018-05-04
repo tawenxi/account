@@ -4,6 +4,8 @@ Vue.component('v-select', VueSelect.VueSelect);
   el: '#app',
   data() {
     return {
+      ordercolumn:'label',
+      reverse:true,
       options: [],
       selected: {id: 9999999, label: '请输入收款人关键字'},
       error:false,
@@ -44,7 +46,7 @@ Vue.component('v-select', VueSelect.VueSelect);
       }
 
       this.$http.get('http://account.test/api/zfpzs'+'/'+this.new_todo.SKR).then(response => {
-          //console.log(this.new_todo.SKR)
+         
             if (response.data[0]) {
               this.Zfpz = response.data;
               console.log(this.Zfpz)
@@ -68,9 +70,11 @@ Vue.component('v-select', VueSelect.VueSelect);
     },
 
     pending: function() {
-      return this.todoList.filter(function(item) {
+      let orderedList = this.todoList.filter(function(item) {
         return !item.done;
       })
+
+      return this.order(orderedList,this.ordercolumn,this.reverse)
     },
     completed: function() {
       return this.todoList.filter(function(item) {
@@ -104,6 +108,20 @@ Vue.component('v-select', VueSelect.VueSelect);
     }
   },
   methods: {
+
+    savedata(){
+      this.$http.get('/api/truncatedata');
+      this.todoList.forEach((item) => {
+          this.$http.post('/api/savedata',item)
+        });
+    },
+
+    getdata(){
+          this.$http.get('/api/getdata').then(response => {
+              this.todoList = response.data
+          });
+    },
+
     sum(arr) {
       var s = 0;
       arr.forEach(function(val, idx, arr) {
@@ -166,7 +184,7 @@ Vue.component('v-select', VueSelect.VueSelect);
                   var a = that.todoList.filter(function($item){
                       return $item.ZY+$item.amount+$item.SKR == item.ZY+(item.JE/100)+item.SKR;
                   }).forEach(function($$item){
-                    // console.log($$item)
+
                     that.deleteItem($$item)
                   });
             });    
@@ -179,17 +197,17 @@ Vue.component('v-select', VueSelect.VueSelect);
     },
 
 
-    order(){
-      this.todoList.sort(function (obj1, obj2) {
-          var val1 = obj1['tagged'];
-          var val2 = obj2['tagged'];if (val1 < val2) {
-              return -1;
-          } else if (val1 > val2) {
-              return 1;
-          } else {
-              return 0;
-          }            
-      } ).reverse();
+    setorderkey(key){
+      this.reverse = (this.ordercolumn == key)? !this.reverse : true
+       this.ordercolumn = key
+    },
+
+
+    order(list,ordercolumn,reverse){
+        if (!this.reverse) {
+        return _.sortBy(list,ordercolumn)
+       }
+      return _.sortBy(list,ordercolumn).reverse()
     },
 
     untagAll(){
@@ -200,7 +218,7 @@ Vue.component('v-select', VueSelect.VueSelect);
 
     tag(task) {
       task.tagged = !task.tagged;
-      this.order();
+      //this.order();
     },
     findSkr(data) {
       this.note = '';
@@ -219,7 +237,10 @@ Vue.component('v-select', VueSelect.VueSelect);
     getTodos() {
       if (localStorage.getItem('todo_list')) {
         this.todoList = JSON.parse(localStorage.getItem('todo_list'));
-        this.order();
+        this.todoList.forEach(function(item){
+            item.amount = parseFloat(item.amount);
+        });
+        //this.order();
       }
     },
     // add a new item
@@ -230,13 +251,13 @@ Vue.component('v-select', VueSelect.VueSelect);
         this.todoList.unshift({
           id: this.todoList.length?((this.todoList.reverse()[0].id)+1):1,
           ZY: this.new_todo.ZY,
-          amount: this.new_todo.amount,
+          amount: parseFloat(this.new_todo.amount),
           SKR: this.new_todo.SKR,
           SKYH: this.new_todo.SKYH,
           SKZH: this.new_todo.SKZH,
           ZFFS: this.new_todo.ZFFS,
-          label: Date.parse(new Date()),
-          tagged: 0,
+          label: Date.parse(new Date())/1000-1500000000,
+          tagged: false,
           beizhu: this.new_todo.beizhu,
           done: false,
         });

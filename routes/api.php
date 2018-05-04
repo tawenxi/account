@@ -57,6 +57,30 @@ Route::post('/zfpz/receive', function() {
     });
 
 
+
+Route::post('/savedata', function(Request $request) {
+
+    \App\Task::create($request->all());
+    return $request->all();
+    });
+
+Route::get('/getdata', function() {
+
+    $data = \App\Task::get();
+    return response()->json($data);
+    });
+
+
+Route::get('/truncatedata', function() {
+    \App\Task::truncate();
+    
+       
+    });
+
+
+
+
+
 Route::get('/boss/{name}', function () {
     $data = \App\Model\Boss::where('name',request('name'))->first();
     return response()->json($data);
