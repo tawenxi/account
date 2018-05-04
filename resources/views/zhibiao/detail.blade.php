@@ -115,7 +115,13 @@
 						<h6><a class="{{ ($result->village=='其他')?'btn btn-danger btn-sm':'btn btn-success btn-sm' }}" href={{ ($result->village=='其他')?'http://account.test/zbdetail?search=YSDWMC:%E6%89%B6%E8%B4%AB&only=other':"/project/tozfl/{$result->village}" }}>{{ $result->village }}</a></h6>
 					</td>
 					<td>
-						{{div($result->JE)}}
+						@if ($result->SH_RQ AND !$result->QS_RQ)
+							<span style="color: green">{{div($result->JE)}}</span>
+
+						@else
+							{{div($result->JE)}}
+						@endif
+						
 					</td>
 					<td @click=hidden({{ $result->id }}) class="btn btn-primary">
 						{{ substr($result->ZFFSMC, 0,3) }}
