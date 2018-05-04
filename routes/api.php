@@ -60,8 +60,9 @@ Route::post('/zfpz/receive', function() {
 
 Route::post('/savedata', function(Request $request) {
 
-    \App\Task::create($request->all());
-    return $request->all();
+    return \App\Task::create($request->all());
+    
+
     });
 
 Route::get('/getdata', function() {

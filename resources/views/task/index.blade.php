@@ -80,7 +80,7 @@
         <div class="btn btn-add btn-primary" v-bind:class="{ active: true }"  @click="autoPass">自动清算</div>
         <hr>
         <div class="btn btn-add btn-danger" v-bind:class="{ active: true }"  @click=setorderkey('tagged')>显示标记</div>
-        <div class="btn btn-add btn-success" v-bind:class="{ active: true }"  @click=savedata()>保存数据</div>
+        <div class="btn btn-add btn-success" v-bind:class="{ active: !savesuccess }"  @click=savedata()>保存数据</div>
         <div class="btn btn-add btn-primary" v-bind:class="{ active: true }"  @click=getdata()>恢复数据</div>
 
 

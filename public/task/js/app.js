@@ -4,6 +4,7 @@ Vue.component('v-select', VueSelect.VueSelect);
   el: '#app',
   data() {
     return {
+      savesuccess:false,
       ordercolumn:'label',
       reverse:true,
       options: [],
@@ -110,10 +111,22 @@ Vue.component('v-select', VueSelect.VueSelect);
   methods: {
 
     savedata(){
+      var totle = 0
       this.$http.get('/api/truncatedata');
       this.todoList.forEach((item) => {
-          this.$http.post('/api/savedata',item)
+          this.$http.post('/api/savedata',item).then(response =>{
+           
+              totle++
+              console.log(totle)
+              if (this.todoList.length == totle) { 
+                  this.savesuccess = true
+                  console.log('ok')
+              }
+
+            
+          });
         });
+
     },
 
     getdata(){
