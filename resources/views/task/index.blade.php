@@ -157,6 +157,6 @@
   <script async defer src="/task/js/buttons.js"></script>
 </body>
 
-<script src="https://cdn.bootcss.com/lodash.js/4.17.5/lodash.core.min.js"></script>
+<script src="/task/js/lodash.js"></script>
 <script src="/task/js/resource.js"></script>
 <script src="/task/js/app.js" type="text/javascript" ></script>
