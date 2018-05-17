@@ -46,7 +46,7 @@ class ZhibiaoController extends Controller
      */
     public function index()
     {
-        $results = $this->repository_zb->with(['zfpzs','projects','shouquan','zhijie','shouquan'])->all();
+        $results = $this->repository_zb->with(['zfpzs','projects','zhijie','shouquan'])->all();
 
         return $this->excel->exportBlade('zhibiao.index', compact('results'))->render();
     }
@@ -199,6 +199,34 @@ class ZhibiaoController extends Controller
         $results = $this->repository_zjzb->all()->unique();
        
         return $this->excel->exportBlade('zhibiao.zhijie', compact('results'))->render();
+    }
+
+
+    public function blade(Request $request)
+    {
+
+        $results = \App\Model\Zfpz::where('qs',1)->where('QS_RQ','like',$request->qj.'%')->where('account_number','!=','4011002')->orderBy('account_number')->with(['account'])->get()->toarray();
+         
+          $results = collect($results)->groupBy('account_number');
+          $filter = $results->filter(function($item,$key){
+            return $key == 50013010101;
+          });
+
+          $results = $results->reject(function($item,$key){
+            return $key == 50013010101;
+          });
+
+          $results = $results->push($filter->first());
+          $results = $results->values()->map(function($item ,$key2){
+                 return $item->map(function($item2,$key) use ($key2) {
+                    $item2['hanghao'] = $key+1;
+                    $item2['list_id'] = $key2+3;
+                    return $item2;
+            });
+          });                          
+        $results = $results->flatten(1);
+  
+       return $this->excel->exportBlade('zhibiao.blade', compact('results','request'))->render();
     }
 
 }

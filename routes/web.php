@@ -116,6 +116,10 @@ Route::get('zhijie', 'zhibiaoController@zhijie');
 Route::get('es', 'SearchController@search');
 Route::view('taskmanager', 'task.index');
 
-Route::get('kk', function(){
 
-});
+Route::get('kk', function(){
+	
+    }
+);
+
+Route::get('blade', 'zhibiaoController@blade');

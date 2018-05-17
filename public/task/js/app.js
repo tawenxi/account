@@ -145,8 +145,16 @@ Vue.component('v-select', VueSelect.VueSelect);
     },
 
     validate(){
-            this.error = false;
+      this.error = false;
       var that = this.new_todo;
+      $result = this.todoList.find((item, index, arr) => {
+        return item.ZY == this.new_todo.ZY && item.amount == this.new_todo.amount && item.SKR == this.new_todo.SKR;
+      });
+
+      if ($result) {
+        this.error = true;
+        alert('在任务菜单中有此项目！！')
+      }
       this.$http.get('http://account.test/api/validate').then(response => {    
                   var res = response.data.filter(function(item){
                       return that.ZY+that.amount+that.SKR == item.ZY+(item.JE/100)+item.SKR;  

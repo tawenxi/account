@@ -92,7 +92,10 @@
 						<h6 class="btn btn-primary btn-sm" >{{ substr($result->PDRQ, 3) }}</h6>
 					</td>
 					<td  >
-						<h6 class="btn btn-success btn-sm">{{substr($result->QS_RQ,3)?:'未生效'}} </h6>
+						<h6 class="{{($result->SH_RQ)?(($result->NEWDYBZ==='已打印')?((substr($result->QS_RQ,3)?'btn btn-success btn-sm':'btn btn-success btn-sm')):'btn btn-primary btn-sm'):'btn btn-danger btn-sm'}}">
+							{{($result->SH_RQ)?(($result->NEWDYBZ==='已打印')?((substr($result->QS_RQ,3)?:'已打印')):'未打印'):($result->qs?substr($result->QS_RQ,3):'未审核')}} </h6>
+
+						
 					</td>
 					<td >
 						<a href="/point/{{$result->id}}" title={{ $result->beizhu }}>

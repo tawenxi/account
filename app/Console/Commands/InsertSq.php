@@ -74,13 +74,15 @@ class InsertSq extends Command
 
             if ($value['label'] > 0 && is_numeric($value['label'])) {
                 $value['label'] = (integer)($value['label']);
+            } elseif ($value['label'] == '@') {
+
             } else {
                 throw new Exception('标签无效');
             }
 
             $labels =  Payout::all()->pluck('label')->unique();
 
-            if ($labels->contains($value['label'])) {
+            if ($labels->contains($value['label']) && $value['label'] != '@') {
                 dump($value['label']);
                 throw new Exception('重复拨款');
             } 

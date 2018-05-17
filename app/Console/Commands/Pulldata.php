@@ -122,6 +122,18 @@ class Pulldata extends Command
             if (!isset($zfpzdata['MXZBWH'])) {
                 $zfpzdata['MXZBWH'] = '';
             }
+
+            if (isset($zfpzdata['SH_RQ'])) {
+
+                if ($zfpzdata['SH_RQ'] == '_') {
+
+                $zfpzdata['SH_RQ'] = NULL;
+                }
+                
+            }
+
+            
+
             Zfpz::updateOrCreate(['PDH' => $zfpzdata['PDH']], $zfpzdata);
         }
         $PDH_count1 = Zfpz::all()->pluck(['PDH'])->unique()->count();

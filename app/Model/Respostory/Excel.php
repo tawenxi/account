@@ -86,7 +86,7 @@ class Excel extends Model
         }
     }
 
-    public function export($blade)
+    public function export2($blade)
     {
         $data = $this->viewData;
         \Excel::create($this->viewName, function ($excel) use ($data,$blade) {
@@ -108,5 +108,15 @@ class Excel extends Model
         $this->viewData = $viewData;
 
         return $this;
+    }
+
+
+    public function export($cellData)
+    {
+        \Excel::create('laravel',function($excel) use ($cellData){
+            $excel->sheet('score', function($sheet) use ($cellData){
+                $sheet->rows($cellData);
+            });
+        })->export('xls');
     }
 }
