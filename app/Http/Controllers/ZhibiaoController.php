@@ -225,7 +225,10 @@ class ZhibiaoController extends Controller
             });
           });                          
         $results = $results->flatten(1);
-  
+        
+       if ($request->text == 1) {
+           return $this->excel->exportBlade('zhibiao.testblade', compact('results','request'))->render();
+       }
        return $this->excel->exportBlade('zhibiao.blade', compact('results','request'))->render();
     }
 
