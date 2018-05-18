@@ -1,4 +1,5 @@
-Vue.use(VueResource);
+//Vue.use(VueResource);
+Vue.prototype.$http = axios;
 Vue.component('v-select', VueSelect.VueSelect);
   new Vue({
   el: '#app',

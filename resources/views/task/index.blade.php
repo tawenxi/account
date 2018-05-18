@@ -157,6 +157,7 @@
   <script async defer src="/task/js/buttons.js"></script>
 </body>
 
+<script src="/task/js/axios.js"></script>
 <script src="/task/js/lodash.js"></script>
 <script src="/task/js/resource.js"></script>
 <script src="/task/js/app.js" type="text/javascript" ></script>
