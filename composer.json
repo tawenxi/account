@@ -20,7 +20,6 @@
         "maatwebsite/excel": "2.1.23",
         "naux/sendcloud": "^1.1",
         "nicolaslopezj/searchable": "^1.9",
-        "nunomaduro/collision": "^2.0",
         "overtrue/laravel-ueditor": "~1.0",
         "pda/pheanstalk": "~3.0",
         "predis/predis": "^1.1",
