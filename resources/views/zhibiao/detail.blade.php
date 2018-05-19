@@ -107,7 +107,7 @@
 					</td>
 					<td >
 						<a href="/{{$result->SKR}}/boss">
-							<h6>{{$result->SKR}}</h6>
+							<h6 class="{{ ($result->SKZH == "1783401262206010010001")?'btn btn-sm btn-danger':'' }}">{{$result->SKR}}</h6>
 						</a>
 						
 					</td>

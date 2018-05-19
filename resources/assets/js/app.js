@@ -8,15 +8,17 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import VueClipboard from 'vue-clipboard2';
 import VueResource from 'vue-resource';
-Vue.use(VueResource);
 import vSelect from 'vue-select';
-
 import TurbolinksAdapter from 'vue-turbolinks';
-Vue.use(TurbolinksAdapter);
-
 import CxltToastr from 'cxlt-vue2-toastr';
 import 'cxlt-vue2-toastr/dist/css/cxlt-vue2-toastr.css';
+
+Vue.use(VueClipboard);
+Vue.use(VueResource);
+Vue.use(TurbolinksAdapter);
+
 var toastrConfigs = {
     position: 'top right',
     showDuration: 20000,
@@ -52,6 +54,15 @@ document.addEventListener('turbolinks:load', () => {
         },
 
         methods:{
+             doCopy: function ($guzzleid) {
+                this.$copyText($guzzleid).then(function (e) {
+                  alert('已复制'+$guzzleid)
+                  console.log(e)
+                }, function (e) {
+                  alert('Can not copy')
+                  console.log(e)
+                })
+            },
             hidden(id) {
                 this.shouldHidden = false;
                 this.hiddenId.push(id);

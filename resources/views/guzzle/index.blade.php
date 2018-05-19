@@ -23,12 +23,17 @@
 			</thead>
 			<tbody class='table-hover'>
 				@foreach ($guzzledbs as $guzzledb)
-					<tr class={{ empty($guzzledb->body)?'bg-danger':(
-						$guzzledb->useable?'alert-success':'')}}>
+					<tr class={{ empty($guzzledb->body)?'bg-danger':(($guzzledb->ZCLXDM!='0202')?'bg-warning':(
+						$guzzledb->useable?'alert-success':''))}}>
 						<td>{{ $loop->index+1 }}</td>
 						<td>
-							<a  class="badge badge-primary" href="{{ $guzzledb->ZBID }}/show">{{$guzzledb->ZBID}}
+							<a href="/showzbdetail/{{ $guzzledb->ZBID }}" class="btn btn-warning btn-sm">O</a>
+							<a  class="badge badge-primary" href="{{ $guzzledb->ZBID }}/show"
+								
+							>{{substr($guzzledb->ZBID,11)}}
 							</a>
+
+							<button type="button" class="btn btn-sm btn-success" @click=doCopy("{{ $guzzledb->ZBID }}")>O</button>
 						</td>
 						<td><h5>{{$guzzledb->ZY}}</h5></td>
 						<td><h5>{{$guzzledb->ZJXZMC}}</h5></td>
