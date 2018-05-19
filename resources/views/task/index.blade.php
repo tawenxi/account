@@ -27,6 +27,10 @@
     <h1>财务任务管理器</h1>
     <section class="todo-wrapper">
       <h2 class="todo-title">@{{ today.day }}<br>@{{ today.date }}</h2>
+
+{{--       <pre>
+        @{{ todoList }}
+      </pre> --}}
       <table class="table table-hover" v-if="Zfpz[0]">
         <thead>
           <tr>
@@ -116,7 +120,7 @@
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKYH}}</span>
             <span class="col-md-1"><span class="text-danger">|</span >@{{item.label}}</span>
           </div>
-            <span class="delete" @click="deleteItem(item)"></span>
+            <span class="delete" @click="deleteItem(item)">@{{ fmtDate((item.label-(-1500000000))*1000) }}</span>
           </li>
         </transition>  
       </div> 
