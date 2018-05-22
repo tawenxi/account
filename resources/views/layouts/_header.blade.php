@@ -109,7 +109,7 @@
                     <li><a class="dropdown-item"  href="/zbdetail?search=fail:1">[账号错误]</a></li>
                     <li class="dropdown-divider"></li>
                    
-                    <li><a class="dropdown-item"  href="/taskmanager">taskmanager</a></li> 
+                    <li><a class="dropdown-item"  href="/taskmanager" data-turbolinks="false">taskmanager</a></li> 
 
 
                 </ul>

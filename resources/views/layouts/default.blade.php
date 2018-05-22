@@ -5,7 +5,22 @@
     <link rel="stylesheet" href={{ asset('css/app.css') }}>
     <link rel="stylesheet" href="/css/libs.css">
     <link href="/css/toastr.css" rel="stylesheet">
-
+    <style>
+    tbody {
+        display:block;
+        max-height:600px;
+        overflow:auto;
+    }
+    thead, tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;
+        overflow: scroll;
+    }
+    tr td {
+      word-wrap:break-word;
+    }
+    </style>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- <meta name="turbolinks-visit-control" content="reload"> --}}
 

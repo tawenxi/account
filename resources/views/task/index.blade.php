@@ -120,7 +120,7 @@
             <span class="col-md-2"><span class="text-danger">|</span>@{{item.SKYH}}</span>
             <span class="col-md-1"><span class="text-danger">|</span >@{{item.label}}</span>
           </div>
-            <span class="delete" @click="deleteItem(item)">@{{ fmtDate((item.label-(-1500000000))*1000) }}</span>
+            <span class="delete" @click="deleteItem(item)"></span>
           </li>
         </transition>  
       </div> 
