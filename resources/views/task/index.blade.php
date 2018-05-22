@@ -107,7 +107,7 @@
 
 
         <transition-group name="todo-item" tag="ul" class="todo-list">
-          <li v-for="(item, index) in pending" v-bind:key="item.ZY"
+          <li v-for="(item, index) in pending" v-bind:key="item.id"
           :id="[item.tagged?'tagged':((item.ZFFS == '待定')?'':((item.ZFFS == '直接')?'zhijie':'shouquan'))]">
             <input class="todo-checkbox" v-bind:id="'item_' + item.id" v-model="item.done" type="checkbox">
             <label v-bind:for="'item_' + item.id"></label>
@@ -133,7 +133,7 @@
         <h3 style="text-align: center;">Completed tasks: @{{ completedPercentage }}</h3>
         <h3  style="text-align: center; color:red">@{{ completedTotle }}</h3>
         <transition-group name="todo-item" tag="ul" class="todo-list">
-          <li v-for="(item, index) in completed" v-bind:key="item.ZY" 
+          <li v-for="(item, index) in completed" v-bind:key="item.id" 
           :id="[item.tagged?'tagged':((item.ZFFS == '待定')?'':((item.ZFFS == '直接')?'zhijie':'shouquan'))]">
             <input class="todo-checkbox" v-bind:id="'item_' + item.id" v-model="item.done" type="checkbox">
             <label v-bind:for="'item_' + item.id"></label>
