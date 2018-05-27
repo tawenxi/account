@@ -7,11 +7,8 @@
   <link rel="stylesheet" type="text/css" href="/task/css/styles.css">
   <link rel="stylesheet" href="/task/css/app.css">
   <link href="/task/css/bs3.css" rel="stylesheet">
-
-  <script src="/task/js/vue.js"></script>
-  <script src="/task/js/select.js"></script>
-
-
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -158,10 +155,6 @@
       </div>
     </section>
   </div>
-  <script async defer src="/task/js/buttons.js"></script>
+  <script src="/js/task.js?t="<?=time()?> type="text/javascript" ></script>
 </body>
 
-<script src="/task/js/axios.js"></script>
-<script src="/task/js/lodash.js"></script>
-<script src="/task/js/resource.js"></script>
-<script src="/task/js/app.js" type="text/javascript" ></script>

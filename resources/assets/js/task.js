@@ -1,6 +1,11 @@
+require('./bootstrap');
+require('select');
+window.Vue = require('vue');
+import VueSelect from 'vue-select';
+
 //Vue.use(VueResource);
 Vue.prototype.$http = axios;
-Vue.component('v-select', VueSelect.VueSelect);
+Vue.component('v-select', VueSelect);
   new Vue({
   el: '#app',
   data() {
@@ -148,7 +153,7 @@ Vue.component('v-select', VueSelect.VueSelect);
     validate(){
       this.error = false;
       var that = this.new_todo;
-      $result = this.todoList.find((item, index, arr) => {
+      var $result = this.todoList.find((item, index, arr) => {
         return item.ZY == this.new_todo.ZY && item.amount == this.new_todo.amount && item.SKR == this.new_todo.SKR;
       });
 
@@ -271,7 +276,7 @@ Vue.component('v-select', VueSelect.VueSelect);
       // validation check
       if (this.new_todo.ZY) {
         this.todoList.unshift({
-          id: this.todoList.length?((this.todoList.reverse()[0].id)+1):1,
+          id: this.todoList.length?(_.maxBy(this.todoList, 'id').id + 1):1,
           ZY: this.new_todo.ZY,
           amount: parseFloat(this.new_todo.amount),
           SKR: this.new_todo.SKR,
