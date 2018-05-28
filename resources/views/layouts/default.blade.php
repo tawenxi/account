@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/libs.css">
     <link href="/css/toastr.css" rel="stylesheet">
     <style>
-    tbody {
+/*    tbody {
         display:block;
         max-height:600px;
         overflow:auto;
@@ -19,14 +19,14 @@
     }
     tr td {
       word-wrap:break-word;
-    }
+    }*/
     </style>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- <meta name="turbolinks-visit-control" content="reload"> --}}
 
     <script src={{ mix('/js/app.js') }}></script>
-    <script src="js/socket.io.slim.js"></script>
-    <script src="js/toastr.min.js"></script>
+    <script src="/js/socket.io.slim.js"></script>
+    <script src="/js/toastr.min.js"></script>
   </head>
   <body style="padding-top: 0px;background:url('/image/bg{{ random_int(11, 11) }}.jpg');">
 @if (!\Auth::check())
