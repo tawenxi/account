@@ -168,7 +168,7 @@ return [
         Overtrue\LaravelUEditor\UEditorServiceProvider::class,
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
 
-        
+        Laracasts\Matryoshka\MatryoshkaServiceProvider::class,
         SebastiaanLuca\Helpers\Methods\GlobalHelpersServiceProvider::class,
         SebastiaanLuca\Helpers\Collections\CollectionMacrosServiceProvider::class,
         Naux\Mail\SendCloudServiceProvider::class,
