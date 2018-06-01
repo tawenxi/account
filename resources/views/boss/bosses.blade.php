@@ -24,9 +24,6 @@
 			<tbody class='table-hover'>
 				@foreach ($bosses as $boss)
 				<tr>
-
-
-
 						<td >
 							<a href="/{{ $boss->name }}/boss">{{ $boss->name }}</a>
 						</td>
@@ -34,13 +31,12 @@
 						<td >{{ $boss->totalpayout }}</td>
 
 						<td>{{ $boss->bankaccount }}<br>
+							@cache($boss->name)
 							@foreach (boss_village($boss->name,1) as $village)
 								<a href="project/tozfl/{{ $village }}" class="btn btn-success btn-sm">{{ $village }}</a>
 							@endforeach 
+							@endcache
 						</td>
-
-
-
 
 						<td>{{ $boss->bank }}</td>
 						<td class='btn btn-link'>
