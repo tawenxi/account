@@ -15,6 +15,7 @@
 				<tr class='bg-primary'>
 				 	<th><h6>id</h6></th>
 					{{-- <th><h6>科目</h6></th> --}}
+					<th><h6>追述</h6></th>
 					<th><h6>指标ID</h6></th>
 					<th><h6>日期</h6></th>
 					<th><h6>摘要</h6></th>
@@ -39,9 +40,15 @@
 					<tr class={{ ($divider = $result->projects->sum(function($item){
 					                                return $item->pivot->amount;
 					                           })>0)?'alert-warning':(abs($result->JE-$result->zfpzs->sum('JE'))<1?'alert-danger':"") }}>
-					   	<td>{{ $loop->index+1 }}</td>					
+					   	<td>{{ $loop->index+1 }}</td>
+					   	<td>
+					   		@if ($result->prezbid)
+					   			<a href="/sourcezb/{{ $result->ZBID }}" class="btn btn-primary btn-sm">O</a>
+					   		@endif
+					   	</td>					
 						<td class="small">
-							<a href="/showzbdetail/{{ $result->ZBID }}">{{$result->ZBID}} 
+							
+							<a href="/showzbdetail/{{ $result->ZBID }}" class="btn btn-success btn-sm">{{substr($result->ZBID,11)}} 
 							</a>
 						</td>
 						<td>{{$result->LR_RQ}}</td>
@@ -107,6 +114,7 @@
 			</tbody>
 				<tr class='bg-primary'>
 					<th><h6>id</h6></th>
+					<th><h6>追述</h6></th>
 					<th><h6>指标ID</h6></th>
 					<th><h6>日期</h6></th>
 					<th><h6>摘要</h6></th>

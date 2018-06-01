@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Model\Respostory\Excel;
 use App\Model\Respostory\GetSqlResult;
 use App\Model\Respostory\Guzzle;
@@ -230,6 +231,23 @@ class ZhibiaoController extends Controller
            return $this->excel->exportBlade('zhibiao.testblade', compact('results','request'))->render();
        }
        return $this->excel->exportBlade('zhibiao.blade', compact('results','request'))->render();
+    }
+
+
+    public function sourcezb($zbid)
+    {
+      
+      $zbid = $this->repository_zb->pushCriteria(WithoutGlobalScopesCriteria::class)->findByField('ZBID', $zbid)->first();
+     
+      $zbids = [$zbid->ZBID];
+      while ($zbid = $zbid->prezbid()) {
+          $zbids[] = $zbid->ZBID;
+          //dd($zbids);
+      }
+      //dd($zbids);
+      $results = $this->repository_zfpz->pushCriteria(WithoutGlobalScopesCriteria::class)->findWhereIn('ZBID', $zbids);
+
+      return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
     }
 
 }

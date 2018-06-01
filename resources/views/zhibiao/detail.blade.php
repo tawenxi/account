@@ -1,6 +1,10 @@
 @extends('layouts.default')
 @section('content')
 <h1>左安镇指标支出所有明细表({{ $results->count().'条' }})</h1>
+@if (strstr(url()->full(),'sourcezb') AND $results->first())
+<h1>原始指标总额({{ findOriginZb($results->first()->zb->ZBID)->JE.'元' }})</h1>
+<h1>原始指标ID({{ findOriginZb($results->first()->zb->ZBID)->ZBID }})</h1>
+@endif
 @if ($results->where('deleted',1)->count())
 	<div class="alert alert-danger text-center">
 		已被删除({{ $results->where('deleted',1)->count().'条' }})
@@ -93,7 +97,7 @@
 					</td>
 					<td  >
 						<h6 class="{{($result->SH_RQ)?(($result->NEWDYBZ==='已打印')?((substr($result->QS_RQ,3)?'btn btn-success btn-sm':'btn btn-success btn-sm')):'btn btn-primary btn-sm'):'btn btn-danger btn-sm'}}">
-							{{($result->SH_RQ)?(($result->NEWDYBZ==='已打印')?((substr($result->QS_RQ,3)?:'已打印')):'未打印'):($result->qs?substr($result->QS_RQ,3):'未审核')}} </h6>
+							{{ $result->status }} </h6>
 
 						
 					</td>

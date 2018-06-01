@@ -59,6 +59,30 @@ class Zfpz extends Model
         return div($this->attributes['JE']/100);
     }
 
+    public function getStatusAttribute($amount)
+    {
+        if ($this->SH_RQ) {
+            if ($this->NEWDYBZ==='已打印') {
+                if (!substr($this->QS_RQ,3)) {
+                    return '已打印';
+                } else {
+                    return substr($this->QS_RQ,3);
+                }
+                
+            } else {
+                return '未打印';
+            }
+            
+        } else {
+            if ($this->qs) {
+                return substr($this->QS_RQ,3);
+            } else {
+                return '未审核';
+            }
+
+        }
+    }
+
     public function project()
     {
         return $this->belongsTo(Project::class);

@@ -123,3 +123,5 @@ Route::get('kk', function(){
 );
 
 Route::get('blade', 'zhibiaoController@blade');
+
+Route::get('sourcezb/{zbid}', 'zhibiaoController@sourcezb');

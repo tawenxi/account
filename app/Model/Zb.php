@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Model\Zb;
 use App\Scopes\KJNDScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,6 +22,15 @@ class Zb extends Model
     public function account()
     {
         return $this->belongsTo(Account::class, 'account_number', 'account_number');
+    }
+
+    public function prezbid()
+    {   
+        $prezbid = static::withoutGlobalScopes()->where('zbid',$this->prezbid)->first();
+        if ($prezbid) {
+            return $prezbid;
+        }
+        return false;
     }
 
     public $timestamps = false;
@@ -121,7 +131,7 @@ class Zb extends Model
     }
 
     protected $fillable = [
-    'id', 'GSDM', 'KJND', 'MXZBLB', 'MXZBBH', 'MXZBWH', 'MXZBXH', 'ZZBLB', 'ZZBBH', 'FWRQ', 'DZKDM', 'YSDWDM', 'ZBLYDM', 'YSKMDM', 'ZJXZDM', 'JFLXDM', 'ZCLXDM', 'XMDM', 'ZFFSDM', 'JE', 'ZY', 'LRR_ID', 'LRR', 'LR_RQ', 'XGR_ID', 'CSR_ID', 'CSR', 'CS_RQ', 'HQBZ', 'HQWCBZ', 'SHJBR_ID', 'SHR_ID', 'SHR', 'SH_RQ', 'SNJZ', 'NCYS', 'BNZA', 'BNZF', 'BNBF', 'ZBYE', 'SJLY', 'YZBLB', 'YSGLLXDM', 'ZBZT', 'TZBZ', 'JZRQ', 'ZBID', 'ZBIDWM', 'DCBZ', 'DCRID', 'STAMP', 'OAZT', 'TZH', 'JZR_ID', 'PZFLH', 'JZR_ID1', 'PZFLH1', 'DJZT', 'SCJHJE', 'DYBZ', 'YWLXDM', 'XMFLDM', 'SJWH', 'KZZLDM1', 'ASHR_ID', 'ASHR', 'ASH_RQ', 'ASHJD', 'AXSHJD', 'ASFTH', 'ZBLB', 'DZKMC', 'ZBLYMC', 'YSDWMC', 'YSDWQC', 'YSKMMC', 'YSKMQC', 'ZJXZMC', 'XMMC', 'YSGLLXMC', 'HQNAME', 'ZZBWH', 'ZZBXH','YWLXMC','XMFLMC','JFLXMC','JFLXQC'
+    'id', 'GSDM', 'KJND', 'MXZBLB', 'MXZBBH', 'MXZBWH', 'MXZBXH', 'ZZBLB', 'ZZBBH', 'FWRQ', 'DZKDM', 'YSDWDM', 'ZBLYDM', 'YSKMDM', 'ZJXZDM', 'JFLXDM', 'ZCLXDM', 'XMDM', 'ZFFSDM', 'JE', 'ZY', 'LRR_ID', 'LRR', 'LR_RQ', 'XGR_ID', 'CSR_ID', 'CSR', 'CS_RQ', 'HQBZ', 'HQWCBZ', 'SHJBR_ID', 'SHR_ID', 'SHR', 'SH_RQ', 'SNJZ', 'NCYS', 'BNZA', 'BNZF', 'BNBF', 'ZBYE', 'SJLY', 'YZBLB', 'YSGLLXDM', 'ZBZT', 'TZBZ', 'JZRQ', 'ZBID', 'ZBIDWM', 'DCBZ', 'DCRID', 'STAMP', 'OAZT', 'TZH', 'JZR_ID', 'PZFLH', 'JZR_ID1', 'PZFLH1', 'DJZT', 'SCJHJE', 'DYBZ', 'YWLXDM', 'XMFLDM', 'SJWH', 'KZZLDM1', 'ASHR_ID', 'ASHR', 'ASH_RQ', 'ASHJD', 'AXSHJD', 'ASFTH', 'ZBLB', 'DZKMC', 'ZBLYMC', 'YSDWMC', 'YSDWQC', 'YSKMMC', 'YSKMQC', 'ZJXZMC', 'XMMC', 'YSGLLXMC', 'HQNAME', 'ZZBWH', 'ZZBXH','YWLXMC','XMFLMC','JFLXMC','JFLXQC','prezbid'
 
     ];
 }

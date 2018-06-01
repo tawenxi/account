@@ -135,3 +135,21 @@ if (!function_exists('preg_replace_with_count')) {
    }
 
 
+   function findOriginZb($zbid)
+   {
+
+        $zbid =\App\Model\Zb::WithoutGlobalScopes()->where('ZBID',$zbid)->first();
+
+      if ( $zbid->prezbid() === false) {
+          return  $zbid;
+      }
+      while ($zbid = $zbid->prezbid()) {
+          $originZb = $zbid;
+      }
+      if ($originZb) {
+          return $originZb;
+      }
+        return null;
+   }
+
+

@@ -90,6 +90,9 @@
 
       <div v-if="pending.length > 0">
         <h3  style="text-align: center;">You have @{{ pending.length }} pending item<span v-if="todoList.length>1">s</span></h3>
+
+        <h3  style="text-align: center;">You have @{{ completed.length }} monitered item<span v-if="todoList.length>1">s</span></h3>
+
         <h3  style="text-align: center; color:red">@{{ Math.round(pendingTotle * 100) / 100 }}</h3>
 
             <li class="list-group-item list-group-item-success glyphicon-th-list">
