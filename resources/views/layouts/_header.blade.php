@@ -147,7 +147,6 @@
             <input class="form-control" name="q" type="text" placeholder="Search" aria-label="Search">
             </form>
 
-               {{--        @endcan    --}} 
             <li  class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle"  id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ \Auth::check()?Auth::user()->name:"" }} <b class="caret"></b>

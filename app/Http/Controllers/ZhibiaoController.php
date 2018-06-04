@@ -47,7 +47,7 @@ class ZhibiaoController extends Controller
      */
     public function index()
     {
-        $results = $this->repository_zb->with(['zfpzs','projects','zhijie','shouquan'])->all();
+        $results = $this->repository_zb->with(['zfpzs','projects','zhijie','shouquan'])->orderBy('SH_RQ','desc')->all();
 
         return $this->excel->exportBlade('zhibiao.index', compact('results'))->render();
     }

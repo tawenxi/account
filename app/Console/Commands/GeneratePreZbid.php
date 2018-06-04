@@ -38,6 +38,36 @@ class Test extends Command
      */
     public function handle()
     {
+        //$this->setPreZbid();
+        $this->setOriginZbid();
+    }
+
+    public function setOriginZbid()
+    {
+        $zbs = Zb::WithoutGlobalScopes()->get();
+        $zbs->each(function($zb){
+            $zb->update(['originzbid'=>$this->OriginZbid($zb->ZBID)]);
+        });
+
+        $this->info('更新源头指标ID成功！');
+    }
+    public function OriginZbid($zbid)
+    {
+          $zbid =Zb::WithoutGlobalScopes()->where('ZBID',$zbid)->first();
+          if ( $zbid->prezbid() === false) {
+              return  null;
+          }
+          while ($zbid = $zbid->prezbid()) {
+              $originZb = $zbid;
+          }
+          if ($originZb) {
+              return $originZb->ZBID;
+          }
+        return null;
+    }
+
+    public function setPreZbid()
+    {
         session(['ND'=>'2018']);
 
         Zb::withoutGlobalScopes()->get()->each(function($item){
@@ -45,5 +75,6 @@ class Test extends Command
             $item->update(['prezbid'=>$prezbid]);
         });
         $this->info('更新来源指标数据成功');
+        session(['ND'=>'2018']);
     }
 }

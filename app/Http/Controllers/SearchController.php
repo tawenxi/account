@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Account;
 use App\Model\Payout;
 use Illuminate\Http\Request;
+use App\Model\Zb;
 use App\Model\Zfpz;
 
 class SearchController extends Controller
@@ -98,29 +99,33 @@ class SearchController extends Controller
         } catch (\Exception $e) {
             if ($e->getmessage()!='') {
                 if (!is_numeric($query)) {
-                        if (strstr($query, ' ')) {
-                        $keyWords = explode(' ', $query);
-                        $concatenated = collect();
-                        foreach ($keyWords as $keyword) {
-                            $result = Zfpz::withoutGlobalScopes()->where('ZY', 'like', '%'.$keyword.'%')->orWhere('SKR' ,'like', '%'.$keyword.'%')->get();
-                            $concatenated = $concatenated->merge($result);
-                        }
-                        $results = $concatenated->unique();
-                    } elseif(strstr($query, '+')){
-                        $keyWords = explode('+', $query);
-                        $concatenated = collect();
-                        foreach ($keyWords as $keyword) {
-                            if (isset($result)) {
-                                $result = $result->where('ZY', 'like', '%'.$keyword.'%');
-                            } else {
-                                $result = Zfpz::withoutGlobalScopes()->where('ZY', 'like', '%'.$keyword.'%');
+                        if (substr($query,0,1) == '@') {
+                            $query = substr($query,1);
+                            $results = Zb::withoutGlobalScopes()->where('ZY', 'like', '%'.$query.'%')->orderBy('SH_RQ','desc')->get();
+                            return view('zhibiao.index', compact('results'));
+                        } elseif (strstr($query, ' ')) {
+                            $keyWords = explode(' ', $query);
+                            $concatenated = collect();
+                            foreach ($keyWords as $keyword) {
+                                $result = Zfpz::withoutGlobalScopes()->where('ZY', 'like', '%'.$keyword.'%')->orWhere('SKR' ,'like', '%'.$keyword.'%')->get();
+                                $concatenated = $concatenated->merge($result);
                             }
+                            $results = $concatenated->unique();
+                        } elseif(strstr($query, '+')){
+                            $keyWords = explode('+', $query);
+                            $concatenated = collect();
+                            foreach ($keyWords as $keyword) {
+                                if (isset($result)) {
+                                    $result = $result->where('ZY', 'like', '%'.$keyword.'%');
+                                } else {
+                                    $result = Zfpz::withoutGlobalScopes()->where('ZY', 'like', '%'.$keyword.'%');
+                                }
+                            }
+                            $concatenated = $result->get();
+                            $results = $concatenated->unique();
+                        } else{
+                            $results = Zfpz::withoutGlobalScopes()->where('ZY', 'like', '%'.$query.'%')->orWhere('SKR' ,'like', '%'.$query.'%')->get();
                         }
-                        $concatenated = $result->get();
-                        $results = $concatenated->unique();
-                    } else{
-                        $results = Zfpz::withoutGlobalScopes()->where('ZY', 'like', '%'.$query.'%')->orWhere('SKR' ,'like', '%'.$query.'%')->get();
-                    }
                 } else {
                     $results = Zfpz::withoutGlobalScopes()->where('JE', $query*100)->get();
                 }

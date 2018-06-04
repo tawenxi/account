@@ -43,7 +43,7 @@
 					   	<td>{{ $loop->index+1 }}</td>
 					   	<td>
 					   		@if ($result->prezbid)
-					   			<a href="/sourcezb/{{ $result->ZBID }}" class="btn btn-primary btn-sm">O</a>
+					   			<a href="/sourcezb/{{ $result->ZBID }}" class="btn btn-primary btn-sm">{{ $result->OriginZbYear }}</a>
 					   		@endif
 					   	</td>					
 						<td class="small">
