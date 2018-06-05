@@ -114,10 +114,52 @@
 
         <div class="form-group">
               <label for="describe"><font color="black">已分配到项目：</font></label>
+              <br>
+              <a class="btn btn-primary" href="/divider/{{ $zb->transforToOrigin()->id }}">{{ $zb->transforToOrigin()->ZBID }}</a>
+              @if ($zb->isOriginZb())
+                <button type="submit" class="btn btn-success">是原始指标</button>
+              @else
+                <button type="submit" class="btn btn-danger">不是原始指标</button>
+              @endif
               <table class="table table-bordered table-striped table-hover table-dark table-sm">
                 <thead>
                   <tr>
-                    <th>项目</th><th>金额</th><th>删除</th>
+                    <th>项目</th><th>金额</th><th>ZBID</th><th>删除</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach ($zb->transforToOrigin()->projects as $project)
+                    <tr>
+                    <td class="col-md-4">{{ $project->name }}</td>
+                    <td>{{ $project->pivot->amount }}</td>
+                    <td>
+                      <a href="/sourcezb/{{ $zb->ZBID }}" class="btn btn-success btn-sm">
+                      {{ $zb->transforToOrigin()->ZBID }}
+                      </a>
+                    </td>
+                    <td class="col-md-1">
+                        {!! Form::open(['method' => 'post',  'route' => ['project.deletezb'],'class' => 'form-horizontal']) !!}
+                        <input type="hidden" name="project_id" value={{ $project->id }}>
+                        <input type="hidden" name="zb_id" value={{ $zb->id }}>
+                        <input type="hidden" name="amount" value={{ $project->pivot->amount }}>
+
+
+                        {!! Form::submit('删除', ['class' => 'btn btn-danger pull-right btn-sm']) !!}
+            
+                        {!! Form::close() !!}
+                    </td>
+
+                    </tr>
+                  @endforeach
+                  
+                </tbody>
+              </table>
+
+
+              <table class="table table-bordered table-striped table-hover table-dark table-sm">
+                <thead>
+                  <tr>
+                    <th>项目</th><th>金额</th><th>ZBID</th><th>删除</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -125,6 +167,11 @@
                     <tr>
                     <td class="col-md-4">{{ $project->name }}</td>
                     <td>{{ $project->pivot->amount }}</td>
+                    <td>
+                      <a href="/sourcezb/{{ $zb->ZBID }}" class="btn btn-success btn-sm">
+                      {{ $zb->transforToOrigin()->ZBID }}
+                      </a>
+                    </td>
                     <td class="col-md-1">
                         {!! Form::open(['method' => 'post',  'route' => ['project.deletezb'],'class' => 'form-horizontal']) !!}
                         <input type="hidden" name="project_id" value={{ $project->id }}>

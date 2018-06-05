@@ -35,7 +35,7 @@
 
 							<button type="button" class="btn btn-sm btn-success" @click=doCopy("{{ $guzzledb->ZBID }}")>O</button>
 						</td>
-						<td><h5>{{$guzzledb->ZY}}</h5></td>
+						<td><h6>{{$guzzledb->ZY}}</h6></td>
 						<td><h5>{{$guzzledb->ZJXZMC}}</h5></td>
 						<td>{{$guzzledb->YKJHZB}}</td>
 						<td>{{$guzzledb->KYJHJE}}</td>

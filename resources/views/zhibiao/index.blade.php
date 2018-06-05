@@ -57,7 +57,7 @@
 								<button type="submit" title="{{$result->zb?$result->zb->ZY:'' }}" class="btn btn-primary btn-sm">备注</button>
 								<a href="/divider/{{ $result->id }}" title="{{$result->beizhu?$result->beizhu:'' }}" >
 							@endif
-							{{$result->ZY}}
+							<a href="/es?q={{ '@'.$result->ZY }}" class="btn  btn-success btn-sm">O</a>{{$result->ZY}}
 							@if ($result->beizhu)
 								</a>
 							@endif

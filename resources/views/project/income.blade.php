@@ -6,7 +6,7 @@
 <article>
 	
 	<div class='h4 row'>
-		<table class="table table-bordered table-striped table-hover table-condensed">
+		<table class="table table-dark table-bordered table-striped table-hover table-condensed table-sm">
 			<caption>
 				<center>{{ date("Y-m-d H:i:s") }}</center>
 			</caption>
@@ -27,7 +27,7 @@
 					<th>单位</th>
 				</tr>
 			</thead>
-			<tbody class='alert-info'>
+			<tbody class='table-hover'>
 				@foreach ($zbs as $result)
 					<tr class={{ abs($result->JE-$result->zfpzs->sum('JE'))<1?'alert-danger':""}}>
 					   	<td>{{ $loop->index+1 }}</td>					
@@ -36,7 +36,7 @@
 							</a>
 						</td>
 						<td>{{$result->LR_RQ}}</td>
-						<td class="col-md-3">{{$result->ZY}}</td>
+						<td class="col-md-3"><a href="/es?q={{ '@'.$result->ZY }}" class="btn  btn-success">{{$result->ZY}}</a></td>
 						<td>{{substr($result->ZJXZMC,0,12)}}</td>
 						<td>{{$result->JE}}</td>
 						<td>{{div($result->yeamount)}}</td>

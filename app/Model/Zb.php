@@ -19,6 +19,8 @@ class Zb extends Model
      *
      * @var array
      */
+
+    public $timestamps = false;
     public function account()
     {
         return $this->belongsTo(Account::class, 'account_number', 'account_number');
@@ -33,7 +35,18 @@ class Zb extends Model
         return false;
     }
 
-    public $timestamps = false;
+    public function transforToOrigin()
+    {
+        if ($this->originzbid) {
+            return static::withoutGlobalScopes()->where('ZBID',$this->originzbid)->first();
+        }
+        return $this; 
+    }
+
+    public function isOriginZb()
+    {
+        return $this->originzbid?false:true;
+    }
 
     public function zfpzs()
     {

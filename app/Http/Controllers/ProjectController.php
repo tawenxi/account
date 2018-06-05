@@ -144,7 +144,7 @@ class ProjectController extends Controller
 
     public function divider($zb)
     {
-        $zb = Zb::find($zb);
+        $zb = Zb::withoutGlobalScopes()->find($zb);
         $projects = Project::all();
         return view('project.divider',compact('projects','zb'));
     }
@@ -155,7 +155,12 @@ class ProjectController extends Controller
         $zb->KYX = $request['KYX'];
         $zb->beizhu = $request['beizhu'];
         $zb->save();
+        if ($zb->originzbid) {
+            $zb = $zb->transforToOrigin();
+            \Session::flash('warning', '分配的是原始指标');
+        }
         $is_enough = $zb->judgeAmountEnough($request);
+
         if (!$is_enough) {
             flash()->error('Woohoo', '指标分配失败');
             return redirect()->back();
@@ -163,14 +168,13 @@ class ProjectController extends Controller
 
         if ($request['amount'] != 0) $zb->divide($request['project_id'], $request['amount']);
         flash()->success('Woohoo', '指标分配成功');
-        \Session::flash('success', '指标分配成功');
         return redirect()->back();
     }
 
 
     public function deletezb(Request $request)
     {
-        Zb::find($request['zb_id'])->deletedivide($request['project_id'], $request['amount']);
+        Zb::withoutGlobalScopes()->find($request['zb_id'])->deletedivide($request['project_id'], $request['amount']);
         flash()->success('Woohoo', '删除分配成功');
         \Session::flash('success', '删除分配成功');
         return redirect()->back();
