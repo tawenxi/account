@@ -17,7 +17,25 @@
      <nav id="navtop" class="navbar navbar-dark  pull-right navbar-expand-lg ">
         <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
 
+
           <ul class="navbar-nav">
+            <li  class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle"  id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 更新数据 <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">      
+                  <li><a class="dropdown-item"  href="/pullzhifupz">指标和支付令pullzhifupz</a></li>
+                  <li><a class="dropdown-item"  href="/pullsq">授权信息pullsq</a></li>
+                  <li><a class="dropdown-item"  href="/pullzj">直接指标信息pullzj</a></li>
+                  <li><a class="dropdown-item"  href="/updateboss">BOSSupdateboss</a></li>
+                  <li><a class="dropdown-item"  href="/pullyue">余额pullyue</a></li>
+                  <li><a class="dropdown-item"  href="/pullshenqing">用款计划pullshenqing</a></li>
+                  <li><a class="dropdown-item"  href="/cast">实时信息cast</a></li>
+
+
+                  <li class="dropdown-divider"></li> 
+                </ul>
+              </li>
         <li class="nav-item active"><a class="nav-link" href="{{ url()->full().(stristr(Request::getRequestUri(), '?')?'&':'?').'export=1' }}">导出excel</a></li>
                {{--     @can('showAllSalary')      --}}
 
@@ -50,9 +68,6 @@
 
                 </ul>
               </li>
-             <li><a class="nav-link" href="/searchacc">查询</a></li> 
-             
-
              <li  class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle"  id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                  监控台 <b class="caret"></b>
@@ -61,7 +76,8 @@
                   <li><a class="dropdown-item"  href="/redis">实时监控</a></li>
                   <li><a class="dropdown-item"  href="/rediscache">缓存监控</a></li>
                   <li class="dropdown-divider"></li>
-                  <li><a class="dropdown-item"  href="/dpt">平台更新</a></li>  
+                  <li><a class="dropdown-item"  href="/dpt">平台更新</a></li> 
+                  <li><a class="nav-link" href="/searchacc">查询</a></li>  
                 </ul>
               </li>
 

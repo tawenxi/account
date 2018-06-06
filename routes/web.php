@@ -125,3 +125,11 @@ Route::get('kk', function(){
 Route::get('blade', 'zhibiaoController@blade');
 
 Route::get('sourcezb/{zbid}', 'zhibiaoController@sourcezb');
+
+Route::get('pullzhifupz', 'CommandController@pullzhifupz');
+Route::get('pullsq', 'CommandController@pullsq');
+Route::get('pullzj', 'CommandController@pullzj');
+Route::get('updateboss', 'CommandController@updateboss');
+Route::get('pullyue', 'CommandController@pullyue');
+Route::get('pullshenqing', 'CommandController@pullshenqing');
+Route::get('cast', 'CommandController@cast');
