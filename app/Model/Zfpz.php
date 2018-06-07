@@ -12,7 +12,7 @@ class Zfpz extends Model
 {
     // use SearchableTrait;
     use \App\Model\Tt\RecordsActivity;
-    public $timestamps = false;
+    public $timestamps = true;
     
     public function getZySkrAttribute()
     {

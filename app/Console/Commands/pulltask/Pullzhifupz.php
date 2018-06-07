@@ -63,6 +63,7 @@ class Pullzhifupz extends Command
     public function handle()
     { 
         $this->PullZfpz();
+        $this->cast();
     }
 
     public function PullZfpz()
@@ -70,25 +71,8 @@ class Pullzhifupz extends Command
         session(['ND'=>'2018']);
         \DB::table('zfpzs')->where('QS_RQ','!=',NULL)->update(['qs'=>1]);
         Zfpz::where(['QS_RQ'=>NULL,'received'=>'0'])->delete();
-        $zb_data = $this->guzzle->get_ZB();
-        $collection = collect($zb_data);
-        $collection = $collection->reject(function($item,$key){
-            return !array_key_exists('SHR', $item);
-        })->map(function ($item) {
-            //dd($item["SJWH"]);
-            if ($item["YWLXDM"] !="_" OR
-                $item["XMFLDM"] !="_" ) 
-                dd("发现YWLXDM，XMFLDM异常会影响数据源".$item["YWLXDM"].$item["XMFLDM"] !="_");
-            if (isset($item["SJWH"]) AND $item["SJWH"] !=="" AND $item["SJWH"] !="_") {
-                dd("发现SJWH异常会影响数据源");
-            }
-            $newzb = \App\Model\Zb::where('ZBID',$item['ZBID'])->first();
 
-            if (!$newzb) {
-                $this->newzb[] = $item['ZBID'];
-            }
-            \App\Model\Zb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
-        });
+        $this->pullzb();
 
         $month = '01';
         if (\Carbon\carbon::now()->month>5) {
@@ -137,5 +121,70 @@ class Pullzhifupz extends Command
         if ($PDH_count1 != $PDH_count2) dd('PDH重复');
         Zfpz::where(['received'=>1,'qs'=>0])->whereNotIn('PDH',collect($zfpzdatas)->pluck(['PDH'])->toArray())->update(['deleted'=>1]);
         $this->info('SUCCESS-更新收支指标成功');          
+    }
+
+
+    public function pullzb()
+    {
+        session(['ND'=>'2018']);
+        $zb_data = $this->guzzle->get_ZB();
+        $collection = collect($zb_data);
+        $collection = $collection->reject(function($item,$key){
+            return !array_key_exists('SHR', $item);
+        })->map(function ($item) {
+            //dd($item["SJWH"]);
+            if ($item["YWLXDM"] !="_" OR
+                $item["XMFLDM"] !="_" ) 
+                dd("发现YWLXDM，XMFLDM异常会影响数据源".$item["YWLXDM"].$item["XMFLDM"] !="_");
+            if (isset($item["SJWH"]) AND $item["SJWH"] !=="" AND $item["SJWH"] !="_") {
+                dd("发现SJWH异常会影响数据源");
+            }
+            $newzb = \App\Model\Zb::where('ZBID',$item['ZBID'])->first();
+
+            if (!$newzb) {
+                $this->newzb[] = $item['ZBID'];
+            }
+            \App\Model\Zb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
+        });
+    }
+
+
+    public function cast()
+    {
+        $zbs = [];$datas1 = [];$datas2 = [];
+        if ($this->newpass != []) {
+            $datas1 = zfpz::whereIn('PDH',$this->newpass)->get()->toarray();
+            foreach ($datas1 as $data) {
+                $data['LX'] = '已清算';
+                // Redis::publish('test-channel',json_encode($data));
+                event(new UpdateData($data));
+            }
+        }
+
+        if ($this->newzb != []) {
+            $zbs = ZB::whereIn('ZBID',$this->newzb)->get()->toarray();
+            foreach ($zbs as $data) {
+                $data['LX'] = '收到新指标';
+                Redis::publish('test-channel',json_encode($data));
+            }
+        }
+
+        if ($this->newsh != []) {
+            $datas2 = zfpz::whereIn('PDH',$this->newsh)->get()->toarray();
+            foreach ($datas2 as $data) {
+                $data['LX'] = '已审核';
+                // Redis::publish('test-channel',json_encode($data));
+                event(new UpdateData($data));
+            }
+        }
+        $save_zfpzs = array_merge($datas2,$datas1);
+
+        $zbs = Cache::get('updatedZb')?array_merge($zbs,Cache::get('updatedZb')):$zbs;
+        $save_zfpzs = Cache::get('updatedZfpz')?array_merge($save_zfpzs,Cache::get('updatedZfpz')):$save_zfpzs;
+
+
+        Cache::put('updatedZb', $zbs, 600);
+        Cache::put('updatedZfpz', $save_zfpzs, 600);
+        $this->info('实时监控成功');
     }
 }

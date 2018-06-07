@@ -7,7 +7,7 @@
 
 <article id="app">
     <div  class='h4 row'>
-    <table class="table table-bordered table-striped table-hover table-condensed table-sm table-dark">
+    <table class="table table-dark table-bordered table-striped table-condensed table-sm table-hover">
         <caption>
             <center>{{ date("Y-m-d H:i:s") }}</center>
         </caption>
@@ -90,7 +90,7 @@
 
 <article id="app">
     <div  class='h4 row'>
-    <table class="table table-bordered table-striped table-hover table-condensed">
+    <table class="table table-dark table-bordered table-striped table-condensed table-sm table-hover">
         <caption>
             <center>{{ date("Y-m-d H:i:s") }}</center>
         </caption>
@@ -108,7 +108,7 @@
 
             </tr>
         </thead>
-        <tbody class='alert-info'>
+        <tbody class='alert-hover'>
            
                 <tr v-for="zb in zbs">
 

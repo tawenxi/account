@@ -7,7 +7,7 @@
 
 <article id="app">
     <div  class='h4 row'>
-    <table class="table table-bordered table-striped table-hover table-condensed">
+    <table class="table table-dark table-bordered table-striped table-condensed table-sm table-hover">
         <caption>
             <center>{{ date("Y-m-d H:i:s") }}</center>
         </caption>
@@ -27,7 +27,7 @@
 
             </tr>
         </thead>
-        <tbody class='alert-info'>
+        <tbody class='alert-hover'>
            
                @if ($updatedZfpzs)
                     @foreach ($updatedZfpzs as $zfpz)
@@ -86,7 +86,7 @@
 
 <article id="app">
     <div  class='h4 row'>
-    <table class="table table-bordered table-striped table-hover table-condensed">
+    <table class="table table-dark table-bordered table-striped table-condensed table-sm table-hover">
         <caption>
             <center>{{ date("Y-m-d H:i:s") }}</center>
         </caption>
@@ -102,7 +102,7 @@
                 <th>单位</th>
             </tr>
         </thead>
-        <tbody class='alert-info'>
+        <tbody class='alert-hover'>
            @if ($updatedZbs)
                @foreach ($updatedZbs as $zb)
                      <tr>

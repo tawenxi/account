@@ -87,8 +87,11 @@
 						
 					</td>
 					<td class="small " style="word-break:break-all; word-wrap:break-all;">
+						@if ($result->zb->prezbid)
+					   			<a href="/sourcezb/{{ $result->zb->ZBID }}" class="btn btn-primary btn-sm">{{ $result->zb->OriginZbYear }}</a>
+					   	@endif
 						<a href="/showzbdetail/{{ str_replace('.', '-', $result->ZBID) }}" >
-							<h6>{{$result->zb->ZY}}</h6>
+							<span class="small">{{$result->zb->ZY}}</span>
 						</a> 
 					</td>
 

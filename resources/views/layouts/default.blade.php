@@ -28,7 +28,7 @@
     <script src="/js/socket.io.slim.js"></script>
     <script src="/js/toastr.min.js"></script>
   </head>
-  <body style="padding-top: 0px;background:url('/image/bg{{ random_int(11, 11) }}.jpg');">
+  <body style="padding-top: 0px;background:url('/image/bg{{ random_int(11, 11) }}.jpg') fixed;">
 @if (!\Auth::check())
   @include('layouts._header')
 @endif
