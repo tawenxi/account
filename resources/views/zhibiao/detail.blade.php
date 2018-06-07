@@ -5,21 +5,27 @@
 <h1>原始指标总额({{ findOriginZb($results->first()->zb->ZBID)->JE.'元' }})</h1>
 <h1>原始指标ID({{ findOriginZb($results->first()->zb->ZBID)->ZBID }})</h1>
 @endif
-@if ($results->where('deleted',1)->count())
+@if ($count1 = $results->filter(function($item){
+	return $item->deleted == 1;
+})->count())
 	<div class="alert alert-danger text-center">
-		已被删除({{ $results->where('deleted',1)->count().'条' }})
+		已被删除({{ $count1.'条' }})
 	</div>
 @endif
 
-@if ($results->where('received',0)->count())
+@if ($count2 = $results->filter(function($item){
+	return $item->received == 0;
+})->count())
 	<div class="alert alert-success text-center">
-		未收到({{ $results->where('received',0)->count().'条' }})
+		未收到({{ $count2.'条' }})
 	</div>
 @endif
 
-@if ($results->where('fail',1)->count())
+@if ($count3 = $results->filter(function($item){
+	return $item->fail == 1;
+})->count())
 	<div class="alert alert-info text-center">
-		支付失败({{ $results->where('fail',1)->count().'条' }})
+		支付失败({{ $count3.'条' }})
 	</div>
 @endif
 
@@ -50,7 +56,7 @@
 		<thead>
 			<tr class='bg-primary  '>
 				<th><h6>id</h6></th>
-				<th><h6>支出ID</h6></th>
+				<th><h6>科目</h6></th>
 				<th><h6>ZBID</h6></th>
 				<th><h6>制单日期</h6></th>
 				<th><h6>日期</h6></th>
@@ -74,7 +80,7 @@
 							@if (!is_null($result->account))
 								<a href="{{ route('zbdetail.edit',['id'=>$result->id]) }}" title="{{ $result->account->name }}">
 									{{-- <h6>{{$result->account->name}} </h6> --}}
-									<h6>{{substr($result->account->name,0,1+strrpos($result->account->name,'@')).substr($result->account->name,1+strrpos($result->account->name,'-'))}} </h6>
+									<h6> {{ $result->accountname() }} </h6>
 								</a>
 							@else
 								<form 	 method="GET"
@@ -90,7 +96,7 @@
 						@if ($result->zb->prezbid)
 					   			<a href="/sourcezb/{{ $result->zb->ZBID }}" class="btn btn-primary btn-sm">{{ $result->zb->OriginZbYear }}</a>
 					   	@endif
-						<a href="/showzbdetail/{{ str_replace('.', '-', $result->ZBID) }}" >
+						<a href="/showzbdetail/{{ $result->zbid() }}" >
 							<span class="small">{{$result->zb->ZY}}</span>
 						</a> 
 					</td>
@@ -99,7 +105,7 @@
 						<h6 class="btn btn-primary btn-sm" >{{ substr($result->PDRQ, 3) }}</h6>
 					</td>
 					<td  >
-						<h6 class="{{($result->SH_RQ)?(($result->NEWDYBZ==='已打印')?((substr($result->QS_RQ,3)?'btn btn-success btn-sm':'btn btn-success btn-sm')):'btn btn-primary btn-sm'):'btn btn-danger btn-sm'}}">
+						<h6 class="{{ $result->getclass() }}">
 							{{ $result->status }} </h6>
 
 						
@@ -114,22 +120,22 @@
 					</td>
 					<td >
 						<a href="/{{$result->SKR}}/boss">
-							<h6 class="{{ ($result->SKZH == "1783401262206010010001")?'btn btn-sm btn-danger':'' }}">{{$result->SKR}}</h6>
+							<h6 class="{{ $result->getCaizhengClass() }}">{{$result->SKR}}</h6>
 						</a>
 						
 					</td>
 					<td>
-						<h6 class="btn btn-primary btn-sm">{{ substr($result->YSDWMC, 9) }}</h6>
+						<h6 class="btn btn-primary btn-sm">{{ $result->YSDW() }}</h6>
 					</td>
 					<td>
-						<h6><a class="{{ ($result->village=='其他')?'btn btn-danger btn-sm':'btn btn-success btn-sm' }}" href={{ ($result->village=='其他')?'http://account.test/zbdetail?search=YSDWMC:%E6%89%B6%E8%B4%AB&only=other':"/project/tozfl/{$result->village}" }}>{{ $result->village }}</a></h6>
+						<h6><a class="{{ $result->villageClass() }}" href={{ $result->villageLink() }}>{{ $result->village }}</a></h6>
 					</td>
 					<td>
 						@if ($result->SH_RQ AND !$result->QS_RQ)
-							<span style="color: green">{{div($result->JE)}}</span>
+							<span style="color: green">{{ $result->amount() }}</span>
 
 						@else
-							{{div($result->JE)}}
+							{{ $result->amount() }}
 						@endif
 						
 					</td>
@@ -154,14 +160,16 @@
 		</tbody>
 		<tr class='bg-primary'>
 			<th><h6>id</h6></th>
-			<th><h6>支出ID</h6></th>
+			<th><h6>科目</h6></th>
 			<th><h6>ZBID</h6></th>
 			<th><h6>制单日期</h6></th>
 			<th><h6>日期</h6></th>
 			<th><h6>摘要</h6></th>
 			<th><h6>收款人</h6></th>
 			<th><h6>预算单位</h6></th><th><h6>相关村</h6></th>
-			<th><h6>{{($results->sum('JE'))/10000}}</h6></th>
+			<th><h6>{{($results->sum(function($val){
+				return $val->JE;
+			}))/10000}}</h6></th>
 			<th><h6>支出类型</h6></th>
 			<th><h6>received</h6></th>
 		</tr>

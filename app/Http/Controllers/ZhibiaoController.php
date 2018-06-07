@@ -13,6 +13,8 @@ use App\Repositories\ZjzbRepository;
 use Illuminate\Http\Request;
 use App\Model\ZbApply;
 use App\Criteria\WithoutGlobalScopesCriteria;
+use App\Presenters\PresenterForBlade\ZbdetailPresenter;
+use App\Presenters\PresenterForBlade\ZbPresenter;
 
 class ZhibiaoController extends Controller
 {
@@ -49,6 +51,7 @@ class ZhibiaoController extends Controller
     {
         $results = $this->repository_zb->with(['zfpzs','projects','zhijie','shouquan'])->orderBy('SH_RQ','desc')->all();
 
+        $results = $this->presentZbs($results);
         return $this->excel->exportBlade('zhibiao.index', compact('results'))->render();
     }
 
@@ -96,6 +99,7 @@ class ZhibiaoController extends Controller
             });
         }
 
+        $results = $this->presentZfpzs($results);
         return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
     }
 
@@ -106,6 +110,7 @@ class ZhibiaoController extends Controller
                 return $query->where(['project_id'=>$project_id]);
         })->all()->unique();
 
+        $results = $this->presentZfpzs($results);
         return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
     }
 
@@ -120,7 +125,7 @@ class ZhibiaoController extends Controller
         foreach ($results1 as $key => $result) {
             $results = $results->merge($result);
         }
-
+        $results = $this->presentZfpzs($results);
         return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
     }
 
@@ -246,8 +251,22 @@ class ZhibiaoController extends Controller
       }
       //dd($zbids);
       $results = $this->repository_zfpz->pushCriteria(WithoutGlobalScopesCriteria::class)->findWhereIn('ZBID', $zbids);
-
+      $results = $this->presentZfpzs($results);
       return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
+    }
+
+    public function presentZfpzs($results)
+    {
+      return $results = $results->map(function($item){
+            return new ZbdetailPresenter($item);
+        });
+    }
+
+    public function presentZbs($results)
+    {
+      return $results = $results->map(function($item){
+            return new ZbPresenter($item);
+        });
     }
 
 }

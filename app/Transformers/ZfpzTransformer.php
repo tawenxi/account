@@ -2,7 +2,7 @@
 
 namespace App\Transformers;
 
-use App\Entities\Zfpz;
+use App\MOdel\Zfpz;
 use League\Fractal\TransformerAbstract;
 
 /**
@@ -21,6 +21,7 @@ class ZfpzTransformer extends TransformerAbstract
     {
         return [
             'id'         => (int) $model->id,
+            'title'   => $model->id,
 
             /* place your other model properties here */
 

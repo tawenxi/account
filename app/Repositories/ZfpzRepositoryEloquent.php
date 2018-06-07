@@ -56,4 +56,10 @@ class ZfpzRepositoryEloquent extends BaseRepository implements ZfpzRepository, C
         'fail',
         'deleted'
     ];
+
+//开启 present功能
+    // public function presenter()
+    // {
+    //     return "App\\Presenters\\ZfpzPresenter";
+    // }
 }

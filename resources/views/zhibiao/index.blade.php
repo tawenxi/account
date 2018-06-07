@@ -37,9 +37,7 @@
 			</thead>
 			<tbody class='table-hover'>
 				@foreach ($results as $result)
-					<tr class={{ ($divider = $result->projects->sum(function($item){
-					                                return $item->pivot->amount;
-					                           })>0)?'alert-warning':(abs($result->JE-$result->zfpzs->sum('JE'))<1?'alert-danger':"") }}>
+					<tr class={{ $result->getRowClass() }}>
 					   	<td>{{ $loop->index+1 }}</td>
 					   	<td>
 					   		@if ($result->prezbid)
@@ -54,8 +52,8 @@
 						<td>{{$result->LR_RQ}}</td>
 						<td class="small text-warning" >
 							@if ($result->beizhu)
-								<button type="submit" title="{{$result->zb?$result->zb->ZY:'' }}" class="btn btn-primary btn-sm">备注</button>
-								<a href="/divider/{{ $result->id }}" title="{{$result->beizhu?$result->beizhu:'' }}" >
+								<button type="submit" title="{{ $result->beizhu() }}" class="btn btn-primary btn-sm">备注</button>
+								<a href="/divider/{{ $result->id }}" title="{{$result->beizhu() }}" >
 							@endif
 							<a href="/es?q={{ '@'.$result->ZY }}" class="btn  btn-success btn-sm">O</a>{{$result->ZY}}
 							@if ($result->beizhu)
@@ -67,25 +65,21 @@
 						<td>{{$result->JE}}</td>
 						<td>{{div($result->yeamount)}}</td>
 						@if (strstr(url()->full(),'%3A%E6%89%B6%E8%B4%AB'))
-							<td> {{ $result->projects->sum(function($item){
-	                                return $item->pivot->amount;
-	                           }) }}
+							<td> {{ $result->devidedCount() }}
 	                       </td>
 	                    @endif
 
-						<td >{{ $result->zfpzs->count() }}</td>
-						<td >{{ $result->projects->sum(function($item){
-                                return $item->pivot->amount;
-                           }) }}</td>
+						<td >{{ $result->costCount() }}</td>
+						<td >{{ $result->devidedCount() }}</td>
 
                         <td>
-                        	@if ($result->shouquan->sum('YKJHZB'))
-                        		<a href="#"  class="btn btn-success btn-sm" title="{{ $result->shouquan->sum('YKJHZB') }}">{{ 'o' }}</a>
+                        	@if ($result->shouquan())
+                        		<a href="#"  class="btn btn-success btn-sm" title="{{ $result->shouquan() }}">{{ 'o' }}</a>
                         	@endif
                         </td>
                         <td>
-                        	@if ($result->zhijie->sum('YKJHZB'))
-                        		<a href="#"  class="btn btn-primary btn-sm" title="{{ $result->zhijie->sum('YKJHZB') }}">{{ 'o' }}</a>
+                        	@if ($result->zhijie())
+                        		<a href="#"  class="btn btn-primary btn-sm" title="{{ $result->zhijie() }}">{{ 'o' }}</a>
                         	@endif
                         </td>
 						
@@ -96,7 +90,7 @@
 						@endif --}}
 						
 				{{-- 		@if (strstr($result->YSDWMC,'扶贫')) --}}
-						<font class="text-danger">{{ substr($result->YSDWMC, 9) }}</font>
+						<font class="text-danger">{{ $result->YSDW() }}</font>
 							</a>
 {{-- 						@else
 						{{ substr($result->YSDWMC, 9) }}
@@ -119,8 +113,15 @@
 					<th><h6>日期</h6></th>
 					<th><h6>摘要</h6></th>
 					<th><h6>预算项目</h6></th>
-					<th><h6>{{round($results->sum('JE')/10000,2)}}</h6></th>
-					<th><h6>{{round(round(($results->sum('JE'))/10000,2)-round($results->sum('detail')/10000,2),2)}}</h6></th>
+					<th><h6>{{round($results->sum(function($item){
+						return $item->JE;
+					})/10000,2)}}</h6></th>
+
+					<th><h6>{{round(round(($results->sum(function($item){
+						return $item->JE;
+					}))/10000,2)-round($results->sum(function($item){
+						return $item->detail;
+					})/10000,2),2)}}</h6></th>
 					@if (strstr(url()->full(),'%3A%E6%89%B6%E8%B4%AB'))
 						<th><h6>已分配</h6></th>
 					@endif

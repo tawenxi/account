@@ -7,6 +7,9 @@ use App\Model\Payout;
 use Illuminate\Http\Request;
 use App\Model\Zb;
 use App\Model\Zfpz;
+use App\Presenters\PresenterForBlade\ZbdetailPresenter;
+use App\Presenters\PresenterForBlade\ZbPresenter;
+
 
 class SearchController extends Controller
 {
@@ -102,6 +105,9 @@ class SearchController extends Controller
                         if (substr($query,0,1) == '@') {
                             $query = substr($query,1);
                             $results = Zb::withoutGlobalScopes()->where('ZY', 'like', '%'.$query.'%')->orderBy('SH_RQ','desc')->get();
+                                $results = $results->map(function($item){
+                                    return new ZbPresenter($item);
+                                });
                             return view('zhibiao.index', compact('results'));
                         } elseif (strstr($query, ' ')) {
                             $keyWords = explode(' ', $query);
@@ -133,6 +139,11 @@ class SearchController extends Controller
                 
             }
         }
+
+        $results = $results->map(function($item){
+            return new ZbdetailPresenter($item);
+        });
+
         return view('zhibiao.detail', compact('results', 'query'));
     }
 }
