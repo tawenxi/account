@@ -63,6 +63,7 @@ class Pullzhifupz extends Command
     public function handle()
     { 
         $this->PullZfpz();
+        $this->pullzb();
         $this->cast();
     }
 
@@ -72,7 +73,7 @@ class Pullzhifupz extends Command
         \DB::table('zfpzs')->where('QS_RQ','!=',NULL)->update(['qs'=>1]);
         Zfpz::where(['QS_RQ'=>NULL,'received'=>'0'])->delete();
 
-        $this->pullzb();
+        
 
         $month = '01';
         if (\Carbon\carbon::now()->month>5) {
