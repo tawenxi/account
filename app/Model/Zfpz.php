@@ -7,10 +7,13 @@ use App\Model\Project\Project;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Prettus\Repository\Contracts\Presentable;
+use Prettus\Repository\Traits\PresentableTrait;
 
-class Zfpz extends Model
+class Zfpz extends Model implements Presentable
 {
     // use SearchableTrait;
+    use PresentableTrait;
     use \App\Model\Tt\RecordsActivity;
     public $timestamps = true;
     

@@ -34,7 +34,7 @@ Route::get('/find', 'GuzzleController@find'); //显示可用授权指标
 Route::get('/reflash', 'GuzzleController@reflash');
 //Route::get('/account', 'AccountController@index');
 Route::get('/dpt', 'GuzzleController@dpt');
-Route::get('/hyy', 'GuzzleController@hyy');
+Route::get('/hyy', 'GuzzleController@hyy');//->middleware('cache.response')
 Route::get('/edit/{guzzledb}', 'GuzzleController@edit')->name('guzzle.edit');
 Route::get('/preview', 'GuzzleController@preview');
 Route::any('/payout', 'GuzzleController@payoutlist')->name('payout');
@@ -66,7 +66,7 @@ Route::post('/api/payout_with_date', 'SearchController@payout_with_date');
 Route::get('/modifyacc', 'SearchController@modifyacc');
 
 Route::get('/zhibiao', 'ZhibiaoController@index');
-Route::get('/zbdetail', 'ZhibiaoController@zb_detail');
+Route::get('/zbdetail', 'ZhibiaoController@zb_detail');//->middleware('cache.response');
 Route::get('/showzbdetail/{zbid}', 'ZhibiaoController@show');
 Route::get('/inco', 'ZhibiaoController@inco'); //收支对应表
 
@@ -133,3 +133,4 @@ Route::get('updateboss', 'CommandController@updateboss');
 Route::get('pullyue', 'CommandController@pullyue');
 Route::get('pullshenqing', 'CommandController@pullshenqing');
 Route::get('cast', 'CommandController@cast');
+Route::get('cacheclear', 'CommandController@cacheclear');

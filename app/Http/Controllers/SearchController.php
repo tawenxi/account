@@ -6,6 +6,7 @@ use App\Model\Account;
 use App\Model\Payout;
 use Illuminate\Http\Request;
 use App\Model\Zb;
+use App\Model\Respostory\Excel;
 use App\Model\Zfpz;
 use App\Presenters\PresenterForBlade\ZbdetailPresenter;
 use App\Presenters\PresenterForBlade\ZbPresenter;
@@ -13,6 +14,12 @@ use App\Presenters\PresenterForBlade\ZbPresenter;
 
 class SearchController extends Controller
 {
+
+    public function __construct(Excel $excel)
+    {
+        $this->excel = $excel;
+    }
+
     public function account()
     {
         return view('search.account')->render();
@@ -140,10 +147,17 @@ class SearchController extends Controller
             }
         }
 
-        $results = $results->map(function($item){
+        $results = $this->presentZfpzs($results);
+
+       // dd($results->first()->presenter());
+
+        return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
+    }
+
+    public function presentZfpzs($results)
+    {
+      return $results = $results->map(function($item){
             return new ZbdetailPresenter($item);
         });
-
-        return view('zhibiao.detail', compact('results', 'query'));
     }
 }

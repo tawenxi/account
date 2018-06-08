@@ -58,4 +58,9 @@ class ZbdetailPresenter
     {
     	return div($this->model->JE);
     }
+
+    public function presenter()
+    {
+    	return $this->model->presenter();
+    }
 }

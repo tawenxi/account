@@ -57,9 +57,10 @@ class ZfpzRepositoryEloquent extends BaseRepository implements ZfpzRepository, C
         'deleted'
     ];
 
+    protected $skipPresenter = true;
 //开启 present功能
-    // public function presenter()
-    // {
-    //     return "App\\Presenters\\ZfpzPresenter";
-    // }
+    public function presenter()
+    {
+        return "App\\Presenters\\ZfpzPresenter";
+    }
 }

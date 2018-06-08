@@ -63,4 +63,11 @@ class CommandController extends Controller
     	return redirect()->back();
     }
 
+    public function cacheclear()
+    {
+        Artisan::call('cache:clear');
+        flash()->success('Woohoo', '清除缓存成功');
+        return redirect()->back();
+    }
+
 }

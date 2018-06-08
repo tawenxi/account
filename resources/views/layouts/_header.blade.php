@@ -31,6 +31,7 @@
                   <li><a class="dropdown-item"  href="/pullyue">余额pullyue</a></li>
                   <li><a class="dropdown-item"  href="/pullshenqing">用款计划pullshenqing</a></li>
                   <li><a class="dropdown-item"  href="/cast">实时信息cast</a></li>
+                  <li><a class="dropdown-item"  href="/cacheclear">清除缓存</a></li>
 
 
                   <li class="dropdown-divider"></li> 

@@ -21,12 +21,21 @@ class ZfpzTransformer extends TransformerAbstract
     {
         return [
             'id'         => (int) $model->id,
-            'title'   => $model->id,
+            'ZBID'   => $model->zb->ZBID,
+            'data'   => $model->QS_RQ,
+            'data'   => $model->ZY,
+            'SKR'   => $model->SKR,
+            'DW'   => $model->YSDWMC,
+            'amount'   => $model->JE,
+            'ZFFS'   => $model->ZFFSMC,
+
+
+
 
             /* place your other model properties here */
 
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at,
+            // 'created_at' => $model->created_at,
+            // 'updated_at' => $model->updated_at,
         ];
     }
 }

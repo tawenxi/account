@@ -79,7 +79,13 @@ class Excel extends Model
 
     public function exportBlade($blade, $data)
     {
+
         if (\Request::has('export')) {
+
+            $data = $data['results']->map(function($val){
+                return $val->presenter()['data'];
+            })->toArray();
+            //dd($data);
             $this->setViewName($blade)->setViewData($data)->export($blade);
         } else {
             return view($blade, $data);
@@ -89,11 +95,11 @@ class Excel extends Model
     public function export($blade)
     {
         $data = $this->viewData;
-        \Excel::create($this->viewName, function ($excel) use ($data,$blade) {
-            $excel->sheet($this->viewName, function ($sheet) use ($data,$blade) {
-                $sheet->loadView($blade, $data);
-            })->export('xls');
-        });
+        \Excel::create('导出结果',function($excel) use ($data){
+            $excel->sheet('导出结果', function($sheet) use ($data){
+                $sheet->rows($data);
+            });
+        })->export('xls');
     }
 
     public function setViewName($viewName)

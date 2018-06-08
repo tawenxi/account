@@ -99,7 +99,11 @@ class ZhibiaoController extends Controller
             });
         }
 
+        
         $results = $this->presentZfpzs($results);
+        //dd($results->first()->presenter());
+        //dd($results);
+        //dd($results->first()->presenter());
         return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
     }
 
