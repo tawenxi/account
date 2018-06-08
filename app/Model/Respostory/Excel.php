@@ -85,8 +85,8 @@ class Excel extends Model
             $data = $data['results']->map(function($val){
                 return $val->presenter()['data'];
             })->toArray();
-            //dd($data);
             $this->setViewName($blade)->setViewData($data)->export($blade);
+            //return rediresct()->back();
         } else {
             return view($blade, $data);
         }
@@ -95,8 +95,8 @@ class Excel extends Model
     public function export($blade)
     {
         $data = $this->viewData;
-        \Excel::create('导出结果',function($excel) use ($data){
-            $excel->sheet('导出结果', function($sheet) use ($data){
+        \Excel::create($blade,function($excel) use ($data,$blade){
+            $excel->sheet($blade, function($sheet) use ($data){
                 $sheet->rows($data);
             });
         })->export('xls');

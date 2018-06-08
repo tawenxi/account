@@ -52,4 +52,10 @@ class ZbRepositoryEloquent extends BaseRepository implements ZbRepository, Cache
         'LR_RQ'=>'like',
         'KYX'=>'=',
     ];
+    protected $skipPresenter = true;
+//开启 present功能
+    public function presenter()
+    {
+        return "App\\Presenters\\ZbPresenter";
+    }
 }

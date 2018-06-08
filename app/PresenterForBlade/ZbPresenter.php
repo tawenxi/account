@@ -66,4 +66,9 @@ class ZbPresenter
     {
         return substr($this->model->YSDWMC, 9);
     }
+
+    public function presenter()
+    {
+        return $this->model->presenter();
+    }
 }

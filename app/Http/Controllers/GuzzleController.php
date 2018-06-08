@@ -49,7 +49,7 @@ class GuzzleController extends Controller
         $guzzledbs = $this->repository->orderBy('ZJXZMC', 'Asc')
                 ->orderBy('KYJHJE', 'desc')
                 ->all();
-
+                
         return $this->excel->exportBlade('guzzle.index', compact('guzzledbs'));
     }
 

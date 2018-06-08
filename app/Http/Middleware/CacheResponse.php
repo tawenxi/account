@@ -110,11 +110,7 @@ class CacheResponse
             $this->minutes,
             function () {
                 $this->cacheMissed();
-
                 $response = ($this->next)($this->request);
-                 session()->flash('success',$this->cacheHit);
-                //dd($response);
-
                 return $this->resolveResponseCache($response) + [
                     'cacheExpireAt' => Carbon::now()->addMinutes($this->minutes)->format('Y-m-d H:i:s T'),
                 ];

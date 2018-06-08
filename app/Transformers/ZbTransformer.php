@@ -2,7 +2,7 @@
 
 namespace App\Transformers;
 
-use App\Entities\Zb;
+use App\Model\Zb;
 use League\Fractal\TransformerAbstract;
 
 /**
@@ -21,11 +21,15 @@ class ZbTransformer extends TransformerAbstract
     {
         return [
             'id'         => (int) $model->id,
+            'ZBID'   => $model->ZBID,
+            'data'   => $model->LR_RQ,
+            'ZY'   => $model->ZY,
+            'ZJXZMC'   => $model->ZJXZMC,
 
-            /* place your other model properties here */
+            'amount'   => $model->JE,
+            'yeamount'   => $model->yeamount,
+            'YSDWMC'   => $model->YSDWMC,
 
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at,
         ];
     }
 }

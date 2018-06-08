@@ -8,10 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use App\Model\Project\Project;
+use Prettus\Repository\Contracts\Presentable;
+use Prettus\Repository\Traits\PresentableTrait;
 
-class Zb extends Model
+class Zb extends Model implements Presentable
 {
     use SearchableTrait;
+    use PresentableTrait;
     use \App\Model\Tt\RecordsActivity;
 
     /**

@@ -98,12 +98,9 @@ class ZhibiaoController extends Controller
                 return $item['village'] == '其他';
             });
         }
-
         
         $results = $this->presentZfpzs($results);
-        //dd($results->first()->presenter());
-        //dd($results);
-        //dd($results->first()->presenter());
+
         return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
     }
 
@@ -194,7 +191,6 @@ class ZhibiaoController extends Controller
         return $this->excel->exportBlade('zhibiao.showapply', compact('results'));
 
     }
-
 
     public function rediscache()
     {
