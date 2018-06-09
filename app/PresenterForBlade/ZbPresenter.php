@@ -1,5 +1,5 @@
 <?php
-namespace App\Presenters\PresenterForBlade;
+namespace App\PresenterForBlade;
 
  
 

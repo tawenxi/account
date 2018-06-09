@@ -145,7 +145,9 @@ class CacheResponse
             $this->getHeaders()
         );
 
-        return $response;
+        return $response->cookie(
+                'iscached', $this->cacheHit, 5, null, null, null, false
+            );
     }
 
     /**

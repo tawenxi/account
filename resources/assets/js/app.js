@@ -21,7 +21,7 @@ Vue.use(TurbolinksAdapter);
 
 var toastrConfigs = {
     position: 'top right',
-    showDuration: 20000,
+    showDuration: 2000,
     timeOut: 20000,
 }
 Vue.use(CxltToastr, toastrConfigs);
@@ -90,11 +90,30 @@ document.addEventListener('turbolinks:load', () => {
                     return true;
                 }
                 return false;
+            },
+
+            getCookie(name){
+                var strcookie = document.cookie;//获取cookie字符串
+                var arrcookie = strcookie.split("; ");//分割
+                //遍历匹配
+                for ( var i = 0; i < arrcookie.length; i++) {
+                var arr = arrcookie[i].split("=");
+                if (arr[0] == name){
+                return arr[1];
+                }
+                }
+                return "";
             }
         },
 
     	mounted() {
-
+            console.log(this.getCookie('iscached'));
+            console.log(1);
+            if (this.getCookie('iscached') == 1) {
+                this.$toast.info({title:'缓存状态',message:'已缓存'});
+            } else {
+                this.$toast.error({title:'缓存状态',message:'无缓存'});
+            }
             this.$toast.success({title:'加油吧！Tawenxi',message:''});
             // toastr.options.closeButton = true;
             // toastr.options.closeHtml = '<button><i class="icon-off">LOVE</i></button>';

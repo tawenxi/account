@@ -4,10 +4,24 @@
 	<title>ss</title>
 </head>
 <body>
-@cache('my-cache-key')
+
     <div>
         <h1>Hello World</h1>
     </div>
-@endcache
+
 </body>
+
+<script>
+    xmlhttp = new XMLHttpRequest();
+xmlhttp.open("HEAD", document.URL ,true);
+xmlhttp.onreadystatechange=function() {
+if (xmlhttp.readyState==4) {
+  console.log(xmlhttp.getResponseHeader('connection'));
+  }
+}
+xmlhttp.send();
+
+
+
+</script>
 </html>

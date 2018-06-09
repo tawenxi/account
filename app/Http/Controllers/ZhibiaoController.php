@@ -13,8 +13,8 @@ use App\Repositories\ZjzbRepository;
 use Illuminate\Http\Request;
 use App\Model\ZbApply;
 use App\Criteria\WithoutGlobalScopesCriteria;
-use App\Presenters\PresenterForBlade\ZbdetailPresenter;
-use App\Presenters\PresenterForBlade\ZbPresenter;
+use App\PresenterForBlade\ZbdetailPresenter;
+use App\PresenterForBlade\ZbPresenter;
 
 class ZhibiaoController extends Controller
 {
