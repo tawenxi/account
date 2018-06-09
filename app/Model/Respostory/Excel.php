@@ -85,7 +85,7 @@ class Excel extends Model
             $data = $data['results']->map(function($val){
                 return $val->presenter()['data'];
             })->toArray();
-            $this->setViewName($blade)->setViewData($data)->export($blade);
+            return $this->setViewName($blade)->setViewData($data)->export($blade);
             //return rediresct()->back();
         } else {
             return view($blade, $data);

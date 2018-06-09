@@ -31,13 +31,13 @@
                   <li><a class="dropdown-item"  href="/pullyue">余额pullyue</a></li>
                   <li><a class="dropdown-item"  href="/pullshenqing">用款计划pullshenqing</a></li>
                   <li><a class="dropdown-item"  href="/cast">实时信息cast</a></li>
-                  <li><a class="dropdown-item"  href="/cacheclear">清除缓存</a></li>
+                  <li><a class="dropdown-item"  href="/cacheclear" data-turbolinks="false">清除缓存</a></li>
 
 
                   <li class="dropdown-divider"></li> 
                 </ul>
               </li>
-        <li class="nav-item active"><a class="nav-link" href="{{ url()->full().(stristr(Request::getRequestUri(), '?')?'&':'?').'export=1' }}">导出excel</a></li>
+        <li class="nav-item active"><a class="nav-link" href="{{ url()->full().(stristr(Request::getRequestUri(), '?')?'&':'?').'export=1' }}" data-turbolinks="false">导出excel</a></li>
                {{--     @can('showAllSalary')      --}}
 
             <li  class="nav-item dropdown">
