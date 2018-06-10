@@ -125,3 +125,59 @@ Route::get('/validate', function () {
     $data = \App\Model\Zfpz::withoutGlobalScopes()->where('PDQJ','>=',$data)->get();
     return response()->json($data->toArray());
 })->middleware('api');
+
+
+
+Route::get('/cacheclear', function () {
+        Artisan::call('cache:clear');
+        return response()->json(['cacheclear'=>true]);
+})->middleware('api');
+
+
+Route::get('/pullzfpz', function () {
+        session(['ND' => config('app.MYND')]);  
+        Artisan::call('pull:zfpz');
+        return response()->json(['pullzfpz'=>true]);
+})->middleware('api');   
+
+Route::get('/pullsq', function () {
+        session(['ND' => config('app.MYND')]);  
+        Artisan::call('pull:sq');
+        return response()->json(['pullsq'=>true]);
+})->middleware('api');
+
+Route::get('/pullzj', function () {
+        session(['ND' => config('app.MYND')]);  
+        Artisan::call('pull:zj');
+        return response()->json(['pullzj'=>true]);
+})->middleware('api');
+
+Route::get('/updateboss', function () {
+        session(['ND' => config('app.MYND')]);  
+        Artisan::call('pull:updateboss');
+        return response()->json(['updateboss'=>true]);
+})->middleware('api');
+
+Route::get('/pullyue', function () {
+        session(['ND' => config('app.MYND')]);  
+        Artisan::call('pull:yue');
+        return response()->json(['pullyue'=>true]);
+})->middleware('api');
+
+Route::get('/pullshenqing', function () {
+        session(['ND' => config('app.MYND')]);  
+        Artisan::call('pull:shenqing');
+        return response()->json(['pullshenqing'=>true]);
+})->middleware('api');
+
+Route::get('/pullcast', function () {
+        session(['ND' => config('app.MYND')]);  
+        Artisan::call('pull:cast');
+        return response()->json(['pullcast'=>true]);
+})->middleware('api');
+
+Route::get('/pulldpt', function () {
+        session(['ND' => config('app.MYND')]);  
+        Artisan::call('pull:dpt');
+        return response()->json(['pulldpt'=>true]);
+})->middleware('api');

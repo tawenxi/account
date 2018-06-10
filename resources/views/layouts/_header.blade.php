@@ -24,16 +24,26 @@
                  更新数据 <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">      
-                  <li><a class="dropdown-item"  href="/pullzhifupz">指标和支付令pullzhifupz</a></li>
+                 {{--  <li><a class="dropdown-item"  href="/pullzhifupz">指标和支付令pullzhifupz</a></li>
                   <li><a class="dropdown-item"  href="/pullsq">授权信息pullsq</a></li>
                   <li><a class="dropdown-item"  href="/pullzj">直接指标信息pullzj</a></li>
                   <li><a class="dropdown-item"  href="/updateboss">BOSSupdateboss</a></li>
                   <li><a class="dropdown-item"  href="/pullyue">余额pullyue</a></li>
                   <li><a class="dropdown-item"  href="/pullshenqing">用款计划pullshenqing</a></li>
                   <li><a class="dropdown-item"  href="/cast">实时信息cast</a></li>
-                  <li><a class="dropdown-item"  href="/cacheclear" data-turbolinks="false">清除缓存</a></li>
+                  <li><a class="dropdown-item"  href="/cacheclear" data-turbolinks="false">清除缓存</a>
+                      <li class="dropdown-divider"></li>  --}}
 
-
+                  <li @click='pulldpt' class="dropdown-item">pulldpt</li>
+                  <li @click='pullzfpz' class="dropdown-item">指标和支付令pullzfpz</li>
+                  <li @click='pullsq' class="dropdown-item">授权信息pullsq</li>
+                  <li @click='pullzj' class="dropdown-item">直接指标信息pullzj</li>
+                  <li @click='updateboss' class="dropdown-item">BOSSupdateboss</li>
+                  <li @click='pullyue' class="dropdown-item">余额pullyue</li>
+                  <li @click='pullshenqing' class="dropdown-item">用款计划pullshenqing</li>
+                  <li @click='pullcast' class="dropdown-item">实时信息cast</li>
+                  <li @click='cacheclear' class="dropdown-item">清除缓存</li>
+                 
                   <li class="dropdown-divider"></li> 
                 </ul>
               </li>

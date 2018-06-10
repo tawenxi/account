@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Model\Zb;
 use App\Model\Respostory\Excel;
 use App\Model\Zfpz;
-use App\Presenters\PresenterForBlade\ZbdetailPresenter;
+use App\PresenterForBlade\ZbdetailPresenter;
 use App\Presenters\PresenterForBlade\ZbPresenter;
 use App\Repositories\ZbRepository;
 use App\Repositories\ZfpzRepository;

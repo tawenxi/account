@@ -8,6 +8,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+Vue.prototype.$http = axios;
 import VueClipboard from 'vue-clipboard2';
 import VueResource from 'vue-resource';
 import vSelect from 'vue-select';
@@ -103,7 +104,7 @@ document.addEventListener('turbolinks:load', () => {
                 }
                 }
                 return "";
-            }
+            },
         },
 
     	mounted() {
@@ -155,6 +156,96 @@ document.addEventListener('turbolinks:load', () => {
             }.bind(this));
         }
 	});
+
+
+    const app2 = new Vue({
+        el: '#navtop',
+        data() {
+            return {
+                zfpzs:[],
+
+            }
+        },
+
+        methods:{
+            cacheclear(){
+                this.$http.get('http://account.test/api/cacheclear').then(response => {
+                    console.log(response.data.cacheclear);
+                    if (response.data.cacheclear) {
+                        this.$toast.info({title:'清除缓存：',message:'清除成功'});
+                    }
+                });
+            },
+
+            pullzfpz(){
+                this.$http.get('http://account.test/api/pullzfpz').then(response => {
+                    console.log('更新指标和支付令成功'+response.data.pullzfpz);
+                    if (response.data.pullzfpz) {
+                        this.$toast.success({title:'后台执行：',message:'更新指标和支付令成功'});
+                    }
+                });
+            },
+            pullsq(){
+                this.$http.get('http://account.test/api/pullsq').then(response => {
+                    console.log('更新授权指标成功'+response.data.pullsq);
+                    if (response.data.pullsq) {
+                        this.$toast.success({title:'后台执行：',message:'更新授权指标成功'});
+                    }
+                });
+
+            },
+            pullzj(){
+                this.$http.get('http://account.test/api/pullzj').then(response => {
+                    console.log('更新授权指标成功'+response.data.pullzj);
+                    if (response.data.pullzj) {
+                        this.$toast.success({title:'后台执行：',message:'更新直接指标成功'});
+                    }
+                });
+            },
+            updateboss(){
+                this.$http.get('http://account.test/api/updateboss').then(response => {
+                    console.log('更新授权指标成功'+response.data.updateboss);
+                    if (response.data.updateboss) {
+                        this.$toast.success({title:'后台执行：',message:'更新BOSS成功'});
+                    }
+                });
+            },
+            pullyue(){
+                this.$http.get('http://account.test/api/pullyue').then(response => {
+                    console.log('更新授权指标成功'+response.data.pullyue);
+                    if (response.data.pullyue) {
+                        this.$toast.success({title:'后台执行：',message:'更新指标余额成功'});
+                    }
+                });
+
+            },
+            pullshenqing(){
+                this.$http.get('http://account.test/api/pullshenqing').then(response => {
+                    console.log('更新授权指标成功'+response.data.pullshenqing);
+                    if (response.data.pullshenqing) {
+                        this.$toast.success({title:'后台执行：',message:'更新分月申请成功'});
+                    }
+                });
+            },
+            pullcast(){
+                this.$http.get('http://account.test/api/pullcast').then(response => {
+                    console.log('更新授权指标成功'+response.data.pullcast);
+                    if (response.data.pullcast) {
+                        this.$toast.success({title:'后台执行：',message:'更新分月申请成功'});
+                    }
+                });
+            },
+
+            pulldpt(){
+                this.$http.get('http://account.test/api/pulldpt').then(response => {
+                    console.log('更新DPT成功'+response.data.pulldpt);
+                    if (response.data.pulldpt) {
+                        this.$toast.success({title:'后台执行：',message:'更新DPT成功'});
+                    }
+                });
+            },
+        }
+    });
 });
 
 

@@ -116,12 +116,6 @@ Route::get('zhijie', 'zhibiaoController@zhijie');
 Route::get('es', 'SearchController@search')->middleware('cache.response');
 Route::view('taskmanager', 'task.index');
 
-
-Route::get('kk', function(){
-	
-    }
-);
-
 Route::get('blade', 'zhibiaoController@blade');
 
 Route::get('sourcezb/{zbid}', 'zhibiaoController@sourcezb');
