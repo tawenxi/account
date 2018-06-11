@@ -58,4 +58,12 @@ class ZbRepositoryEloquent extends BaseRepository implements ZbRepository, Cache
     {
         return "App\\Presenters\\ZbPresenter";
     }
+
+
+
+
+    public function getIndexPage()
+    {
+        return $this->with(['zfpzs','projects','zhijie','shouquan'])->orderBy('SH_RQ','desc')->all();
+    }
 }

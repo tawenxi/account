@@ -12,6 +12,7 @@ use App\Repositories\ZfpzRepository;
 use App\Repositories\ZjzbRepository;
 use Illuminate\Http\Request;
 use App\Model\ZbApply;
+use App\Criteria\OrderCriteria;
 use App\Criteria\WithoutGlobalScopesCriteria;
 use App\PresenterForBlade\ZbdetailPresenter;
 use App\PresenterForBlade\ZbPresenter;
@@ -24,7 +25,7 @@ class ZhibiaoController extends Controller
     private $getperson;
     private $repository_zb;
     private $repository_zfpz;
-    private $repository_zjzb;
+    private $repository_zjzb; 
 
     public function __construct(ZfpzRepository $repository_zfpz,
                                 ZbRepository $repository_zb,
@@ -49,7 +50,7 @@ class ZhibiaoController extends Controller
      */
     public function index()
     {
-        $results = $this->repository_zb->with(['zfpzs','projects','zhijie','shouquan'])->orderBy('SH_RQ','desc')->all();
+        $results = $this->repository_zb->getIndexPage();
 
         $results = $this->presentZbs($results);
         return $this->excel->exportBlade('zhibiao.index', compact('results'))->render();
@@ -84,14 +85,8 @@ class ZhibiaoController extends Controller
         } else {
             $results = $this->repository_zfpz;
         }
-        $results = $results->scopeQuery(function($query) use ($request) {
-            if ($request->has('orderBy')) {
-                return $query;
-            } else { 
-                return $query->orderBy('QS_RQ', 'desc');
-            }
-            
-        })->with(['zb','account','project'])->all();
+
+        $results = $results->pushCriteria(OrderCriteria::class)->with(['zb','account','project'])->all();
 
         if (request('only')=='other') {
             $results = $results->filter(function($item){
@@ -247,9 +242,7 @@ class ZhibiaoController extends Controller
       $zbids = [$zbid->ZBID];
       while ($zbid = $zbid->prezbid()) {
           $zbids[] = $zbid->ZBID;
-          //dd($zbids);
       }
-      //dd($zbids);
       $results = $this->repository_zfpz->pushCriteria(WithoutGlobalScopesCriteria::class)->findWhereIn('ZBID', $zbids);
       $results = $this->presentZfpzs($results);
       return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
