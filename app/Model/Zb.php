@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use App\Model\Zb;
+use App\Model\File;
 use App\Scopes\KJNDScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -54,6 +55,21 @@ class Zb extends Model implements Presentable
     public function zfpzs()
     {
         return $this->hasMany(Zfpz::class, 'ZBID', 'ZBID');
+    }
+
+    public function files()
+    {
+        return $this->hasMany(File::class, 'ZBID', 'ZBID');
+    }
+
+    public static function locatedAt($id)
+    {
+        return static::where('id', $id)->firstOrFail();
+    }
+
+    public function addFile(File $file)
+    {
+        return $this->files()->save($file);
     }
 
     public function GetDetailAttribute()

@@ -2,6 +2,7 @@
 <header class="bg-dark navbar-dark position-fixed fixed-top" data-sticky="top" >
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf-token" content="{{ csrf_token() }}">
   <div class="container">
     <div class="col-md-offset-0 col-md-12">
      @if (\Auth::check())

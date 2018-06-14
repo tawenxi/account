@@ -32,6 +32,7 @@
 					<th><h6>构成</h6></th>
 					<th><h6>构成</h6></th>
 					<th><h6>单位</h6></th>
+					<th><h6>文件</h6></th>
 					<th><h6>可用性</h6></th>
 				</tr>
 			</thead>
@@ -49,13 +50,14 @@
 							<a href="/showzbdetail/{{ $result->ZBID }}" class="btn btn-success btn-sm">{{substr($result->ZBID,11)}} 
 							</a>
 						</td>
-						<td>{{$result->LR_RQ}}</td>
+						<td><h6>{{$result->LR_RQ}}</h6></td>
 						<td class="small text-warning" >
 							@if ($result->beizhu)
 								<button type="submit" title="{{ $result->beizhu() }}" class="btn btn-primary btn-sm">备注</button>
 								<a href="/divider/{{ $result->id }}" title="{{$result->beizhu() }}" >
 							@endif
-							<a href="/es?q={{ '@'.$result->ZY }}" class="btn  btn-success btn-sm">O</a>{{$result->ZY}}
+							<a href="/es?q={{ '@'.$result->ZY }}" class="btn  btn-success btn-sm">O</a>
+							<span class="sm">{{$result->ZY}}</span>
 							@if ($result->beizhu)
 								</a>
 							@endif
@@ -96,6 +98,10 @@
 						{{ substr($result->YSDWMC, 9) }}
 						@endif --}}
 					</td>
+					<td>
+						<a href="/file/{{ $result->id }}" class="btn  btn-success btn-sm">O</a>
+					</td>
+					
 					<td >
 						@if ($result->KYX)
 							<button type="submit" class="btn btn-primary btn-sm">可用</button>
@@ -130,6 +136,7 @@
 					<th><h6>构成</h6></th>
 					<th><h6>构成</h6></th>
 					<th><h6>单位</h6></th>
+					<th><h6>文件</h6></th>
 					<th><h6>可用性</h6></th>
 				</tr>
 		</table>

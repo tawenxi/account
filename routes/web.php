@@ -128,3 +128,7 @@ Route::get('pullyue', 'CommandController@pullyue');
 Route::get('pullshenqing', 'CommandController@pullshenqing');
 Route::get('cast', 'CommandController@cast');
 Route::get('cacheclear', 'CommandController@cacheclear');
+Route::get('file/{id}', 'FileController@index');
+Route::post('/file-upload', 'FileController@uploadFile')->name('store_file_path');
+Route::get('/deletefile/{id}', 'FileController@deleteFile');
+

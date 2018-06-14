@@ -5,8 +5,9 @@
     <link rel="stylesheet" href={{ asset('css/app.css') }}>
     <link rel="stylesheet" href="/css/libs.css">
     <link href="/css/toastr.css" rel="stylesheet">
-    <style>
-/*    tbody {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/min/dropzone.min.css">
+{{--     <style>
+    tbody {
         display:block;
         max-height:600px;
         overflow:auto;
@@ -19,8 +20,8 @@
     }
     tr td {
       word-wrap:break-word;
-    }*/
-    </style>
+    }
+    </style> --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {{-- <meta name="turbolinks-visit-control" content="reload"> --}}
 
@@ -49,6 +50,7 @@
 @endif
       </div>
     </div>
+    @yield('content2')
       <script src="/js/libs.js"></script>
       @include('shared._flash')
       @yield('js')
