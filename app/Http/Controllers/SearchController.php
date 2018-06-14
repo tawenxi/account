@@ -17,6 +17,7 @@ use App\Criteria\FindZyCriteria;
 use App\Criteria\FindSkrOrZyCriteria;
 use App\Criteria\FindByZyCriteria;
 use App\Criteria\FindByZySkrCriteria;
+use App\Criteria\FindTotleCriteria;
 
 
 
@@ -131,12 +132,47 @@ public function __construct(ZfpzRepository $repository_zfpz,
                             });
 
                             return $this->excel->exportBlade('zhibiao.index', compact('results'));
-                        } elseif (strstr($query, ' ')) {
+                        } elseif (substr($query,0,1)  == '[' AND substr($query,-1,1)== ']' AND strstr($query,',')) {
+                            $query = substr($query,1,-1);
+                            $scope = explode(',', $query);
+                            if (!(count($scope) == 2 AND is_numeric($scope[0]) AND is_numeric($scope[1]))) {
+                                throw new \Exception('请输入数字范围', 1);
+                            }
+                            $results = $this->repository_zfpz->scopeQuery(function($_query)use ($scope){
+                                return $_query->where('JE', '>=', trim($scope[0])*100)->where('JE', '<=', trim($scope[1])*100)->orderBy('SH_RQ','desc');
+                            })->with(['zb','account','project'])->get();
+                            $results = $results->map(function($item){
+                                    return new ZbdetailPresenter($item);
+                                });
+                            return $this->excel->exportBlade('zhibiao.detail', compact('results'));
+                        } elseif (substr($query,0,1) == '#' AND is_numeric(substr($query,1))) {
+                            $query = substr($query,1)*100;
+                            $as = \DB::table('zfpzs')
+                                    ->select('ZY', \DB::raw('SUM(`JE`) as JE2'),'SKR','PDRQ')
+                                    ->groupBy(['ZY','SKR','PDRQ'])
+                                    ->havingRaw("JE2 = {$query} AND Count(*) > 1")
+                                    ->get();
+
+                            $concatenated = collect();
+                            foreach ($as as $a) {
+                                $result = $this->repository_zfpz
+                                  ->pushCriteria(new FindTotleCriteria($a))->with(['zb','account','project'])->all();
+                                $concatenated = $concatenated->merge($result);
+                                $this->repository_zfpz->popCriteria(new FindTotleCriteria($a));
+                            }
+
+                            $results = $concatenated->map(function($item){
+                                    return new ZbdetailPresenter($item);
+                                });
+                            return $this->excel->exportBlade('zhibiao.detail', compact('results'));
+                        }elseif (strstr($query, ' ')) {
                             $keyWords = explode(' ', $query);
                             $concatenated = collect();
                             foreach ($keyWords as $keyword) {
                                 $result = $this->repository_zfpz
-                                               ->pushCriteria(new FindSkrOrZyCriteria($keyword))->all();
+                                               ->pushCriteria(new FindSkrOrZyCriteria($keyword))
+                                               ->with(['zb','account','project'])
+                                               ->all();
                                 $concatenated = $concatenated->merge($result);
                                 $this->repository_zfpz->popCriteria(new FindSkrOrZyCriteria($keyword));
                             }
@@ -146,21 +182,25 @@ public function __construct(ZfpzRepository $repository_zfpz,
                             $concatenated = collect();
                             foreach ($keyWords as $keyword) {
                                 if (isset($result)) {
-                                    $result = $result->pushCriteria(new FindZyCriteria($keyword));
+                                    $result = $result->pushCriteria(new FindZyCriteria($keyword))
+                                                     ->with(['zb','account','project']);
                                 } else {
-                                            $result = $this->repository_zfpz->pushCriteria(new FindZyCriteria($keyword));
+                                            $result = $this->repository_zfpz->pushCriteria(new FindZyCriteria($keyword))
+                                                                            ->with(['zb','account','project']);
                                         }
                                     }
                             $concatenated = $result->all();
                             $results = collect($concatenated)->unique();
                         } else {
                             $results = $this->repository_zfpz
-                                            ->pushCriteria(new FindByZySkrCriteria($query))->all();
+                                            ->pushCriteria(new FindByZySkrCriteria($query))
+                                            ->with(['zb','account','project'])
+                                            ->all();
                                         }
                 } else {
                     $results = $this->repository_zfpz->scopeQuery(function($_query)use ($query){
                                 return $_query->where('JE', $query*100);
-                        })->all();
+                        })->with(['zb','account','project'])->all();
                 }    
             }
         }
