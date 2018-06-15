@@ -130,6 +130,7 @@
 
 
                     <li class="dropdown-divider"></li>
+                    <li><a class="dropdown-item"  href="/zbhavefile">[有文件的指标]</a></li> 
                     <li><a class="dropdown-item"  href="/zbdetail?search=received:0">缺失账单</a></li> 
                     <li><a class="dropdown-item"  href="/zbdetail?search=qs:0&searchFields=qs:=">尚未生效</a></li>
                     <li class="dropdown-divider"></li>

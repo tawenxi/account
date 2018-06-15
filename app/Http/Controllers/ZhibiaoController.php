@@ -56,6 +56,14 @@ class ZhibiaoController extends Controller
         return $this->excel->exportBlade('zhibiao.index', compact('results'))->render();
     }
 
+    public function ZbHavingFile()
+    {
+        $results = $this->repository_zb->getZbHavingFile();
+
+        $results = $this->presentZbs($results);
+        return $this->excel->exportBlade('zhibiao.index', compact('results'))->render();
+    }
+
     /**
      * 进行数据并查，看看有zbdetails里面有没有数据差错进行调整.
      * url: '/up'

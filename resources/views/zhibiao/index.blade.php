@@ -99,7 +99,9 @@
 						@endif --}}
 					</td>
 					<td>
-						<a href="/file/{{ $result->id }}" class="btn  btn-success btn-sm">O</a>
+						<a href="/file/{{ $result->id }}" 
+						   class=" {{ $result->files->count()?'btn  btn-success btn-sm':'btn  btn-danger btn-sm' }} "
+						   title='{{ $result->MXZBWH }}' >O</a>
 					</td>
 					
 					<td >

@@ -5,7 +5,7 @@
     <link rel="stylesheet" href={{ asset('css/app.css') }}>
     <link rel="stylesheet" href="/css/libs.css">
     <link href="/css/toastr.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/min/dropzone.min.css">
+    <link rel="stylesheet" href="/css/dropzone.min.css">
 {{--     <style>
     tbody {
         display:block;

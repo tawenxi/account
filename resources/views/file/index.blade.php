@@ -33,10 +33,10 @@
 						<td>{{ $result->type }}</td>
 						<td>{{ $result->ZBID }}</td>
 						<td>
-						<a href="{{ $result->url }}" class="btn btn-info">download</a>
+						<a href="{{ $result->url }}" class="btn btn-info btn-sm">download</a>
 					   </td>
 					   <td>
-						<a href="/deletefile/{{ $result->id }}" class="btn btn-info">download</a>
+						<a href="/deletefile/{{ $result->id }}" class="btn btn-danger btn-sm">删除</a>
 					   </td>
 						
 
@@ -84,7 +84,7 @@
         Dropzone.options.addPhotosForm = {
             paramName: 'file',
             maxFileSize: 3,
-            acceptedFiles: '.jpg, .jpeg, .png, .xls',
+            acceptedFiles: '.xlsx,.doc,.xls',
         };
     </script>
 

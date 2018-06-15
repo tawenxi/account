@@ -132,3 +132,5 @@ Route::get('file/{id}', 'FileController@index');
 Route::post('/file-upload', 'FileController@uploadFile')->name('store_file_path');
 Route::get('/deletefile/{id}', 'FileController@deleteFile');
 
+Route::get('zbhavefile','ZhibiaoController@ZbHavingFile');
+

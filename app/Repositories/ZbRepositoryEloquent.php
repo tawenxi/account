@@ -66,4 +66,11 @@ class ZbRepositoryEloquent extends BaseRepository implements ZbRepository, Cache
     {
         return $this->with(['zfpzs','projects','zhijie','shouquan'])->orderBy('SH_RQ','desc')->all();
     }
+
+    public function getZbHavingFile()
+    {
+        return $this->scopeQuery(function($query) { 
+                return $query->withoutGlobalScopes()->has('files');
+        })->with(['zfpzs','projects','zhijie','shouquan'])->orderBy('SH_RQ','desc')->all();
+    }
 }
