@@ -28,10 +28,10 @@
 				@foreach ($results as $result)
 					<tr>
 						<td>{{ $loop->index+1 }}</td>
-						<td>{{ $result->name }}</td>
-						<td>{{ $result->title }}</td>
-						<td>{{ $result->type }}</td>
-						<td>{{ $result->ZBID }}</td>
+						<td class="small">{{ $result->name }}</td>
+						<td class="small">{{ $result->title }}</td>
+						<td class="small">{{ $result->type }}</td>
+						<td class="small">{{ $result->ZBID }}</td>
 						<td>
 						<a href="{{ $result->url }}" class="btn btn-info btn-sm">download</a>
 					   </td>
