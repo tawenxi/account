@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Account extends Model
 {
     public $timestamps = false;
-    protected $fillable = ['account_number', 'name','account_name'];
+    protected $fillable = ['account_number', 'name','account_name','isuseful'];
 
     public function zbDetails()
     {
