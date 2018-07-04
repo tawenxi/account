@@ -143,9 +143,11 @@ class ZhibiaoController extends Controller
     public function show($zbid)
     {
         $zbid = str_replace('-', '.', $zbid);
-        $results = $this->repository_zfpz->findByField('ZBID', $zbid)->all();
+        $results = $this->repository_zfpz->findByField('ZBID', $zbid);
 
-        return $this->excel->exportBlade('zhibiao.showzbdetail', compact('results'))->render();
+        $results = $this->presentZfpzs($results);
+        return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();
+        //return $this->excel->exportBlade('zhibiao.showzbdetail', compact('results'))->render();
     }
 
     public function getdetails()

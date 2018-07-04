@@ -48,4 +48,63 @@ class FileController extends Controller
          $file->delete();
         //return redirect()->back();
     }
+
+
+
+    public function findexcel()
+    {
+        $files = Storage::allFiles('public/excel');
+
+    $files = collect($files)->filter(function($val){
+        return strstr($val,'.xl') AND !strstr($val, '~$');
+    });
+
+   // dd($files);
+
+        foreach ($files as $file) {
+            $file = substr($file,7);
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file);
+
+            $count = $spreadsheet->getSheetCount();
+
+            $currentIndex = 0;
+
+            do {
+                
+                    $worksheet = $spreadsheet->getSheet($currentIndex);
+
+                    // Get the highest row number and column letter referenced in the worksheet
+                    $highestRow = $worksheet->getHighestRow(); // e.g. 10
+                    $highestColumn = $worksheet->getHighestColumn(); // e.g 'F'
+                    // Increment the highest column letter
+                    $highestColumn++;
+
+                    echo '<table>' . "\n";
+                    for ($row = 1; $row <= $highestRow; ++$row) {
+                        echo '<tr>' . PHP_EOL;
+                        for ($col = 'A'; $col != $highestColumn; ++$col) {
+                            echo '<td>' .
+                                 $cell_value = $worksheet->getCell($col . $row)
+                                     ->getValue() .
+                                 '</td>' . PHP_EOL;
+                                 if (strstr($cell_value,'更新')) {
+                                    dump('finded');
+                                 }
+                        }
+                        echo '</tr>' . PHP_EOL;
+                    }
+                    echo '</table>' . PHP_EOL;
+
+                    //dd(strstr($cell_value,'更新'));
+
+                    
+                    $currentIndex++;
+
+                    dump('==============================================================================================================================================================================');
+
+            } while ($currentIndex < $count);
+        }
+
+
+    }
 }

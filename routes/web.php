@@ -134,3 +134,27 @@ Route::get('/deletefile/{id}', 'FileController@deleteFile');
 
 Route::get('zbhavefile','ZhibiaoController@ZbHavingFile');
 
+
+Route::get('ssss',function() {
+
+
+$query = 5000;
+$a = \DB::table('zfpzs')
+        ->select('ZY', \DB::raw('SUM(`JE`) as JE2'),'SKR','PDRQ')
+        ->groupBy(['ZY','SKR','PDRQ'])
+        ->havingRaw("JE2 = {$query} AND Count(*) > 1")
+        ->get();
+
+
+$a = \DB::table('zfpzs')
+        ->select('SKR as name', \DB::raw('SUM(`JE`) as JE2'))
+        ->groupBy(['SKR'])
+        //->havingRaw("JE2 = {$query} AND Count(*) > 1")
+        ->get();
+
+        dd($a);
+
+});
+
+
+Route::get('excel','FileController@findexcel');

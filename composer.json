@@ -23,6 +23,7 @@
         "nicolaslopezj/searchable": "^1.9",
         "overtrue/laravel-ueditor": "~1.0",
         "pda/pheanstalk": "~3.0",
+        "phpoffice/phpspreadsheet": "^1.3",
         "predis/predis": "^1.1",
         "prettus/l5-repository": "^2.6",
         "sebastiaanluca/laravel-helpers": "^1.0",
