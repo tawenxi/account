@@ -11,7 +11,7 @@ class File extends Model
 	public $fillable = ['title','name','url','ZBID'];
     public function zb()
     {
-        return $this->belongsTo(Zb::class, 'ZBID', 'ZBID');
+        return $this->belongsTo(Zb::class, 'ZBID', 'ZBID')->withoutGlobalScopes();
     }
 
 
