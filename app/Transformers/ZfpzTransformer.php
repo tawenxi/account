@@ -21,9 +21,9 @@ class ZfpzTransformer extends TransformerAbstract
     {
         return [
             'id'         => (int) $model->id,
-            'ZBID'   => $model->zb->ZBID,
-            'data'   => $model->QS_RQ,
-            'data'   => $model->ZY,
+            'ZBID'   => $model->zb->ZY,
+            'date'   => $model->QS_RQ,
+            'ZY'   => $model->ZY,
             'SKR'   => $model->SKR,
             'DW'   => $model->YSDWMC,
             'amount'   => $model->JE,
