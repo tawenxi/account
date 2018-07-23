@@ -38,7 +38,13 @@ class UpdateAccount extends Command
      */
     public function handle()
     {
-        $accounts = Account::all();
+        //$this->Beuseful();
+        $this->addaccount();
+    }
+
+    public function Beuseful()
+    {
+     $accounts = Account::all();
         $accounts->each(function($account) {
             $exisit = Account::where('account_number','like',$account->account_number.'%')->where('account_number','!=',$account->account_number)->exists();
             if ($exisit) {
@@ -49,6 +55,16 @@ class UpdateAccount extends Command
             }
         });
 
-        $this->info('update success');
+        $this->info('update success');   
+    }
+
+    public function addaccount()
+    {
+        $accounts = \DB::connection('sqlsrv')->table('GL_Kmxx')->where('Jl_RQ','>','20180718')->get();
+
+        foreach ($accounts as $account) {
+            $this->info($account->kmdm.'---'.$account->kmmc.'---'.$account->Jl_RQ);
+            
+        }
     }
 }
