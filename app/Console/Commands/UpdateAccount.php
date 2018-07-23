@@ -66,5 +66,6 @@ class UpdateAccount extends Command
             $this->info($account->kmdm.'---'.$account->kmmc.'---'.$account->Jl_RQ);
             
         }
+        
     }
 }
