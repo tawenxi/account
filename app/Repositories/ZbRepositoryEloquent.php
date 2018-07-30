@@ -64,7 +64,7 @@ class ZbRepositoryEloquent extends BaseRepository implements ZbRepository, Cache
 
     public function getIndexPage()
     {
-        return $this->with(['zfpzs','projects','zhijie','shouquan'])->orderBy('SH_RQ','desc')->all();
+        return $this->with(['zfpzs','projects','zhijie','shouquan','files'])->orderBy('SH_RQ','desc')->all();
     }
 
     public function getZbHavingFile()
