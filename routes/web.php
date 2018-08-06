@@ -1,6 +1,6 @@
 <?php
 
-Route::get('/', function () {return redirect('/geren');});
+Route::get('/', function () {return redirect('/zhibiao/?search=yeamount:1&orderBy=LR_RQ');});
 Route::get('/jiema', 'GuzzleController@jiema');
 require('myweb.php');
 Route::get('/2', function () {

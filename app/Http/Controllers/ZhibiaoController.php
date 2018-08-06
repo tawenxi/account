@@ -50,6 +50,7 @@ class ZhibiaoController extends Controller
      */
     public function index()
     {
+        error_log(\Auth::user()->name.'登陆了，登陆时间：'.\Carbon\Carbon::now().PHP_EOL, 3, storage_path($path = '/logs/logins.log'));
         $results = $this->repository_zb->getIndexPage();
 
         $results = $this->presentZbs($results);
