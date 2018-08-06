@@ -169,7 +169,7 @@ document.addEventListener('turbolinks:load', () => {
 
         methods:{
             cacheclear(){
-                this.$http.get('http://account.test/api/cacheclear').then(response => {
+                this.$http.get('/api/cacheclear').then(response => {
                     console.log(response.data.cacheclear);
                     if (response.data.cacheclear) {
                         this.$toast.info({title:'清除缓存：',message:'清除成功'});
@@ -178,7 +178,7 @@ document.addEventListener('turbolinks:load', () => {
             },
 
             pullzfpz(){
-                this.$http.get('http://account.test/api/pullzfpz').then(response => {
+                this.$http.get('/api/pullzfpz').then(response => {
                     console.log('更新指标和支付令成功'+response.data.pullzfpz);
                     if (response.data.pullzfpz) {
                         this.$toast.success({title:'后台执行：',message:'更新指标和支付令成功'});
@@ -186,7 +186,7 @@ document.addEventListener('turbolinks:load', () => {
                 });
             },
             pullsq(){
-                this.$http.get('http://account.test/api/pullsq').then(response => {
+                this.$http.get('/api/pullsq').then(response => {
                     console.log('更新授权指标成功'+response.data.pullsq);
                     if (response.data.pullsq) {
                         this.$toast.success({title:'后台执行：',message:'更新授权指标成功'});
@@ -195,7 +195,7 @@ document.addEventListener('turbolinks:load', () => {
 
             },
             pullzj(){
-                this.$http.get('http://account.test/api/pullzj').then(response => {
+                this.$http.get('/api/pullzj').then(response => {
                     console.log('更新授权指标成功'+response.data.pullzj);
                     if (response.data.pullzj) {
                         this.$toast.success({title:'后台执行：',message:'更新直接指标成功'});
@@ -203,7 +203,7 @@ document.addEventListener('turbolinks:load', () => {
                 });
             },
             updateboss(){
-                this.$http.get('http://account.test/api/updateboss').then(response => {
+                this.$http.get('/api/updateboss').then(response => {
                     console.log('更新授权指标成功'+response.data.updateboss);
                     if (response.data.updateboss) {
                         this.$toast.success({title:'后台执行：',message:'更新BOSS成功'});
@@ -211,7 +211,7 @@ document.addEventListener('turbolinks:load', () => {
                 });
             },
             pullyue(){
-                this.$http.get('http://account.test/api/pullyue').then(response => {
+                this.$http.get('/api/pullyue').then(response => {
                     console.log('更新授权指标成功'+response.data.pullyue);
                     if (response.data.pullyue) {
                         this.$toast.success({title:'后台执行：',message:'更新指标余额成功'});
@@ -220,7 +220,7 @@ document.addEventListener('turbolinks:load', () => {
 
             },
             pullshenqing(){
-                this.$http.get('http://account.test/api/pullshenqing').then(response => {
+                this.$http.get('/api/pullshenqing').then(response => {
                     console.log('更新授权指标成功'+response.data.pullshenqing);
                     if (response.data.pullshenqing) {
                         this.$toast.success({title:'后台执行：',message:'更新分月申请成功'});
@@ -228,7 +228,7 @@ document.addEventListener('turbolinks:load', () => {
                 });
             },
             pullcast(){
-                this.$http.get('http://account.test/api/pullcast').then(response => {
+                this.$http.get('/api/pullcast').then(response => {
                     console.log('更新授权指标成功'+response.data.pullcast);
                     if (response.data.pullcast) {
                         this.$toast.success({title:'后台执行：',message:'更新分月申请成功'});
@@ -237,7 +237,7 @@ document.addEventListener('turbolinks:load', () => {
             },
 
             pulldpt(){
-                this.$http.get('http://account.test/api/pulldpt').then(response => {
+                this.$http.get('/api/pulldpt').then(response => {
                     console.log('更新DPT成功'+response.data.pulldpt);
                     if (response.data.pulldpt) {
                         this.$toast.success({title:'后台执行：',message:'更新DPT成功'});
