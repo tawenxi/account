@@ -162,7 +162,7 @@ class Zb extends Model implements Presentable
 
     public function zhijie()
     {
-        return $this->hasMany('App\Model\zjzb', 'ZBID', 'ZBID');
+        return $this->hasMany('App\Model\Zjzb', 'ZBID', 'ZBID');
     }
 
     protected $fillable = [

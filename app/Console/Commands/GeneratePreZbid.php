@@ -38,7 +38,7 @@ class Test extends Command
      */
     public function handle()
     {
-        //$this->setPreZbid();
+        $this->setPreZbid();
         $this->setOriginZbid();
     }
 
