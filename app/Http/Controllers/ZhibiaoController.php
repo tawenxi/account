@@ -144,7 +144,7 @@ class ZhibiaoController extends Controller
     public function show($zbid)
     {
         $zbid = str_replace('-', '.', $zbid);
-        $results = $this->repository_zfpz->findByField('ZBID', $zbid);
+        $results = $this->repository_zfpz->with(['zb','account','project'])->findByField('ZBID', $zbid);
 
         $results = $this->presentZfpzs($results);
         return $this->excel->exportBlade('zhibiao.detail', compact('results'))->render();

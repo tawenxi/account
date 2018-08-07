@@ -92,10 +92,10 @@ Route::get('/zhibiaos', 'HomeController@zhibiao');
 Route::get('/session', 'PageController@session');
 Route::get('/r9', 'RccountController@index');
 Route::get('/rr', 'RccountController@rr');
-Route::get('/up', 'zhibiaoController@checkoutZFPZ');
-Route::get('zbdetail/{id}/edit', 'zhibiaoController@edit')->name('zbdetail.edit');
-Route::patch('zbdetail/update', 'zhibiaoController@update');
-Route::get('/shenqing', 'zhibiaoController@shenqing');
+Route::get('/up', 'ZhibiaoController@checkoutZFPZ');
+Route::get('zbdetail/{id}/edit', 'ZhibiaoController@edit')->name('zbdetail.edit');
+Route::patch('zbdetail/update', 'ZhibiaoController@update');
+Route::get('/shenqing', 'ZhibiaoController@shenqing');
 
 Route::get('/company', 'BossController@companylist');
 Route::get('/personalboss', 'BossController@personalbosslist');
@@ -110,15 +110,15 @@ Route::post('boss/store', 'BossController@update')->name('boss.update');
 
 Route::get('/project/tozfl/{village?}', 'BossController@villagezfl');
 Route::view('redis', 'zhibiao.socket');
-Route::get('rediscache', 'zhibiaoController@rediscache');
-Route::get('zhijie', 'zhibiaoController@zhijie');
+Route::get('rediscache', 'ZhibiaoController@rediscache');
+Route::get('zhijie', 'ZhibiaoController@zhijie');
 
 Route::get('es', 'SearchController@search')->middleware('cache.response');
 Route::view('taskmanager', 'task.index');
 
-Route::get('blade', 'zhibiaoController@blade');
+Route::get('blade', 'ZhibiaoController@blade');
 
-Route::get('sourcezb/{zbid}', 'zhibiaoController@sourcezb');
+Route::get('sourcezb/{zbid}', 'ZhibiaoController@sourcezb');
 
 Route::get('pullzhifupz', 'CommandController@pullzhifupz');
 Route::get('pullsq', 'CommandController@pullsq');
