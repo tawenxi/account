@@ -20,7 +20,10 @@ class FindByZyCriteria implements CriteriaInterface
      */
     public function apply($model, RepositoryInterface $repository)
     {
-        return $model->where('ZY', 'like', '%'.$this->keyword.'%');
+        if (is_numeric($this->keyword)) {
+            return $model->where('ZBYE', $this->keyword*100)->with(['projects','files','zfpzs','shouquan','zhijie']);
+        }
+        return $model->where('ZY', 'like', '%'.$this->keyword.'%')->with(['projects','files','zfpzs','shouquan','zhijie']);
     }
 
     public function __construct($keyword)
