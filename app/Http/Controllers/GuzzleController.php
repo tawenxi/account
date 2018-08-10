@@ -34,7 +34,7 @@ class GuzzleController extends Controller
      */
     public function dpt(Guzzle $guzzle)  //带了更新功能
     {
-        session(['ND'=>'2018']);
+        session(['ND'=>config('app.MYND')]);
         \Artisan::call('pull:dpt');
         flash()->success('Woohoo', '更新平台成功');
         \Session::flash('success', '更新平台成功');

@@ -67,7 +67,7 @@ class updateyue extends Command
 
     public function update_yeamount()
     {
-        session(['ND'=>'2018']);
+        session(['ND'=>config('app.MYND')]);
         \App\Model\Zb::all()->each(function($val){
             \App\Model\Zb::where('ZBID',$val['ZBID'])->update(['yeamount'=>($val['JE']-$val->zfpzs->sum('JE'))*100]);
         });

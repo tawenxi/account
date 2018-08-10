@@ -69,7 +69,7 @@ class Pullzhifupz extends Command
 
     public function PullZfpz()
     {
-        session(['ND'=>'2018']);
+        session(['ND'=>config('app.MYND')]);
         \DB::table('zfpzs')->where('QS_RQ','!=',NULL)->update(['qs'=>1]);
         Zfpz::where(['QS_RQ'=>NULL,'received'=>'0'])->delete();
 
@@ -127,7 +127,7 @@ class Pullzhifupz extends Command
 
     public function pullzb()
     {
-        session(['ND'=>'2018']);
+        session(['ND'=>config('app.MYND')]);
         $zb_data = $this->guzzle->get_ZB();
         $collection = collect($zb_data);
         $collection = $collection->reject(function($item,$key){
