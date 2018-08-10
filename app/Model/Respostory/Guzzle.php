@@ -402,7 +402,7 @@ public function setCompareBody($body = NULL)
      */
     public function add_rizhi($pid, $djbh)
     {
-        $data = $this->jiema($this->RZ_data);
+        $data = $this->jiema($this->RZ_data());
         Test::log(__METHOD__.'解码日志sql');
 
         $timepattern = "/\'\s*20[123]([0-9]{5})\s*\'/";
@@ -442,7 +442,7 @@ public function setCompareBody($body = NULL)
      */
     public function deletefj($pid, $djbh)
     {
-        $data = $this->jiema($this->FJ_data);
+        $data = $this->jiema($this->FJ_data());
         $copydata = $data;
         $data = $this->timereplace($data,1,1,0);
         $this->checkreplace($copydata, $data);

@@ -47,7 +47,7 @@ class DataSource
         $tawenxi3 = sprintf('%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s',$GSDM,$KJND,$ZFLB,$PDH,$PDQJ,$JSFSMC,$NEWDYBZ,$NEWZZPZ,$NEWCXBZ,$NEWPZLY,$NEWZT,$PDXH,$DZKMC,$XMMC,$XMFLMC,$YSDWMC,$YSDWQC,$YWLXMC,$ZFFSMC,$MXZBWH,$MXZBXH,$ZBLYMC,$ZJXZMC,$YSKMMC,$YSKMQC,$JFLXMC,$JFLXQC,$ZCLXMC,$YSGLLXMC,$KZZLMC1,$KZZLMC2);
         unset($GSDM,$KJND,$ZFLB,$PDH,$PDQJ,$JSFSMC,$NEWDYBZ,$NEWZZPZ,$NEWCXBZ,$NEWPZLY,$NEWZT,$PDXH,$DZKMC,$XMMC,$XMFLMC,$YSDWMC,$YSDWQC,$YWLXMC,$ZFFSMC,$MXZBWH,$MXZBXH,$ZBLYMC,$ZJXZMC,$YSKMMC,$YSKMQC,$JFLXMC,$JFLXQC,$ZCLXMC,$YSGLLXMC,$KZZLMC1,$KZZLMC2);
 
-        $this->mybody = strtr($this->sqmoban, compact('tawenxi1','tawenxi2','tawenxi3'));
+        $this->mybody = strtr($this->sqmoban(), compact('tawenxi1','tawenxi2','tawenxi3'));
         return $this;
     }
 

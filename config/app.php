@@ -14,7 +14,11 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-    'MYND' => '2018',  //config('app.MYND')
+
+    'MYND' => '2018',  //config('app.MYND')    guzzledb的moban只和这个有关系
+    'YSDWDM' => '901012',
+    'CZYID' => '913',
+    'END' => '0728',
     /*
     |--------------------------------------------------------------------------
     | Application Environment

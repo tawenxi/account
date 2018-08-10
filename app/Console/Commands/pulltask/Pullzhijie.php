@@ -67,7 +67,7 @@ class Pullzhijie extends Command
 
     public function pullzjzb()
     {
-        $zjzbs = $this->getdetail->getdata($this->zhijie_zhifu_data, [
+        $zjzbs = $this->getdetail->getdata($this->zhijie_zhifu_data(), [
             ["'".config('app.MYND')."0408'", "to_char(sysdate,'yyyymmdd')"],
         ]);
 

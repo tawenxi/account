@@ -81,9 +81,9 @@ class Pullzhifupz extends Command
             $month = ($month<10)?'0'.(string)$month:(string)$month;
         }
         
-        $zfpzdatas = $this->getdetail->getdata($this->zfpz, [
+        $zfpzdatas = $this->getdetail->getdata($this->zfpz(), [
             ["'".config('app.MYND')."0101'", "'".config('app.MYND').$month."01'"], //每年修改
-            ["'".config('app.MYND')."0821'", "to_char(sysdate,'yyyymmdd')"],
+            ["'".config('app.MYND')."0728'", "to_char(sysdate,'yyyymmdd')"],
         ]);
 
         if ($zfpzdatas[0] === null) return true;

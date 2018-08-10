@@ -77,9 +77,9 @@ class ZhibiaoController extends Controller
         $Zfpz = $Zfpz->map(function ($a) {
             return collect($a->only(['PDH', 'ZY']))->toJson();
         });
-        $zfpzdatas = $this->getdetail->getdata($this->zfpz, [
+        $zfpzdatas = $this->getdetail->getdata($this->zfpz(), [
                                 ["'".config('app.MYND')."0101'", "'".config('app.MYND')."0101'"],
-                                ["'".config('app.MYND')."0821'", "to_char(sysdate,'yyyymmdd')"],
+                                ["'".config('app.MYND')."0728'", "to_char(sysdate,'yyyymmdd')"],
                                 ]);
         $b = collect($zfpzdatas)->map(function ($a) {
             return collect(collect($a)->only(['PDH', 'ZY']))->toJson();
@@ -153,8 +153,8 @@ class ZhibiaoController extends Controller
 
     public function getdetails()
     {
-        $person = $this->getdetail->getdata($this->zfpz, [
-            ["'".config('app.MYND')."0821'", "to_char(sysdate,'yyyymmdd')"], ]);
+        $person = $this->getdetail->getdata($this->zfpz(), [
+            ["'".config('app.MYND')."0728'", "to_char(sysdate,'yyyymmdd')"], ]);
         dd($person);
     }
 

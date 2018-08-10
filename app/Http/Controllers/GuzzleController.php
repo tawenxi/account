@@ -266,15 +266,15 @@ EOF;
     public function jiema()
     {
         $datas = [
-        'findquery_xingzheng' => $this->findquery_xingzheng,
-        'findquery_benji'     => $this->findquery_benji,
-        'RZ_data'             => $this->RZ_data,
-        'FJ_data'             => $this->FJ_data,
-        'zhibiao_sql'         => $this->zhibiao_sql,
+        'findquery_xingzheng' => $this->findquery_xingzheng(),
+        'findquery_benji'     => $this->findquery_benji(),
+        'RZ_data'             => $this->RZ_data(),
+        'FJ_data'             => $this->FJ_data(),
+        'zhibiao_sql'         => $this->zhibiao_sql(),
 
-        'zfpz'                => $this->zfpz,
-        'shenqingsql'         => $this->shenqingsql,
-        'zhijie_zhifu_data'   => $this->zhijie_zhifu_data,
+        'zfpz'                => $this->zfpz(),
+        'shenqingsql'         => $this->shenqingsql(),
+        'zhijie_zhifu_data'   => $this->zhijie_zhifu_data(),
         ];
 
         foreach ($datas as $key => $data) {

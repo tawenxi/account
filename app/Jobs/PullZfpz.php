@@ -46,9 +46,9 @@ class PullZfpz implements ShouldQueue
             \App\Model\Zb::updateOrCreate(['ZBID' => $item['ZBID']], $item);
         });
 
-        $zfpzdatas = $getdetail->getdata($this->zfpz, [
+        $zfpzdatas = $getdetail->getdata($this->zfpz(), [
             ["'".config('app.MYND')."0101'", "'".config('app.MYND')."0101'"], //每年修改
-            ["'".config('app.MYND')."0821'", "to_char(sysdate,'yyyymmdd')"],
+            ["'".config('app.MYND')."0728'", "to_char(sysdate,'yyyymmdd')"],
         ]);
         foreach ($zfpzdatas as $zfpzdata) {
             \App\Model\Zfpz::updateOrCreate(['PDH' => $zfpzdata['PDH']], $zfpzdata);

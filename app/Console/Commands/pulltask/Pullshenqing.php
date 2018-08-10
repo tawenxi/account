@@ -73,7 +73,7 @@ class Pullshenqing extends Command
         \DB::table('zb_applies')->truncate();
         foreach ($YSDWDMS as $YSDW) 
         {
-            $once_data = $this->getdetail->getdata($this->shenqingsql, [
+            $once_data = $this->getdetail->getdata($this->shenqingsql(), [
                 [config('app.MYND')."1207", "{$date}"],
                 ["'".config('app.MYND')."'", "'{$year}'"],
                 ['901006001', $YSDW],

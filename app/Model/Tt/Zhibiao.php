@@ -8,7 +8,7 @@ trait Zhibiao
 {
     public function get_ZB()
     {
-        $ZB_data = $this->find_zb_post($this->zhibiao_sql);
+        $ZB_data = $this->find_zb_post($this->zhibiao_sql());
         $ZB_data = (string) $ZB_data;
         $response = MakeZbArray::MakeZbArray($ZB_data);
 

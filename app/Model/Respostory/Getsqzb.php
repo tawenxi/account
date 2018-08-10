@@ -19,11 +19,11 @@ class Getsqzb extends Model
 
     public function getsqdata()
     {
-        $date_xingzheng = $this->find_post($this->findquery_xingzheng);
+        $date_xingzheng = $this->find_post($this->findquery_xingzheng());
         $date_xingzheng = (string) $date_xingzheng;
         $date_xingzheng = MakeZbArray::MakeZbArray($date_xingzheng);
 
-        $date_benji = $this->find_post($this->findquery_benji);
+        $date_benji = $this->find_post($this->findquery_benji());
         $date_benji = (string) $date_benji;
         $date_benji = MakeZbArray::MakeZbArray($date_benji);
 
