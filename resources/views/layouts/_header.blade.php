@@ -132,7 +132,8 @@
                     <li class="dropdown-divider"></li>
                     <li><a class="dropdown-item"  href="/zbhavefile">[有文件的指标]</a></li> 
                     <li><a class="dropdown-item"  href="/zbdetail?search=received:0">缺失账单</a></li> 
-                    <li><a class="dropdown-item"  href="/zbdetail?search=qs:0&searchFields=qs:=">尚未生效</a></li>
+                    <li><a class="dropdown-item"  href="/zbdetail?search=qs:0&searchFields=qs:=">[尚未生效]</a></li>
+                     <li><a class="dropdown-item"  href="/overview">[资金概览]</a></li>
                     <li class="dropdown-divider"></li>
                     <li><a class="dropdown-item"  href="/zbdetail?search=deleted:1">[系统已删除]</a></li>
                     <li><a class="dropdown-item"  href="/zbdetail?search=fail:1">[账号错误]</a></li>

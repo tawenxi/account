@@ -45,7 +45,8 @@ class Testcompare extends Command
             if ($res) {
                $this->info($item->id);
             } else {
-                throw new \Exception('验证数据源失败'.$item->id.'号失败');
+                $this->info('*******');
+                //throw new \Exception('验证数据源失败'.$item->id.'号失败');
             }
         });
         $this->info('SUCCESS-验证'.$this->argument('year').'年数据源成功');

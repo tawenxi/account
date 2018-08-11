@@ -134,6 +134,8 @@ Route::get('/deletefile/{id}', 'FileController@deleteFile');
 
 Route::get('zbhavefile','ZhibiaoController@ZbHavingFile');
 
+Route::get('/overview','ZhibiaoController@overview');
+
 
 Route::get('ssss',function() {
 

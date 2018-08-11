@@ -112,3 +112,29 @@ Route::get('www', function(){
     $a = config('app.MYND');
     return $a;
 });
+
+
+
+Route::get('aaa', function(){
+    
+
+      $data = \DB::table('zfpzs')
+                 ->select(DB::raw('LEFT(QS_RQ,6) as peroid, count(*) as count, round(sum(JE)/100,2) as amount'))
+                 ->where('qs',1)
+                 ->groupBy('peroid')
+                 ->get()->toarray();
+
+                 dd($data);
+});
+
+
+Route::get('bbb', function(){
+    
+
+      $data = \DB::table('zbs')
+                 ->select(DB::raw('LEFT(SH_RQ,6) as peroid, count(*) as count, round(sum(JE)/100,2) as amount'))
+                 ->groupBy('peroid')
+                 ->get()->toarray();
+
+                 dd($data);
+});

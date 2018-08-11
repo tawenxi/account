@@ -7,6 +7,7 @@ use App\Model\Respostory\Excel;
 use App\Model\Respostory\GetSqlResult;
 use App\Model\Respostory\Guzzle;
 use App\Model\Tt\Data;
+use DB;
 use App\Repositories\ZbRepository;
 use App\Repositories\ZfpzRepository;
 use App\Repositories\ZjzbRepository;
@@ -273,6 +274,22 @@ class ZhibiaoController extends Controller
       return $results = $results->map(function($item){
             return new ZbPresenter($item);
         });
+    }
+
+    public function overview()
+    {
+        $results = DB::table('zfpzs')
+             ->select(DB::raw('LEFT(QS_RQ,6) as peroid, count(*) as count, round(sum(JE)/100,2) as amount'))
+             ->where('qs',1)
+             ->groupBy('peroid')
+             ->get();
+
+      $datas = \DB::table('zbs')
+                 ->select(DB::raw('LEFT(SH_RQ,6) as peroid, count(*) as count, round(sum(JE)/100,2) as amount'))
+                 ->groupBy('peroid')
+                 ->get();
+
+        return view('zhibiao.overview',compact('results','datas'));
     }
 
 }

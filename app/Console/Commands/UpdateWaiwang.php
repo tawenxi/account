@@ -49,15 +49,17 @@ class UpdateWaiwang extends Command
                 }
             }
             
+            DB::transaction(function () use ($table,$arrays) {
+                DB::connection('imiguo')->table($table)->truncate();
+                $this->info('已经清空数据表'.$table);
+                
+                collect($arrays)->chunk(500)->each(function($data)use($table){
+                    DB::connection('imiguo')->table($table)->insert($data->toarray());
+                });
+                
+                $this->info('success-'.$table);
 
-            DB::connection('imiguo')->table($table)->truncate();
-            $this->info('已经清空数据表'.$table);
-            
-            collect($arrays)->chunk(500)->each(function($data)use($table){
-                DB::connection('imiguo')->table($table)->insert($data->toarray());
             });
-            
-            $this->info('success-'.$table);
         }
     }
 
