@@ -38,5 +38,13 @@ class AppServiceProvider extends ServiceProvider
         if (md5('tawenxi'.env('MSDATABASE', 'forge').'tawenxi') !== '6b464406ff35541360bb3d72be4124ba') {
             dd(env('MSDATABASE', 'forge'));
         }
+
+        if (!env('CZYID')) {
+            dd('请设置操作员ID');
+        }
+
+        if (!env('YSDWDM')) {
+            dd('请设置预算代为代码');
+        }
     }
 }

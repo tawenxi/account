@@ -35,7 +35,7 @@ public $zhijie_zhifu_data = '<?xml version="1.0" encoding="GB2312"?><R9PACKET ve
     public function findquery_xingzheng()
     {
         $data = str_replace(['[YSDWDM]','[CZYID]','[MYND]'] ,
-                            [config('app.YSDWDM'),config('app.CZYID'),config('app.MYND')], 
+                            [env('YSDWDM','901012'),env('CZYID','913'),config('app.MYND')], 
                             $this->findquery_xingzheng);
 
         return $data;
@@ -44,7 +44,7 @@ public $zhijie_zhifu_data = '<?xml version="1.0" encoding="GB2312"?><R9PACKET ve
     public function findquery_benji()
     {
         $data = str_replace(['[YSDWDM]','[CZYID]','[MYND]'] ,
-                            [config('app.YSDWDM'),config('app.CZYID'),config('app.MYND')], 
+                            [env('YSDWDM','901012'),env('CZYID','913'),config('app.MYND')], 
                             $this->findquery_benji);
 
         return $data;
@@ -67,7 +67,7 @@ public $zhijie_zhifu_data = '<?xml version="1.0" encoding="GB2312"?><R9PACKET ve
     public function zhibiao_sql()
     {
         $data = str_replace(['[YSDWDM]','[MYND]','0728'],
-                            [config('app.YSDWDM'), config('app.MYND'),config('app.END')], 
+                            [env('YSDWDM','901012'), config('app.MYND'),config('app.END')], 
                             $this->zhibiao_sql);
 
         return $data;
@@ -76,7 +76,7 @@ public $zhijie_zhifu_data = '<?xml version="1.0" encoding="GB2312"?><R9PACKET ve
     public function zfpz()
     {
         $data = str_replace(['[YSDWDM]','[MYND]','0728'],
-                            [config('app.YSDWDM'), config('app.MYND'),config('app.END')], 
+                            [env('YSDWDM','901012'), config('app.MYND'),config('app.END')], 
                             $this->zfpz);
 
         return $data;
@@ -85,7 +85,7 @@ public $zhijie_zhifu_data = '<?xml version="1.0" encoding="GB2312"?><R9PACKET ve
     public function shenqingsql()
     {
         $data = str_replace(['[YSDWDM]','[CZYID]','[MYND]'] ,
-                            [config('app.YSDWDM'),config('app.CZYID'),config('app.MYND')], 
+                            [env('YSDWDM','901012'),env('CZYID','913'),config('app.MYND')], 
                             $this->shenqingsql);
 
         return $data;
@@ -102,7 +102,7 @@ public $zhijie_zhifu_data = '<?xml version="1.0" encoding="GB2312"?><R9PACKET ve
     public function zhijie_zhifu_data()
     {
         $data = str_replace(['[CZYID]','[MYND]'] ,
-                            [config('app.CZYID'),config('app.MYND')], 
+                            [env('CZYID','913'),config('app.MYND')], 
                             $this->zhijie_zhifu_data);
 
         return $data;
