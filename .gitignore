@@ -4,6 +4,9 @@
 /public/storage
 /storage/*.key
 /vendor
+/account/storage/excel
+/public/excel
+/storage/excel/*
 /.idea
 /.vagrant
 Homestead.json
