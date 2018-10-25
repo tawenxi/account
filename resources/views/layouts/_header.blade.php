@@ -104,6 +104,7 @@
 
                   <li><a class="dropdown-item"  href="/dpt">平台更新</a></li>   
                   <li><a class="dropdown-item"  href="/payout">授权登记</a></li>
+                  <li><a class="dropdown-item"  href="/searchbalance">账务余额</a></li>
                     <li class="dropdown-divider"></li>
                 </ul>
               </li>

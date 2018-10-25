@@ -113,7 +113,7 @@ Route::view('redis', 'zhibiao.socket');
 Route::get('rediscache', 'ZhibiaoController@rediscache');
 Route::get('zhijie', 'ZhibiaoController@zhijie');
 
-Route::get('es', 'SearchController@search')->middleware('cache.response');
+Route::get('es', 'SearchController@search');
 Route::view('taskmanager', 'task.index');
 
 Route::get('blade', 'ZhibiaoController@blade');
@@ -135,7 +135,8 @@ Route::get('/deletefile/{id}', 'FileController@deleteFile');
 Route::get('zbhavefile','ZhibiaoController@ZbHavingFile');
 
 Route::get('/overview','ZhibiaoController@overview');
-
+Route::get('searchaccount', 'AccountController@search');
+Route::get('searchbalance', 'AccountController@balance')->middleware('cache.response');
 
 Route::get('ssss',function() {
 

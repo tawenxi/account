@@ -66,6 +66,16 @@ class UpdateAccount extends Command
             $this->info($account->kmdm.'---'.$account->kmmc.'---'.$account->Jl_RQ);
             
         }
+
+        $accounts->each(function($val,$key){
+            if(!Account::where('account_number',$val->kmdm)->exists()){
+                Account::create(['account_number'=>$val->kmdm,
+                                 'account_name'=>$val->kmmc,
+                                 'name'=>$val->kmdm.'@'.$val->kmdm]);
+                $this->info($val->kmdm.'==='.$val->kmmc.'==='.$val->Jl_RQ.'增加成功');
+            }
+            
+        });
         
     }
 }
